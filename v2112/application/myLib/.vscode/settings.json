@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "myDFSEMInletFvPatchVectorField.C": "cpp",
+        "myDFSEMInletFvPatchVectorFieldTemplates.C": "cpp",
+        "myEddyIO.C": "cpp",
+        "myDelta.H": "cpp",
+        "myDelta.C": "cpp"
+    }
+}

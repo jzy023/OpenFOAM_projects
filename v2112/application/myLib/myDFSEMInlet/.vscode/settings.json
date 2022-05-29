@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "myDFSEMInletFvPatchVectorField.C": "cpp",
+        "myDFSEMInletFvPatchVectorField.H": "cpp"
+    }
+}
