@@ -1,0 +1,160 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2206                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _76d719d1-20220624 OPENFOAM=2206 version=v2206
+Arch   : "LSB;label=64;scalar=64"
+Exec   : decomposePar
+Date   : May 12 2023
+Time   : 10:47:13
+Host   : DESKTOP-BTFG136
+PID    : 9969
+I/O    : uncollated
+Case   : /home/noreff/works/OpenFOAM/2206-user/Projects/validation_CHAD/cavity/scalar_noDiff
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+--> FOAM Warning : 
+    From void Foam::Time::setControls()
+    in file db/Time/Time.C at line 335
+    Reading "0/uniform/time" at line 19 to 27
+    Time read from time dictionary 45 differs from actual time 0.
+    This may cause unexpected database behaviour. If you are not interested
+    in preserving time state delete the time dictionary.
+
+
+Decomposing mesh
+
+Create mesh
+
+Calculating distribution of cells
+Decomposition method hierarchical [8] (region region0)
+
+Finished decomposition in 0.01 s
+
+Calculating original mesh data
+
+Distributing cells to processors
+
+Distributing faces to processors
+
+Distributing points to processors
+
+Constructing processor meshes
+
+Processor 0
+    Number of cells = 7812
+    Number of points = 16000
+    Number of faces shared with processor 1 = 124
+    Number of faces shared with processor 4 = 63
+    Number of processor patches = 2
+    Number of processor faces = 187
+    Number of boundary faces = 15811
+
+Processor 1
+    Number of cells = 7812
+    Number of points = 16002
+    Number of faces shared with processor 0 = 124
+    Number of faces shared with processor 2 = 124
+    Number of faces shared with processor 4 = 1
+    Number of faces shared with processor 5 = 63
+    Number of faces shared with processor 6 = 2
+    Number of processor patches = 5
+    Number of processor faces = 314
+    Number of boundary faces = 15686
+
+Processor 2
+    Number of cells = 7812
+    Number of points = 16000
+    Number of faces shared with processor 1 = 124
+    Number of faces shared with processor 3 = 124
+    Number of faces shared with processor 6 = 63
+    Number of processor patches = 3
+    Number of processor faces = 311
+    Number of boundary faces = 15687
+
+Processor 3
+    Number of cells = 7812
+    Number of points = 16002
+    Number of faces shared with processor 2 = 124
+    Number of faces shared with processor 6 = 1
+    Number of faces shared with processor 7 = 63
+    Number of processor patches = 3
+    Number of processor faces = 188
+    Number of boundary faces = 15812
+
+Processor 4
+    Number of cells = 7813
+    Number of points = 16006
+    Number of faces shared with processor 0 = 63
+    Number of faces shared with processor 1 = 1
+    Number of faces shared with processor 5 = 126
+    Number of processor patches = 3
+    Number of processor faces = 190
+    Number of boundary faces = 15814
+
+Processor 5
+    Number of cells = 7813
+    Number of points = 16004
+    Number of faces shared with processor 1 = 63
+    Number of faces shared with processor 4 = 126
+    Number of faces shared with processor 6 = 124
+    Number of processor patches = 3
+    Number of processor faces = 313
+    Number of boundary faces = 15689
+
+Processor 6
+    Number of cells = 7813
+    Number of points = 16006
+    Number of faces shared with processor 1 = 2
+    Number of faces shared with processor 2 = 63
+    Number of faces shared with processor 3 = 1
+    Number of faces shared with processor 5 = 124
+    Number of faces shared with processor 7 = 126
+    Number of processor patches = 5
+    Number of processor faces = 316
+    Number of boundary faces = 15688
+
+Processor 7
+    Number of cells = 7813
+    Number of points = 16004
+    Number of faces shared with processor 3 = 63
+    Number of faces shared with processor 6 = 126
+    Number of processor patches = 2
+    Number of processor faces = 189
+    Number of boundary faces = 15813
+
+Number of processor faces = 1004
+Max number of cells = 7813 (0.0064% above average 7812.5)
+Max number of processor patches = 5 (53.8462% above average 3.25)
+Max number of faces between processors = 316 (25.8964% above average 251)
+
+Time = 0
+
+Processor 0: field transfer
+Detected additional non-decomposed files in "/home/noreff/works/OpenFOAM/2206-user/Projects/validation_CHAD/cavity/scalar_noDiff/0/uniform"
+Processor 1: field transfer
+Detected additional non-decomposed files in "/home/noreff/works/OpenFOAM/2206-user/Projects/validation_CHAD/cavity/scalar_noDiff/0/uniform"
+Processor 2: field transfer
+Detected additional non-decomposed files in "/home/noreff/works/OpenFOAM/2206-user/Projects/validation_CHAD/cavity/scalar_noDiff/0/uniform"
+Processor 3: field transfer
+Detected additional non-decomposed files in "/home/noreff/works/OpenFOAM/2206-user/Projects/validation_CHAD/cavity/scalar_noDiff/0/uniform"
+Processor 4: field transfer
+Detected additional non-decomposed files in "/home/noreff/works/OpenFOAM/2206-user/Projects/validation_CHAD/cavity/scalar_noDiff/0/uniform"
+Processor 5: field transfer
+Detected additional non-decomposed files in "/home/noreff/works/OpenFOAM/2206-user/Projects/validation_CHAD/cavity/scalar_noDiff/0/uniform"
+Processor 6: field transfer
+Detected additional non-decomposed files in "/home/noreff/works/OpenFOAM/2206-user/Projects/validation_CHAD/cavity/scalar_noDiff/0/uniform"
+Processor 7: field transfer
+Detected additional non-decomposed files in "/home/noreff/works/OpenFOAM/2206-user/Projects/validation_CHAD/cavity/scalar_noDiff/0/uniform"
+
+End
+

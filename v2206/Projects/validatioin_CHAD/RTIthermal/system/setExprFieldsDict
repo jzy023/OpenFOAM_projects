@@ -1,0 +1,115 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      setExprFieldsDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+defaultFieldValues
+(
+    volScalarFieldValue alpha.lightFluid 0
+    volScalarFieldValue alpha.denseFluid 1
+    volScalarFieldValue T 298
+);
+
+expressions
+(
+    T
+    {
+        field       T;
+
+        constants
+        {
+            interface (0.0  0.0  0.0);
+        }
+
+        variables
+        (
+            "x = pos().x()"
+            "L = 0.04"
+            "H = 0.12"
+            "wavenumber = 1"
+            "amp = 0.02"
+        );
+
+        fieldMask
+        #{
+            pos().y() < amp*H*sin((2*3.141592653)*x/(L/wavenumber)) + H/2
+        #};
+
+        expression
+        #{
+            300
+        #};
+    }
+
+    alpha.lightFluid
+    {
+        field       alpha.lightFluid;
+
+        constants
+        {
+            interface (0.0  0.0  0.0);
+        }
+
+        variables
+        (
+            "x = pos().x()"
+            "L = 0.04"
+            "H = 0.12"
+            "wavenumber = 1"
+            "amp = 0.02"
+        );
+
+        fieldMask
+        #{
+            pos().y() < amp*H*sin((2*3.141592653)*x/(L/wavenumber)) + H/2
+        #};
+
+        expression
+        #{
+            1
+        #};
+    }
+
+    alpha.denseFluid
+    {
+        field       alpha.denseFluid;
+
+        constants
+        {
+            interface (0.0  0.0  0.0);
+        }
+
+        variables
+        (
+            "x = pos().x()"
+            "L = 0.04"
+            "H = 0.12"
+            "wavenumber = 1"
+            "amp = 0.02"
+        );
+
+        fieldMask
+        #{
+            pos().y() >=amp*H*sin((2*3.141592653)*x/(L/wavenumber)) + H/2
+        #};
+
+        expression
+        #{
+            1
+        #};
+    }
+);
+
+
+// ************************************************************************* //

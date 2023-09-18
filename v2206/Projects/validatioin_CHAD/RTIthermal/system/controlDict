@@ -1,0 +1,123 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     compressibleMultiphaseInterFoam;// multiphaseInterFoam;
+
+startFrom       startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         0.8;
+// endTime         0.4;
+
+deltaT          1e-4;
+
+writeControl    adjustable;
+
+writeInterval   2e-2;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable yes;
+
+adjustTimeStep  yes;
+
+maxCo           0.8;
+
+maxAlphaCo      0.8;
+
+maxDeltaT       1;
+
+functions
+{
+    // #includeFunc  probes
+    probe0
+    {
+        type            probes;
+        libs            (sampling);
+        writeControl    timeStep;
+        writeInterval   1;
+
+        fields
+        (
+            U
+        );
+
+        probeLocations
+        (
+            (0.02  0.06  0.0005)
+        );
+    }
+
+    yPlus0
+    {
+        // Mandatory entries (unmodifiable)
+        type            yPlus;
+        libs            (fieldFunctionObjects);
+
+        // Optional (inherited) entries
+        writePrecision  6;
+        writeToFile     true;
+        useUserTime     true;
+
+        region          region0;
+        enabled         true;
+        log             true;
+        writeControl    adjustable;
+        writeInterval   2e-2;
+    }
+
+    grad0
+    {
+        // Mandatory entries (unmodifiable)
+        type            grad;
+        libs            (fieldFunctionObjects);
+
+        // Mandatory (inherited) entries (runtime modifiable)
+        field           U;
+
+        // Optional (inherited) entries
+        enabled         true;
+        log             true;
+        writeControl    adjustable;
+        writeInterval   2e-2;
+    }
+
+    rhofunc
+    {
+        type            writeObjects;
+        libs            ("libutilityFunctionObjects.so");
+        writeControl    adjustable;
+        writeInterval   2e-2;
+        objects         ("rho");
+    }
+}
+
+
+
+// ************************************************************************* //

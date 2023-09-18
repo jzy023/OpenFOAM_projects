@@ -1,0 +1,94 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      fvSolution;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+solvers
+{
+    "alpha.*"
+    {
+        MULESCorr       yes;
+        nAlphaSubCycles 4;
+        nAlphaCorr      1;
+        cAlpha          1;
+
+        nLimiterIter    3;
+        alphaApplyPrevCorr no;
+    }
+
+    "pcorr.*"
+    {
+        solver          PCG;
+        tolerance       1e-8;
+        relTol          0;
+    }
+
+    ".*(rho|rhoFinal)"
+    {
+        solver          diagonal;
+    }
+
+    p_rgh
+    {
+        solver          PCG;
+        preconditioner  DIC;
+        tolerance       1e-8;
+        relTol          0;
+    }
+
+    p_rghFinal
+    {
+        solver          PCG;
+        preconditioner  DIC;
+        tolerance       1e-8;
+        relTol          0;
+    }
+
+    "(U|T|k|B|epsilon).*"
+    {
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-8;
+        relTol          0;
+    }
+
+    "(U|T|k|B|nuTilda)Final"
+    {
+        $U;
+        relTol          0;
+    }
+}
+
+PIMPLE
+{
+    consistent                  no;
+    momentumPredictor           yes;
+    nOuterCorrectors            1; // <- derive more details, needs more investigation
+    nCorrectors                 2;
+    nNonOrthogonalCorrectors    0;
+
+    pRefCell    0;
+    pRefValue   0;
+}
+
+relaxationFactors
+{
+    equations
+    {
+        ".*"           0.9;
+    }
+}
+
+
+// ************************************************************************* //

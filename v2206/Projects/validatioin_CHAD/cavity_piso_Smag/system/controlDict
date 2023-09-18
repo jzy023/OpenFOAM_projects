@@ -1,0 +1,109 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2206                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     pimpleFoam; // pisoFoam;
+
+startFrom       startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         100;
+
+deltaT          5e-3;
+
+writeControl    adjustable;
+
+writeInterval   1;
+
+purgeWrite      0;
+
+writeFormat     binary;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+adjustTimeStep  true;
+
+runTimeModifiable true;
+
+maxCo           0.8;
+
+maxDeltaT       1;
+
+functions {
+    yPlus1
+    {
+        // Mandatory entries (unmodifiable)
+        type            yPlus;
+        libs            (fieldFunctionObjects);
+
+        // Optional (inherited) entries
+        writePrecision  6;
+        writeToFile     true;
+        useUserTime     true;
+
+        region          region0;
+        enabled         true;
+        log             true;
+        timeStart       0;
+        timeEnd         $endTime;
+        executeControl  timeStep;
+        executeInterval $writeInterval;
+        writeControl    adjustable;
+        writeInterval   $writeInterval;
+    }
+
+    #includeFunc    R;
+    fieldAverage1
+    {
+        type                fieldAverage;
+        libs                ("fieldFunctionObjects.so");
+        fields
+        (
+            U
+            {
+                mean        on;
+                prime2Mean  on;
+                base        time;
+            }
+            p
+            {
+                mean        on;
+                prime2Mean  off;
+                base        time;
+            }
+            nut
+            {
+                mean        on;
+                prime2Mean  off;
+                base        time;
+            }
+        );
+        writeControl        adjustable;
+        writeInterval       $writeInterval;
+        timeStart       	#eval {0.25*$endTime};
+    }
+}
+
+
+// ************************************************************************* //
