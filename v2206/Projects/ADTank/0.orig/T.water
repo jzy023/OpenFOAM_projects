@@ -1,44 +1,45 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  2206                                  |
+|  \\    /   O peration     | Version:  v2206                                 |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
     version     2.0;
-    format      binary;
-    arch        "LSB;label=64;scalar=64";
-    class       polyBoundaryMesh;
-    location    "constant/polyMesh";
-    object      boundary;
+    format      ascii;
+    class       volScalarField;
+    object      T.water;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-3
-(
-    top
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 500;
+
+boundaryField
+{
+    rotor
     {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          100;
-        startFace       12300;
+        type            zeroGradient;
     }
-    walls
+
+    stator
     {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          300;
-        startFace       12400;
+        type            zeroGradient;
     }
-    frontAndBack
+
+    front
     {
-        type            symmetry;
-        inGroups        1(symmetry);
-        nFaces          5000;
-        startFace       12700;
+        type            empty;
     }
-)
+
+    back
+    {
+        type            empty;
+    }
+}
+
 
 // ************************************************************************* //

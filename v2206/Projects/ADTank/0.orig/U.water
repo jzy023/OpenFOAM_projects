@@ -9,46 +9,37 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    object      controlDict;
+    class       volVectorField;
+    object      U.water;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     twoPhaseEulerFoam;
+dimensions      [0 1 -1 0 0 0 0];
 
-startFrom       startTime;
+internalField   uniform (0 0 0);
 
-startTime       0;
+boundaryField
+{
+    rotor
+    {
+        type            noSlip;
+    }
 
-stopAt          endTime;
+    stator
+    {
+        type            noSlip;
+    }
 
-endTime         20;
+    front
+    {
+        type            empty;
+    }
 
-deltaT          1e-4;
-
-writeControl    adjustable;
-
-writeInterval   0.1;
-
-purgeWrite      0;
-
-writeFormat     ascii;
-
-writePrecision  6;
-
-writeCompression off;
-
-timeFormat      general;
-
-timePrecision   6;
-
-runTimeModifiable yes;
-
-adjustTimeStep  yes;
-
-maxCo           0.2;
-
-maxDeltaT       1;
+    back
+    {
+        type            empty;
+    }
+}
 
 
 // ************************************************************************* //

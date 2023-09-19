@@ -16,47 +16,65 @@ FoamFile
 
 solvers
 {
-    "(p|kinematicCloud:theta)"
+    alpha.air
     {
-        solver          GAMG;
-        tolerance       1e-06;
-        relTol          0.01;
-        smoother        GaussSeidel;
+        nAlphaCorr      1;
+        nAlphaSubCycles 2;
     }
 
-    "(p|kinematicCloud:theta)Final"
+    p_rgh
     {
-        solver          GAMG;
-        tolerance       1e-06;
+        solver          PCG;
+        preconditioner
+        {
+            preconditioner  GAMG;
+            smoother        GaussSeidel;
+        }
+        tolerance       1e-6;
         relTol          0;
-        smoother        GaussSeidel;
     }
 
-    "(U.water|k|omega)"
+    p_rghFinal
+    {
+        $p_rgh;
+        relTol          0;
+    }
+
+    "U.*"
     {
         solver          smoothSolver;
         smoother        symGaussSeidel;
-        tolerance       1e-05;
-        relTol          0.1;
+        tolerance       1e-5;
+        relTol          0;
+        minIter         1;
     }
 
-    "(U.water|k|omega)Final"
+    "(h|e).*"
     {
         solver          smoothSolver;
         smoother        symGaussSeidel;
-        tolerance       1e-05;
+        tolerance       1e-8;
         relTol          0;
+        minIter         1;
     }
 }
 
 PIMPLE
 {
-    nOuterCorrectors 1;
-    nCorrectors     2;
-    momentumPredictor yes;
+    nOuterCorrectors 3;
+    nCorrectors      1;
     nNonOrthogonalCorrectors 0;
+
     pRefCell        0;
     pRefValue       0;
+}
+
+relaxationFactors
+{
+    equations
+    {
+        ".*"            1;
+    }
 }
 
 

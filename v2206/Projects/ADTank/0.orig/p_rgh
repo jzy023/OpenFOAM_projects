@@ -9,46 +9,39 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    object      controlDict;
+    class       volScalarField;
+    object      p_rgh;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     twoPhaseEulerFoam;
+dimensions      [1 -1 -2 0 0 0 0];
 
-startFrom       startTime;
+internalField   uniform 1e5;
 
-startTime       0;
+boundaryField
+{
+    rotor
+    {
+        type            fixedFluxPressure;
+        value           $internalField;
+    }
 
-stopAt          endTime;
+    stator
+    {
+        type            fixedFluxPressure;
+        value           $internalField;
+    }
 
-endTime         20;
+    front
+    {
+        type            empty;
+    }
 
-deltaT          1e-4;
-
-writeControl    adjustable;
-
-writeInterval   0.1;
-
-purgeWrite      0;
-
-writeFormat     ascii;
-
-writePrecision  6;
-
-writeCompression off;
-
-timeFormat      general;
-
-timePrecision   6;
-
-runTimeModifiable yes;
-
-adjustTimeStep  yes;
-
-maxCo           0.2;
-
-maxDeltaT       1;
+    back
+    {
+        type            empty;
+    }
+}
 
 
 // ************************************************************************* //

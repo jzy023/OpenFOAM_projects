@@ -10,16 +10,20 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      transportProperties;
+    object      topoSetDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-continuousPhase     water;
-
-rho.water           1000;
-
-transportModel      Newtonian;
-nu                  1e-02;
+actions
+(
+    {
+        name    rotor;
+        type    cellSet;
+        action  new;
+        source  zoneToCell;
+        zone    rotor;
+    }
+);
 
 
 // ************************************************************************* //

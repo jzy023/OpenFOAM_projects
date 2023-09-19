@@ -10,17 +10,21 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      decomposeParDict;
+    object      MRFProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-numberOfSubdomains 4;
-
-method          simple;
-
-coeffs
+MRF1
 {
-    n           (2 2 1);
+    cellZone    rotor;
+    active      yes;
+
+    // Fixed patches (by default they 'move' with the MRF zone)
+    nonRotatingPatches ();
+
+    origin    (0 0 0);
+    axis      (0 0 1);
+    omega     constant 10.472;
 }
 
 
