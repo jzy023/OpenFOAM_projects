@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2206                                 |
+|  \\    /   O peration     | Version:  2206                                  |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -9,37 +9,80 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       volScalarField;
-    object      T.water;
+    arch        "LSB;label=64;scalar=64";
+    class       regIOobject;
+    location    "constant/polyMesh";
+    object      faceZones;
+    meta
+    {
+        names           1 ( faceMRFzone );
+    }
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 0 0 1 0 0 0];
-
-internalField   uniform 500;
-
-boundaryField
+1
+(faceMRFzone
 {
-    rotor
-    {
-        type            zeroGradient;
-    }
-
-    stator
-    {
-        type            zeroGradient;
-    }
-
-    front
-    {
-        type            empty;
-    }
-
-    back
-    {
-        type            empty;
-    }
+    type            faceZone;
+    faceLabels      List<label> 
+24
+(
+144
+148
+154
+295
+299
+303
+1363
+1365
+1366
+1379
+1380
+1389
+1390
+1398
+1399
+1791
+1794
+1797
+1805
+1807
+1815
+1817
+1822
+1823
+)
+;
+    flipMap         List<bool> 
+24
+(
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+)
+;
 }
-
+)
 
 // ************************************************************************* //

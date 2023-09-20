@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2206                                 |
+|  \\    /   O peration     | Version:  v1912                                 |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -10,11 +10,33 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      turbulenceProperties.air;
+    object      surfaceFeatureExtractDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-simulationType  laminar;
+// surfaces
+// (
+//     "GeoShaft.stl"
+//     "GeoTank.stl"
+//     // "vessel.stl"
+// );
 
+// // Identify a feature when angle between faces < includedAngle
+// includedAngle       150;
+
+GeoShaft.stl {
+    extractionMethod            extractFromSurface;
+    extractFromSurfaceCoeffs    { includedAngle 179; }
+}
+
+GeoTank.stl {
+    extractionMethod            extractFromSurface;
+    extractFromSurfaceCoeffs    { includedAngle 179; }
+}
+
+// vessel.stl {
+//     extractionMethod            extractFromSurface;
+//     extractFromSurfaceCoeffs    { includedAngle 150; }
+// }
 
 // ************************************************************************* //

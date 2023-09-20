@@ -1,9 +1,9 @@
 /*--------------------------------*- C++ -*----------------------------------*\
-| =========                 |                                                 |
-| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2206                                 |
-|   \\  /    A nd           | Website:  www.openfoam.com                      |
-|    \\/     M anipulation  |                                                 |
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  8
+     \\/     M anipulation  |
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
@@ -16,66 +16,44 @@ FoamFile
 
 solvers
 {
-    alpha.air
+    p
     {
-        nAlphaCorr      1;
-        nAlphaSubCycles 2;
-    }
-
-    p_rgh
-    {
-        solver          PCG;
-        preconditioner
-        {
-            preconditioner  GAMG;
-            smoother        GaussSeidel;
-        }
+        solver          GAMG;
+        smoother        GaussSeidel;
         tolerance       1e-6;
-        relTol          0;
+        relTol          0.1;
     }
 
-    p_rghFinal
-    {
-        $p_rgh;
-        relTol          0;
-    }
-
-    "U.*"
+    "(U|k|omega|epsilon)"
     {
         solver          smoothSolver;
         smoother        symGaussSeidel;
-        tolerance       1e-5;
-        relTol          0;
-        minIter         1;
-    }
-
-    "(h|e).*"
-    {
-        solver          smoothSolver;
-        smoother        symGaussSeidel;
-        tolerance       1e-8;
-        relTol          0;
-        minIter         1;
+        tolerance       1e-6;
+        relTol          0.1;
     }
 }
 
-PIMPLE
+SIMPLE
 {
-    nOuterCorrectors 3;
-    nCorrectors      1;
     nNonOrthogonalCorrectors 0;
-
-    pRefCell        0;
-    pRefValue       0;
+    consistent      yes;
+    pRefCell		0;
+    pRefValue		0;
+    residualControl
+    {
+        U                   1e-4;
+        p                   1e-3;
+        "(k|epsilon|omega)" 1e-3;
+    }
 }
 
 relaxationFactors
 {
     equations
     {
-        ".*"            1;
+        U                   0.95;
+        "(k|omega|epsilon)" 0.95;
     }
 }
-
 
 // ************************************************************************* //

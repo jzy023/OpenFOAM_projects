@@ -1,0 +1,7 @@
+{
+  "file-series-version" : "1.0",
+  "files" : [
+    { "name" : "ADTank_0.vtm", "time" : 0 },
+    { "name" : "ADTank_1.vtm", "time" : 1 }
+  ]
+}
