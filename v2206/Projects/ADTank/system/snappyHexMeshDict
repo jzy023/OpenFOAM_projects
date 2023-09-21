@@ -35,9 +35,9 @@ geometry
     MRF
     {
         type searchableCylinder;
-        point1 (0.0 -80  0.0);
-        point2 (0.0  80  0.0);
-        radius 50;
+        point1 (0.0 -81  0.0);
+        point2 (0.0  81  0.0);
+        radius 51;
     }
 }
 
@@ -59,12 +59,12 @@ castellatedMeshControls
     (
         {
             file "GeoTank.eMesh";
-            level 0;
+            level 2;
         }
 
         {
             file "GeoShaft.eMesh";
-            level 1;
+            level 3;
         }
 
     );
@@ -83,12 +83,12 @@ castellatedMeshControls
 
         GeoShaft
         {
-            level (1 1);
+            level (3 3);
         }
 
         GeoTank
         {
-            level (0 0);
+            level (2 2);
         }
     }
 
@@ -102,7 +102,7 @@ castellatedMeshControls
         
     }
 
-    locationInMesh (0.0 0.1 0.0); // Inside point
+    locationInMesh (20 20 100); // Inside point
 
     allowFreeStandingZoneFaces true;
 }
@@ -113,7 +113,7 @@ snapControls
 
     nSmoothPatch 3;
 
-    tolerance 1.0;
+    tolerance 4.0;
 
     nSolveIter 300;
 
@@ -123,7 +123,7 @@ snapControls
 
     implicitFeatureSnap true;
 
-    explicitFeatureSnap false;
+    explicitFeatureSnap true;
 
     multiRegionFeatureSnap true;
 }

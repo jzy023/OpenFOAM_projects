@@ -22,15 +22,15 @@ FoamFile
     {
         type            wall;
         inGroups        1(wall);
-        nFaces          719;
-        startFace       2244;
+        nFaces          19820;
+        startFace       681723;
     }
     GeoTank
     {
         type            wall;
         inGroups        1(wall);
-        nFaces          12;
-        startFace       2963;
+        nFaces          28956;
+        startFace       701543;
     }
 )
 
