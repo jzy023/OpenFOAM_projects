@@ -26,12 +26,12 @@ FoamFile
 
 GeoShaft.stl {
     extractionMethod            extractFromSurface;
-    extractFromSurfaceCoeffs    { includedAngle 175; }
+    extractFromSurfaceCoeffs    { includedAngle 180; }
 }
 
 GeoTank.stl {
     extractionMethod            extractFromSurface;
-    extractFromSurfaceCoeffs    { includedAngle 175; }
+    extractFromSurfaceCoeffs    { includedAngle 180; }
 }
 
 // vessel.stl {

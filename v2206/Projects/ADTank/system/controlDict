@@ -1,9 +1,9 @@
 /*--------------------------------*- C++ -*----------------------------------*\
-  =========                 |
-  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
-   \\    /   O peration     | Website:  https://openfoam.org
-    \\  /    A nd           | Version:  8
-     \\/     M anipulation  |
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2206                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
@@ -16,25 +16,27 @@ FoamFile
 
 application     simpleFoam;
 
-startFrom       startTime;
+startFrom       latestTime;
 
 startTime       0;
 
 stopAt          endTime;
 
-endTime         1;
+endTime         0.3;
 
-deltaT          1;
+deltaT          1e-4;
 
-writeControl    timeStep;
+adjustableRunTime yes; 
 
-writeInterval   1;
+writeControl    runTime;
+
+writeInterval   0.1;
 
 purgeWrite      0;
 
 writeFormat     ascii;
 
-writePrecision   8;
+writePrecision   6;
 
 writeCompression off;
 
@@ -42,6 +44,10 @@ timeFormat      general;
 
 timePrecision   6;
 
-runTimeModifiable true;
+adjustTimeStep  yes;
+
+// maxCo           0.9;
+
+// runTimeModifiable true;
 
 // ************************************************************************* //

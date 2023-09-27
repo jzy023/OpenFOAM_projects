@@ -18,19 +18,19 @@ FoamFile
 
 2
 (
-    GeoShaft
-    {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          19820;
-        startFace       681723;
-    }
     GeoTank
     {
         type            wall;
         inGroups        1(wall);
-        nFaces          28956;
-        startFace       701543;
+        nFaces          28757;
+        startFace       1216041;
+    }
+    GeoShaft
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          5594;
+        startFace       1244798;
     }
 )
 

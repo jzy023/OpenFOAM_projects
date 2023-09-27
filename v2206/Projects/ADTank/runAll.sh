@@ -1,11 +1,15 @@
 blockMesh
-surfaceFeatures
+surfaceFeatureExtract
 snappyHexMesh -overwrite
+transformPoints -scale '(0.001 0.001 0.001)'
 simpleFoam
 foamToVTK
+
+
 # decomposePar
 # mpirun -np 4 DPMFoam -parallel > log &
 
+# =====================================================
 # #!/bin/sh
 # cd ${0%/*} || exit 1    # Run from this directory
 

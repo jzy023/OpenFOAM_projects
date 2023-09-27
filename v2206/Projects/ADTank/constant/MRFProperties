@@ -24,8 +24,8 @@ MRFImpeller
     nonRotatingPatches ();
 
     origin    (0.0 0.0 0.0);
-    axis      (0 1 0);
-    omega     constant 12.56; // ~120 RPM
+    axis      (0 0 1);
+    omega     constant 1.256; // ~12 RPM
 }
 
 // ************************************************************************* //

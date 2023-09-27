@@ -17,26 +17,27 @@ FoamFile
 
 castellatedMesh true;
 snap            true;
-addLayers       false;
+addLayers       true;
 
 geometry
 {
-    GeoShaft
-    {
-        type triSurfaceMesh;
-        file "GeoShaft.stl";
-    }
+    
     GeoTank
     {
         type triSurfaceMesh;
         file "GeoTank.stl";
     }
+    GeoShaft
+    {
+        type triSurfaceMesh;
+        file "GeoShaft.stl";
+    }
     //- Used to define MRF zone and refine mesh round the GeoShaft 
     MRF
     {
         type searchableCylinder;
-        point1 (0.0 -81  0.0);
-        point2 (0.0  81  0.0);
+        point1 (0.0  0.0  -81);
+        point2 (0.0  0.0   81);
         radius 51;
     }
 }
@@ -46,20 +47,17 @@ castellatedMeshControls
 {
 
     maxLocalCells 100000;
-
     maxGlobalCells 2000000;
-
-    minRefinementCells 0;
-
-    nCellsBetweenLevels 2;
-
+    minRefinementCells 1;
+    nCellsBetweenLevels 4;
+    resolveFeatureAngle 15; // 90; 
     maxLoadUnbalance 0.10;
 
     features
     (
         {
             file "GeoTank.eMesh";
-            level 2;
+            level 3;
         }
 
         {
@@ -69,16 +67,11 @@ castellatedMeshControls
 
     );
 
-    resolveFeatureAngle 30;
-
     refinementSurfaces
     {
-        MRF
+        GeoTank
         {
-            level (1 1);
-            cellZone cellMRFzone;
-            faceZone faceMRFzone;
-            cellZoneInside inside;
+            level (3 3);
         }
 
         GeoShaft
@@ -86,9 +79,12 @@ castellatedMeshControls
             level (3 3);
         }
 
-        GeoTank
+        MRF
         {
-            level (2 2);
+            level (1 1);
+            cellZone cellMRFzone;
+            faceZone faceMRFzone;
+            cellZoneInside inside;
         }
     }
 
@@ -99,74 +95,60 @@ castellatedMeshControls
             mode inside;
             levels ((1E15 1));
         }
-        
     }
 
-    locationInMesh (20 20 100); // Inside point
-
-    allowFreeStandingZoneFaces true;
+    locationInMesh (20 20 20); // Inside point
+    allowFreeStandingZoneFaces false; // true;
 }
 
 // Settings for the snapping.
 snapControls
 {
-
-    nSmoothPatch 3;
-
-    tolerance 4.0;
-
-    nSolveIter 300;
-
-    nRelaxIter 10;
-
-    nFeatureSnapIter 10;
-
-    implicitFeatureSnap true;
-
-    explicitFeatureSnap true;
-
-    multiRegionFeatureSnap true;
+    nSmoothPatch            3;
+    tolerance               4.0;
+    nSolveIter              300;
+    nRelaxIter              20;
+    nFeatureSnapIter        20;
+    explicitFeatureSnap     true;
+    implicitFeatureSnap     false;
+    multiRegionFeatureSnap  true;
+    nFaceSplitInterval      5;
 }
 
 // Settings for the layer addition.
 addLayersControls
 {
-
-    relativeSizes true;
-
     layers
     {
+        GeoTank
+        {
+            nSurfaceLayers 5;
+        }
+
+        GeoShaft
+        {
+            nSurfaceLayers 3;
+        }
     }
 
-    expansionRatio 1.0;
+    relativeSizes           true;
+    expansionRatio          1.5;
+    finalLayerThickness     0.5;
+    minThickness            0.2;
+    nGrow                   0;
 
-    finalLayerThickness 0.3;
-
-    minThickness 0.25;
-
-    nGrow 0;
-
-    featureAngle 30;
-
-    nRelaxIter 5;
-
-    nSmoothSurfaceNormals 1;
-
-    nSmoothNormals 3;
-
-    nSmoothThickness 10;
-
-    maxFaceThicknessRatio 0.5;
-
+    featureAngle            60;
+    nRelaxIter              5;
+    nSmoothSurfaceNormals   1;
+    nSmoothNormals          3;
+    nSmoothThickness        10;
+    maxFaceThicknessRatio   0.5;
     maxThicknessToMedialRatio 0.3;
+    minMedianAxisAngle      90; // 60;
+    nBufferCellsNoExtrude   0;
 
-    minMedianAxisAngle 90;
-
-    nBufferCellsNoExtrude 0;
-
-    nLayerIter 50;
-
-    nRelaxedIter 20;
+    nLayerIter              50;
+    nRelaxedIter            20;
 }
 
 meshQualityControls
