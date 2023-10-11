@@ -16,21 +16,14 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-2
+1
 (
     GeoTank
     {
         type            wall;
         inGroups        1(wall);
-        nFaces          28757;
-        startFace       1216041;
-    }
-    GeoShaft
-    {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          5594;
-        startFace       1244798;
+        nFaces          28780;
+        startFace       594622;
     }
 )
 

@@ -93,7 +93,7 @@ subModels
         }
     }
 
-    dispersionModel test; // none;
+    dispersionModel none;
 
     patchInteractionModel localInteraction;
 

@@ -14,29 +14,23 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// surfaces
-// (
-//     "GeoShaft.stl"
-//     "GeoTank.stl"
-//     // "vessel.stl"
-// );
-
-// // Identify a feature when angle between faces < includedAngle
-// includedAngle       150;
-
 GeoShaft.stl {
     extractionMethod            extractFromSurface;
-    extractFromSurfaceCoeffs    { includedAngle 180; }
+    extractFromSurfaceCoeffs    { includedAngle 150; }
+    
+    subsetFeatures
+    {
+        // Keep nonManifold edges (edges with >2 connected faces)
+        nonManifoldEdges       no;
+        // Keep open edges (edges with 1 connected face)
+        openEdges       yes;
+    }
 }
 
 GeoTank.stl {
     extractionMethod            extractFromSurface;
-    extractFromSurfaceCoeffs    { includedAngle 180; }
+    extractFromSurfaceCoeffs    { includedAngle 135; }
 }
 
-// vessel.stl {
-//     extractionMethod            extractFromSurface;
-//     extractFromSurfaceCoeffs    { includedAngle 150; }
-// }
 
 // ************************************************************************* //
