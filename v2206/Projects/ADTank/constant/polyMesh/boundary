@@ -16,14 +16,20 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-1
+2
 (
-    GeoTank
+    allBoundary
     {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          28780;
-        startFace       594622;
+        type            patch;
+        nFaces          2600;
+        startFace       34400;
+    }
+    top
+    {
+        type            symmetry;
+        inGroups        1(symmetry);
+        nFaces          600;
+        startFace       37000;
     }
 )
 

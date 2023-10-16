@@ -57,10 +57,10 @@ minDeterminant 0.001;
 
 //- Relative position of face in relation to cell centres (0.5 for orthogonal
 //  mesh) (0 -> 0.5)
-minFaceWeight 0.02;
+minFaceWeight 0.1;
 
 //- Volume ratio of neighbouring cells (0 -> 1)
-minVolRatio 0.01;
+minVolRatio 0.1;
 
 //- Per triangle normal compared to average normal. Like face twist
 //  but now per (face-centre decomposition) triangle. Must be >0 for Fluent

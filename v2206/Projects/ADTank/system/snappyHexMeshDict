@@ -24,10 +24,18 @@ geometry
     //- Used to define MRF zone and refine mesh round the GeoShaft 
     MRF
     {
-        type searchableCylinder;
-        point1 (0.0  0.0  -81);
-        point2 (0.0  0.0   81);
-        radius 51;
+        type            searchableCone;
+        point1          (0  0 -81);
+        radius1         51;
+        innerRadius1    39;
+        point2          (0  0  80);
+        radius2         51;
+        innerRadius2    39;
+        // type searchableCylinder;
+        // point1 (0.0  0.0  -81);
+        // point2 (0.0  0.0   81);
+        // radius 51;
+        // innerRadius 40;
     }
 
     GeoTank
@@ -57,7 +65,7 @@ castellatedMeshControls
     (
         {
             file "GeoTank.eMesh";
-            level 3;
+            level 2;
         }
 
         // {
@@ -68,17 +76,17 @@ castellatedMeshControls
 
     refinementSurfaces
     {
-        MRF
-        {
-            level (1 1);
-            cellZone cellMRFzone;
-            faceZone faceMRFzone;
-            cellZoneInside inside;
-        }
+        // MRF
+        // {
+        //     level (2 2);
+        //     cellZone cellMRFzone;
+        //     faceZone faceMRFzone;
+        //     cellZoneInside inside;
+        // }
 
         GeoTank
         {
-            level (3 3);
+            level (2 2);
         }
 
         // GeoShaft
@@ -93,7 +101,7 @@ castellatedMeshControls
         MRF
         {
             mode inside;
-            levels ((1E15 1));
+            level 2; // ((1E15 1));
         }
     }
 
@@ -105,10 +113,10 @@ castellatedMeshControls
 snapControls
 {
     nSmoothPatch            3;
-    tolerance               2.0;
+    tolerance               4.0;
     nSolveIter              30;
-    nRelaxIter              8;
-    nFeatureSnapIter        8;
+    nRelaxIter              10;
+    nFeatureSnapIter        10;
     explicitFeatureSnap     true;
     implicitFeatureSnap     false;
     multiRegionFeatureSnap  false;
@@ -120,9 +128,14 @@ addLayersControls
 {
     layers
     {
+        // MRF
+        // {
+        //     nSurfaceLayers 3;
+        // }
+
         GeoTank
         {
-            nSurfaceLayers 3;
+            nSurfaceLayers 2;
         }
 
         // GeoShaft
