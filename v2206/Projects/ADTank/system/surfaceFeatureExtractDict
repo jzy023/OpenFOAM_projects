@@ -27,9 +27,15 @@ GeoShaft.stl {
     }
 }
 
-GeoTank.stl {
+GeoTank_s.stl {
     extractionMethod            extractFromSurface;
-    extractFromSurfaceCoeffs    { includedAngle 135; }
+    extractFromSurfaceCoeffs    { includedAngle 150; }
+
+    subsetFeatures
+    {
+        nonManifoldEdges        no;
+        openEdges               no;
+    }
 }
 
 

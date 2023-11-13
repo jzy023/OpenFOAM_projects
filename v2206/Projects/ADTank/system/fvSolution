@@ -20,15 +20,31 @@ solvers
     {
         solver          GAMG;
         smoother        GaussSeidel;
-        tolerance       1e-6;
+        tolerance       1e-12;
         relTol          0.1;
+    }
+
+    pFinal
+    {
+        $p;
+        smoother        DICGaussSeidel;
+        tolerance       1e-12;
+        relTol          0;
     }
 
     "(U|k|omega|epsilon)"
     {
         solver          smoothSolver;
         smoother        symGaussSeidel;
-        tolerance       1e-6;
+        tolerance       1e-8;
+        relTol          0.1;
+    }
+
+    "(U|k|omega|epsilon)Final"
+    {
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-8;
         relTol          0.1;
     }
 }
@@ -47,12 +63,22 @@ SIMPLE
     }
 }
 
+PIMPLE
+{
+    nOuterCorrectors 1;
+    nCorrectors     2;
+    momentumPredictor no;
+    nNonOrthogonalCorrectors 0;
+    pRefCell        0;
+    pRefValue       0;
+}
+
 relaxationFactors
 {
     equations
     {
-        U                   0.95;
-        "(k|omega|epsilon)" 0.95;
+        U                   0.8;
+        "(k|omega|epsilon)" 0.8;
     }
 }
 

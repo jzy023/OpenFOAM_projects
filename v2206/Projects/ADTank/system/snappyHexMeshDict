@@ -22,27 +22,27 @@ addLayers       true;
 geometry
 {
     //- Used to define MRF zone and refine mesh round the GeoShaft 
-    MRF
-    {
-        type            searchableCone;
-        point1          (0  0 -81);
-        radius1         51;
-        innerRadius1    39;
-        point2          (0  0  80);
-        radius2         51;
-        innerRadius2    39;
-        // type searchableCylinder;
-        // point1 (0.0  0.0  -81);
-        // point2 (0.0  0.0   81);
-        // radius 51;
-        // innerRadius 40;
-    }
+    // MRF
+    // {
+    //     type            searchableCone;
+    //     point1          (0  0 -81);
+    //     radius1         51;
+    //     innerRadius1    39;
+    //     point2          (0  0  80);
+    //     radius2         51;
+    //     innerRadius2    39;
+    //     // type searchableCylinder;
+    //     // point1 (0.0  0.0  -81);
+    //     // point2 (0.0  0.0   81);
+    //     // radius 51;
+    // }
 
     GeoTank
     {
         type triSurfaceMesh;
-        file "GeoTank.stl";
+        file "GeoTank_s.stl";
     }
+    
     // GeoShaft
     // {
     //     type triSurfaceMesh;
@@ -57,14 +57,14 @@ castellatedMeshControls
     maxLocalCells 100000;
     maxGlobalCells 2000000;
     minRefinementCells 10;
-    nCellsBetweenLevels 2;
-    resolveFeatureAngle 30; // 90; 
-    maxLoadUnbalance 0.10;
+    maxLoadUnbalance 0.1;
+    nCellsBetweenLevels 3;
+    resolveFeatureAngle 30; // 90;
 
     features
     (
         {
-            file "GeoTank.eMesh";
+            file "GeoTank_s.eMesh";
             level 2;
         }
 
@@ -78,7 +78,7 @@ castellatedMeshControls
     {
         // MRF
         // {
-        //     level (2 2);
+        //     level (1 1);
         //     cellZone cellMRFzone;
         //     faceZone faceMRFzone;
         //     cellZoneInside inside;
@@ -98,29 +98,30 @@ castellatedMeshControls
 
     refinementRegions
     {
-        MRF
-        {
-            mode inside;
-            level 2; // ((1E15 1));
-        }
+        // MRF
+        // {
+        //     mode inside;
+        //     levels ((1E15 1)); // ((1E15 1));
+        // }
     }
 
     locationInMesh (20 20 20); // Inside point
-    allowFreeStandingZoneFaces true;
+    allowFreeStandingZoneFaces false; // true;
+    useLeakClosure  true;
 }
 
 // Settings for the snapping.
 snapControls
 {
     nSmoothPatch            3;
-    tolerance               4.0;
+    tolerance               2.0;
     nSolveIter              30;
     nRelaxIter              10;
     nFeatureSnapIter        10;
     explicitFeatureSnap     true;
     implicitFeatureSnap     false;
     multiRegionFeatureSnap  false;
-    nFaceSplitInterval      5;
+    // nFaceSplitInterval      5;
 }
 
 // Settings for the layer addition.
@@ -152,7 +153,7 @@ addLayersControls
 
     featureAngle            60;
     slipFeatureAngle        30;
-    nRelaxIter              5;
+    nRelaxIter              3;
     nSmoothSurfaceNormals   1;
     nSmoothNormals          3;
     nSmoothThickness        10;
