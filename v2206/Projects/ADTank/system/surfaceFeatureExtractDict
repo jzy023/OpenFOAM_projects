@@ -14,16 +14,14 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-GeoShaft.stl {
+GeoShaft_s.stl { 
     extractionMethod            extractFromSurface;
-    extractFromSurfaceCoeffs    { includedAngle 150; }
-    
+    extractFromSurfaceCoeffs    { includedAngle 135; }
+
     subsetFeatures
     {
-        // Keep nonManifold edges (edges with >2 connected faces)
-        nonManifoldEdges       no;
-        // Keep open edges (edges with 1 connected face)
-        openEdges       yes;
+        nonManifoldEdges        no;
+        openEdges               no;
     }
 }
 

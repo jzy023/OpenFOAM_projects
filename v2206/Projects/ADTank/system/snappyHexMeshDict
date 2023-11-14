@@ -22,20 +22,21 @@ addLayers       true;
 geometry
 {
     //- Used to define MRF zone and refine mesh round the GeoShaft 
-    // MRF
-    // {
-    //     type            searchableCone;
-    //     point1          (0  0 -81);
-    //     radius1         51;
-    //     innerRadius1    39;
-    //     point2          (0  0  80);
-    //     radius2         51;
-    //     innerRadius2    39;
-    //     // type searchableCylinder;
-    //     // point1 (0.0  0.0  -81);
-    //     // point2 (0.0  0.0   81);
-    //     // radius 51;
-    // }
+    MRF
+    {
+        // type            searchableCone;
+        // point1          (0  0 -81);
+        // radius1         51;
+        // innerRadius1    39;
+        // point2          (0  0  80);
+        // radius2         51;
+        // innerRadius2    39;
+
+        type searchableCylinder;
+        point1 (0.0  0.0  -81);
+        point2 (0.0  0.0   81);
+        radius 51;
+    }
 
     GeoTank
     {
@@ -43,11 +44,11 @@ geometry
         file "GeoTank_s.stl";
     }
     
-    // GeoShaft
-    // {
-    //     type triSurfaceMesh;
-    //     file "GeoShaft.stl";
-    // }
+    GeoShaft
+    {
+        type triSurfaceMesh;
+        file "GeoShaft.stl";
+    }
 }
 
 
@@ -68,41 +69,41 @@ castellatedMeshControls
             level 2;
         }
 
-        // {
-        //     file "GeoShaft.eMesh";
-        //     level 4;
-        // }
+        {
+            file "GeoShaft_s.eMesh";
+            level 4;
+        }
     );
 
     refinementSurfaces
     {
-        // MRF
-        // {
-        //     level (1 1);
-        //     cellZone cellMRFzone;
-        //     faceZone faceMRFzone;
-        //     cellZoneInside inside;
-        // }
+        MRF
+        {
+            level (1 1);
+            cellZone cellMRFzone;
+            faceZone faceMRFzone;
+            cellZoneInside inside;
+        }
 
         GeoTank
         {
             level (2 2);
         }
 
-        // GeoShaft
-        // {
-        //     level (3 3);
-        // }
+        GeoShaft
+        {
+            level (2 2);
+        }
 
     }
 
     refinementRegions
     {
-        // MRF
-        // {
-        //     mode inside;
-        //     levels ((1E15 1)); // ((1E15 1));
-        // }
+        MRF
+        {
+            mode inside;
+            levels ((1E15 2)); // ((1E15 1));
+        }
     }
 
     locationInMesh (20 20 20); // Inside point
@@ -139,10 +140,10 @@ addLayersControls
             nSurfaceLayers 2;
         }
 
-        // GeoShaft
-        // {
-        //     nSurfaceLayers 3;
-        // }
+        GeoShaft
+        {
+            nSurfaceLayers 2;
+        }
     }
 
     relativeSizes           true;

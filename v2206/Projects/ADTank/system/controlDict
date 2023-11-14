@@ -22,32 +22,60 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         0.05;
+endTime         10;//0.05;
 
-deltaT          1e-5;
+deltaT          1;//1e-5;
 
 adjustableRunTime yes; 
 
 writeControl    runTime;
 
-writeInterval   0.01;
+writeInterval   5;//0.01;
 
 purgeWrite      0;
 
 writeFormat     ascii;
 
-writePrecision   6;
+writePrecision  5;
 
 writeCompression off;
 
 timeFormat      general;
 
-timePrecision   6;
+timePrecision   5;
 
-adjustTimeStep  yes;
+// adjustTimeStep  yes;
 
-maxCo           0.8;
+// maxCo           0.8;
 
 runTimeModifiable true;
+
+functions
+{
+    #includeFunc mag(U)
+    linesample
+    {
+        type                    sets;
+        libs                    (“libsampling.so”);
+        writeControl            runTime;
+        writeInterval          5;
+        interpolationScheme     cellPoint;
+        setFormat               raw;
+        sets
+        (
+            data
+            {
+                type    uniform;
+                axis    y;
+                start   (0  -0.11  0);
+                end     (0  0.11  0);
+                nPoints 500;
+            }
+        );
+        fields (U);
+        // fields (U);
+    }
+}
+
 
 // ************************************************************************* //
