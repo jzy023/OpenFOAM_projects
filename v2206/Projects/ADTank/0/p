@@ -20,9 +20,14 @@ internalField       uniform 0;
 
 boundaryField
 {
+    allBoundary
+    {
+        type            zeroGradient;
+    }
+
     top
     {
-        type               symmetry;
+        type            symmetry;
     }
     GeoTank
     {

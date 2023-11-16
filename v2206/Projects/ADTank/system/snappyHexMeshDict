@@ -47,7 +47,7 @@ geometry
     GeoShaft
     {
         type triSurfaceMesh;
-        file "GeoShaft.stl";
+        file "GeoShaft_s.stl";
     }
 }
 
@@ -92,7 +92,7 @@ castellatedMeshControls
 
         GeoShaft
         {
-            level (2 2);
+            level (3 3);
         }
 
     }
@@ -115,7 +115,7 @@ castellatedMeshControls
 snapControls
 {
     nSmoothPatch            3;
-    tolerance               2.0;
+    tolerance               1.0;
     nSolveIter              30;
     nRelaxIter              10;
     nFeatureSnapIter        10;
@@ -142,7 +142,7 @@ addLayersControls
 
         GeoShaft
         {
-            nSurfaceLayers 2;
+            nSurfaceLayers 4;
         }
     }
 
@@ -163,8 +163,8 @@ addLayersControls
     minMedianAxisAngle      90; // 60;
     nBufferCellsNoExtrude   0;
 
-    nLayerIter              50;
-    nRelaxedIter            20;
+    nLayerIter              30;
+    nRelaxedIter            10;
 }
 
 meshQualityControls

@@ -60,7 +60,7 @@ minDeterminant 0.001;
 minFaceWeight 0.001;
 
 //- Volume ratio of neighbouring cells (0 -> 1)
-minVolRatio 0.11;
+minVolRatio 0.05;
 
 //- Per triangle normal compared to average normal. Like face twist
 //  but now per (face-centre decomposition) triangle. Must be >0 for Fluent

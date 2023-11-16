@@ -20,15 +20,19 @@ internalField   uniform (0 0 0);
 
 boundaryField
 {
+    allBoundary
+    {
+        type            noSlip;
+    }
     
     top
     {
-        type               symmetry;
+        type            symmetry;
     }
     GeoTank
     {
-        type               fixedValue;
-        value              uniform (0 0 0);
+        type            fixedValue;
+        value           uniform (0 0 0);
     }
 
     GeoShaft

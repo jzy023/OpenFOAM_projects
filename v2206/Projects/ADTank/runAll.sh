@@ -1,17 +1,12 @@
-# blockMesh
-# surfaceFeatureExtract
-# snappyHexMesh -overwrite # > log.SHM 
+blockMesh
+surfaceFeatureExtract
+snappyHexMesh -overwrite # > log.SHM 
 
-# transformPoints -scale '(0.001 0.001 0.001)'
+transformPoints -scale '(0.001 0.001 0.001)'
 
 decomposePar
 mpirun -np 4 simpleFoam -parallel
 reconstructPar
-# foamToVTK
-
-
-# decomposePar
-# mpirun -np 4 DPMFoam -parallel > log &
 
 # =====================================================
 # #!/bin/sh

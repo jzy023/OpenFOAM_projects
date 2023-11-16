@@ -16,7 +16,7 @@ FoamFile
 
 application     simpleFoam;
 
-startFrom       latestTime;
+startFrom       startTime;
 
 startTime       0;
 
@@ -36,7 +36,7 @@ purgeWrite      0;
 
 writeFormat     ascii;
 
-writePrecision  5;
+writePrecision  6;
 
 writeCompression off;
 

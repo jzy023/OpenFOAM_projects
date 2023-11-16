@@ -18,19 +18,18 @@ FoamFile
 
 2
 (
-    GeoTank
+    allBoundary
     {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          11146;
-        startFace       904666;
+        type            patch;
+        nFaces          8192;
+        startFace       191488;
     }
-    GeoShaft
+    top
     {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          27802;
-        startFace       915812;
+        type            symmetry;
+        inGroups        1(symmetry);
+        nFaces          2048;
+        startFace       199680;
     }
 )
 

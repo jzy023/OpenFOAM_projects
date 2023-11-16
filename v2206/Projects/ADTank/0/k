@@ -21,6 +21,11 @@ internalField   uniform 1;
 
 boundaryField
 {
+    allBoundary
+    {
+        type            zeroGradient;
+    }
+
     top
     {
         type            symmetry;

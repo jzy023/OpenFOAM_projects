@@ -1,0 +1,74 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2206                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _76d719d1-20220624 OPENFOAM=2206 version=v2206
+Arch   : "LSB;label=64;scalar=64"
+Exec   : blockMesh
+Date   : Nov 16 2023
+Time   : 14:40:45
+Host   : DESKTOP-BTFG136
+PID    : 26826
+I/O    : uncollated
+Case   : /home/noreff/works/OpenFOAM-user/v2206/Projects/ADTank
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Creating block mesh from "system/blockMeshDict"
+Creating block edges
+No non-planar block faces defined
+Creating topology blocks
+
+Creating topology patches - from boundary section
+
+Creating block mesh topology
+
+Check topology
+
+	Basic statistics
+		Number of internal faces : 0
+		Number of boundary faces : 6
+		Number of defined boundary faces : 6
+		Number of undefined boundary faces : 0
+	Checking patch -> block consistency
+
+Creating block offsets
+Creating merge list (topological search)...
+
+Creating polyMesh from blockMesh
+Creating patches
+Creating cells
+Creating points with scale (1 1 1)
+    Block 0 cell size :
+        i : 9.375 .. 9.375
+        j : 9.375 .. 9.375
+        k : 7.03125 .. 7.03125
+
+
+There are no merge patch pairs
+
+Writing polyMesh with 0 cellZones
+----------------
+Mesh Information
+----------------
+  boundingBox: (-150 -150 -200) (150 150 250)
+  nPoints: 70785
+  nCells: 65536
+  nFaces: 201728
+  nInternalFaces: 191488
+----------------
+Patches
+----------------
+  patch 0 (start: 191488 size: 8192) name: allBoundary
+  patch 1 (start: 199680 size: 2048) name: top
+
+End
+

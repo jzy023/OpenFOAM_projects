@@ -21,6 +21,11 @@ internalField   uniform 20;
 
 boundaryField
 {
+    allBoundary
+    {
+        type            zeroGradient;
+    }
+
     top
     {
         type            symmetry;
@@ -30,7 +35,6 @@ boundaryField
         type            epsilonWallFunction;
         value           $internalField;
     }
-
     GeoShaft
     {
         type            epsilonWallFunction;

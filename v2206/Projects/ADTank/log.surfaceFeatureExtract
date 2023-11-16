@@ -1,0 +1,115 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2206                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _76d719d1-20220624 OPENFOAM=2206 version=v2206
+Arch   : "LSB;label=64;scalar=64"
+Exec   : surfaceFeatureExtract
+Date   : Nov 16 2023
+Time   : 14:40:45
+Host   : DESKTOP-BTFG136
+PID    : 26827
+I/O    : uncollated
+Case   : /home/noreff/works/OpenFOAM-user/v2206/Projects/ADTank
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+
+Note: Feature line extraction only valid on closed manifold surfaces
+
+Reading surfaceFeatureExtractDict
+
+Surfaces     : GeoShaft_s.stl
+Output       : GeoShaft_s
+Load options : offset
+Write options: writeObj=off writeVTK=off
+
+Statistics:
+Triangles    : 4322 in 1 region(s)
+Vertices     : 2157
+Bounding Box : (-50.0099 -50.0151 -85.4604) (50.0091 50.0208 215.54)
+
+Constructing feature set from included angle 135
+Selecting edges based purely on geometric tests: no
+Removing all non-manifold edges (edges with > 2 connected faces) unless they cross multiple regions
+Removing all open edges (edges with 1 connected face)
+
+Initial Feature set:
+    points : 10
+    edges  : 777
+    of which
+        region edges   : 0
+        external edges : 630
+        internal edges : 147
+
+Final Feature set:
+    points : 825
+    of which
+        convex             : 0
+        concave            : 0
+        mixed              : 10
+        non-feature        : 815
+    edges  : 777
+    of which
+        external edges     : 630
+        internal edges     : 147
+        flat edges         : 0
+        open edges         : 0
+        multiply connected : 0
+
+Writing extendedFeatureEdgeMesh to "/home/noreff/works/OpenFOAM-user/v2206/Projects/ADTank/constant/extendedFeatureEdgeMesh/GeoShaft_s.extendedFeatureEdgeMesh"
+
+Writing featureEdgeMesh to "/home/noreff/works/OpenFOAM-user/v2206/Projects/ADTank/constant/triSurface/GeoShaft_s.eMesh"
+Surfaces     : GeoTank_s.stl
+Output       : GeoTank_s
+Load options : offset
+Write options: writeObj=off writeVTK=off
+
+Statistics:
+Triangles    : 3478 in 1 region(s)
+Vertices     : 1741
+Bounding Box : (-113.379 -113.356 -175.461) (113.356 113.356 157.795)
+
+Constructing feature set from included angle 150
+Selecting edges based purely on geometric tests: no
+Removing all non-manifold edges (edges with > 2 connected faces) unless they cross multiple regions
+Removing all open edges (edges with 1 connected face)
+
+Initial Feature set:
+    points : 2
+    edges  : 30
+    of which
+        region edges   : 0
+        external edges : 30
+        internal edges : 0
+
+Final Feature set:
+    points : 30
+    of which
+        convex             : 2
+        concave            : 0
+        mixed              : 0
+        non-feature        : 28
+    edges  : 30
+    of which
+        external edges     : 30
+        internal edges     : 0
+        flat edges         : 0
+        open edges         : 0
+        multiply connected : 0
+
+Writing extendedFeatureEdgeMesh to "/home/noreff/works/OpenFOAM-user/v2206/Projects/ADTank/constant/extendedFeatureEdgeMesh/GeoTank_s.extendedFeatureEdgeMesh"
+
+Writing featureEdgeMesh to "/home/noreff/works/OpenFOAM-user/v2206/Projects/ADTank/constant/triSurface/GeoTank_s.eMesh"
+ExecutionTime = 0.02 s  ClockTime = 0 s
+
+End
+
