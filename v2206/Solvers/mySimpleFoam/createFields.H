@@ -26,6 +26,20 @@ volVectorField U
     mesh
 );
 
+Info<< "Reading field Gch4\n" << endl;
+volScalarField Gch4
+(
+    IOobject
+    (
+        "Gch4",
+        runTime.timeName(),
+        mesh,
+        IOobject::MUST_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh
+);
+
 #include "createPhi.H"
 
 
