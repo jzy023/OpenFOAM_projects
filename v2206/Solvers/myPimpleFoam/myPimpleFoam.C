@@ -116,6 +116,8 @@ int main(int argc, char *argv[])
         #include "setInitialDeltaT.H"
     }
 
+    #include "readingInitialConditions.H"
+
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
     Info<< "\nStarting time loop\n" << endl;

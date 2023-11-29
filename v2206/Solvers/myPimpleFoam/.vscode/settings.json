@@ -1,6 +1,9 @@
 {
     "files.associations": {
         "bashrc": "shellscript",
-        "myPimpleFoam.C": "cpp"
+        "myPimpleFoam.C": "cpp",
+        "admParameter.C": "cpp",
+        "admIn.C": "cpp",
+        "admIni.C": "cpp"
     }
 }

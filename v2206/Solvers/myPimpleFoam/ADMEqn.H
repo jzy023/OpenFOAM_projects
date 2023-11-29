@@ -39,12 +39,12 @@ Description
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-Info << "ADMno1 test!" << endl;
-Info << "Setting ADM parameters" << nl << endl;
+// Info << "ADMno1 test!" << endl;
+// Info << "Setting ADM parameters" << nl << endl;
 
-// define runMode with I/O
-int runMode = 0;
-admPara para(runMode);
+// // define runMode with I/O
+// int runMode = 0;
+// admPara para(runMode);
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
