@@ -29,7 +29,8 @@ volVectorField U
 );
 
 #include "createPhi.H"
-#include "createADM.H"
+// #include "createADM.H"
+#include "createADMtest.H"
 
 
 label pRefCell = 0;

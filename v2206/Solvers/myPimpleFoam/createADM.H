@@ -14,7 +14,7 @@ volScalarField Top
     TopDefault
 );
 
-Info<< "Reading field Soluble su" << endl;
+Info<< "Reading field Soluables su" << endl;
 volScalarField Ssu
 (
     IOobject
@@ -28,7 +28,7 @@ volScalarField Ssu
     mesh
 );
 
-Info<< "Reading field Soluble aa" << endl;
+Info<< "Reading field Soluables aa" << endl;
 volScalarField Saa
 (
     IOobject
@@ -42,7 +42,7 @@ volScalarField Saa
     mesh
 );
 
-Info<< "Reading field Soluble fa" << endl;
+Info<< "Reading field Soluables fa" << endl;
 volScalarField Sfa
 (
     IOobject
@@ -56,7 +56,7 @@ volScalarField Sfa
     mesh
 );
 
-Info<< "Reading field Soluble va" << endl;
+Info<< "Reading field Soluables va" << endl;
 volScalarField Sva
 (
     IOobject
@@ -70,7 +70,7 @@ volScalarField Sva
     mesh
 );
 
-Info<< "Reading field Soluble bu" << endl;
+Info<< "Reading field Soluables bu" << endl;
 volScalarField Sbu
 (
     IOobject
@@ -84,7 +84,7 @@ volScalarField Sbu
     mesh
 );
 
-Info<< "Reading field Soluble pro" << endl;
+Info<< "Reading field Soluables pro" << endl;
 volScalarField Spro
 (
     IOobject
@@ -98,7 +98,7 @@ volScalarField Spro
     mesh
 );
 
-Info<< "Reading field Soluble ac" << endl;
+Info<< "Reading field Soluables ac" << endl;
 volScalarField Sac
 (
     IOobject
@@ -112,7 +112,7 @@ volScalarField Sac
     mesh
 );
 
-Info<< "Reading field Soluble h2" << endl;
+Info<< "Reading field Soluables h2" << endl;
 volScalarField Sh2
 (
     IOobject
@@ -126,7 +126,7 @@ volScalarField Sh2
     mesh
 );
 
-Info<< "Reading field Soluble ch4" << endl;
+Info<< "Reading field Soluables ch4" << endl;
 volScalarField Sch4
 (
     IOobject
@@ -140,7 +140,7 @@ volScalarField Sch4
     mesh
 );
 
-Info<< "Reading field Soluble Inorganic Carbon" << endl;
+Info<< "Reading field Soluables Inorganic Carbon" << endl;
 volScalarField SIC
 (
     IOobject
@@ -154,7 +154,7 @@ volScalarField SIC
     mesh
 );
 
-Info<< "Reading field Soluble Inorganic Nitrogen" << endl;
+Info<< "Reading field Soluables Inorganic Nitrogen" << endl;
 volScalarField SIN
 (
     IOobject
@@ -168,7 +168,7 @@ volScalarField SIN
     mesh
 );
 
-Info<< "Reading field Soluble Inerts" << endl;
+Info<< "Reading field Soluables Inerts" << endl;
 volScalarField SI
 (
     IOobject
