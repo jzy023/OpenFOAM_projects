@@ -1,3 +1,5 @@
 admParameter.C
+admSoluables.C
+admSolFields.C
 
 LIB = $(FOAM_USER_LIBBIN)/libADM

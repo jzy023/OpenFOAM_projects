@@ -35,58 +35,177 @@ Description
 #define admSoluables_H
 
 #include "typeDefs.H"
+#include "contiguous.H"
+#include "VectorSpace.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-
-class admSoluables
-{
-private:
-    IOdictionary    dict_; // might not nedded
-    scalar          soluables_[12];
-public:
-    admSoluables
-    (
-        const IOdictionary  &io, 
-        const double        soluables[12]
-    )
-    :
-        dict_(io)
-    {
-        for (int i = 0; i < 12; ++i) {
-            soluables_[i] = soluables[i];
-        }
-    };
-};
 
 namespace Foam
 {
-template<>
-class pTraits<admSoluables>
-{
-    admSoluables p_;
-public:
-        // Appropriate public typedefs such as cmptType, etc. 
-        // Look into the Scalar.H and see how the partial specialization is 
-        // done for the Scalar, and do the same for your type. 
-    //- Equivalent type of labels used for valid component indexing
-    typedef admSoluables cmptType;
 
-    typedef label labelType;
+// Forward Declarations
+template<class T> class List;
+ 
+/*---------------------------------------------------------------------------*\
+                           Class Vector Declaration
+\*---------------------------------------------------------------------------*/
+
+template<class Cmpt>
+class admSoluables
+:
+    public VectorSpace<admSoluables<Cmpt>, Cmpt, 12>
+{
+public:
+
+    // Typedefs
+ 
+        //- Equivalent type of labels used for valid component indexing
+        typedef admSoluables<label> labelAdmSoluables;
+ 
  
     // Member Constants
  
-    //- Dimensionality of space
-    static constexpr direction dim = 3;
+        //- Rank of Vector is 1
+        static constexpr direction rank = 1;
+ 
+ 
+    //- Component labeling enumeration
+    enum components { su_, aa_, fa_, va_, bu_, pro_, ac_, h2_, ch4_, IC_, IN_, I_ };
 
-    //- Rank of Scalar is 0
-    static constexpr direction rank = 0;
+    // Generated Methods
+ 
+        //- Default construct
+        admSoluables() = default;
+ 
+        //- Copy construct
+        admSoluables(const admSoluables&) = default;
+ 
+        //- Copy assignment
+        admSoluables& operator=(const admSoluables&) = default;
 
-    //- Number of components in Scalar is 1
-    static constexpr direction nComponents = 1;
+    // Constructors
+ 
+        //- Construct initialized to zero
+        inline admSoluables(const Foam::zero);
+ 
+        //- Copy construct from VectorSpace of the same rank
+        template<class Cmpt2>
+        inline admSoluables(const VectorSpace<admSoluables<Cmpt2>, Cmpt2, 12>& sols);
+ 
+        //- Construct from three components
+        inline admSoluables(const Cmpt& Ssu, const Cmpt& Saa, const Cmpt& Sfa,
+                            const Cmpt& Sva, const Cmpt& Sbu, const Cmpt& Spro,
+                            const Cmpt& Sac, const Cmpt& Sh2, const Cmpt& Sch4,
+                            const Cmpt& SIC, const Cmpt& SIN, const Cmpt& SI
+                            );
+ 
+        //- Construct from Istream
+        inline explicit admSoluables(Istream& is);
+
+    // Member Functions
+    
+        //- Access to the vector su component
+        inline const Cmpt& su() const;
+ 
+        //- Access to the vector aa component
+        inline const Cmpt& aa() const;
+ 
+        //- Access to the vector fa component
+        inline const Cmpt& fa() const;
+
+        //- Access to the vector va component
+        inline const Cmpt& va() const;
+ 
+        //- Access to the vector bu component
+        inline const Cmpt& bu() const;
+
+        //- Access to the vector pro component
+        inline const Cmpt& pro() const;
+
+        //- Access to the vector ac component
+        inline const Cmpt& ac() const;
+
+        //- Access to the vector h2 component
+        inline const Cmpt& h2() const;
+
+        //- Access to the vector ch4 component
+        inline const Cmpt& ch4() const;
+
+        //- Access to the vector IC component
+        inline const Cmpt& IC() const;
+
+        //- Access to the vector IN component
+        inline const Cmpt& IN() const;
+
+        //- Access to the vector I component
+        inline const Cmpt& I() const;
+ 
+    //- Access to the vector su component
+        inline Cmpt& su();
+ 
+        //- Access to the vector aa component
+        inline Cmpt& aa();
+ 
+        //- Access to the vector fa component
+        inline Cmpt& fa();
+
+        //- Access to the vector va component
+        inline Cmpt& va();
+ 
+        //- Access to the vector bu component
+        inline Cmpt& bu();
+
+        //- Access to the vector pro component
+        inline Cmpt& pro();
+
+        //- Access to the vector ac component
+        inline Cmpt& ac();
+
+        //- Access to the vector h2 component
+        inline Cmpt& h2();
+
+        //- Access to the vector ch4 component
+        inline Cmpt& ch4();
+
+        //- Access to the vector IC component
+        inline Cmpt& IC();
+
+        //- Access to the vector IN component
+        inline Cmpt& IN();
+
+        //- Access to the vector I component
+        inline Cmpt& I();
+ 
+        //- Inplace normalise the vector by its magnitude
+        //  For small magnitudes (less than ROOTVSMALL) set to zero.
+        //  Will not be particularly useful for a vector of labels
+        // inline Vector<Cmpt>& normalise(const scalar tol = ROOTVSMALL);
+ 
+        // //- Inplace removal of components that are collinear to the given
+        // //- unit vector.
+        // inline Vector<Cmpt>& removeCollinear(const Vector<Cmpt>& unitVec);
+ 
+ 
+        // //- Return *this (used for point which is a typedef to Vector<scalar>.
+        // inline const Vector<Cmpt>& centre
+        // (
+        //     const UList<Vector<Cmpt>>&  /* (unused) */
+        // ) const;
+
+
 };
+
+
+// Typedefs
+typedef admSoluables<scalar>    admS;
+typedef admSoluables<float>     floatAdmS;
+typedef admSoluables<double>    doubleAdmS;
+ 
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+ 
 }
 
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+#include "admSoluablesI.H"
 
 #endif
 

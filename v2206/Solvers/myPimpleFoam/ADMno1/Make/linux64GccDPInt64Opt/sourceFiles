@@ -1,0 +1,6 @@
+SOURCE = \
+admParameter.C \
+admSoluables.C \
+admSolFields.C \
+
+# sources

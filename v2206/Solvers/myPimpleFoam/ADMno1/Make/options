@@ -8,7 +8,8 @@ EXE_INC = \
     -I$(LIB_SRC)/transportModels/incompressible/singlePhaseTransportModel \
     -I$(LIB_SRC)/dynamicMesh/lnInclude \
     -I$(LIB_SRC)/dynamicFvMesh/lnInclude \
-    -I$(LIB_SRC)/regionFaModels/lnInclude
+    -I$(LIB_SRC)/regionFaModels/lnInclude \
+	-I$(LIB_SRC)/OpenFOAM/lnInclude
 
 EXE_LIBS = \
     -lfiniteVolume \
@@ -23,4 +24,4 @@ EXE_LIBS = \
     -ltopoChangerFvMesh \
     -latmosphericModels \
     -lregionFaModels \
-    -lfiniteArea
+    -lfiniteArea 

@@ -84,6 +84,8 @@ Note
 #include "localEulerDdtScheme.H"
 #include "fvcSmooth.H"
 #include "admParameter.H"
+#include "admSoluables.H"
+#include "admSolFields.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

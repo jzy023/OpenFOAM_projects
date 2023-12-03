@@ -4,6 +4,9 @@
         "myPimpleFoam.C": "cpp",
         "admParameter.C": "cpp",
         "admIn.C": "cpp",
-        "admIni.C": "cpp"
+        "admIni.C": "cpp",
+        "admSoluables.C": "cpp",
+        "admSolFields.C": "cpp",
+        "admSolFields copy.C": "cpp"
     }
 }

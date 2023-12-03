@@ -1,22 +1,24 @@
-// dimensionedScalar TopDefault("TopDefault", dimensionSet(0,0,0,1,0,0,0), 308.15); 
-// Info<< "Reading field Operating Temperature" << endl;
-// volScalarField Top
-// (
-//     IOobject
-//     (
-//         "Top",
-//         runTime.timeName(),
-//         mesh,
-//         IOobject::READ_IF_PRESENT,
-//         IOobject::AUTO_WRITE
-//     ),
-//     mesh,
-//     TopDefault
-// );
+dimensionedScalar TopDefault("TopDefault", dimensionSet(0,0,0,1,0,0,0), 308.15); 
+Info<< "Reading field Operating Temperature" << endl;
+volScalarField Top
+(
+    IOobject
+    (
+        "Top",
+        runTime.timeName(),
+        mesh,
+        IOobject::READ_IF_PRESENT,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    TopDefault
+);
+
+
 
 Info<< "Reading field Soluables" << endl;
-// GeometricField<admSoluables, fvPatchField, fvMesh> Sol
-GeometricField<admSoluables, fvPatchField, volMesh> Sol
+// GeometricField<admSoluables<scalar>, fvPatchField, volMesh> Sol
+volADMSField Sol
 (
     IOobject
     (
@@ -26,7 +28,6 @@ GeometricField<admSoluables, fvPatchField, volMesh> Sol
         IOobject::MUST_READ,
         IOobject::AUTO_WRITE
     ),
-    mesh,
-    admSoluables
+    mesh
 );
 
