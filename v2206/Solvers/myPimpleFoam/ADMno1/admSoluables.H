@@ -47,7 +47,7 @@ namespace Foam
 template<class T> class List;
  
 /*---------------------------------------------------------------------------*\
-                           Class Vector Declaration
+                           Class admSoluables Declaration
 \*---------------------------------------------------------------------------*/
 
 template<class Cmpt>
@@ -65,7 +65,7 @@ public:
  
     // Member Constants
  
-        //- Rank of Vector is 1
+        //- Rank of admSoluables is 1
         static constexpr direction rank = 1;
  
  
@@ -175,23 +175,6 @@ public:
 
         //- Access to the vector I component
         inline Cmpt& I();
- 
-        //- Inplace normalise the vector by its magnitude
-        //  For small magnitudes (less than ROOTVSMALL) set to zero.
-        //  Will not be particularly useful for a vector of labels
-        // inline Vector<Cmpt>& normalise(const scalar tol = ROOTVSMALL);
- 
-        // //- Inplace removal of components that are collinear to the given
-        // //- unit vector.
-        // inline Vector<Cmpt>& removeCollinear(const Vector<Cmpt>& unitVec);
- 
- 
-        // //- Return *this (used for point which is a typedef to Vector<scalar>.
-        // inline const Vector<Cmpt>& centre
-        // (
-        //     const UList<Vector<Cmpt>>&  /* (unused) */
-        // ) const;
-
 
 };
 
@@ -200,9 +183,33 @@ public:
 typedef admSoluables<scalar>    admS;
 typedef admSoluables<float>     floatAdmS;
 typedef admSoluables<double>    doubleAdmS;
- 
+
+// * * * * * * * * * * * * * * * * * Traits  * * * * * * * * * * * * * * * * //
+
+//- Data are contiguous if component type is contiguous
+template<class Cmpt>
+struct is_contiguous<admSoluables<Cmpt>> : is_contiguous<Cmpt> {};
+
+//- Data are contiguous label if component type is label
+template<class Cmpt>
+struct is_contiguous_label<admSoluables<Cmpt>> : is_contiguous_label<Cmpt> {};
+
+//- Data are contiguous scalar if component type is scalar
+template<class Cmpt>
+struct is_contiguous_scalar<admSoluables<Cmpt>> : is_contiguous_scalar<Cmpt> {};
+
+
+// template<class Cmpt>
+// class typeOfRank<Cmpt, 1>
+// {
+// public:
+
+//     typedef admSoluables<Cmpt> type;
+// };
+
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
- 
+
+
 }
 
 #include "admSoluablesI.H"

@@ -229,3 +229,45 @@ inline Cmpt& Foam::admSoluables<Cmpt>::I()
 }
 
 // ************************************************************************* //
+
+// * * * * * * * * * * * * * * * Global Operators  * * * * * * * * * * * * * //
+
+namespace Foam
+{
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+//- Dummy innerProduct for scalar to allow the construction of vtables for
+//  virtual member functions involving the inner-products of fields
+//  for which a "NotImplemented" specialization for scalar is provided.
+template<class Cmpt>
+class innerProduct<admSoluables<Cmpt>, scalar>
+{
+public:
+
+    typedef scalar type;
+};
+
+
+template<class Cmpt>
+inline admSoluables<Cmpt> operator*(const Cmpt& s, const admSoluables<Cmpt>& v)
+{
+    return admSoluables<Cmpt>(s*v.su(), s*v.aa(), s*v.fa(), 
+                              s*v.va(), s*v.bu(), s*v.pro(), 
+                              s*v.ac(), s*v.h2(), s*v.ch4(), 
+                              s*v.IC(), s*v.IN(), s*v.I());
+}
+
+
+template<class Cmpt>
+inline admSoluables<Cmpt> operator*(const admSoluables<Cmpt>& v, const Cmpt& s)
+{
+    return s*v;
+}
+
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+} // End namespace Foam
+
+// ************************************************************************* //
