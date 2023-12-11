@@ -33,6 +33,7 @@ divSchemes
 
     div(phi,k)      Gauss limitedLinear 1;
     div(phi,Gch4)   bounded Gauss limitedLinear 1;
+    div(phi,Sch4)   bounded Gauss limitedLinear 1;
 
     div((nuEff*dev2(T(grad(U))))) Gauss linear;
 }

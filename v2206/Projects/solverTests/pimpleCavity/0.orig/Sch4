@@ -16,7 +16,7 @@ FoamFile
 
 dimensions      [0 0 0 0 0 0 0];
 
-internalField   uniform 0.0555;
+internalField   uniform 0;
 
 boundaryField
 {

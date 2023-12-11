@@ -902,7 +902,6 @@ $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/fvcSmooth.H \
 ./ADMno1/lnInclude/typeDefs.H \
 ./ADMno1/lnInclude/admSoluables.H \
 ./ADMno1/lnInclude/admSoluablesI.H \
-./ADMno1/lnInclude/admSolFields.H \
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/postProcess.H \
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/addRegionOption.H \
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/addFunctionObjectOptions.H \
@@ -924,7 +923,7 @@ $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/createTimeControls.H \
 createFields.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/createRDeltaT.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/createPhi.H \
-createADMtest.H \
+createADM.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/createMRF.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/createFvOptions.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/createUfIfPresent.H \
@@ -941,5 +940,6 @@ $(WM_PROJECT_DIR)/src/dynamicFvMesh/lnInclude/meshCourantNo.H \
 UEqn.H \
 pEqn.H \
 ADMEqn.H \
+./ADMno1/lnInclude/convectionDiffusionEqn.H \
 
 #END

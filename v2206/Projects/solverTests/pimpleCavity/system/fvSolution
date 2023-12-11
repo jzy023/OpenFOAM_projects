@@ -30,7 +30,7 @@ solvers
         relTol          0;
     }
 
-    "(U|k|B|nuTilda|Gch4)"
+    "(U|k|B|nuTilda|Gch4|Sch4)"
     {
         solver          smoothSolver;
         smoother        GaussSeidel;
@@ -41,6 +41,12 @@ solvers
     UFinal
     {
         $U;
+        relTol          0;
+    }
+
+    "(Gch4Final|Sch4Final)"
+    {
+        $Sch4;
         relTol          0;
     }
 }

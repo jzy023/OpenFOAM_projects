@@ -39,6 +39,9 @@ Description
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
+Info << "ADM convection-diffusion calculation" << endl;
+#include "convectionDiffusionEqn.H"
+
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

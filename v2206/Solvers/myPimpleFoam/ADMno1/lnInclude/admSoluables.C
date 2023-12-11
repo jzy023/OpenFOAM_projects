@@ -1,1 +1,1 @@
-../admSoluables.C
+../_LEGACY_ADM/admSoluables.C

@@ -860,7 +860,7 @@ $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/scalarRanges.H \
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/scalarRange.H \
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/scalarRangeI.H \
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/scalarRangesI.H \
-admSoluables.H \
-admSoluablesI.H \
+lnInclude/admSoluables.H \
+lnInclude/admSoluablesI.H \
 
 #END
