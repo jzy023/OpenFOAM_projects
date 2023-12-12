@@ -223,3 +223,26 @@ volScalarField Gco2
     ),
     mesh
 );
+
+// making ptr list for all the components
+// PtrList<volScalarField>& cmptPtrs(28); // 27 + Sco2 
+PtrList<volScalarField> cmptPtrs(15);
+// soluables
+cmptPtrs.set(0, &Ssu);
+cmptPtrs.set(1, &Saa);
+cmptPtrs.set(2, &Sfa);
+cmptPtrs.set(3, &Sva);
+cmptPtrs.set(4, &Sbu);
+cmptPtrs.set(5, &Spro);
+cmptPtrs.set(6, &Sac);
+cmptPtrs.set(7, &Sh2);
+cmptPtrs.set(8, &Sch4);
+cmptPtrs.set(9, &SIC);
+cmptPtrs.set(10, &SIN);
+cmptPtrs.set(11, &SI);
+// gaseous
+cmptPtrs.set(12, &Gh2);
+cmptPtrs.set(13, &Gch4);
+cmptPtrs.set(14, &Gco2);
+// TODO: particulate
+// TODO: for multiphase as well

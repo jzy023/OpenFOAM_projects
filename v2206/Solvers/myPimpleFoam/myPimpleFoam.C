@@ -78,6 +78,7 @@ Note
 #include "dynamicFvMesh.H"
 #include "singlePhaseTransportModel.H"
 #include "turbulentTransportModel.H"
+#include "multivariateScheme.H"
 #include "pimpleControl.H"
 #include "CorrectPhi.H"
 #include "fvOptions.H"

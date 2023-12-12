@@ -40,7 +40,37 @@ Description
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 Info << "ADM convection-diffusion calculation" << endl;
-#include "convectionDiffusionEqn.H"
+// TODO: make it an input from ./constant/ADMpara file
+scalar SC = 0.1; // Schmidt Number
+volScalarField Deff = turbulence->nu() / SC;
+{
+    forAll(cmptPtrs, i)
+    {
+        volScalarField& Yi = cmptPtrs[i];
+
+        fvScalarMatrix YiEqn
+        (
+            fvm::ddt(Yi)
+          + fvm::div(phi, Yi)
+          - fvm::laplacian(Deff, Yi) 
+        //  TODO: add turbulent diffusion
+        // - fvm::laplacian(turbulence->muEff(), Yi)
+         ==
+            fvOptions(Yi)
+        //  TODO: add local biochemical reaction as source term
+        //   reaction->R(Yi)
+        // + fvOptions(rho, Yi)
+        );
+
+        YiEqn.relax();
+
+        fvOptions.constrain(YiEqn);
+
+        YiEqn.solve(mesh.solver("Yi"));
+
+        fvOptions.correct(Yi);
+    }
+}
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
