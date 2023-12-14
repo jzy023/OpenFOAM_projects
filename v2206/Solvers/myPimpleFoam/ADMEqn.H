@@ -44,9 +44,9 @@ Info << "ADM convection-diffusion calculation" << endl;
 scalar SC = 0.1; // Schmidt Number
 volScalarField Deff = turbulence->nu() / SC;
 {
-    forAll(cmptPtrs, i)
+    forAll(YPtrs, i)
     {
-        volScalarField& Yi = cmptPtrs[i];
+        volScalarField& Yi = YPtrs[i];
 
         fvScalarMatrix YiEqn
         (

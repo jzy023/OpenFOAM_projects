@@ -35,7 +35,6 @@ Description
 #define admParameter_H
 
 #include "typeDefs.H"
-#include "admSoluables.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
