@@ -1,4 +1,4 @@
-// #include "./ADMno1/admParameter.H"
+// #include "./ADMno1/adModelParameter.H"
 // TODO: make it an input from ./constant/ADMpara file
 int runMode = 0;
 

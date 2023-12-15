@@ -24,15 +24,15 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    ADM::admParameter
+    ADM::adModelParameter
 
 Description
     H file for declairing AMDno1 parameter class
 
 \*---------------------------------------------------------------------------*/
 
-#ifndef admParameter_H
-#define admParameter_H
+#ifndef adModelParameter_H
+#define adModelParameter_H
 
 #include "typeDefs.H"
 

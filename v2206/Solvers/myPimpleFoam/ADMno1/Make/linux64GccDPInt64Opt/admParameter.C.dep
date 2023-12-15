@@ -1,6 +1,6 @@
-$(OBJECTS_DIR)/admParameter.C.dep: \
-admParameter.C \
-admParameter.H \
+$(OBJECTS_DIR)/adModelParameter.C.dep: \
+adModelParameter.C \
+adModelParameter.H \
 typeDefs.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/fvCFD.H \
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/Time.H \

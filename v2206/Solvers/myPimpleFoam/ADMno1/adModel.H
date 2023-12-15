@@ -24,54 +24,71 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    ADM::ADMEqn
+    ADM::adModel
 
 Description
-    ADM computations.
+    Anaerobic Digestion Model No.1 class.
+
 
 \*---------------------------------------------------------------------------*/
 
-#ifndef ADMEqn_H
-#define ADMEqn_H
+#ifndef adModel_H
+#define adModel_H
 
-#include "typeDefs.H"
+#include "fvCFD.H"
+#include "autoPtr.H"
+#include "ODESystem.H"
+#include "volFields.H"
+#include "simpleMatrix.H"
 #include "adModelParameter.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-Info << "ADM convection-diffusion calculation" << endl;
-// TODO: make it an input from ./constant/ADMpara file
-scalar SC = 0.1; // Schmidt Number
-volScalarField Deff = turbulence->nu() / SC;
+// namespace ADM
+// {
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+class adModel
 {
-    forAll(YPtrs, i)
-    {
-        volScalarField& Yi = YPtrs[i];
 
-        fvScalarMatrix YiEqn
-        (
-            fvm::ddt(Yi)
-          + fvm::div(phi, Yi)
-          - fvm::laplacian(Deff, Yi) 
-        //  TODO: add turbulent diffusion
-        // - fvm::laplacian(turbulence->muEff(), Yi)
-         ==
-            fvOptions(Yi)
-        //  TODO: add local biochemical reaction as source term
-        //   reaction->R(Yi)
-        // + fvOptions(rho, Yi)
-        );
+private:
 
-        YiEqn.relax();
+    //- Reference to the field of specie concentrations
+    PtrList<volScalarField>& YPtrs_;
 
-        fvOptions.constrain(YiEqn);
+    //- List of reaction rate per specie [kg/m3/s]
+    PtrList<volScalarField::Internal> RR_;
 
-        YiEqn.solve(mesh.solver("Yi"));
+    //- Temporary concentration field
+    mutable scalarField c_;
+ 
+    //- Temporary rate-of-change of concentration field
+    mutable scalarField dcdt_;
 
-        fvOptions.correct(Yi);
-    }
-}
+public:
+ 
+    //- Run time type information
+    TypeName("adModel");
 
+    // Constructors
+
+
+    // Destructor
+
+
+    // Member Functions
+    //- Return const access to the chemical source terms for specie, i
+    inline const volScalarField::Internal& RR ( const label i ) const;
+
+    //- Return non const access to chemical source terms [kg/m3/s]
+    virtual volScalarField::Internal& RR ( const label i );
+
+    // combustionModels/laminar.C -> template<class ReactionThermo>
+                                  // Foam::tmp<Foam::fvScalarMatrix>
+                                  // Foam::combustionModels::laminar<ReactionThermo>::R(volScalarField& Y) const
+
+};
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

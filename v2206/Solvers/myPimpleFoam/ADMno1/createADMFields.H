@@ -35,7 +35,7 @@ Description
 #define createADMFields_H
 
 // #include "typeDefs.H"
-#include "admParameter.H"
+#include "adModelParameter.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

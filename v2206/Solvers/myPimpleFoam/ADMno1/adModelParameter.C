@@ -24,14 +24,14 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    ADM::admParameter
+    ADM::adModelParameter
 
 Description
     C file for defining AMDno1 parameter class functions
 
 \*---------------------------------------------------------------------------*/
 
-#include "admParameter.H"
+#include "adModelParameter.H"
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 

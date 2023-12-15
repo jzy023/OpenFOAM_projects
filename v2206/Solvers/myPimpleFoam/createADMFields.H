@@ -24,7 +24,6 @@ Info<< "Reading ADMno1 initial concentrations for soluables" << endl;
 
 forAll(namesSoluable, i)
 {
-    Info << i << endl;
     YPtrs.set
     (
         i,
@@ -44,7 +43,6 @@ forAll(namesSoluable, i)
 }
 
 iNames += namesSoluable.size();
-Info << iNames << "<" << endl; 
 
 //-  Read gaseuoses
 
@@ -52,7 +50,6 @@ Info<< "Reading ADMno1 initial concentrations for gaseuoses" << endl;
 
 forAll(namesGaseous, i)
 {
-    Info << i+iNames << endl;
     YPtrs.set
     (
         i + iNames,
