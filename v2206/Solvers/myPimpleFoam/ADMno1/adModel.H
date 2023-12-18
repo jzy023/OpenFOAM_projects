@@ -66,6 +66,26 @@ private:
     //- Temporary rate-of-change of concentration field
     mutable scalarField dcdt_;
 
+    //- Species names for soluable
+    //- !!! Sh2 is calculated iteratively 
+    const wordList namesSoluable = {"Ssu", "Saa", "Sfa", "Sva", "Sbu", "Spro",
+                                    "Sac", "Sh2", "Sch4", "SIC", "SIN", "SI", "Scat", "San"};
+
+    //- Species names for gaseouse
+    const wordList namesGaseous = {"Gh2", "Gch4", "Gco2"};
+
+    //- Species names for particulate
+    const wordList namesParticulate = {"Xc", "Xch", "Xpr", "Xli", "Xsu", "Xaa",
+                                       "Xfa", "Xc4", "Xpro", "Xac", "Xh2", "XI"};
+
+    //- Species names for acid-base medians
+    //- !!! All calculated iteratively
+    const wordList namesAcidBase = {"SvaN", "SbuN", "SproN", "SacN", "Shco3N", "SohN"
+                                    "Snh3", "ShP"};
+
+    //- calculated by simple subtractions
+    const wordList namesMedians = {"Sco2", "Snh4"}
+
 public:
  
     //- Run time type information
