@@ -25,6 +25,8 @@ License
 
 Class
     ADM::adModel
+    >>> inspired from reactingFoam/CombustionModel<psiReactionThermo>
+
 
 Description
     Anaerobic Digestion Model No.1 class.
@@ -50,6 +52,7 @@ Description
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 class adModel
+// inherite from other classes
 {
 
 private:
@@ -60,7 +63,8 @@ private:
     //- List of reaction rate per specie [kg/m3/s]
     PtrList<volScalarField::Internal> RR_;
 
-    //- Temporary concentration field
+    //- Temporary concentration fields
+    // PtrList<volScalarField>& YPtrsTemps_;
     mutable scalarField c_;
  
     //- Temporary rate-of-change of concentration field
