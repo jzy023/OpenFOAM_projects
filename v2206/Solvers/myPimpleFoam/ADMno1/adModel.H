@@ -57,6 +57,9 @@ class adModel
 
 private:
 
+    //- Thermodynamical condition
+    label runMode_;
+
     //- Reference to the field of specie concentrations
     PtrList<volScalarField>& YPtrs_;
 
@@ -96,12 +99,14 @@ public:
     TypeName("adModel");
 
     // Constructors
-
+    adModel ( label runMode );
 
     // Destructor
 
 
     // Member Functions
+    //- Return YPtrs_
+
     //- Return const access to the chemical source terms for specie, i
     inline const volScalarField::Internal& RR ( const label i ) const;
 

@@ -3,6 +3,7 @@
         "bashrc": "shellscript",
         "simpleFoam.C": "cpp",
         "buoyantBoussinesqSimpleFoam.C": "cpp",
-        "mySimpleFoam.C": "cpp"
+        "mySimpleFoam.C": "cpp",
+        "myPimpleFoam.C": "cpp"
     }
 }

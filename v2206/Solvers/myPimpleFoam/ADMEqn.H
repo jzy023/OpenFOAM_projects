@@ -50,7 +50,7 @@ volScalarField Deff = turbulence->nu() / SC;
 {
     forAll(YPtrs, i)
     {
-        volScalarField& Yi = YPtrs[i];
+        volScalarField& Yi = YPtrs[i]; // cfd-online >> How exactly does this work?
 
         fvScalarMatrix YiEqn
         (

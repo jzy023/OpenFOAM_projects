@@ -7,6 +7,7 @@
         "admIni.C": "cpp",
         "admSoluables.C": "cpp",
         "admSolFields.C": "cpp",
-        "admSolFields copy.C": "cpp"
+        "admSolFields copy.C": "cpp",
+        "adModel.C": "cpp"
     }
 }
