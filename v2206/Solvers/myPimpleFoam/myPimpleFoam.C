@@ -84,7 +84,7 @@ Note
 #include "fvOptions.H"
 #include "localEulerDdtScheme.H"
 #include "fvcSmooth.H"
-#include "adModelParameter.H"
+#include "adModel.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

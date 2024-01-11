@@ -30,13 +30,167 @@ License
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
-adModel::adModel
+Foam::adModel::adModel
+// adModel::adModel
 (
-    label runMode                   // runModes (Meso) 
+    const fvMesh& mesh,     // mesh
+    label runMode           // runModes (Meso) 
 )
 :
-    runMode_(runMode)
+    IOdictionary
+    (
+        IOobject
+        (
+            // phasePropertyName(dictName, phaseName),
+            mesh.time().constant(),
+            mesh,
+            IOobject::MUST_READ_IF_MODIFIED,
+            IOobject::NO_WRITE
+        )
+    ),
+    runMode_(runMode),
+    admParameters_(runMode)
 {
-    // recreate "createADMFields.H"
-    // set up temperal concentration fields
+    //- Recreate "createADMFields.H"
+
+    Info<< "Reading ADMno1 initial concentrations for soluables" << endl;
+
+    label iNames = 0;
+    label nSpecies = namesSoluable.size() + namesGaseous.size();
+                // TODO: add other species
+                //    + namesParticulate.size() + namesMedians.size();
+
+    YPtrs_.resize(nSpecies);
+
+    forAll(namesSoluable, i)
+    {
+        YPtrs_.set
+        (
+            i,
+            new volScalarField
+            (
+                IOobject
+                (
+                    namesSoluable[i], // IOobject::groupName(namesSoluable[i]),
+                    mesh.time().timeName(),
+                    mesh,
+                    IOobject::MUST_READ,
+                    IOobject::AUTO_WRITE
+                ),
+                mesh
+            )
+        );
+    }
+
+    iNames += namesSoluable.size();
+
+    //-  Read gaseuoses
+
+    Info<< "Reading ADMno1 initial concentrations for gaseuoses" << endl;
+
+    forAll(namesGaseous, i)
+    {
+        YPtrs_.set
+        (
+            i + iNames,
+            new volScalarField
+            (
+                IOobject
+                (
+                    namesGaseous[i],
+                    mesh.time().timeName(),
+                    mesh,
+                    IOobject::MUST_READ,
+                    IOobject::AUTO_WRITE
+                ),
+                mesh
+            )
+        );
+    }
+
+    // iNames += sizeof(namesGaseous);
+
+    // //-  Read particulates
+
+    // Info<< "Reading ADMno1 initial concentrations for particulates" << endl;
+
+    // forAll(namesParticulate, i)
+    // {
+    //     YPtrs_.set
+    //     (
+    //         i + iNames,
+    //         new volScalarField
+    //         (
+    //             IOobject
+    //             (
+    //                 namesParticulate[i],
+    //                 mesh.time().timeName(),
+    //                 mesh,
+    //                 IOobject::MUST_READ,
+    //                 IOobject::AUTO_WRITE
+    //             ),
+    //             mesh
+    //         )
+    //     );
+    // }
+
+    // iNames += sizeof(namesParticulate);
+
+    // //-  Read electrolytes
+
+    // Info<< "Reading ADMno1 initial concentrations for electrolytes" << endl;
+
+    // forAll(namesElectrolyte, i)
+    // {
+    //     YPtrs_.set
+    //     (
+    //         i + iNames,
+    //         new volScalarField
+    //         (
+    //             IOobject
+    //             (
+    //                 namesElectrolyte[i],
+    //                 mesh.time().timeName(),
+    //                 mesh,
+    //                 IOobject::MUST_READ,
+    //                 IOobject::AUTO_WRITE
+    //             ),
+    //             mesh
+    //         )
+    //     );
+    // }
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+    //- Set up temperal concentration fields
+
+
+
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+    Info<< "Reading ADMno1 initial operating temperaturesbased on runMode" << endl;
+
+    // TODO: if statement from runMode
+    scalar TopDefault_ = 308.15;
+
+    dimensionedScalar TopDefault("TopDefault", dimensionSet(0,0,0,1,0,0,0), TopDefault_); 
+    Info<< "Reading field Operating Temperature" << endl;
+    volScalarField Top
+    (
+        IOobject
+        (
+            "Top",
+            mesh.time().timeName(),  // or runTime.timeName(),
+            mesh,
+            IOobject::READ_IF_PRESENT,
+            IOobject::AUTO_WRITE
+        ),
+        mesh,
+        TopDefault
+    );
 }
+
+
+
+// ************************************************************************* //

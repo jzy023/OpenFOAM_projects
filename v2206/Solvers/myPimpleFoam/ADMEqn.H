@@ -34,8 +34,8 @@ Description
 #ifndef ADMEqn_H
 #define ADMEqn_H
 
-#include "typeDefs.H"
-#include "adModelParameter.H"
+// #include "typeDefs.H"
+// #include "adModelParameter.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -46,6 +46,7 @@ volScalarField Deff = turbulence->nu() / SC;
 
 // Create ADM class instance (ADMno1 constructor)
 // reaction->R(Yi) becomses the source term
+PtrList<volScalarField>& YPtrs = reaction.Y();
 
 {
     forAll(YPtrs, i)

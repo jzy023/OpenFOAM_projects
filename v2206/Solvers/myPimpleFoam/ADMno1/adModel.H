@@ -42,17 +42,21 @@ Description
 #include "ODESystem.H"
 #include "volFields.H"
 #include "simpleMatrix.H"
+
+#include "typeDefs.H"
 #include "adModelParameter.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// namespace ADM
-// {
+namespace Foam
+{
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 class adModel
 // inherite from other classes
+:
+    public IOdictionary
 {
 
 private:
@@ -60,8 +64,11 @@ private:
     //- Thermodynamical condition
     label runMode_;
 
+    //- ADM no1 parameters
+    admPara admParameters_;
+
     //- Reference to the field of specie concentrations
-    PtrList<volScalarField>& YPtrs_;
+    PtrList<volScalarField> YPtrs_;
 
     //- List of reaction rate per specie [kg/m3/s]
     PtrList<volScalarField::Internal> RR_;
@@ -91,7 +98,7 @@ private:
                                     "Snh3", "ShP"};
 
     //- calculated by simple subtractions
-    const wordList namesMedians = {"Sco2", "Snh4"}
+    const wordList namesMedians = {"Sco2", "Snh4"};
 
 public:
  
@@ -99,13 +106,19 @@ public:
     TypeName("adModel");
 
     // Constructors
-    adModel ( label runMode );
+    adModel
+    ( 
+        const fvMesh& mesh,
+        label runMode 
+    );
 
     // Destructor
 
 
     // Member Functions
     //- Return YPtrs_
+    // inline const PtrList<volScalarField>& Y() const;
+    inline PtrList<volScalarField>& Y();
 
     //- Return const access to the chemical source terms for specie, i
     inline const volScalarField::Internal& RR ( const label i ) const;
@@ -121,6 +134,13 @@ public:
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
+} // End namespace Foam
+ 
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+ 
+#include "adModelI.H"
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 #endif
 
 // ************************************************************************* //

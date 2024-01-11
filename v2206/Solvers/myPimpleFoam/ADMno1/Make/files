@@ -1,3 +1,4 @@
 adModelParameter.C
+adModel.C
 
 LIB = $(FOAM_USER_LIBBIN)/libADM

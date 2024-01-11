@@ -9,6 +9,7 @@ EXE_INC = \
     -I$(LIB_SRC)/dynamicMesh/lnInclude \
     -I$(LIB_SRC)/dynamicFvMesh/lnInclude \
     -I$(LIB_SRC)/regionFaModels/lnInclude \
+	-I$(LIB_SRC)/ODE/lnInclude \
 	-I./ADMno1/lnInclude
 
 EXE_LIBS = \
@@ -25,5 +26,6 @@ EXE_LIBS = \
     -latmosphericModels \
     -lregionFaModels \
     -lfiniteArea \
+	-lODE \
 	-L$(FOAM_USER_LIBBIN) \
 	-lADM
