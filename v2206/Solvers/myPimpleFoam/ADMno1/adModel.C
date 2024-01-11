@@ -37,17 +37,17 @@ Foam::adModel::adModel
     label runMode           // runModes (Meso) 
 )
 :
-    IOdictionary
-    (
-        IOobject
-        (
-            // phasePropertyName(dictName, phaseName),
-            mesh.time().constant(),
-            mesh,
-            IOobject::MUST_READ_IF_MODIFIED,
-            IOobject::NO_WRITE
-        )
-    ),
+    // IOdictionary
+    // (
+    //     IOobject
+    //     (
+    //         // phasePropertyName(dictName, phaseName),
+    //         mesh.time().constant(),
+    //         mesh,
+    //         IOobject::MUST_READ_IF_MODIFIED,
+    //         IOobject::NO_WRITE
+    //     )
+    // ),
     runMode_(runMode),
     admParameters_(runMode)
 {
@@ -64,6 +64,7 @@ Foam::adModel::adModel
 
     forAll(namesSoluable, i)
     {
+        // Info<< namesSoluable[i] << endl;
         YPtrs_.set
         (
             i,

@@ -55,8 +55,8 @@ namespace Foam
 
 class adModel
 // inherite from other classes
-:
-    public IOdictionary
+// :
+//     public IOdictionary
 {
 
 private:
@@ -103,7 +103,9 @@ private:
 public:
  
     //- Run time type information
-    TypeName("adModel");
+    //> runTimeSelection mechanism: 
+    //> https://openfoamwiki.net/index.php/OpenFOAM_guide/runTimeSelection_mechanism
+    // TypeName("adModel");
 
     // Constructors
     adModel
@@ -124,7 +126,7 @@ public:
     inline const volScalarField::Internal& RR ( const label i ) const;
 
     //- Return non const access to chemical source terms [kg/m3/s]
-    virtual volScalarField::Internal& RR ( const label i );
+    // virtual volScalarField::Internal& RR ( const label i );
 
     // combustionModels/laminar.C -> template<class ReactionThermo>
                                   // Foam::tmp<Foam::fvScalarMatrix>
