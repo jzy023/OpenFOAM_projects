@@ -29,14 +29,16 @@ volVectorField U
 );
 
 #include "createPhi.H"
-
 // #include "createADMFields.H"
-// make it a ptr with New() method? 
-// ref>>
-//      autoPtr<CombustionModel<psiReactionThermo>> reaction
-//      (
-//          CombustionModel<psiReactionThermo>::New(thermo, turbulence())
-//      );
+
+//- Make it a ptr with New() method
+//- to read parameters from constant/admno1Properties
+//- runTimeSelection mechanism -> Selector -> New()
+//- ref>>
+//       autoPtr<adModel> reaction
+//       (
+//           CombustionModel<psiReactionThermo>::New(thermo, turbulence())
+//       );
 adModel reaction(mesh, 1);
 
 label pRefCell = 0;
