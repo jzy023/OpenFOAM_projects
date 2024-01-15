@@ -37,6 +37,8 @@ Description
 #ifndef adModel_H
 #define adModel_H
 
+#include "IOdictionary.H"
+#include "typeInfo.H"
 #include "fvCFD.H"
 #include "autoPtr.H"
 #include "ODESystem.H"
@@ -55,75 +57,110 @@ namespace Foam
 
 class adModel
 // inherite from other classes
-// :
-//     public IOdictionary
+:
+    public IOdictionary
 {
 
 private:
 
     //- Thermodynamical condition
-    label runMode_;
+        label runMode_;
 
     //- ADM no1 parameters
-    admPara admParameters_;
+        admPara admParameters_;
 
     //- Reference to the field of specie concentrations
-    PtrList<volScalarField> YPtrs_;
+        PtrList<volScalarField> YPtrs_;
 
     //- List of reaction rate per specie [kg/m3/s]
-    PtrList<volScalarField::Internal> RR_;
+        PtrList<volScalarField::Internal> RR_;
 
     //- Temporary concentration fields
     // PtrList<volScalarField>& YPtrsTemps_;
-    mutable scalarField c_;
+        mutable scalarField c_;
  
     //- Temporary rate-of-change of concentration field
-    mutable scalarField dcdt_;
+        mutable scalarField dcdt_;
 
     //- Species names for soluable
     //- !!! Sh2 is calculated iteratively 
-    const wordList namesSoluable = {"Ssu", "Saa", "Sfa", "Sva", "Sbu", "Spro",
-                                    "Sac", "Sh2", "Sch4", "SIC", "SIN", "SI", "Scat", "San"};
+        const wordList namesSoluable = {"Ssu", "Saa", "Sfa", "Sva", "Sbu", "Spro",
+                                        "Sac", "Sh2", "Sch4", "SIC", "SIN", "SI", "Scat", "San"};
 
     //- Species names for gaseouse
-    const wordList namesGaseous = {"Gh2", "Gch4", "Gco2"};
+        const wordList namesGaseous = {"Gh2", "Gch4", "Gco2"};
 
     //- Species names for particulate
-    const wordList namesParticulate = {"Xc", "Xch", "Xpr", "Xli", "Xsu", "Xaa",
-                                       "Xfa", "Xc4", "Xpro", "Xac", "Xh2", "XI"};
+        const wordList namesParticulate = {"Xc", "Xch", "Xpr", "Xli", "Xsu", "Xaa",
+                                           "Xfa", "Xc4", "Xpro", "Xac", "Xh2", "XI"};
 
     //- Species names for acid-base medians
     //- !!! All calculated iteratively
-    const wordList namesAcidBase = {"SvaN", "SbuN", "SproN", "SacN", "Shco3N", "SohN"
-                                    "Snh3", "ShP"};
+        const wordList namesAcidBase = {"SvaN", "SbuN", "SproN", "SacN", "Shco3N", "SohN"
+                                        "Snh3", "ShP"};
 
     //- calculated by simple subtractions
-    const wordList namesMedians = {"Sco2", "Snh4"};
+        const wordList namesMedians = {"Sco2", "Snh4"};
+
+
+    // const word dictName("");
 
 public:
  
     //- Run time type information
     //> runTimeSelection mechanism: 
     //> https://openfoamwiki.net/index.php/OpenFOAM_guide/runTimeSelection_mechanism
-    // TypeName("adModel");
+        TypeName("adModel");
+
+    // Declare run-time constructor selection table
+
+        declareRunTimeSelectionTable
+        (
+            autoPtr,
+            adModel,
+            fvMesh,
+            (const fvMesh& mesh, label runMode),
+            (mesh, runMode)
+        );
+ 
+    //- Default name of the turbulence properties dictionary
+
+        static const word propertiesName;
 
     // Constructors
-    adModel
-    ( 
-        const fvMesh& mesh,
-        label runMode 
-    );
+
+        adModel
+        ( 
+            const fvMesh& mesh,
+            label runMode 
+        );
+
+    // Selectors
+
+        // template<class model>
+        // static autoPtr<model> New
+        // (
+        //     const fvMesh&,
+        //     label runMode
+        // );
+
+
+        // static autoPtr<adModel> New
+        // (
+        //     const fvMesh&,
+        //     label runMode
+        // );
 
     // Destructor
-
+        ~adModel() = default;
 
     // Member Functions
     //- Return YPtrs_
     // inline const PtrList<volScalarField>& Y() const;
-    inline PtrList<volScalarField>& Y();
+        inline PtrList<volScalarField>& Y();
 
     //- Return const access to the chemical source terms for specie, i
-    inline const volScalarField::Internal& RR ( const label i ) const;
+        inline const volScalarField::Internal& RR ( const label i ) const;
 
     //- Return non const access to chemical source terms [kg/m3/s]
     // virtual volScalarField::Internal& RR ( const label i );

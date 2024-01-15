@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
         #include "setInitialDeltaT.H"
     }
 
-    #include "readingInitialConditions.H"
+    // #include "readingInitialConditions.H"
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

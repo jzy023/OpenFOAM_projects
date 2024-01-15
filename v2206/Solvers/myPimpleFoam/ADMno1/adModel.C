@@ -28,26 +28,38 @@ License
 
 #include "adModel.H"
 
+
+// * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
+ 
+namespace Foam
+{
+    defineTypeNameAndDebug(adModel, 0);
+    defineRunTimeSelectionTable(adModel, fvMesh);
+}
+ 
+const Foam::word Foam::adModel::propertiesName("admno1Properties");
+
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
 Foam::adModel::adModel
+
 // adModel::adModel
 (
     const fvMesh& mesh,     // mesh
     label runMode           // runModes (Meso) 
 )
 :
-    // IOdictionary
-    // (
-    //     IOobject
-    //     (
-    //         // phasePropertyName(dictName, phaseName),
-    //         mesh.time().constant(),
-    //         mesh,
-    //         IOobject::MUST_READ_IF_MODIFIED,
-    //         IOobject::NO_WRITE
-    //     )
-    // ),
+    IOdictionary
+    (
+        IOobject
+        (
+            propertiesName,
+            mesh.time().constant(),
+            mesh,
+            IOobject::MUST_READ_IF_MODIFIED,
+            IOobject::NO_WRITE
+        )
+    ),
     runMode_(runMode),
     admParameters_(runMode)
 {
@@ -192,6 +204,16 @@ Foam::adModel::adModel
     );
 }
 
-
+// * * * * * * * * * * * * * * * * Selectors * * * * * * * * * * * * * * * * //
+ 
+// Foam::autoPtr<Foam::adModel> Foam::adModel::New
+// (
+//     const fvMesh& mesh,
+//     label runMode
+// )
+// {
+//     return New<adModel>(mesh, runMode);
+// }
+ 
 
 // ************************************************************************* //

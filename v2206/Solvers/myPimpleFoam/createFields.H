@@ -41,6 +41,10 @@ volVectorField U
 //       );
 adModel reaction(mesh, 1);
 
+// label runMode = 1;
+// autoPtr<adModel> reaction(adModel::New(mesh, runMode));
+// auto* reaction = new adModel(mesh, runMode);
+
 label pRefCell = 0;
 scalar pRefValue = 0.0;
 setRefCell(p, pimple.dict(), pRefCell, pRefValue);

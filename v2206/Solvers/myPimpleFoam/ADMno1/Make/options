@@ -26,4 +26,5 @@ EXE_LIBS = \
     -latmosphericModels \
     -lregionFaModels \
     -lfiniteArea \
+	-lOpenFOAM \
 	-lODE
