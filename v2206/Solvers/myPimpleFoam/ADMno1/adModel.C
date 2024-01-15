@@ -206,14 +206,14 @@ Foam::adModel::adModel
 
 // * * * * * * * * * * * * * * * * Selectors * * * * * * * * * * * * * * * * //
  
-// Foam::autoPtr<Foam::adModel> Foam::adModel::New
-// (
-//     const fvMesh& mesh,
-//     label runMode
-// )
-// {
-//     return New<adModel>(mesh, runMode);
-// }
+Foam::autoPtr<Foam::adModel> Foam::adModel::New
+(
+    const fvMesh& mesh,
+    label runMode
+)
+{
+    return New<adModel>(mesh, runMode);
+}
  
 
 // ************************************************************************* //

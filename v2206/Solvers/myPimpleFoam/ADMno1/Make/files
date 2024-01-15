@@ -1,5 +1,4 @@
 adModelParameter.C
 adModel.C
-adModelTemplates.C
 
 LIB = $(FOAM_USER_LIBBIN)/libADM

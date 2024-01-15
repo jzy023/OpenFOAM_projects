@@ -30,38 +30,37 @@ License
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
-// template<class model>
-// Foam::autoPtr<model> Foam::adModel::New
-// (
-//     const fvMesh& mesh,
-//     label runMode
-// )
-// {
-//     // IOdictionary thermoDict
-//     // (
-//     //     IOobject
-//     //     (
-//     //         phasePropertyName(dictName, phaseName),
-//     //         mesh.time().constant(),
-//     //         mesh,
-//     //         IOobject::MUST_READ_IF_MODIFIED,
-//     //         IOobject::NO_WRITE,
-//     //         false
-//     //     )
-//     // );
+template<class model>
+Foam::autoPtr<model> Foam::adModel::New
+(
+    const fvMesh& mesh,
+    label runMode
+)
+{
+    // TODO: do it properly!!! with virtual destructors and constructor hash tables 
+    // new keywaord is not gonna last!
+
+    // IOdictionary thermoDict
+    // (
+    //     IOobject
+    //     (
+    //         phasePropertyName(dictName, phaseName),
+    //         mesh.time().constant(),
+    //         mesh,
+    //         IOobject::MUST_READ_IF_MODIFIED,
+    //         IOobject::NO_WRITE,
+    //         false
+    //     )
+    // );
  
-//     // auto* ctorPtr = getThermoOrDie<Thermo>
-//     // (
-//     //     thermoDict,
-//     //     *(Thermo::fvMeshConstructorTablePtr_)
-//     // );
+    // auto* ctorPtr = getThermoOrDie<Thermo>
+    // (
+    //     thermoDict,
+    //     *(Thermo::fvMeshConstructorTablePtr_)
+    // );
 
-//     auto* reactionPtr = new adModel(mesh, runMode);
-//     return autoPtr<adModel>(reactionPtr);
-
-//     // adModel adReaction = adModel(mesh, runMode);
-//     // auto* reactionPtr = &adReaction;
-//     // return autoPtr<adModel>(reactionPtr);
-// }
+    auto* reactionPtr = new model(mesh, runMode);
+    return autoPtr<model>(reactionPtr);
+}
 
 // ************************************************************************* //

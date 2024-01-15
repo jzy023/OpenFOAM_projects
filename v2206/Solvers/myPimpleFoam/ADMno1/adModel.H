@@ -137,19 +137,19 @@ public:
 
     // Selectors
 
-        // template<class model>
-        // static autoPtr<model> New
-        // (
-        //     const fvMesh&,
-        //     label runMode
-        // );
+        template<class model>
+        static autoPtr<model> New
+        (
+            const fvMesh&,
+            label runMode
+        );
 
 
-        // static autoPtr<adModel> New
-        // (
-        //     const fvMesh&,
-        //     label runMode
-        // );
+        static autoPtr<adModel> New
+        (
+            const fvMesh&,
+            label runMode
+        );
 
     // Destructor
         ~adModel() = default;
@@ -178,6 +178,11 @@ public:
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
  
 #include "adModelI.H"
+
+#ifdef NoRepository
+    #include "adModelTemplates.C"
+#endif
+ 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 #endif
