@@ -29,24 +29,22 @@ volVectorField U
 );
 
 #include "createPhi.H"
-// #include "createADMFields.H"
-
-label runMode = 1;
-autoPtr<adModel> reaction(adModel::New(mesh, runMode));
-// auto* reaction = new adModel(mesh, runMode);
-// adModel reaction(mesh, 1);
 
 label pRefCell = 0;
 scalar pRefValue = 0.0;
 setRefCell(p, pimple.dict(), pRefCell, pRefValue);
 mesh.setFluxRequired(p.name());
 
-
 singlePhaseTransportModel laminarTransport(U, phi);
 
 autoPtr<incompressible::turbulenceModel> turbulence
 (
     incompressible::turbulenceModel::New(U, phi, laminarTransport)
+);
+
+autoPtr<ADMno1> reaction
+(
+    ADMno1::New(mesh)
 );
 
 #include "createMRF.H"

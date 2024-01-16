@@ -5,7 +5,8 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2016 OpenFOAM Foundation
+    Copyright (C) 2012-2017 OpenFOAM Foundation
+    Copyright (C) 2017-2021 OpenCFD Ltd.
 -------------------------------------------------------------------------------
 License
     This file is part of OpenFOAM.
@@ -24,20 +25,37 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
  
 \*---------------------------------------------------------------------------*/
+ 
+#include "ADMno1.H" 
 
-inline Foam::PtrList<Foam::volScalarField>& Foam::adModel::Y()
+// * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
+
+
+// * * * * * * * * * * * * * * * * Selectors * * * * * * * * * * * * * * * * //
+
+template<class ADModel>
+Foam::autoPtr<ADModel> Foam::ADMno1::New
+(
+    const fvMesh& mesh
+)
 {
-    return YPtrs_;
+    IOdictionary ADMno1Dict
+    (
+        IOobject
+        (
+            propertiesName,
+            mesh.time().constant(),
+            mesh,
+            IOobject::MUST_READ_IF_MODIFIED,
+            IOobject::NO_WRITE,
+            false
+        )
+    );
+
+    // TODO: do it properly!!! with virtual destructors and constructor hash tables 
+    // new keywaord is not gonna last!
+    auto* reactionPtr = new ADModel(mesh, ADMno1Dict);
+    return autoPtr<ADModel>(reactionPtr);
 }
-
-// inline PtrList<volScalarField>& adModel::Y()
-// {
-//     return YPtrs_;
-// }
-
-// inline const Foam::PtrList<Foam::volScalarField>& Y() const
-// {
-//     return YPtrs_;
-// }
 
 // ************************************************************************* //

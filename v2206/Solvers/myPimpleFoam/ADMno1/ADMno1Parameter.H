@@ -24,15 +24,15 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    ADM::adModelParameter
+    ADM::ADMno1Parameter
 
 Description
     H file for declairing AMDno1 parameter class
 
 \*---------------------------------------------------------------------------*/
 
-#ifndef adModelParameter_H
-#define adModelParameter_H
+#ifndef ADMno1Parameter_H
+#define ADMno1Parameter_H
 
 #include "typeDefs.H"
 
@@ -41,6 +41,9 @@ Description
 class admPara
 {
 private:
+    // TODO: enum for naming admMode
+    int admMode_ = 1;
+
 	yieldBiomass yB_;	// yield of biomass (Y)
 	yieldProduct yP_;	// yield of product (f)
 	carbonContent CC_;	// carbon content
@@ -141,6 +144,8 @@ public:
 	const yieldBiomass getYieldBio() const { return yB_; }
 	const yieldProduct getYieldPro() const { return yP_; }
 	const carbonContent getCarbonCon() const { return CC_; }
+
+    int getADMMode() const { return admMode_; }
 };
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

@@ -1,4 +1,4 @@
-adModelParameter.C
-adModel.C
+ADMno1Parameter.C
+ADMno1.C
 
 LIB = $(FOAM_USER_LIBBIN)/libADM

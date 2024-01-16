@@ -26,43 +26,34 @@ License
  
 \*---------------------------------------------------------------------------*/
 
-#include "adModel.H"
-
+#include "ADMno1.H"
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
  
 namespace Foam
 {
-    defineTypeNameAndDebug(adModel, 0);
-    defineRunTimeSelectionTable(adModel, fvMesh);
+    defineTypeNameAndDebug(ADMno1, 0);
+    // defineRunTimeSelectionTable(ADMno1, fvMesh);
 }
  
-const Foam::word Foam::adModel::propertiesName("admno1Properties");
+const Foam::word Foam::ADMno1::propertiesName("admno1Properties");
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
-Foam::adModel::adModel
-
-// adModel::adModel
+Foam::ADMno1::ADMno1
+// ADMno1::ADMno1
 (
-    const fvMesh& mesh,     // mesh
-    label runMode           // runModes (Meso) 
+    const fvMesh& mesh,
+    const IOdictionary& ADMno1Dict
 )
 :
-    IOdictionary
-    (
-        IOobject
-        (
-            propertiesName,
-            mesh.time().constant(),
-            mesh,
-            IOobject::MUST_READ_IF_MODIFIED,
-            IOobject::NO_WRITE
-        )
-    ),
-    runMode_(runMode),
-    admParameters_(runMode)
+    IOdictionary(ADMno1Dict),
+    admParameters_(ADMno1Dict.lookupOrDefault("runMode", 1))
 {
+
+    Info<< "Reading ADMno1 properties from " << propertiesName << endl;
+    Info<< "Setting ADMno1 run mode as " << admParameters_.getADMMode() << endl;
+
     //- Recreate "createADMFields.H"
 
     Info<< "Reading ADMno1 initial concentrations for soluables" << endl;
@@ -206,13 +197,12 @@ Foam::adModel::adModel
 
 // * * * * * * * * * * * * * * * * Selectors * * * * * * * * * * * * * * * * //
  
-Foam::autoPtr<Foam::adModel> Foam::adModel::New
+Foam::autoPtr<Foam::ADMno1> Foam::ADMno1::New
 (
-    const fvMesh& mesh,
-    label runMode
+    const fvMesh& mesh
 )
 {
-    return New<adModel>(mesh, runMode);
+    return New<ADMno1>(mesh);
 }
  
 

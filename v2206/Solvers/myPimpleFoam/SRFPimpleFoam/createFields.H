@@ -45,7 +45,7 @@ scalar pRefValue = 0.0;
 setRefCell(p, pimple.dict(), pRefCell, pRefValue);
 mesh.setFluxRequired(p.name());
 
-Info<< "Creating SRF model\n" << endl;
+Info<< "Creating SRF ADModel\n" << endl;
 autoPtr<SRF::SRFModel> SRF
 (
     SRF::SRFModel::New(Urel)

@@ -2,13 +2,15 @@
     "files.associations": {
         "bashrc": "shellscript",
         "myPimpleFoam.C": "cpp",
-        "adModelParameter.C": "cpp",
+        "ADMno1Parameter.C": "cpp",
         "admIn.C": "cpp",
         "admIni.C": "cpp",
         "admSoluables.C": "cpp",
         "admSolFields.C": "cpp",
         "admSolFields copy.C": "cpp",
-        "adModel.C": "cpp",
-        "adModelTemplates.C": "cpp"
+        "ADMno1.C": "cpp",
+        "adModelTemplates.C": "cpp",
+        "ADM1Templates.C": "cpp",
+        "ADMno1Templates.C": "cpp"
     }
 }
