@@ -38,6 +38,25 @@ namespace Foam
  
 const Foam::word Foam::ADMno1::propertiesName("admno1Properties");
 
+// * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
+
+void Foam::ADMno1::modeCheckErr()
+{
+    if (!namesOpMode.found(opMode_))
+    {
+        std::cerr << nl << "--> FOAM FATAL IO ERROR:" << nl
+                  << "Unknown operation mode type: " << opMode_
+                  << "\n\nValid operation mode types:\n";
+        std::cerr << namesOpMode.size() << "(\n";
+        forAll(namesOpMode, i)
+        {
+            std::cerr << namesOpMode[i] << nl;
+        }
+        std::cerr << ")\n";
+        std::exit(1);
+    }
+}
+
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
 Foam::ADMno1::ADMno1
@@ -48,15 +67,20 @@ Foam::ADMno1::ADMno1
 )
 :
     IOdictionary(ADMno1Dict),
-    admParameters_(ADMno1Dict.lookupOrDefault("runMode", 1))
+    opMode_(ADMno1Dict.get<word>("mode")),
+    Sc_(ADMno1Dict.lookupOrDefault("Sc", 0.2))
 {
 
-    Info<< "Reading ADMno1 properties from " << propertiesName << endl;
-    Info<< "Setting ADMno1 run mode as " << admParameters_.getADMMode() << endl;
+    Info<< "\nSelecting ADM no1 operation mode " << opMode_ << endl;
+    
+    modeCheckErr();
+
+    admParameters_.setOpMode(namesOpMode.find(opMode_));
+    
 
     //- Recreate "createADMFields.H"
 
-    Info<< "Reading ADMno1 initial concentrations for soluables" << endl;
+    Info<< "Reading ADM no1 initial concentrations for soluables" << endl;
 
     label iNames = 0;
     label nSpecies = namesSoluable.size() + namesGaseous.size();
@@ -90,7 +114,7 @@ Foam::ADMno1::ADMno1
 
     //-  Read gaseuoses
 
-    Info<< "Reading ADMno1 initial concentrations for gaseuoses" << endl;
+    Info<< "Reading ADM no1 initial concentrations for gaseuoses" << endl;
 
     forAll(namesGaseous, i)
     {
@@ -168,18 +192,15 @@ Foam::ADMno1::ADMno1
 
     //- Set up temperal concentration fields
 
-
-
-
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-    Info<< "Reading ADMno1 initial operating temperaturesbased on runMode" << endl;
+    // Info<< "Reading ADMno1 initial operating temperaturesbased on runMode" << endl;
 
     // TODO: if statement from runMode
-    scalar TopDefault_ = 308.15;
+    // scalar TopDefault_ = admParameters_.getTbase();
 
-    dimensionedScalar TopDefault("TopDefault", dimensionSet(0,0,0,1,0,0,0), TopDefault_); 
-    Info<< "Reading field Operating Temperature" << endl;
+    dimensionedScalar TopDefault("TopDefault", dimensionSet(0,0,0,1,0,0,0), admParameters_.getTbase()); 
+    Info<< "Reading field operational temperature" << endl;
     volScalarField Top
     (
         IOobject
@@ -195,6 +216,7 @@ Foam::ADMno1::ADMno1
     );
 }
 
+
 // * * * * * * * * * * * * * * * * Selectors * * * * * * * * * * * * * * * * //
  
 Foam::autoPtr<Foam::ADMno1> Foam::ADMno1::New
@@ -202,8 +224,24 @@ Foam::autoPtr<Foam::ADMno1> Foam::ADMno1::New
     const fvMesh& mesh
 )
 {
-    return New<ADMno1>(mesh);
+    IOdictionary ADMno1Dict
+    (
+        IOobject
+        (
+            propertiesName,
+            mesh.time().constant(),
+            mesh,
+            IOobject::MUST_READ_IF_MODIFIED,
+            IOobject::NO_WRITE,
+            false
+        )
+    );
+
+    // TODO: do it properly!!! with virtual destructors and constructor hash tables 
+    // new keywaord is not gonna last!
+    ADMno1* reactionPtr = new ADMno1(mesh, ADMno1Dict);
+    return autoPtr<ADMno1>(reactionPtr);
 }
- 
+
 
 // ************************************************************************* //

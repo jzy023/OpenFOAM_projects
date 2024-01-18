@@ -25,6 +25,11 @@ License
  
 \*---------------------------------------------------------------------------*/
 
+inline scalar Foam::ADMno1::Sc()
+{
+    return Sc_;
+}
+
 inline Foam::PtrList<Foam::volScalarField>& Foam::ADMno1::Y()
 {
     return YPtrs_;

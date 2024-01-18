@@ -63,8 +63,11 @@ class ADMno1
 
 private:
 
-    //- Thermodynamical condition
-    label runMode_;
+    //- Operation mode
+    word opMode_;
+
+    //- Schmidt number
+    scalar Sc_;
 
     //- ADM no1 parameters
     admPara admParameters_;
@@ -82,6 +85,9 @@ private:
     //- Temporary rate-of-change of concentration field
     mutable scalarField dcdt_;
 
+    //- Operation modes (thermal conditions for biomass)
+    const wordList namesOpMode = {"Meso", "MesoSolid", "Thermo"};  
+
     //- Species names for soluable
     //- !!! Sh2 is calculated iteratively 
     const wordList namesSoluable = {"Ssu", "Saa", "Sfa", "Sva", "Sbu", "Spro",
@@ -97,7 +103,7 @@ private:
     //- Species names for acid-base medians
     //- !!! All calculated iteratively
     const wordList namesAcidBase = {"SvaN", "SbuN", "SproN", "SacN", "Shco3N", "SohN"
-                                        "Snh3", "ShP"};
+                                    "Snh3", "ShP"};
 
     //- calculated by simple subtractions
     const wordList namesMedians = {"Sco2", "Snh4"};
@@ -112,7 +118,6 @@ public:
     //> https://openfoamwiki.net/index.php/OpenFOAM_guide/runTimeSelection_mechanism
     TypeName("ADMno1");
 
-
     // Declare run-time constructor selection table
 
     // declareRunTimeSelectionTable
@@ -123,12 +128,11 @@ public:
     //     (const fvMesh& mesh, label runMode),
     //     (mesh, runMode)
     // );
- 
+
 
     //- Default name of the turbulence properties dictionary
 
     static const word propertiesName;
-
 
     // Constructors
 
@@ -147,17 +151,10 @@ public:
 
     // Selectors
 
-    template<class ADModel>
-    static autoPtr<ADModel> New
-    (
-        const fvMesh&
-    );
+    // template<class ADModel>
+    // static autoPtr<ADModel> New (const fvMesh&);
 
-
-    static autoPtr<ADMno1> New
-    (
-        const fvMesh&
-    );
+    static autoPtr<ADMno1> New (const fvMesh&);
 
 
     // Destructor
@@ -165,6 +162,11 @@ public:
     ~ADMno1() = default;
 
     // Member Functions
+    void modeCheckErr();
+
+    //- Return Schmidt number
+    inline scalar Sc();
+    
     //- Return YPtrs_
     // inline const PtrList<volScalarField>& Y() const;
     inline PtrList<volScalarField>& Y();
@@ -191,10 +193,9 @@ public:
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
  
 #include "ADMno1I.H"
-
-#ifdef NoRepository
-    #include "ADMno1Templates.C"
-#endif
+// #ifdef NoRepository
+//     #include "ADMno1Templates.C"
+// #endif
  
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

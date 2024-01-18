@@ -41,8 +41,8 @@ Description
 class admPara
 {
 private:
-    // TODO: enum for naming admMode
-    int admMode_ = 1;
+
+    scalar Tbase_;      // base operational temperature
 
 	yieldBiomass yB_;	// yield of biomass (Y)
 	yieldProduct yP_;	// yield of product (f)
@@ -93,59 +93,65 @@ public:
 	scalar pH_UL_h2;
 	scalar pH_LL_h2;
 
-	// constructor
-    admPara() : // Yields of product
-                yP_({0.10, 0.25, 0.20,
-                     0.20, 0.25, 0.95,
-                     0.19, 0.13, 0.27,
-                     0.41, 0.06, 0.23,
-                     0.26, 0.05, 0.40}),
-                // Carbon Content
-                CC_({0.2786, 0.03, 0.0313,
-                     0.03, 0.022, 0.03,
-                     0.0313, 0.03, 0.0217,
-                     0.025, 0.0268, 0.0313,
-                     0.0313, 0.024, 0.0156}),
-                // Nitrogen Content
-                N_aa_(0.007), N_bac_(0.005714),
-                // Acid Base Kinetics
-                kAB({1e10, 1e10, 1e10,
-                     1e10, 1e10, 1e10}),
-                // Acide base Equilibrium Para
-                Ka({1.380e-5, 1.514e-5, 1.318e-5,
-                    1.738e-5, 4.467e-7, 5.623e-10,
-                    1e-14}),
-                // Henry's Law Coefficients
-                KH({7.384654293536963e-04, // h2
-                    0.001161902733673,     // ch4
-                    0.027146692900075,     // co2
-                    0.031300000000000}),   // h2o
+    admPara() : 
+        Tbase_(35),
+        // Yields of product
+        yP_({0.10, 0.25, 0.20,
+             0.20, 0.25, 0.95,
+             0.19, 0.13, 0.27,
+             0.41, 0.06, 0.23,
+             0.26, 0.05, 0.40}),
+        // Carbon Content
+        CC_({0.2786, 0.03, 0.0313,
+             0.03, 0.022, 0.03,
+             0.0313, 0.03, 0.0217,
+             0.025, 0.0268, 0.0313,
+             0.0313, 0.024, 0.0156}),
+        // Nitrogen Content
+        N_aa_(0.007), N_bac_(0.005714),
+        // Acid Base Kinetics
+        kAB({1e10, 1e10, 1e10,
+             1e10, 1e10, 1e10}),
+        // Acide base Equilibrium Para
+        Ka({1.380e-5, 1.514e-5, 1.318e-5,
+            1.738e-5, 4.467e-7, 5.623e-10,
+            1e-14}),
+        // Henry's Law Coefficients
+        KH({7.384654293536963e-04, // h2
+            0.001161902733673,     // ch4
+            0.027146692900075,     // co2
+            0.031300000000000}),   // h2o
 
-                // Gas Transfer Coefficients
-                // kL({200, 200, 200}),
-				kLa(200),
-                // pH bounds
-                pH_UL_aa(5.5), pH_LL_aa(4),
-                pH_UL_ac(7), pH_LL_ac(6),
-                pH_UL_h2(6), pH_LL_h2(5)
+        // Gas Transfer Coefficients
+        // kL({200, 200, 200}),
+    	kLa(200),
+        // pH bounds
+        pH_UL_aa(5.5), pH_LL_aa(4),
+        pH_UL_ac(7), pH_LL_ac(6),
+        pH_UL_h2(6), pH_LL_h2(5)
     {
-		defineRCMeso();
-		defineYieldsMeso();
-		defineKIMeso();
-		defineKSMeso();
-		defineSTOI();
-		defineAcidBaseDAE();
-	};
-	// maybe use enums?
-	admPara(int admMode);
+    	defineRCMeso();
+    	defineYieldsMeso();
+    	defineKIMeso();
+    	defineKSMeso();
+    	defineSTOI();
+    	defineAcidBaseDAE();
+    };
 
 	// member functions
+
+    void setOpMode(label idxMode);
+
 	const reactionRateConstant getRC() const { return RC; }
+
 	const yieldBiomass getYieldBio() const { return yB_; }
+
 	const yieldProduct getYieldPro() const { return yP_; }
+
 	const carbonContent getCarbonCon() const { return CC_; }
 
-    int getADMMode() const { return admMode_; }
+    scalar getTbase() const { return Tbase_; }
+
 };
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

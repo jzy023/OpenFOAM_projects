@@ -35,95 +35,48 @@ Description
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
-admPara::admPara(int admMode) 
-: 
-    admMode_(admMode),
-    // Yields of product
-    yP_({0.10, 0.20, 0.20,
-         0.20, 0.30, 0.95,
-         0.19, 0.13, 0.27,
-         0.41, 0.06, 0.23,
-         0.26, 0.05, 0.40}),
-    // si_xc;	xi_sc;	ch_xc;
-    // pr_xc;	li_xc;	fa_li;
-    // h2_su;	bu_su;	pro_su;
-    // ac_su;	h2_aa;	va_aa;
-    // bu_aa;	pro_aa;	ac_aa;
+// admPara::admPara() : // Yields of product
+//     yP_({0.10, 0.25, 0.20,
+//          0.20, 0.25, 0.95,
+//          0.19, 0.13, 0.27,
+//          0.41, 0.06, 0.23,
+//          0.26, 0.05, 0.40}),
+//     // Carbon Content
+//     CC_({0.2786, 0.03, 0.0313,
+//          0.03, 0.022, 0.03,
+//          0.0313, 0.03, 0.0217,
+//          0.025, 0.0268, 0.0313,
+//          0.0313, 0.024, 0.0156}),
+//     // Nitrogen Content
+//     N_aa_(0.007), N_bac_(0.005714),
+//     // Acid Base Kinetics
+//     kAB({1e10, 1e10, 1e10,
+//          1e10, 1e10, 1e10}),
+//     // Acide base Equilibrium Para
+//     Ka({1.380e-5, 1.514e-5, 1.318e-5,
+//         1.738e-5, 4.467e-7, 5.623e-10,
+//         1e-14}),
+//     // Henry's Law Coefficients
+//     KH({7.384654293536963e-04, // h2
+//         0.001161902733673,     // ch4
+//         0.027146692900075,     // co2
+//         0.031300000000000}),   // h2o
 
-    // Carbon Content
-    CC_({0.02786, 0.03, 0.0313,
-         0.03, 0.022, 0.03,
-         0.0313, 0.03, 0.0217,
-         0.025, 0.0268, 0.0313,
-         0.0313, 0.024, 0.0156}),
-    // xc;		si;		ch;
-    // pr;		li;		xi;
-    // su;		aa;		fa;
-    // bu;		pro;	ac;
-    // bac;		va;		ch4;
-
-    // Nitrogen Content
-    N_aa_(0.007), N_bac_(0.005714),
-
-    // Acid Base Kinetics
-    kAB({1e10, 1e10, 1e10,
-         1e10, 1e10, 1e10}),
-
-    // Acide base Equilibrium Para
-    Ka({1.380e-5, 1.514e-5, 1.318e-5,
-        1.738e-5, 4.467e-7, 5.623e-10,
-        1e-14}),
-    // va;	bu;	  pro;
-    // ac;	co2;  IN;
-    // Kw
-
-    // Henry's Law Coefficients
-    KH({7.384654293536963e-04, // h2
-        0.001161902733673,     // ch4
-        0.027146692900075,     // co2
-        0.031300000000000}),   // h2o
-
-    // Gas Transfer Coefficients
-    // TODO: simplify
-    // kL({200, 200, 200}),
-    kLa(200),
-
-    pH_UL_aa(5.5), pH_LL_aa(4),
-    pH_UL_ac(7), pH_LL_ac(6),
-    pH_UL_h2(6), pH_LL_h2(5)
-{
-	if (admMode == 0)
-	{
-		defineRCMeso();
-		defineYieldsMeso();
-		defineKIMeso();
-		defineKSMeso();
-	}
-	else if (admMode == 1)
-	{
-		defineRCMesoSolid();
-		defineYieldsMeso();
-		defineKIMeso();
-		defineKSMesoSolid();
-	}
-	else if (admMode == 2)
-	{
-		defineRCThermo();
-		defineYieldsThermo();
-		defineKIThermo();
-		defineKSThermo();
-	}
-	else
-	{
-		throw "admMode undefined";
-	}
-
-	/* ========================= Stoichematic for ==========================
-	>>> calculate Stoichematic table based on yields 
-	======================================================================== */
-	defineSTOI();
-	defineAcidBaseDAE();
-}
+//     // Gas Transfer Coefficients
+//     // kL({200, 200, 200}),
+// 	kLa(200),
+//     // pH bounds
+//     pH_UL_aa(5.5), pH_LL_aa(4),
+//     pH_UL_ac(7), pH_LL_ac(6),
+//     pH_UL_h2(6), pH_LL_h2(5)
+// {
+// 	defineRCMeso();
+// 	defineYieldsMeso();
+// 	defineKIMeso();
+// 	defineKSMeso();
+// 	defineSTOI();
+// 	defineAcidBaseDAE();
+// }
 
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
@@ -424,6 +377,40 @@ void admPara::defineAcidBaseDAE()
 	abDAE[8][6] = 0;		//nh3
 	abDAE[8][7] = 1;		//nh+
 	abDAE[8][8] = 1;
+};
+
+
+void admPara::setOpMode
+(
+    label idxMode
+)
+{
+    if (idxMode == 0)
+	{
+		defineRCMeso();
+		defineYieldsMeso();
+		defineKIMeso();
+		defineKSMeso();
+	}
+	else if (idxMode == 1)
+	{
+		defineRCMesoSolid();
+		defineYieldsMeso();
+		defineKIMeso();
+		defineKSMesoSolid();
+	}
+	else if (idxMode == 2)
+	{
+        Tbase_ = 55;
+		defineRCThermo();
+		defineYieldsThermo();
+		defineKIThermo();
+		defineKSThermo();
+	}
+    // else
+	// {
+	// 	throw "ADM no1 operation mode undefined";
+	// }
 }
 
 

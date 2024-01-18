@@ -41,8 +41,7 @@ Description
 
 Info << "ADM convection-diffusion calculation" << endl;
 // TODO: make it an input from ./constant/ADMpara file
-scalar SC = 0.1; // Schmidt Number
-volScalarField Deff = turbulence->nu() / SC;
+volScalarField Deff = turbulence->nu() / reaction->Sc();
 
 // Create ADM class instance (ADMno1 constructor)
 // reaction->R(Yi) becomses the source term
