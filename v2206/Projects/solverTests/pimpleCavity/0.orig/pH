@@ -10,20 +10,19 @@ FoamFile
     version     2.0;
     format      ascii;
     class       volScalarField;
-    object      San;
+    object      pH;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 dimensions      [0 0 0 0 0 0 0];
 
-internalField   uniform 1e-16;
+internalField   uniform 7.26;
 
 boundaryField
 {
     movingWall
     {
-        type            fixedValue;
-        value           uniform 1e-16;
+        type            zeroGradient;
     }
 
     fixedWalls
@@ -36,5 +35,6 @@ boundaryField
         type            empty;
     }
 }
+
 
 // ************************************************************************* //

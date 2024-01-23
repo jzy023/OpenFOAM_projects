@@ -70,13 +70,31 @@ private:
     scalar Sc_;
 
     //- ADM no1 parameters
-    admPara admParameters_;
+    admPara para_;
 
-    //- Reference to the field of specie concentrations
+    //- Gas constant
+    scalar R_;
+
+    //- pH value
+    volScalarField pH_;
+
+    //- List of pointers to the field of specie concentrations (STOI)
     PtrList<volScalarField> YPtrs_;
 
-    //- List of reaction rate per specie [kg/m3/s]
-    PtrList<volScalarField::Internal> RR_;
+    //- List of pointers to the field of gas concentrations
+    PtrList<volScalarField> GPtrs_;
+
+    //- List of pointers to the field of electrolytes concentrations
+    PtrList<volScalarField> EPtrs_;
+
+    //- List of pointers to the field of medians concentrations
+    PtrList<volScalarField> MPtrs_;
+
+    //- List of pointers to inhibition 
+    PtrList<volScalarField> IPtrs_;
+
+    //- List of pointers to reaction rate per specie [kg/m3/s] and [mol/m3/s]
+    PtrList<volScalarField> RRPtrs_;
 
     //- Temporary concentration fields
     // PtrList<volScalarField>& YPtrsTemps_;
@@ -91,25 +109,37 @@ private:
     //- Species names for soluable
     //- !!! Sh2 is calculated iteratively 
     const wordList namesSoluable = {"Ssu", "Saa", "Sfa", "Sva", "Sbu", "Spro",
-                                    "Sac", "Sh2", "Sch4", "SIC", "SIN", "SI", "Scat", "San"};
-
-    //- Species names for gaseouse
-    const wordList namesGaseous = {"Gh2", "Gch4", "Gco2"};
+                                    "Sac", "Sh2", "Sch4", "SIC", "SIN", "SI"};
 
     //- Species names for particulate
     const wordList namesParticulate = {"Xc", "Xch", "Xpr", "Xli", "Xsu", "Xaa",
                                        "Xfa", "Xc4", "Xpro", "Xac", "Xh2", "XI"};
 
+    //- Species names for gaseouse
+    const wordList namesGaseous = {"Gh2", "Gch4", "Gco2"};
+
     //- Species names for acid-base medians
     //- !!! All calculated iteratively
-    const wordList namesAcidBase = {"SvaN", "SbuN", "SproN", "SacN", "Shco3N", "SohN"
-                                    "Snh3", "ShP"};
+    const wordList namesElectrolyte = {"SvaN", "SbuN", "SproN", "SacN", "Shco3N", "SohN",
+                                       "ShP"};
 
     //- calculated by simple subtractions
-    const wordList namesMedians = {"Sco2", "Snh4"};
+    const wordList namesMedians = {"Sco2", "Snh3", "Snh4"};
 
+    //- inert substances
+    const wordList namesInerts = {"Scat", "San"};
 
-    // const word dictName("");
+    //- Cation concentration (inert)
+    scalar Scat_;
+
+    //- Anion concentration (inert)
+    scalar San_;
+
+    //- Pirvate Helper Functions
+    #include "ADMno1Helpers.H"
+
+    //- Reaction rate calculation
+    void RR();
 
 public:
  
@@ -133,6 +163,7 @@ public:
     //- Default name of the turbulence properties dictionary
 
     static const word propertiesName;
+
 
     // Constructors
 
@@ -173,7 +204,7 @@ public:
 
 
     //- Return const access to the chemical source terms for specie, i
-    inline const volScalarField::Internal& RR ( const label i ) const;
+    // inline const volScalarField::Internal& RR ( const label i ) const;
 
 
     //- Return non const access to chemical source terms [kg/m3/s]
@@ -183,6 +214,7 @@ public:
     // combustionModels/laminar.C -> template<class ReactionThermo>
                                   // Foam::tmp<Foam::fvScalarMatrix>
                                   // Foam::combustionModels::laminar<ReactionThermo>::R(volScalarField& Y) const
+
 
 };
 

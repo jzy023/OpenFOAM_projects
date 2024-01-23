@@ -11,6 +11,7 @@
         "ADMno1.C": "cpp",
         "adModelTemplates.C": "cpp",
         "ADM1Templates.C": "cpp",
-        "ADMno1Templates.C": "cpp"
+        "ADMno1Templates.C": "cpp",
+        "ADMno1RR.C": "cpp"
     }
 }

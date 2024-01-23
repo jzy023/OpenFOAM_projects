@@ -48,7 +48,7 @@ private:
 	yieldProduct yP_;	// yield of product (f)
 	carbonContent CC_;	// carbon content
 
-	scalar N_aa_; // Nitrogen content
+	scalar N_aa_;  // Nitrogen content
 	scalar N_bac_; // Nitrogen content Biomass
 
 	void defineRCMeso();
@@ -69,19 +69,29 @@ private:
 	void defineSTOI();
 	void defineAcidBaseDAE();
 
+    List<scalar> Yini;  // main
+    List<scalar> Gini;   // gas
+    List<scalar> Eini;   // electrolytes
+    List<scalar> Mini;   // medians
+
+    void listResizing();
+
+    void defineInitialStateMeso();      //TODO: need work
+    void defineInitialStateMesoSolid();
+    void defineInitialStateThermo();
+
 public:
 	std::vector<std::vector<scalar>> STOI;
 	std::vector<std::vector<scalar>> abDAE;
 	reactionRateConstant RC; // k_dis; k_dec; k_hyd; k_m;
 
-	scalar epsilon = 10e-4; //small value to avoid 0 denominator in temp calcs
 	inhibitionParaI K_I;	// 
 	inhibitionParaS K_S;	// 
 	admAcidBaseKinetic kAB;	// 
 	admAcidBaseEq Ka;		// 
 	gasHenryCoe KH;			// Henry's Law
-    scalar kLa;       	// gas transfer rate coefficients [d^-1]
-    // gasTransferRate kL; // gas transfer rate coefficients [d^-1]
+    scalar kLa;       	    // gas transfer rate coefficients [d^-1]
+    // gasTransferRate kL;  // gas transfer rate coefficients [d^-1]
 
     // pH Limits
 	scalar pH_UL_aa;
@@ -152,6 +162,11 @@ public:
 
     scalar getTbase() const { return Tbase_; }
 
+    scalar getYini(label idx) const { return Yini[idx]; }
+    scalar getGini(label idx) const { return Gini[idx]; }
+    scalar getEini(label idx) const { return Eini[idx]; }
+    scalar getMini(label idx) const { return Mini[idx]; }
+    
 };
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

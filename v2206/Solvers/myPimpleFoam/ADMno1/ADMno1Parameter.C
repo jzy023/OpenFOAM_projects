@@ -33,52 +33,6 @@ Description
 
 #include "ADMno1Parameter.H"
 
-// * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
-
-// admPara::admPara() : // Yields of product
-//     yP_({0.10, 0.25, 0.20,
-//          0.20, 0.25, 0.95,
-//          0.19, 0.13, 0.27,
-//          0.41, 0.06, 0.23,
-//          0.26, 0.05, 0.40}),
-//     // Carbon Content
-//     CC_({0.2786, 0.03, 0.0313,
-//          0.03, 0.022, 0.03,
-//          0.0313, 0.03, 0.0217,
-//          0.025, 0.0268, 0.0313,
-//          0.0313, 0.024, 0.0156}),
-//     // Nitrogen Content
-//     N_aa_(0.007), N_bac_(0.005714),
-//     // Acid Base Kinetics
-//     kAB({1e10, 1e10, 1e10,
-//          1e10, 1e10, 1e10}),
-//     // Acide base Equilibrium Para
-//     Ka({1.380e-5, 1.514e-5, 1.318e-5,
-//         1.738e-5, 4.467e-7, 5.623e-10,
-//         1e-14}),
-//     // Henry's Law Coefficients
-//     KH({7.384654293536963e-04, // h2
-//         0.001161902733673,     // ch4
-//         0.027146692900075,     // co2
-//         0.031300000000000}),   // h2o
-
-//     // Gas Transfer Coefficients
-//     // kL({200, 200, 200}),
-// 	kLa(200),
-//     // pH bounds
-//     pH_UL_aa(5.5), pH_LL_aa(4),
-//     pH_UL_ac(7), pH_LL_ac(6),
-//     pH_UL_h2(6), pH_LL_h2(5)
-// {
-// 	defineRCMeso();
-// 	defineYieldsMeso();
-// 	defineKIMeso();
-// 	defineKSMeso();
-// 	defineSTOI();
-// 	defineAcidBaseDAE();
-// }
-
-
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 void admPara::defineRCMeso()
 {
@@ -380,6 +334,42 @@ void admPara::defineAcidBaseDAE()
 };
 
 
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+void admPara::listResizing()
+{
+    Yini.resize(24);
+    Gini.resize(3);
+    Eini.resize(7);
+    Mini.resize(3); 
+}
+
+//TODO: need work
+void admPara::defineInitialStateMeso()
+{
+    listResizing();
+    Info << Yini.size() << ", "
+         << Gini.size() << ", "
+         << Eini.size() << ", "
+         << Mini.size() << endl;
+}
+
+      
+void admPara::defineInitialStateMesoSolid()
+{
+    listResizing();
+}
+
+
+void admPara::defineInitialStateThermo()
+{
+    listResizing();
+}
+
+
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
 void admPara::setOpMode
 (
     label idxMode
@@ -391,6 +381,7 @@ void admPara::setOpMode
 		defineYieldsMeso();
 		defineKIMeso();
 		defineKSMeso();
+        defineInitialStateMeso();
 	}
 	else if (idxMode == 1)
 	{
@@ -398,6 +389,7 @@ void admPara::setOpMode
 		defineYieldsMeso();
 		defineKIMeso();
 		defineKSMesoSolid();
+        defineInitialStateMesoSolid();
 	}
 	else if (idxMode == 2)
 	{
@@ -406,6 +398,7 @@ void admPara::setOpMode
 		defineYieldsThermo();
 		defineKIThermo();
 		defineKSThermo();
+        defineInitialStateThermo();
 	}
     // else
 	// {

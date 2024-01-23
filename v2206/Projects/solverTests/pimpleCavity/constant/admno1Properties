@@ -17,8 +17,21 @@ FoamFile
 // Operation modes
 mode            Meso;
 
-
 // Schmidt number
 Sc              0.2;
+
+// Gas constant
+R               0.083145;
+
+// Default pH value
+pH              7.26;
+
+// Cation concentration
+Scat            0.00;
+
+// Anion concentration
+San             0.0052;
+
+
 
 // ************************************************************************* //

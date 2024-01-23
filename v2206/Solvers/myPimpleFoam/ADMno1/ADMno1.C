@@ -38,7 +38,8 @@ namespace Foam
  
 const Foam::word Foam::ADMno1::propertiesName("admno1Properties");
 
-// * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
+
+// * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
 void Foam::ADMno1::modeCheckErr()
 {
@@ -68,30 +69,51 @@ Foam::ADMno1::ADMno1
 :
     IOdictionary(ADMno1Dict),
     opMode_(ADMno1Dict.get<word>("mode")),
-    Sc_(ADMno1Dict.lookupOrDefault("Sc", 0.2))
+    Sc_(ADMno1Dict.lookupOrDefault("Sc", 0.2)),
+    R_(ADMno1Dict.lookupOrDefault("R", 0.083145)),
+    pH_
+    (
+        IOobject
+        (
+            "pH",
+            mesh.time().timeName(),
+            mesh,
+            IOobject::READ_IF_PRESENT,
+            IOobject::AUTO_WRITE
+        ),
+        mesh,
+        dimensionedScalar
+        (
+            "pHDefault", 
+            dimensionSet(0,0,0,0,0,0,0), 
+            ADMno1Dict.lookupOrDefault("pH", 7.26)
+        )
+    ),
+    Scat_(ADMno1Dict.lookupOrDefault("Scat", 0.00)),
+    San_(ADMno1Dict.lookupOrDefault("San", 0.0052))
 {
 
     Info<< "\nSelecting ADM no1 operation mode " << opMode_ << endl;
     
     modeCheckErr();
 
-    admParameters_.setOpMode(namesOpMode.find(opMode_));
-    
+    para_.setOpMode(namesOpMode.find(opMode_));
 
-    //- Recreate "createADMFields.H"
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+    //- Main substances concentration initialization
 
     Info<< "Reading ADM no1 initial concentrations for soluables" << endl;
 
     label iNames = 0;
-    label nSpecies = namesSoluable.size() + namesGaseous.size();
+    label nSpecies = namesSoluable.size();
                 // TODO: add other species
-                //    + namesParticulate.size() + namesMedians.size();
+                //    + namesParticulate.size();
 
     YPtrs_.resize(nSpecies);
 
     forAll(namesSoluable, i)
     {
-        // Info<< namesSoluable[i] << endl;
         YPtrs_.set
         (
             i,
@@ -102,41 +124,21 @@ Foam::ADMno1::ADMno1
                     namesSoluable[i], // IOobject::groupName(namesSoluable[i]),
                     mesh.time().timeName(),
                     mesh,
-                    IOobject::MUST_READ,
+                    IOobject::READ_IF_PRESENT,
                     IOobject::AUTO_WRITE
                 ),
-                mesh
+                mesh,
+                dimensionedScalar
+                (
+                    namesSoluable[i] + "Default", 
+                    dimensionSet(0,0,0,0,0,0,0),
+                    para_.getYini(i)
+                )
             )
         );
     }
 
     iNames += namesSoluable.size();
-
-    //-  Read gaseuoses
-
-    Info<< "Reading ADM no1 initial concentrations for gaseuoses" << endl;
-
-    forAll(namesGaseous, i)
-    {
-        YPtrs_.set
-        (
-            i + iNames,
-            new volScalarField
-            (
-                IOobject
-                (
-                    namesGaseous[i],
-                    mesh.time().timeName(),
-                    mesh,
-                    IOobject::MUST_READ,
-                    IOobject::AUTO_WRITE
-                ),
-                mesh
-            )
-        );
-    }
-
-    // iNames += sizeof(namesGaseous);
 
     // //-  Read particulates
 
@@ -154,39 +156,123 @@ Foam::ADMno1::ADMno1
     //                 namesParticulate[i],
     //                 mesh.time().timeName(),
     //                 mesh,
-    //                 IOobject::MUST_READ,
+    //                 IOobject::READ_IF_PRESENT,
     //                 IOobject::AUTO_WRITE
     //             ),
-    //             mesh
+    //             mesh,
+    //             dimensionedScalar
+    //             (
+    //                 namesParticulate[i] + "Default", 
+    //                 dimensionSet(0,0,0,0,0,0,0), 
+    //                 para_.getYini(i + iNames)
+    //             )
     //         )
     //     );
     // }
 
     // iNames += sizeof(namesParticulate);
 
-    // //-  Read electrolytes
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-    // Info<< "Reading ADMno1 initial concentrations for electrolytes" << endl;
+    //-  Gaseuoses initialization
 
-    // forAll(namesElectrolyte, i)
-    // {
-    //     YPtrs_.set
-    //     (
-    //         i + iNames,
-    //         new volScalarField
-    //         (
-    //             IOobject
-    //             (
-    //                 namesElectrolyte[i],
-    //                 mesh.time().timeName(),
-    //                 mesh,
-    //                 IOobject::MUST_READ,
-    //                 IOobject::AUTO_WRITE
-    //             ),
-    //             mesh
-    //         )
-    //     );
-    // }
+    Info<< "Reading ADM no1 initial concentrations for gaseuoses" << endl;
+
+    GPtrs_.resize(namesGaseous.size());
+
+    forAll(namesGaseous, i)
+    {
+        GPtrs_.set
+        (
+            i,
+            new volScalarField
+            (
+                IOobject
+                (
+                    namesGaseous[i],
+                    mesh.time().timeName(),
+                    mesh,
+                    IOobject::READ_IF_PRESENT,
+                    IOobject::AUTO_WRITE
+                ),
+                mesh,
+                dimensionedScalar
+                (
+                    namesGaseous[i] + "Default", 
+                    dimensionSet(0,0,0,0,0,0,0),
+                    para_.getGini(i)
+                )
+            )
+        );
+    }
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+    //-  Electrolytes (calculated) initialization
+
+    Info<< "Initializing concentrations for electrolyte" << endl;
+
+    EPtrs_.resize(namesElectrolyte.size());
+
+    forAll(namesElectrolyte, i)
+    {
+        EPtrs_.set
+        (
+            i,
+            new volScalarField
+            (
+                IOobject
+                (
+                    namesElectrolyte[i],
+                    mesh.time().timeName(),
+                    mesh,
+                    IOobject::READ_IF_PRESENT,
+                    IOobject::NO_WRITE
+                ),
+                mesh,
+                dimensionedScalar
+                (
+                    namesElectrolyte[i] + "Default", 
+                    dimensionSet(0,0,0,0,0,0,0), 
+                    para_.getEini(i)
+                )
+            )
+        );
+    }
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+    //-  Medians initialization
+
+    Info<< "Initializing concentrations for medians" << endl;
+
+    MPtrs_.resize(namesMedians.size());
+
+    forAll(namesMedians, i)
+    {
+        MPtrs_.set
+        (
+            i,
+            new volScalarField
+            (
+                IOobject
+                (
+                    namesMedians[i],
+                    mesh.time().timeName(),
+                    mesh,
+                    IOobject::READ_IF_PRESENT,
+                    IOobject::NO_WRITE
+                ),
+                mesh,
+                dimensionedScalar
+                (
+                    namesMedians[i] + "Default", 
+                    dimensionSet(0,0,0,0,0,0,0), 
+                    para_.getMini(i)
+                )
+            )
+        );
+    }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -194,14 +280,61 @@ Foam::ADMno1::ADMno1
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-    // Info<< "Reading ADMno1 initial operating temperaturesbased on runMode" << endl;
+    //- Inhibition coeffs initialization
 
-    // TODO: if statement from runMode
-    // scalar TopDefault_ = admParameters_.getTbase();
+    // IPtrs_.resize(7);
 
-    dimensionedScalar TopDefault("TopDefault", dimensionSet(0,0,0,1,0,0,0), admParameters_.getTbase()); 
+    // for (int i = 0; i < 7; i++)
+    // {
+    //     IPtrs_.set
+    //     (
+    //         i,
+    //         new volScalarField
+    //         (
+    //             IOobject
+    //             (
+    //                 namesElectrolyte[i], //word(string(i)),
+    //                 mesh.time().timeName(),
+    //                 mesh,
+    //                 IOobject::NO_READ,
+    //                 IOobject::NO_WRITE
+    //             ),
+    //             mesh
+    //         )
+    //     );
+    // }
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+    //- Reaction rate initialization
+    
+    // RRPtrs_.resize(19);
+
+    // for (int i = 0; i < 19; i++)
+    // {
+    //     RRPtrs_.set
+    //     (
+    //         i,
+    //         new volScalarField
+    //         (
+    //             IOobject
+    //             (
+    //                 word(string(i)),
+    //                 mesh.time().timeName(),
+    //                 mesh,
+    //                 IOobject::NO_READ,
+    //                 IOobject::NO_WRITE
+    //             ),
+    //             mesh
+    //         )
+    //     );
+    // }
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
     Info<< "Reading field operational temperature" << endl;
-    volScalarField Top
+
+    volScalarField Top_
     (
         IOobject
         (
@@ -212,7 +345,12 @@ Foam::ADMno1::ADMno1
             IOobject::AUTO_WRITE
         ),
         mesh,
-        TopDefault
+        dimensionedScalar
+        (
+            "TopDefault", 
+            dimensionSet(0,0,0,1,0,0,0), 
+            para_.getTbase()
+        )
     );
 }
 
@@ -231,7 +369,7 @@ Foam::autoPtr<Foam::ADMno1> Foam::ADMno1::New
             propertiesName,
             mesh.time().constant(),
             mesh,
-            IOobject::MUST_READ_IF_MODIFIED,
+            IOobject::READ_IF_PRESENT,
             IOobject::NO_WRITE,
             false
         )
