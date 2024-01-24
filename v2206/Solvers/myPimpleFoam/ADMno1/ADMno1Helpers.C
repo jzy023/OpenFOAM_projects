@@ -30,19 +30,18 @@ License
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
-//- Inhibition calculations
+//- Inhibition calculations=
 
-scalar Foam::ADMno1::calcInhibition
+volScalarField Foam::ADMno1::calcInhibition
 (
-    scalar num, 
+    volScalarField* YPtr, 
     scalar denom
 )
 {
-    return 1 / (1 + (num / denom));
+    return 1 / (1 + (*YPtr / denom));
 }
 
-
-volScalarField Foam::ADMno1::calcInhibitionH
+volScalarField Foam::ADMno1::calcInhibitionHP
 (
     volScalarField* ShpPtr,
     scalar UL,
@@ -53,20 +52,6 @@ volScalarField Foam::ADMno1::calcInhibitionH
     scalar Kph = pow(10, -0.5 * (UL + LL));
     return pow(Kph, n) / (pow(*ShpPtr, n) + pow(Kph, n));
 }
-
-
-volScalarField Foam::ADMno1::calcInhibitionPH
-(
-    volScalarField* phPtr,
-    scalar UL,
-    scalar LL,
-    label n
-)
-{
-    scalar Kph = 0.5 * (UL + LL);
-    return pow(*phPtr, n) / (pow(*phPtr, n) + pow(Kph, n));
-}
-
 
 //- Reaction rate calculations
 

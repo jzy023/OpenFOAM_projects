@@ -47,6 +47,7 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
 // reaction->R(Yi) becomses the source term
 // PtrList<volScalarField>& YPtrs = reaction.Y();
 PtrList<volScalarField>& YPtrs = reaction->Y();
+reaction->RR();
 
 {
     forAll(YPtrs, i)

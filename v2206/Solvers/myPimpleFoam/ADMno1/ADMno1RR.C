@@ -38,61 +38,63 @@ void Foam::ADMno1::RR()
     scalar n_ac = 3.0 / (para_.pH_UL_ac - para_.pH_LL_ac);
     scalar n_h2 = 3.0 / (para_.pH_UL_h2 - para_.pH_LL_h2);
 
-    // IPtrs_[0] = calcInhibitionH // aa
-    // (
-    //     &(EPtrs_.last()), // ShP
-    //     para_.pH_UL_aa, 
-    //     para_.pH_LL_aa, n_aa
-    // );
+    IPtrs_[0] = calcInhibitionHP // aa
+    (
+        &(EPtrs_.last()), // ShP
+        para_.pH_UL_aa, 
+        para_.pH_LL_aa,
+        n_aa
+    );
 
-    // IPtrs_[1] = calcInhibitionH // ac
-    // (
-    //     &(EPtrs_.last()), // ShP
-    //     para_.pH_UL_ac, 
-    //     para_.pH_LL_ac, n_ac
-    // );
+    IPtrs_[1] = calcInhibitionHP // ac
+    (
+        &(EPtrs_.last()), // ShP
+        para_.pH_UL_ac, 
+        para_.pH_LL_ac,
+        n_ac
+    );
 
-    // IPtrs_[2] = calcInhibitionH // h2
-    // (
-    //     &(EPtrs_.last()), // ShP
-    //     para_.pH_UL_h2, 
-    //     para_.pH_LL_h2, n_h2
-    // );
+    IPtrs_[2] = calcInhibitionHP // h2
+    (
+        &(EPtrs_.last()), // ShP
+        para_.pH_UL_h2, 
+        para_.pH_LL_h2,
+        n_h2
+    );
 
     // // >>> ???
-    // IPtrs_[3] = calcInhibition // IN
-    // (
-    //     &(YPtrs_[10]), // SIN
-    //     para_.K_S.IN
-    // );
+    IPtrs_[3] = calcInhibition // IN
+    (
+        &(YPtrs_[10]), // SIN
+        para_.K_S.IN
+    );
 
-	// IPtrs_[4] = calcInhibition // h2fa
-    // (
-    //     &(YPtrs_[7]), // Sh2
-    //     para_.K_I.h2fa
-    // );
+	IPtrs_[4] = calcInhibition // h2fa
+    (
+        &(YPtrs_[7]), // Sh2
+        para_.K_I.h2fa
+    );
 
-	// IPtrs_[5] = calcInhibition // h2c4
-    // (
-    //     &(YPtrs_[7]), // Sh2
-    //     para_.K_I.h2c4
-    // );
+	IPtrs_[5] = calcInhibition // h2c4
+    (
+        &(YPtrs_[7]), // Sh2
+        para_.K_I.h2c4
+    );
 
-	// IPtrs_[6] = calcInhibition // h2pro
-    // (
-    //     &(YPtrs_[7]), // Sh2
-    //     para_.K_I.h2pro
-    // );
+	IPtrs_[6] = calcInhibition // h2pro
+    (
+        &(YPtrs_[7]), // Sh2
+        para_.K_I.h2pro
+    );
 
-	// IPtrs_[7] = calcInhibition // nh3
-    // (
-    //     &(MPtrs_[1]), // Snh3
-    //     para_.K_I.nh3
-    // );
+	IPtrs_[7] = calcInhibition // nh3
+    (
+        &(MPtrs_[1]), // Snh3
+        para_.K_I.nh3
+    );
 
+    //- Raction rates
 
-
-    // //- Raction rates
     // RRPtrs_[0] = calcRho(para_.RC.dis, Conc_.X_c);
     // RRPtrs_[1] = calcRho(para_.RC.hyd_ch, Conc_.X_ch);
     // RRPtrs_[2] = calcRho(para_.RC.hyd_pr, Conc_.X_pr);

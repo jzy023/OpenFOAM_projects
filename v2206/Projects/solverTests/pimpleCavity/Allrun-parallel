@@ -15,7 +15,7 @@ runApplication reconstructPar
 
 # runParallel -s "reconstruct" redistributePar -reconstruct -latestTime
 
-# rm -r proc*
+rm -r proc*
 
 touch foam.foam
 

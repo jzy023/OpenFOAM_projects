@@ -32,23 +32,15 @@ License
 
 //- Inhibition calculations
 
-scalar calcInhibition
+volScalarField calcInhibition
 (
-    scalar num,
+    volScalarField* YPtr, 
     scalar denom
 );
 
-volScalarField calcInhibitionH
+volScalarField calcInhibitionHP
 (
     volScalarField* ShpPtr,
-    scalar UL,
-    scalar LL,
-    label n
-);
-
-volScalarField calcInhibitionPH
-(
-    volScalarField* phPtr,
     scalar UL,
     scalar LL,
     label n

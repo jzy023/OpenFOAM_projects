@@ -139,7 +139,7 @@ private:
     #include "ADMno1Helpers.H"
 
     //- Reaction rate calculation
-    void RR();
+    // void RR();
 
 public:
  
@@ -202,6 +202,7 @@ public:
     // inline const PtrList<volScalarField>& Y() const;
     inline PtrList<volScalarField>& Y();
 
+    void RR();
 
     //- Return const access to the chemical source terms for specie, i
     // inline const volScalarField::Internal& RR ( const label i ) const;

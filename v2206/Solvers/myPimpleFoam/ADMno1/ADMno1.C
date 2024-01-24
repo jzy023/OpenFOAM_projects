@@ -282,53 +282,65 @@ Foam::ADMno1::ADMno1
 
     //- Inhibition coeffs initialization
 
-    // IPtrs_.resize(7);
+    IPtrs_.resize(8);
 
-    // for (int i = 0; i < 7; i++)
-    // {
-    //     IPtrs_.set
-    //     (
-    //         i,
-    //         new volScalarField
-    //         (
-    //             IOobject
-    //             (
-    //                 namesElectrolyte[i], //word(string(i)),
-    //                 mesh.time().timeName(),
-    //                 mesh,
-    //                 IOobject::NO_READ,
-    //                 IOobject::NO_WRITE
-    //             ),
-    //             mesh
-    //         )
-    //     );
-    // }
+    for (int i = 0; i < 8; i++)
+    {
+        IPtrs_.set
+        (
+            i,
+            new volScalarField
+            (
+                IOobject
+                (
+                    "Inh",
+                    mesh.time().timeName(),
+                    mesh,
+                    IOobject::NO_READ,
+                    IOobject::NO_WRITE// TODO: choose if writing
+                ),
+                mesh,
+                dimensionedScalar
+                (
+                    "Inh", 
+                    dimensionSet(0,0,0,0,0,0,0), 
+                    1e-20
+                )
+            )
+        );
+    }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
     //- Reaction rate initialization
     
-    // RRPtrs_.resize(19);
+    RRPtrs_.resize(19);
 
-    // for (int i = 0; i < 19; i++)
-    // {
-    //     RRPtrs_.set
-    //     (
-    //         i,
-    //         new volScalarField
-    //         (
-    //             IOobject
-    //             (
-    //                 word(string(i)),
-    //                 mesh.time().timeName(),
-    //                 mesh,
-    //                 IOobject::NO_READ,
-    //                 IOobject::NO_WRITE
-    //             ),
-    //             mesh
-    //         )
-    //     );
-    // }
+    for (int i = 0; i < 19; i++)
+    {
+        RRPtrs_.set
+        (
+            i,
+            new volScalarField
+            (
+                IOobject
+                (
+                    "RRs",
+                    mesh.time().timeName(),
+                    mesh,
+                    IOobject::NO_READ,
+                    IOobject::NO_WRITE
+                ),
+                mesh,
+                dimensionedScalar
+                (
+                    "RRs", 
+                    dimensionSet(0,0,0,0,0,0,0), 
+                    1e-20
+                )
+            )
+        );
+    }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

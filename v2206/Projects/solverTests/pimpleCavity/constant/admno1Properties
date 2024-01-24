@@ -15,7 +15,7 @@ FoamFile
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 // Operation modes
-mode            Meso;
+mode            MesoSolid;
 
 // Schmidt number
 Sc              0.2;
