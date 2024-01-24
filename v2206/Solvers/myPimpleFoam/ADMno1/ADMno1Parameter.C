@@ -349,6 +349,7 @@ void admPara::defineInitialStateMeso()
 {
     listResizing();
 
+    // TODO: update values
     Yini[0] = 0.012394;     // S_su
     Yini[1] = 0.005500;     // S_aa
     Yini[2] = 0.107400;     // S_fa
@@ -359,13 +360,13 @@ void admPara::defineInitialStateMeso()
     Yini[7] = 2.5055e-7;    // S_h2
     Yini[8] = 0.05550;      // S_ch4
     Yini[9] = 0.095100;     // S_IC
-    Yini[10] = 0.094500;    // S_IN
-    Yini[11] = 0.130900;    // S_I
+    Yini[10] = 0.09450;     // S_IN
+    Yini[11] = 0.13090;     // S_I
 
-    Yini[12] = 0.107900;    // X_c
+    Yini[12] = 0.10790;     // X_c
     Yini[13] = 0.02050;     // X_ch
     Yini[14] = 0.08420;     // X_pr
-    Yini[15] = 0.043600;    // X_li
+    Yini[15] = 0.04360;     // X_li
     Yini[16] = 0.31220;     // X_su
     Yini[17] = 0.93170;     // X_aa
     Yini[18] = 0.33840;     // X_fa
@@ -373,7 +374,7 @@ void admPara::defineInitialStateMeso()
     Yini[20] = 0.10110;     // X_pro
     Yini[21] = 0.67720;     // X_ac
     Yini[22] = 0.28480;     // X_h2
-    Yini[23] = 17.21620;    // X_I
+    Yini[23] = 17.2162;     // X_I
 
     Gini[0] = 1.1032e-5;    // G_h2
     Gini[1] = 1.6535;       // G_ch4
@@ -445,6 +446,7 @@ void admPara::defineInitialStateThermo()
 {
     listResizing();
 
+    // TODO: update values
     Yini[0] = 0.012394;     // S_su
     Yini[1] = 0.005500;     // S_aa
     Yini[2] = 0.107400;     // S_fa

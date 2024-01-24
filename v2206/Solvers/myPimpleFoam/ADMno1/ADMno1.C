@@ -106,9 +106,7 @@ Foam::ADMno1::ADMno1
     Info<< "Reading ADM no1 initial concentrations for soluables" << endl;
 
     label iNames = 0;
-    label nSpecies = namesSoluable.size();
-                // TODO: add other species
-                //    + namesParticulate.size();
+    label nSpecies = namesSoluable.size() + namesParticulate.size();
 
     YPtrs_.resize(nSpecies);
 
@@ -124,53 +122,39 @@ Foam::ADMno1::ADMno1
                     namesSoluable[i], // IOobject::groupName(namesSoluable[i]),
                     mesh.time().timeName(),
                     mesh,
-                    IOobject::READ_IF_PRESENT,
+                    IOobject::MUST_READ,
                     IOobject::AUTO_WRITE
                 ),
-                mesh,
-                dimensionedScalar
-                (
-                    namesSoluable[i] + "Default", 
-                    dimensionSet(0,0,0,0,0,0,0),
-                    para_.getYini(i)
-                )
+                mesh
             )
         );
     }
 
     iNames += namesSoluable.size();
 
-    // //-  Read particulates
+    //-  Read particulates
 
-    // Info<< "Reading ADMno1 initial concentrations for particulates" << endl;
+    Info<< "Reading ADMno1 initial concentrations for particulates" << endl;
 
-    // forAll(namesParticulate, i)
-    // {
-    //     YPtrs_.set
-    //     (
-    //         i + iNames,
-    //         new volScalarField
-    //         (
-    //             IOobject
-    //             (
-    //                 namesParticulate[i],
-    //                 mesh.time().timeName(),
-    //                 mesh,
-    //                 IOobject::READ_IF_PRESENT,
-    //                 IOobject::AUTO_WRITE
-    //             ),
-    //             mesh,
-    //             dimensionedScalar
-    //             (
-    //                 namesParticulate[i] + "Default", 
-    //                 dimensionSet(0,0,0,0,0,0,0), 
-    //                 para_.getYini(i + iNames)
-    //             )
-    //         )
-    //     );
-    // }
-
-    // iNames += sizeof(namesParticulate);
+    forAll(namesParticulate, i)
+    {
+        YPtrs_.set
+        (
+            i + iNames,
+            new volScalarField
+            (
+                IOobject
+                (
+                    namesParticulate[i],
+                    mesh.time().timeName(),
+                    mesh,
+                    IOobject::MUST_READ,
+                    IOobject::AUTO_WRITE
+                ),
+                mesh
+            )
+        );
+    }
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

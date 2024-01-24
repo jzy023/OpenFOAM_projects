@@ -40,7 +40,7 @@ void Foam::ADMno1::RR()
 
     IPtrs_[0] = calcInhibitionHP // aa
     (
-        &(EPtrs_.last()), // ShP
+        EPtrs_.last(), // ShP
         para_.pH_UL_aa, 
         para_.pH_LL_aa,
         n_aa
@@ -48,7 +48,7 @@ void Foam::ADMno1::RR()
 
     IPtrs_[1] = calcInhibitionHP // ac
     (
-        &(EPtrs_.last()), // ShP
+        EPtrs_.last(), // ShP
         para_.pH_UL_ac, 
         para_.pH_LL_ac,
         n_ac
@@ -56,68 +56,188 @@ void Foam::ADMno1::RR()
 
     IPtrs_[2] = calcInhibitionHP // h2
     (
-        &(EPtrs_.last()), // ShP
+        EPtrs_.last(), // ShP
         para_.pH_UL_h2, 
         para_.pH_LL_h2,
         n_h2
     );
 
-    // // >>> ???
-    IPtrs_[3] = calcInhibition // IN
-    (
-        &(YPtrs_[10]), // SIN
-        para_.K_S.IN
-    );
+    // >>> TODO: which one is correct ???
+    // IPtrs_[3] = calcInhibition // IN
+    // (
+    //     YPtrs_[10], // SIN
+    //     para_.K_S.IN
+    // );
+
+    IPtrs_[3] = 1 / (1 + (para_.K_S.IN / YPtrs_[10]));
+    
 
 	IPtrs_[4] = calcInhibition // h2fa
     (
-        &(YPtrs_[7]), // Sh2
+        YPtrs_[7], // Sh2
         para_.K_I.h2fa
     );
 
 	IPtrs_[5] = calcInhibition // h2c4
     (
-        &(YPtrs_[7]), // Sh2
+        YPtrs_[7], // Sh2
         para_.K_I.h2c4
     );
 
 	IPtrs_[6] = calcInhibition // h2pro
     (
-        &(YPtrs_[7]), // Sh2
+        YPtrs_[7], // Sh2
         para_.K_I.h2pro
     );
 
 	IPtrs_[7] = calcInhibition // nh3
     (
-        &(MPtrs_[1]), // Snh3
+        MPtrs_[1], // Snh3
         para_.K_I.nh3
     );
 
     //- Raction rates
 
-    // RRPtrs_[0] = calcRho(para_.RC.dis, Conc_.X_c);
-    // RRPtrs_[1] = calcRho(para_.RC.hyd_ch, Conc_.X_ch);
-    // RRPtrs_[2] = calcRho(para_.RC.hyd_pr, Conc_.X_pr);
-    // RRPtrs_[3] = calcRho(para_.RC.hyd_li, Conc_.X_li);
+    RRPtrs_[0] = calcRho
+    (
+        para_.RC.dis,
+        YPtrs_[12] // Xc
+    );
 
-    // RRPtrs_[4] = calcRho(para_.RC.m_su, Conc_.S_su, para_.K_S.su, Conc_.X_su, I.phaa * I.IN);
-    // RRPtrs_[5] = calcRho(para_.RC.m_aa, Conc_.S_aa, para_.K_S.aa, Conc_.X_aa, I.phaa * I.IN);
-    // RRPtrs_[6] = calcRho(para_.RC.m_fa, Conc_.S_fa, para_.K_S.fa, Conc_.X_fa, I.phaa * I.IN * I.h2fa);
-    // RRPtrs_[7] = calcRho(para_.RC.m_c4, Conc_.S_va, para_.K_S.c4, Conc_.X_c4, Conc_.S_bu, I.phaa * I.IN * I.h2c4);
-    // RRPtrs_[8] = calcRho(para_.RC.m_c4, Conc_.S_bu, para_.K_S.c4, Conc_.X_c4, Conc_.S_va, I.phaa * I.IN * I.h2c4);
-    // RRPtrs_[9] = calcRho(para_.RC.m_pro, Conc_.S_pro, para_.K_S.pro, Conc_.X_pro, I.phaa * I.IN * I.h2pro);
-    // RRPtrs_[10] = calcRho(para_.RC.m_ac, Conc_.S_ac, para_.K_S.ac, Conc_.X_ac, I.phac * I.IN * I.nh3);
+    RRPtrs_[1] = calcRho
+    (
+        para_.RC.hyd_ch,
+        YPtrs_[13] // Xch
+    );
 
-	// // >>> in Rosen et al. implementation, no intermediate used for S_h2
-	// RRPtrs_[11] = calcRho(para_.RC.m_h2, Conc_.S_h2, para_.K_S.h2, Conc_.X_h2, I.phh2 * I.IN);
+    RRPtrs_[2] = calcRho
+    (
+        para_.RC.hyd_pr,
+        YPtrs_[14] // Xpr
+    );
 
-	// RRPtrs_[12] = calcRho(para_.RC.dec_xsu, Conc_.X_su);
-    // RRPtrs_[13] = calcRho(para_.RC.dec_xaa, Conc_.X_aa);
-    // RRPtrs_[14] = calcRho(para_.RC.dec_xfa, Conc_.X_fa);
-    // RRPtrs_[15] = calcRho(para_.RC.dec_xc4, Conc_.X_c4);
-    // RRPtrs_[16] = calcRho(para_.RC.dec_xpro, Conc_.X_pro);
-    // RRPtrs_[17] = calcRho(para_.RC.dec_xac, Conc_.X_ac);
-    // RRPtrs_[18] = calcRho(para_.RC.dec_xh2, Conc_.X_h2);
+    RRPtrs_[3] = calcRho
+    (
+        para_.RC.hyd_li,
+        YPtrs_[15] // Xli
+    );
+
+    RRPtrs_[4] = calcRho
+    (
+        para_.RC.m_su,
+        YPtrs_[0], // Ssu
+        para_.K_S.su,
+        YPtrs_[16], // Xsu
+        IPtrs_[0] * IPtrs_[3] // Iphaa*IIN
+    );
+
+    RRPtrs_[5] = calcRho
+    (
+        para_.RC.m_aa,
+        YPtrs_[1], // Saa
+        para_.K_S.aa,
+        YPtrs_[17], // Xaa
+        IPtrs_[0] * IPtrs_[3] // Iphaa*IIN
+    );
+
+    RRPtrs_[6] = calcRho
+    (
+        para_.RC.m_fa,
+        YPtrs_[2], // Sfa
+        para_.K_S.fa,
+        YPtrs_[18], // Xfa
+        IPtrs_[0] * IPtrs_[3] * IPtrs_[4] //Iphaa*IIN*Ih2fa
+    );
+
+    RRPtrs_[7] = calcRho
+    (
+        para_.RC.m_c4,
+        YPtrs_[3], // Sva
+        para_.K_S.c4,
+        YPtrs_[19], // Xc4
+        YPtrs_[4],  // Sbu
+        IPtrs_[0] * IPtrs_[3] * IPtrs_[5] //Iphaa*IIN*Ih2c4
+    );
+
+    RRPtrs_[8] = calcRho
+    (
+        para_.RC.m_c4,
+        YPtrs_[4], // Sbu
+        para_.K_S.c4,
+        YPtrs_[19], // Xc4
+        YPtrs_[3],  // Sva
+        IPtrs_[0] * IPtrs_[3] * IPtrs_[5] //Iphaa*IIN*Ih2c4
+    );
+
+    RRPtrs_[9] = calcRho
+    (
+        para_.RC.m_pro,
+        YPtrs_[5], // Spro
+        para_.K_S.pro,
+        YPtrs_[20], // Xpro
+        IPtrs_[0] * IPtrs_[3] * IPtrs_[6]  //Iphaa*IIN*Ih2pro
+    );
+
+    RRPtrs_[10] = calcRho
+    (
+        para_.RC.m_ac,
+        YPtrs_[6], // Sac
+        para_.K_S.ac,
+        YPtrs_[21], // Xac
+        IPtrs_[1] * IPtrs_[3] * IPtrs_[7] // Iphac*IIN*Inh3
+    );
+
+	// >>> in Rosen et al. implementation, no intermediate used for S_h2
+	RRPtrs_[11] = calcRho
+    (
+        para_.RC.m_h2,
+        YPtrs_[7], // Sh2
+        para_.K_S.h2,
+        YPtrs_[22], // Xh2
+        IPtrs_[2] * IPtrs_[3] // Iphh2*IIN
+    );
+
+	RRPtrs_[12] = calcRho
+    (
+        para_.RC.dec_xsu,
+        YPtrs_[16] // Xsu
+    );
+
+    RRPtrs_[13] = calcRho
+    (
+        para_.RC.dec_xaa,
+        YPtrs_[17] // Xaa
+    );
+
+    RRPtrs_[14] = calcRho
+    (
+        para_.RC.dec_xfa,
+        YPtrs_[18] // Xfa
+    );
+
+    RRPtrs_[15] = calcRho
+    (
+        para_.RC.dec_xc4,
+        YPtrs_[19] // Xc4
+    );
+
+    RRPtrs_[16] = calcRho
+    (
+        para_.RC.dec_xpro,
+        YPtrs_[20] // Xpro
+    );
+
+    RRPtrs_[17] = calcRho
+    (
+        para_.RC.dec_xac,
+        YPtrs_[21] // Xac
+    );
+
+    RRPtrs_[18] = calcRho
+    (
+        para_.RC.dec_xh2,
+        YPtrs_[22] // Xh2
+    );
 
 }
 

@@ -34,13 +34,13 @@ License
 
 volScalarField calcInhibition
 (
-    volScalarField* YPtr, 
+    volScalarField Y, 
     scalar denom
 );
 
 volScalarField calcInhibitionHP
 (
-    volScalarField* ShpPtr,
+    volScalarField Shp,
     scalar UL,
     scalar LL,
     label n
@@ -51,26 +51,26 @@ volScalarField calcInhibitionHP
 volScalarField calcRho
 (
     scalar k, 
-    volScalarField* XPtr
+    volScalarField X
 );
 
 volScalarField calcRho
 (
     scalar k, 
-    volScalarField* SPtr,
+    volScalarField S,
     scalar K,
-    volScalarField* XPtr,
-    scalar I
+    volScalarField X,
+    volScalarField I
 );
 
 volScalarField calcRho
 (
     scalar k, 
-    volScalarField* SPtr1,
+    volScalarField S1,
     scalar K,
-    volScalarField* XPtr,
-    volScalarField* SPtr2,
-    scalar I
+    volScalarField X,
+    volScalarField S2,
+    volScalarField I
 );
 
 // ************************************************************************* //

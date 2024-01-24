@@ -34,23 +34,23 @@ License
 
 volScalarField Foam::ADMno1::calcInhibition
 (
-    volScalarField* YPtr, 
+    volScalarField Y, 
     scalar denom
 )
 {
-    return 1 / (1 + (*YPtr / denom));
+    return 1 / (1 + (Y / denom));
 }
 
 volScalarField Foam::ADMno1::calcInhibitionHP
 (
-    volScalarField* ShpPtr,
+    volScalarField Shp,
     scalar UL,
     scalar LL,
     label n
 )
 {
     scalar Kph = pow(10, -0.5 * (UL + LL));
-    return pow(Kph, n) / (pow(*ShpPtr, n) + pow(Kph, n));
+    return pow(Kph, n) / (pow(Shp, n) + pow(Kph, n));
 }
 
 //- Reaction rate calculations
@@ -58,35 +58,35 @@ volScalarField Foam::ADMno1::calcInhibitionHP
 volScalarField Foam::ADMno1::calcRho
 (
     scalar k, 
-    volScalarField* XPtr
+    volScalarField X
 )
 {
-    return k * *XPtr;
+    return k * X;
 }
 
 volScalarField Foam::ADMno1::calcRho
 (
     scalar k, 
-    volScalarField* SPtr,
+    volScalarField S,
     scalar K,
-    volScalarField* XPtr,
-    scalar I
+    volScalarField X,
+    volScalarField I
 )
 {
-    return k * (*SPtr / (K + *SPtr)) * *XPtr * I;
+    return k * (S / (K + S)) * X * I;
 }
 
 volScalarField Foam::ADMno1::calcRho
 (
     scalar k, 
-    volScalarField* SPtr1,
+    volScalarField S1,
     scalar K,
-    volScalarField* XPtr,
-    volScalarField* SPtr2,
-    scalar I
+    volScalarField X,
+    volScalarField S2,
+    volScalarField I
 )
 {
-    return k * (*SPtr1 / (K + *SPtr1)) * *XPtr * (1 / (1 + (*SPtr2 / *SPtr1))) * I;
+    return k * (S1 / (K + S1)) * X * (1 / (1 + (S2 / S1))) * I;
 }
 
 
