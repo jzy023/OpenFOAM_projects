@@ -75,6 +75,9 @@ private:
     //- Gas constant
     scalar R_;
 
+    //- Thermal condition factor
+    volScalarField fac_;				
+
     //- pH value
     volScalarField pH_;
 
@@ -95,6 +98,9 @@ private:
 
     //- List of pointers to reaction rate per specie [kg/m3/s] and [mol/m3/s]
     PtrList<volScalarField> RRPtrs_;
+
+    //- List of pointers to gas trasfer rate
+    PtrList<volScalarField> GRPtrs_;
 
     //- Temporary concentration fields
     // PtrList<volScalarField>& YPtrsTemps_;
@@ -192,16 +198,25 @@ public:
 
     ~ADMno1() = default;
 
+
     // Member Functions
+
     void modeCheckErr();
 
     //- Return Schmidt number
     inline scalar Sc();
+
+    //- Return a pointer of admno1 parameters
+    inline admPara* paraPtr();
     
     //- Return YPtrs_
     // inline const PtrList<volScalarField>& Y() const;
     inline PtrList<volScalarField>& Y();
 
+    //- Calculate gas transfer rate
+    void gasR(volScalarField& Top);
+
+    //- Calculate reaction rate
     void RR();
 
     //- Return const access to the chemical source terms for specie, i

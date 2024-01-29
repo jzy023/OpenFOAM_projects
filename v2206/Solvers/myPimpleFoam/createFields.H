@@ -47,5 +47,25 @@ autoPtr<ADMno1> reaction
     ADMno1::New(mesh)
 );
 
+Info<< "Reading field operational temperature" << endl;
+volScalarField Top
+(
+    IOobject
+    (
+        "Top",
+        runTime.timeName(),
+        mesh,
+        IOobject::READ_IF_PRESENT,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar
+    (
+        "TopDefault", 
+        dimensionSet(0,0,0,1,0,0,0), 
+        reaction->paraPtr()->getTbase()
+    )
+);
+
 #include "createMRF.H"
 #include "createFvOptions.H"

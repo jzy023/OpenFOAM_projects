@@ -71,6 +71,24 @@ Foam::ADMno1::ADMno1
     opMode_(ADMno1Dict.get<word>("mode")),
     Sc_(ADMno1Dict.lookupOrDefault("Sc", 0.2)),
     R_(ADMno1Dict.lookupOrDefault("R", 0.083145)),
+    fac_
+    (
+        IOobject
+        (
+            "fac",
+            mesh.time().timeName(),
+            mesh,
+            IOobject::READ_IF_PRESENT,
+            IOobject::NO_WRITE
+        ),
+        mesh,
+        dimensionedScalar
+        (
+            "facDefault", 
+            dimensionSet(0,0,0,0,0,0,0), 
+            ADMno1Dict.lookupOrDefault("fac", 1)
+        )
+    ),
     pH_
     (
         IOobject
@@ -328,26 +346,58 @@ Foam::ADMno1::ADMno1
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-    Info<< "Reading field operational temperature" << endl;
+    //- Gas trasfer rate initialization
+    
+    GRPtrs_.resize(3);
 
-    volScalarField Top_
-    (
-        IOobject
+    for (int i = 0; i < 3; i++)
+    {
+        GRPtrs_.set
         (
-            "Top",
-            mesh.time().timeName(),  // or runTime.timeName(),
-            mesh,
-            IOobject::READ_IF_PRESENT,
-            IOobject::AUTO_WRITE
-        ),
-        mesh,
-        dimensionedScalar
-        (
-            "TopDefault", 
-            dimensionSet(0,0,0,1,0,0,0), 
-            para_.getTbase()
-        )
-    );
+            i,
+            new volScalarField
+            (
+                IOobject
+                (
+                    "GRs",
+                    mesh.time().timeName(),
+                    mesh,
+                    IOobject::NO_READ,
+                    IOobject::NO_WRITE
+                ),
+                mesh,
+                dimensionedScalar
+                (
+                    "GRs", 
+                    dimensionSet(0,0,0,0,0,0,0), 
+                    1e-20
+                )
+            )
+        );
+    }
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+    // Info<< "Reading field operational temperature" << endl;
+
+    // volScalarField Top_
+    // (
+    //     IOobject
+    //     (
+    //         "Top",
+    //         mesh.time().timeName(),  // or runTime.timeName(),
+    //         mesh,
+    //         IOobject::READ_IF_PRESENT,
+    //         IOobject::AUTO_WRITE
+    //     ),
+    //     mesh,
+    //     dimensionedScalar
+    //     (
+    //         "TopDefault", 
+    //         dimensionSet(0,0,0,1,0,0,0), 
+    //         para_.getTbase()
+    //     )
+    // );
 }
 
 

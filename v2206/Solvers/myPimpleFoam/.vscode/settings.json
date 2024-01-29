@@ -13,6 +13,7 @@
         "ADM1Templates.C": "cpp",
         "ADMno1Templates.C": "cpp",
         "ADMno1RR.C": "cpp",
-        "ADMno1Helpers.C": "cpp"
+        "ADMno1Helpers.C": "cpp",
+        "ADMno1Gas.C": "cpp"
     }
 }

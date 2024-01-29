@@ -5,7 +5,8 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2016 OpenFOAM Foundation
+    Copyright (C) 2013-2017 OpenFOAM Foundation
+    Copyright (C) 2019-2020 OpenCFD Ltd.
 -------------------------------------------------------------------------------
 License
     This file is part of OpenFOAM.
@@ -25,29 +26,20 @@ License
  
 \*---------------------------------------------------------------------------*/
 
-inline scalar Foam::ADMno1::Sc()
+#include "ADMno1.H"
+
+// * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
+
+void Foam::ADMno1::gasR(volScalarField& Top)
 {
-    return Sc_;
+    fac_ = (1.0 / para_.getTbase() - 1.0 / Top) / (100.0 * R_);
+
+    GRPtrs_[0] = para_.kLa * (YPtrs_[7] - R_ * Top * GPtrs_[0] * para_.KH.h2 * exp(-4180.0 * fac_));
+
+    GRPtrs_[1] = para_.kLa * (YPtrs_[8] - R_ * Top * GPtrs_[1] * para_.KH.ch4 * exp(-14240.0 * fac_));
+
+    GRPtrs_[2] = para_.kLa * (YPtrs_[9] - R_ * Top * GPtrs_[2] * para_.KH.co2 * exp(-19410.0 * fac_));
+
 }
-
-inline admPara* Foam::ADMno1::paraPtr()
-{
-    return &para_;
-}
-
-inline Foam::PtrList<Foam::volScalarField>& Foam::ADMno1::Y()
-{
-    return YPtrs_;
-}
-
-// inline PtrList<volScalarField>& ADMno1::Y()
-// {
-//     return YPtrs_;
-// }
-
-// inline const Foam::PtrList<Foam::volScalarField>& Y() const
-// {
-//     return YPtrs_;
-// }
 
 // ************************************************************************* //
