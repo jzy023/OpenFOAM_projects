@@ -30,20 +30,26 @@ License
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
-void Foam::ADMno1::RR()
+void Foam::ADMno1::KineticRate(volScalarField& Top)
 {
-    //- Inhibiitons
 
-    scalar n_aa = 3.0 / (para_.pH_UL_aa - para_.pH_LL_aa);
-    scalar n_ac = 3.0 / (para_.pH_UL_ac - para_.pH_LL_ac);
-    scalar n_h2 = 3.0 / (para_.pH_UL_h2 - para_.pH_LL_h2);
+    //- Thermal condition factor
+    // TODO: fix dimensions!
+
+    dimensionSet TDim(Top.dimensions());
+
+    Top.dimensions().reset(dimless);
+
+    fac_ = (1.0 / para_.getTbase() - 1.0 / Top) / (100.0 * R_);
+
+    //- Inhibiitons
 
     IPtrs_[0] = calcInhibitionHP // aa
     (
         EPtrs_.last(), // ShP
         para_.pH_UL_aa, 
         para_.pH_LL_aa,
-        n_aa
+        nIh_[0]
     );
 
     IPtrs_[1] = calcInhibitionHP // ac
@@ -51,7 +57,7 @@ void Foam::ADMno1::RR()
         EPtrs_.last(), // ShP
         para_.pH_UL_ac, 
         para_.pH_LL_ac,
-        n_ac
+        nIh_[1]
     );
 
     IPtrs_[2] = calcInhibitionHP // h2
@@ -59,7 +65,7 @@ void Foam::ADMno1::RR()
         EPtrs_.last(), // ShP
         para_.pH_UL_h2, 
         para_.pH_LL_h2,
-        n_h2
+        nIh_[2]
     );
 
     // >>> TODO: which one is correct ???
@@ -96,33 +102,35 @@ void Foam::ADMno1::RR()
         para_.K_I.nh3
     );
 
-    //- Raction rates
+    //- Kinetic rates
 
-    RRPtrs_[0] = calcRho
+    Info << "test\n";
+
+    KRPtrs_[0] = calcRho
     (
         para_.RC.dis,
         YPtrs_[12] // Xc
     );
 
-    RRPtrs_[1] = calcRho
+    KRPtrs_[1] = calcRho
     (
         para_.RC.hyd_ch,
         YPtrs_[13] // Xch
     );
 
-    RRPtrs_[2] = calcRho
+    KRPtrs_[2] = calcRho
     (
         para_.RC.hyd_pr,
         YPtrs_[14] // Xpr
     );
 
-    RRPtrs_[3] = calcRho
+    KRPtrs_[3] = calcRho
     (
         para_.RC.hyd_li,
         YPtrs_[15] // Xli
     );
 
-    RRPtrs_[4] = calcRho
+    KRPtrs_[4] = calcRho
     (
         para_.RC.m_su,
         YPtrs_[0], // Ssu
@@ -131,7 +139,7 @@ void Foam::ADMno1::RR()
         IPtrs_[0] * IPtrs_[3] // Iphaa*IIN
     );
 
-    RRPtrs_[5] = calcRho
+    KRPtrs_[5] = calcRho
     (
         para_.RC.m_aa,
         YPtrs_[1], // Saa
@@ -140,7 +148,7 @@ void Foam::ADMno1::RR()
         IPtrs_[0] * IPtrs_[3] // Iphaa*IIN
     );
 
-    RRPtrs_[6] = calcRho
+    KRPtrs_[6] = calcRho
     (
         para_.RC.m_fa,
         YPtrs_[2], // Sfa
@@ -149,7 +157,7 @@ void Foam::ADMno1::RR()
         IPtrs_[0] * IPtrs_[3] * IPtrs_[4] //Iphaa*IIN*Ih2fa
     );
 
-    RRPtrs_[7] = calcRho
+    KRPtrs_[7] = calcRho
     (
         para_.RC.m_c4,
         YPtrs_[3], // Sva
@@ -159,7 +167,7 @@ void Foam::ADMno1::RR()
         IPtrs_[0] * IPtrs_[3] * IPtrs_[5] //Iphaa*IIN*Ih2c4
     );
 
-    RRPtrs_[8] = calcRho
+    KRPtrs_[8] = calcRho
     (
         para_.RC.m_c4,
         YPtrs_[4], // Sbu
@@ -169,7 +177,7 @@ void Foam::ADMno1::RR()
         IPtrs_[0] * IPtrs_[3] * IPtrs_[5] //Iphaa*IIN*Ih2c4
     );
 
-    RRPtrs_[9] = calcRho
+    KRPtrs_[9] = calcRho
     (
         para_.RC.m_pro,
         YPtrs_[5], // Spro
@@ -178,7 +186,7 @@ void Foam::ADMno1::RR()
         IPtrs_[0] * IPtrs_[3] * IPtrs_[6]  //Iphaa*IIN*Ih2pro
     );
 
-    RRPtrs_[10] = calcRho
+    KRPtrs_[10] = calcRho
     (
         para_.RC.m_ac,
         YPtrs_[6], // Sac
@@ -188,7 +196,7 @@ void Foam::ADMno1::RR()
     );
 
 	// >>> in Rosen et al. implementation, no intermediate used for S_h2
-	RRPtrs_[11] = calcRho
+	KRPtrs_[11] = calcRho
     (
         para_.RC.m_h2,
         YPtrs_[7], // Sh2
@@ -197,47 +205,56 @@ void Foam::ADMno1::RR()
         IPtrs_[2] * IPtrs_[3] // Iphh2*IIN
     );
 
-	RRPtrs_[12] = calcRho
+	KRPtrs_[12] = calcRho
     (
         para_.RC.dec_xsu,
         YPtrs_[16] // Xsu
     );
 
-    RRPtrs_[13] = calcRho
+    KRPtrs_[13] = calcRho
     (
         para_.RC.dec_xaa,
         YPtrs_[17] // Xaa
     );
 
-    RRPtrs_[14] = calcRho
+    KRPtrs_[14] = calcRho
     (
         para_.RC.dec_xfa,
         YPtrs_[18] // Xfa
     );
 
-    RRPtrs_[15] = calcRho
+    KRPtrs_[15] = calcRho
     (
         para_.RC.dec_xc4,
         YPtrs_[19] // Xc4
     );
 
-    RRPtrs_[16] = calcRho
+    KRPtrs_[16] = calcRho
     (
         para_.RC.dec_xpro,
         YPtrs_[20] // Xpro
     );
 
-    RRPtrs_[17] = calcRho
+    KRPtrs_[17] = calcRho
     (
         para_.RC.dec_xac,
         YPtrs_[21] // Xac
     );
 
-    RRPtrs_[18] = calcRho
+    KRPtrs_[18] = calcRho
     (
         para_.RC.dec_xh2,
         YPtrs_[22] // Xh2
     );
+
+
+    GRPtrs_[0] = para_.kLa * (YPtrs_[7] - R_ * Top * GPtrs_[0] * para_.KH.h2 * exp(-4180.0 * fac_));
+
+    GRPtrs_[1] = para_.kLa * (YPtrs_[8] - R_ * Top * GPtrs_[1] * para_.KH.ch4 * exp(-14240.0 * fac_));
+
+    GRPtrs_[2] = para_.kLa * (YPtrs_[9] - R_ * Top * GPtrs_[2] * para_.KH.co2 * exp(-19410.0 * fac_));
+
+    Top.dimensions().reset(TDim);
 
 }
 

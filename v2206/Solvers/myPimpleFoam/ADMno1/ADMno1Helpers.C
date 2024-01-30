@@ -30,7 +30,7 @@ License
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
-//- Inhibition calculations=
+//- Inhibition calculations
 
 volScalarField Foam::ADMno1::calcInhibition
 (
@@ -53,7 +53,7 @@ volScalarField Foam::ADMno1::calcInhibitionHP
     return pow(Kph, n) / (pow(Shp, n) + pow(Kph, n));
 }
 
-//- Reaction rate calculations
+//- Kinetic rate calculations
 
 volScalarField Foam::ADMno1::calcRho
 (
@@ -89,7 +89,21 @@ volScalarField Foam::ADMno1::calcRho
     return k * (S1 / (K + S1)) * X * (1 / (1 + (S2 / S1))) * I;
 }
 
+//- Components source term calculations
 
-
+// volScalarField Foam::ADMno1::concPerComponent
+// (
+//     const admPara *paraPtr, 
+//     int *jPtr
+// )
+// {
+//     data_type concComponent = 0;
+//     for (int i = 0; i < 19; i++) {
+//         data_type temp = (paraPtr->STOI[i][*jPtr]) * (rho[i]); //check if it works
+//         concComponent += temp;
+//     }
+//     *jPtr += 1;
+//     return concComponent;
+// }
 
 // ************************************************************************* //

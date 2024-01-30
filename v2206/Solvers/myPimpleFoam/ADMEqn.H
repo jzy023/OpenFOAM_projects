@@ -47,12 +47,15 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
 // reaction->R(Yi) becomses the source term
 // PtrList<volScalarField>& YPtrs = reaction.Y();
 PtrList<volScalarField>& YPtrs = reaction->Y();
-reaction->RR();
 
 {
+    reaction->correct(Top);
+    // Qdot = reaction->Qdot();
+    // volScalarField Yt(0.0*Y[0]);
+
     forAll(YPtrs, i)
     {
-        volScalarField& Yi = YPtrs[i]; // cfd-online >> How exactly does this work?
+        volScalarField& Yi = YPtrs[i];
 
         fvScalarMatrix YiEqn
         (
@@ -64,7 +67,7 @@ reaction->RR();
          ==
             fvOptions(Yi)
         //  TODO: add local biochemical reaction as source term
-        //   reaction->R(Yi)
+        //   reaction->R(i, Yi)
         // + fvOptions(rho, Yi)
         );
 

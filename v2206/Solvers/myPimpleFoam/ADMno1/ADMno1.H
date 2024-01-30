@@ -72,6 +72,9 @@ private:
     //- ADM no1 parameters
     admPara para_;
 
+    //- Ihibition factors
+    scalarList nIh_ {3};
+
     //- Gas constant
     scalar R_;
 
@@ -81,8 +84,11 @@ private:
     //- pH value
     volScalarField pH_;
 
-    //- List of pointers to the field of specie concentrations (STOI)
+    //- List of pointers to the field of specie concentrations
     PtrList<volScalarField> YPtrs_;
+
+    //- List of pointers to the field of specie concentrations derivatives
+    PtrList<volScalarField> dYPtrs_;
 
     //- List of pointers to the field of gas concentrations
     PtrList<volScalarField> GPtrs_;
@@ -96,8 +102,8 @@ private:
     //- List of pointers to inhibition 
     PtrList<volScalarField> IPtrs_;
 
-    //- List of pointers to reaction rate per specie [kg/m3/s] and [mol/m3/s]
-    PtrList<volScalarField> RRPtrs_;
+    //- List of pointers to kinetic rate per specie [kg/m3/s] and [mol/m3/s]
+    PtrList<volScalarField> KRPtrs_;
 
     //- List of pointers to gas trasfer rate
     PtrList<volScalarField> GRPtrs_;
@@ -144,8 +150,15 @@ private:
     //- Pirvate Helper Functions
     #include "ADMno1Helpers.H"
 
-    //- Reaction rate calculation
-    // void RR();
+    //- Calculate kinetic rate
+    void KineticRate(volScalarField& Top);
+
+    //-
+    void RSh2();
+
+
+    
+
 
 public:
  
@@ -199,10 +212,7 @@ public:
     ~ADMno1() = default;
 
 
-    // Member Functions
-
-    void modeCheckErr();
-
+    // Inline Member Functions
     //- Return Schmidt number
     inline scalar Sc();
 
@@ -210,15 +220,20 @@ public:
     inline admPara* paraPtr();
     
     //- Return YPtrs_
-    // inline const PtrList<volScalarField>& Y() const;
     inline PtrList<volScalarField>& Y();
 
-    //- Calculate gas transfer rate
-    void gasR(volScalarField& Top);
 
-    //- Calculate reaction rate
-    void RR();
+    // Inline Member Functions
+    //- Print Error messages
+    void modeCheckErr();
 
+    //- Correct components consumption rate
+    void correct(volScalarField& Top);
+
+    //- Return components consumption rate matrix, i.e. source term.
+    tmp<fvScalarMatrix> R(volScalarField& Yi, label i) const;
+
+   
     //- Return const access to the chemical source terms for specie, i
     // inline const volScalarField::Internal& RR ( const label i ) const;
 

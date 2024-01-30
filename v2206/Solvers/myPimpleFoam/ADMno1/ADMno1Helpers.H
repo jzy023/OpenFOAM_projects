@@ -46,7 +46,7 @@ volScalarField calcInhibitionHP
     label n
 );
 
-//- Reaction rate calculations
+//- Kinetic rate calculations
 
 volScalarField calcRho
 (
@@ -72,5 +72,10 @@ volScalarField calcRho
     volScalarField S2,
     volScalarField I
 );
+
+//- Components source term calculations
+
+
+
 
 // ************************************************************************* //

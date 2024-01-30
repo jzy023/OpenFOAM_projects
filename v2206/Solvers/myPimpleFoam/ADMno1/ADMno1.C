@@ -174,6 +174,35 @@ Foam::ADMno1::ADMno1
         );
     }
 
+    //- Initializing derivatives
+
+    dYPtrs_.resize(nSpecies);
+
+    for(label i = 0; i < nSpecies; i++)
+    {
+        dYPtrs_.set
+        (
+            i,
+            new volScalarField
+            (
+                IOobject
+                (
+                    Foam::name(i),
+                    mesh.time().timeName(),
+                    mesh,
+                    IOobject::NO_READ,
+                    IOobject::NO_WRITE
+                ),
+                mesh,
+                dimensionedScalar
+                (
+                    dimensionSet(0,0,0,0,0,0,0), 
+                    Zero
+                )
+            )
+        );
+    }
+
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
     //-  Gaseuoses initialization
@@ -295,7 +324,7 @@ Foam::ADMno1::ADMno1
             (
                 IOobject
                 (
-                    "Inh",
+                    "Inh" + Foam::name(i),
                     mesh.time().timeName(),
                     mesh,
                     IOobject::NO_READ,
@@ -304,9 +333,8 @@ Foam::ADMno1::ADMno1
                 mesh,
                 dimensionedScalar
                 (
-                    "Inh", 
                     dimensionSet(0,0,0,0,0,0,0), 
-                    1e-20
+                    Zero
                 )
             )
         );
@@ -314,20 +342,20 @@ Foam::ADMno1::ADMno1
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-    //- Reaction rate initialization
+    //- Kinetic rate initialization
     
-    RRPtrs_.resize(19);
+    KRPtrs_.resize(19);
 
     for (int i = 0; i < 19; i++)
     {
-        RRPtrs_.set
+        KRPtrs_.set
         (
             i,
             new volScalarField
             (
                 IOobject
                 (
-                    "RRs",
+                    "RRs" + Foam::name(i),
                     mesh.time().timeName(),
                     mesh,
                     IOobject::NO_READ,
@@ -336,9 +364,8 @@ Foam::ADMno1::ADMno1
                 mesh,
                 dimensionedScalar
                 (
-                    "RRs", 
                     dimensionSet(0,0,0,0,0,0,0), 
-                    1e-20
+                    Zero
                 )
             )
         );
@@ -359,7 +386,7 @@ Foam::ADMno1::ADMno1
             (
                 IOobject
                 (
-                    "GRs",
+                    "GRs" + Foam::name(i),
                     mesh.time().timeName(),
                     mesh,
                     IOobject::NO_READ,
@@ -368,9 +395,8 @@ Foam::ADMno1::ADMno1
                 mesh,
                 dimensionedScalar
                 (
-                    "GRs", 
                     dimensionSet(0,0,0,0,0,0,0), 
-                    1e-20
+                    Zero
                 )
             )
         );
@@ -378,26 +404,10 @@ Foam::ADMno1::ADMno1
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-    // Info<< "Reading field operational temperature" << endl;
+    nIh_[0] = 3.0 / (para_.pH_UL_aa - para_.pH_LL_aa);  // aa
+    nIh_[1] = 3.0 / (para_.pH_UL_ac - para_.pH_LL_ac);  // ac
+    nIh_[2] = 3.0 / (para_.pH_UL_h2 - para_.pH_LL_h2);  // h2
 
-    // volScalarField Top_
-    // (
-    //     IOobject
-    //     (
-    //         "Top",
-    //         mesh.time().timeName(),  // or runTime.timeName(),
-    //         mesh,
-    //         IOobject::READ_IF_PRESENT,
-    //         IOobject::AUTO_WRITE
-    //     ),
-    //     mesh,
-    //     dimensionedScalar
-    //     (
-    //         "TopDefault", 
-    //         dimensionSet(0,0,0,1,0,0,0), 
-    //         para_.getTbase()
-    //     )
-    // );
 }
 
 
@@ -426,6 +436,65 @@ Foam::autoPtr<Foam::ADMno1> Foam::ADMno1::New
     ADMno1* reactionPtr = new ADMno1(mesh, ADMno1Dict);
     return autoPtr<ADMno1>(reactionPtr);
 }
+
+
+// * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
+
+void Foam::ADMno1::correct(volScalarField& Top)
+{
+
+    //- calculate raction rates
+    KineticRate(Top);
+
+    //- calculate with biochemical rate coefficients
+    for(label j = 0; j < 7; j++)
+    {
+        // dYPtrs_[j] = dimensionedScalar(dimensionSet(0,0,0,0,0,0,0), 0);
+
+        for (int i = 0; i < 19; i++)
+        {
+            dYPtrs_[j] += (para_.STOI[i][j]) * (KRPtrs_[i]); //check if it works
+        }
+    }
+
+    for(label j = 8; j < YPtrs_.size(); j++)
+    {
+        dYPtrs_[j] = dimensionedScalar(dimensionSet(0,0,0,0,0,0,0), 0);
+
+        for (int i = 0; i < 19; i++)
+        {
+            dYPtrs_[j] += (para_.STOI[i][j]) * (KRPtrs_[i]);
+        }
+    }
+
+    //- calculate dSh2 iteratively
+    // RSh2(); // TODO: implement it! with Rosen et al.
+
+
+}
+
+
+tmp<fvScalarMatrix> Foam::ADMno1::R
+(
+    volScalarField& Yi,
+    label i
+) const
+{
+    // TODO: you need ot fix all the dimensions
+    // TODO: quite different from OpenFOAM implementations; need tests
+    tmp<fvScalarMatrix> tSu
+    (
+        new fvScalarMatrix
+        (
+            dYPtrs_[i], 
+            dimensionSet(0,0,0,0,0,0,0)
+        )
+    );
+ 
+    return tSu;
+
+};
+
 
 
 // ************************************************************************* //
