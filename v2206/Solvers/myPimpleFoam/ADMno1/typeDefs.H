@@ -39,6 +39,8 @@ Description
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
+// TODO: try making things std::unordered_map to clean up using for loops
+
 // namespace ADM
 // {
 

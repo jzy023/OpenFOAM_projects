@@ -183,11 +183,11 @@ Foam::ADMno1::ADMno1
         dYPtrs_.set
         (
             i,
-            new volScalarField
+            new volScalarField::Internal
             (
                 IOobject
                 (
-                    Foam::name(i),
+                    "d" + YPtrs_[i].name(),
                     mesh.time().timeName(),
                     mesh,
                     IOobject::NO_READ,
@@ -196,7 +196,7 @@ Foam::ADMno1::ADMno1
                 mesh,
                 dimensionedScalar
                 (
-                    dimensionSet(0,0,0,0,0,0,0), 
+                    dimensionSet(0,0,-1,0,0,0,0), 
                     Zero
                 )
             )
@@ -449,7 +449,7 @@ void Foam::ADMno1::correct(volScalarField& Top)
     //- calculate with biochemical rate coefficients
     for(label j = 0; j < 7; j++)
     {
-        // dYPtrs_[j] = dimensionedScalar(dimensionSet(0,0,0,0,0,0,0), 0);
+        dYPtrs_[j] = dimensionedScalar(dimensionSet(0,0,0,0,0,0,0), 0);
 
         for (int i = 0; i < 19; i++)
         {
@@ -475,25 +475,30 @@ void Foam::ADMno1::correct(volScalarField& Top)
 
 
 tmp<fvScalarMatrix> Foam::ADMno1::R
+// void Foam::ADMno1::R
 (
-    volScalarField& Yi,
-    label i
+    label i,
+    volScalarField& Yi
 ) const
 {
     // TODO: you need ot fix all the dimensions
     // TODO: quite different from OpenFOAM implementations; need tests
+
     tmp<fvScalarMatrix> tSu
     (
         new fvScalarMatrix
         (
-            dYPtrs_[i], 
-            dimensionSet(0,0,0,0,0,0,0)
+            Yi, 
+            dimensionSet(0,3,-1,0,0,0,0)
         )
     );
- 
+
+    fvScalarMatrix& Su = tSu.ref();
+    Su += dYPtrs_[i];
+
     return tSu;
 
-};
+}; 
 
 
 

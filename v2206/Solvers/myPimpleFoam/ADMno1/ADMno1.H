@@ -87,8 +87,11 @@ private:
     //- List of pointers to the field of specie concentrations
     PtrList<volScalarField> YPtrs_;
 
+    //- List of pointers to the field of temperal specie concentrations
+    PtrList<scalarField> YTempPtrs_;
+
     //- List of pointers to the field of specie concentrations derivatives
-    PtrList<volScalarField> dYPtrs_;
+    PtrList<volScalarField::Internal> dYPtrs_;
 
     //- List of pointers to the field of gas concentrations
     PtrList<volScalarField> GPtrs_;
@@ -222,6 +225,9 @@ public:
     //- Return YPtrs_
     inline PtrList<volScalarField>& Y();
 
+    //- Return dYPtrs_
+    inline PtrList<volScalarField::Internal>& dY();
+
 
     // Inline Member Functions
     //- Print Error messages
@@ -231,7 +237,8 @@ public:
     void correct(volScalarField& Top);
 
     //- Return components consumption rate matrix, i.e. source term.
-    tmp<fvScalarMatrix> R(volScalarField& Yi, label i) const;
+    tmp<fvScalarMatrix> R(label i, volScalarField& Yi) const;
+    // void R(label i, volScalarField& Yi) const;
 
    
     //- Return const access to the chemical source terms for specie, i

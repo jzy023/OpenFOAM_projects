@@ -36,11 +36,11 @@ void Foam::ADMno1::KineticRate(volScalarField& Top)
     //- Thermal condition factor
     // TODO: fix dimensions!
 
-    dimensionSet TDim(Top.dimensions());
+    volScalarField TopDummy(Top);
 
-    Top.dimensions().reset(dimless);
+    TopDummy.dimensions().reset(dimless);
 
-    fac_ = (1.0 / para_.getTbase() - 1.0 / Top) / (100.0 * R_);
+    fac_ = (1.0 / para_.getTbase() - 1.0 / TopDummy) / (100.0 * R_);
 
     //- Inhibiitons
 
@@ -103,8 +103,6 @@ void Foam::ADMno1::KineticRate(volScalarField& Top)
     );
 
     //- Kinetic rates
-
-    Info << "test\n";
 
     KRPtrs_[0] = calcRho
     (
@@ -247,14 +245,11 @@ void Foam::ADMno1::KineticRate(volScalarField& Top)
         YPtrs_[22] // Xh2
     );
 
+    GRPtrs_[0] = para_.kLa * (YPtrs_[7] - R_ * TopDummy * GPtrs_[0] * para_.KH.h2 * exp(-4180.0 * fac_));
 
-    GRPtrs_[0] = para_.kLa * (YPtrs_[7] - R_ * Top * GPtrs_[0] * para_.KH.h2 * exp(-4180.0 * fac_));
+    GRPtrs_[1] = para_.kLa * (YPtrs_[8] - R_ * TopDummy * GPtrs_[1] * para_.KH.ch4 * exp(-14240.0 * fac_));
 
-    GRPtrs_[1] = para_.kLa * (YPtrs_[8] - R_ * Top * GPtrs_[1] * para_.KH.ch4 * exp(-14240.0 * fac_));
-
-    GRPtrs_[2] = para_.kLa * (YPtrs_[9] - R_ * Top * GPtrs_[2] * para_.KH.co2 * exp(-19410.0 * fac_));
-
-    Top.dimensions().reset(TDim);
+    GRPtrs_[2] = para_.kLa * (YPtrs_[9] - R_ * TopDummy * GPtrs_[2] * para_.KH.co2 * exp(-19410.0 * fac_));
 
 }
 
