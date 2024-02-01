@@ -5,8 +5,8 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2016 OpenFOAM Foundation
-    Copyright (C) 2017-2021 OpenCFD Ltd.
+    Copyright (C) 2013-2017 OpenFOAM Foundation
+    Copyright (C) 2019-2020 OpenCFD Ltd.
 -------------------------------------------------------------------------------
 License
     This file is part of OpenFOAM.
@@ -25,92 +25,57 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
  
 \*---------------------------------------------------------------------------*/
- 
-#include "ADMno1.H"
+
+// #include "fvCFD.H"
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
 //- Inhibition calculations
 
-volScalarField Foam::ADMno1::calcInhibition
+volScalarField calcInhibition
 (
     volScalarField Y, 
-    dimensionedScalar denum
-)
-{
-    return 1 / (1 + (Y / denum));
-}
+    scalar denom
+);
 
-volScalarField Foam::ADMno1::calcInhibitionHP
+volScalarField calcInhibitionHP
 (
     volScalarField Shp,
     scalar UL,
     scalar LL,
     label n
-)
-{
-    scalar Kph = pow(10, -0.5 * (UL + LL));
-
-    dimensionedScalar dimKph
-    (
-        dimMass/dimVolume,
-        Kph
-    );
-
-    return pow(dimKph, n) / (pow(Shp, n) + pow(dimKph, n));
-}
+);
 
 //- Kinetic rate calculations
 
-volScalarField Foam::ADMno1::calcRho
+volScalarField calcRho
 (
-    dimensionedScalar k,
+    scalar k, 
     volScalarField X
-)
-{
-    return k * X;
-}
+);
 
-volScalarField Foam::ADMno1::calcRho
+volScalarField calcRho
 (
-    dimensionedScalar k, 
+    scalar k, 
     volScalarField S,
-    dimensionedScalar K,
+    scalar K,
     volScalarField X,
     volScalarField I
-)
-{
-    return k * (S / (K + S)) * X * I;
-}
+);
 
-volScalarField Foam::ADMno1::calcRho
+volScalarField calcRho
 (
-    dimensionedScalar k, 
+    scalar k, 
     volScalarField S1,
-    dimensionedScalar K,
+    scalar K,
     volScalarField X,
     volScalarField S2,
     volScalarField I
-)
-{
-    return k * (S1 / (K + S1)) * X * (1 / (1 + (S2 / S1))) * I;
-}
+);
 
 //- Components source term calculations
 
-// volScalarField Foam::ADMno1::concPerComponent
-// (
-//     const admPara *paraPtr, 
-//     int *jPtr
-// )
-// {
-//     data_type concComponent = 0;
-//     for (int i = 0; i < 19; i++) {
-//         data_type temp = (paraPtr->STOI[i][*jPtr]) * (rho[i]); //check if it works
-//         concComponent += temp;
-//     }
-//     *jPtr += 1;
-//     return concComponent;
-// }
+
+
 
 // ************************************************************************* //

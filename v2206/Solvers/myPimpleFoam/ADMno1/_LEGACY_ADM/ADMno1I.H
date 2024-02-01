@@ -5,8 +5,7 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2013-2017 OpenFOAM Foundation
-    Copyright (C) 2019-2020 OpenCFD Ltd.
+    Copyright (C) 2011-2016 OpenFOAM Foundation
 -------------------------------------------------------------------------------
 License
     This file is part of OpenFOAM.
@@ -26,56 +25,34 @@ License
  
 \*---------------------------------------------------------------------------*/
 
-// #include "fvCFD.H"
+inline scalar Foam::ADMno1::Sc()
+{
+    return Sc_;
+}
 
-// * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
+inline admPara* Foam::ADMno1::paraPtr()
+{
+    return &para_;
+}
 
-//- Inhibition calculations
+inline Foam::PtrList<Foam::volScalarField>& Foam::ADMno1::Y()
+{
+    return YPtrs_;
+}
 
-volScalarField calcInhibition
-(
-    volScalarField Y, 
-    dimensionedScalar denom
-);
+inline Foam::PtrList<Foam::volScalarField::Internal>& Foam::ADMno1::dY()
+{
+    return dYPtrs_;
+}
 
-volScalarField calcInhibitionHP
-(
-    volScalarField Shp,
-    scalar UL,
-    scalar LL,
-    label n
-);
+// inline PtrList<volScalarField>& ADMno1::Y()
+// {
+//     return YPtrs_;
+// }
 
-//- Kinetic rate calculations
-
-volScalarField calcRho
-(
-    dimensionedScalar k, 
-    volScalarField X
-);
-
-volScalarField calcRho
-(
-    dimensionedScalar k, 
-    volScalarField S,
-    dimensionedScalar K,
-    volScalarField X,
-    volScalarField I
-);
-
-volScalarField calcRho
-(
-    dimensionedScalar k, 
-    volScalarField S1,
-    dimensionedScalar K,
-    volScalarField X,
-    volScalarField S2,
-    volScalarField I
-);
-
-//- Components source term calculations
-
-
-
+// inline const Foam::PtrList<Foam::volScalarField>& Y() const
+// {
+//     return YPtrs_;
+// }
 
 // ************************************************************************* //

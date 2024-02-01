@@ -35,10 +35,16 @@ License
 volScalarField Foam::ADMno1::calcInhibition
 (
     volScalarField Y, 
-    dimensionedScalar denum
+    scalar denom
 )
 {
-    return 1 / (1 + (Y / denum));
+    dimensionedScalar dimDen
+    (
+        dimMass/dimVolume,
+        denom
+    );
+
+    return 1 / (1 + (Y / dimDen));
 }
 
 volScalarField Foam::ADMno1::calcInhibitionHP
@@ -64,36 +70,66 @@ volScalarField Foam::ADMno1::calcInhibitionHP
 
 volScalarField Foam::ADMno1::calcRho
 (
-    dimensionedScalar k,
+    scalar k, 
     volScalarField X
 )
 {
-    return k * X;
+    dimensionedScalar dimk
+    (
+        dimless/dimTime,
+        k
+    );
+
+    return dimk * X;
 }
 
 volScalarField Foam::ADMno1::calcRho
 (
-    dimensionedScalar k, 
+    scalar k, 
     volScalarField S,
-    dimensionedScalar K,
+    scalar K,
     volScalarField X,
     volScalarField I
 )
 {
-    return k * (S / (K + S)) * X * I;
+    dimensionedScalar dimk
+    (
+        dimless/dimTime,
+        k
+    );
+
+    dimensionedScalar dimK
+    (
+        dimless,
+        K
+    );
+
+    return dimk * (S / (dimK + S)) * X * I;
 }
 
 volScalarField Foam::ADMno1::calcRho
 (
-    dimensionedScalar k, 
+    scalar k, 
     volScalarField S1,
-    dimensionedScalar K,
+    scalar K,
     volScalarField X,
     volScalarField S2,
     volScalarField I
 )
 {
-    return k * (S1 / (K + S1)) * X * (1 / (1 + (S2 / S1))) * I;
+    dimensionedScalar dimk
+    (
+        dimless/dimTime,
+        k
+    );
+
+    dimensionedScalar dimK
+    (
+        dimless,
+        K
+    );
+
+    return dimk * (S1 / (dimK + S1)) * X * (1 / (1 + (S2 / S1))) * I;
 }
 
 //- Components source term calculations

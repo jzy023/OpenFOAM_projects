@@ -15,5 +15,6 @@
         "ADMno1RR.C": "cpp",
         "ADMno1Helpers.C": "cpp",
         "ADMno1Gas.C": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

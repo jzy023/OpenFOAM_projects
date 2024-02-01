@@ -34,7 +34,8 @@ Description
 #ifndef ADMno1Parameter_H
 #define ADMno1Parameter_H
 
-#include "typeDefs.H"
+// #include "typeDefs.H"
+#include "ADMno1Types.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -42,130 +43,189 @@ class admPara
 {
 private:
 
-    scalar Tbase_;      // base operational temperature
+    //- Operation modes (thermal conditions for biomass)
+    const wordList namesOpMode = {"Meso", "MesoSolid", "Thermo"}; 
 
-	yieldBiomass yB_;	// yield of biomass (Y)
-	yieldProduct yP_;	// yield of product (f)
-	carbonContent CC_;	// carbon content
+    //- Error message
+    int errMessage;
 
-	scalar N_aa_;  // Nitrogen content
-	scalar N_bac_; // Nitrogen content Biomass
+    //- Base operational temperature
+    dimensionedScalar Tbase_;   
 
-	void defineRCMeso();
-	void defineRCMesoSolid();
-	void defineRCThermo();
+    //- Yield of biomass (Y)
+	yieldBiomass yB_;
 
-	void defineYieldsMeso();
-	void defineYieldsThermo();
+    //- Yield of product (f)
+	yieldProduct yP_;
 
-	void defineKIMeso();
-	void defineKIMesoSolid();
-	void defineKIThermo();
+    //- Carbon content
+	carbonContent CC_;	
 
-	void defineKSMeso();
-	void defineKSMesoSolid();
-	void defineKSThermo();
+    //- Nitrogen content
+	scalar N_aa_;
 
-	void defineSTOI();
-	void defineAcidBaseDAE();
+    //- Nitrogen content Biomass
+	scalar N_bac_; 
 
-    List<scalar> Yini;  // main
-    List<scalar> Gini;   // gas
-    List<scalar> Eini;   // electrolytes
-    List<scalar> Mini;   // medians
+    // List<scalar> Yini;  // main
+
+    List<scalar> Gini_;   // gas
+
+    List<scalar> Eini_;   // electrolytes
+
+    List<scalar> Mini_;   // medians
+
+// * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
+
+    int printErrMessage(word runMode);
+
+    dimensionedScalar defineTbase(word runMode);
+
+	reactionRateConstant defineRC(word runMode);
+
+    yieldBiomass defineYields(word runMode);
+
+    inhibitionParaI defineKI(word runMode);
+
+    inhibitionParaS defineKS(word runMode);
+
+	// void defineSTOI();
+	// void defineAcidBaseDAE();
 
     void listResizing();
 
-    void defineInitialStateMeso();      //TODO: need work
-    void defineInitialStateMesoSolid();
-    void defineInitialStateThermo();
+    void defineInitialState(word runMode);
 
 public:
+
 	std::vector<std::vector<scalar>> STOI;
+
 	std::vector<std::vector<scalar>> abDAE;
+
 	reactionRateConstant RC; // k_dis; k_dec; k_hyd; k_m;
 
 	inhibitionParaI K_I;	// 
+
 	inhibitionParaS K_S;	// 
+
 	admAcidBaseKinetic kAB;	// 
+
 	admAcidBaseEq Ka;		// 
+
 	gasHenryCoe KH;			// Henry's Law
-    scalar kLa;       	    // gas transfer rate coefficients [d^-1]
-    // gasTransferRate kL;  // gas transfer rate coefficients [d^-1]
+
+    dimensionedScalar kLa;  // gas transfer rate coefficients [d^-1]
 
     // pH Limits
 	scalar pH_UL_aa;
+
 	scalar pH_LL_aa;
 
 	scalar pH_UL_ac;
+
 	scalar pH_LL_ac;
 
 	scalar pH_UL_h2;
+
 	scalar pH_LL_h2;
 
+    //- Constructor
+
     admPara() : 
-        Tbase_(35),
+        errMessage
+        (
+            printErrMessage("Meso")
+        ),
+        Tbase_
+        (
+            defineTbase("Meso")
+        ),
         // Yields of product
-        yP_({0.10, 0.25, 0.20,
-             0.20, 0.25, 0.95,
-             0.19, 0.13, 0.27,
-             0.41, 0.06, 0.23,
-             0.26, 0.05, 0.40}),
+        yB_
+        (
+            defineYields("Meso")
+        ),
+        yP_
+        (   0.10, 0.25, 0.20,
+            0.20, 0.25, 0.95,
+            0.19, 0.13, 0.27,
+            0.41, 0.06, 0.23,
+            0.26, 0.05, 0.40
+        ),
         // Carbon Content
-        CC_({0.2786, 0.03, 0.0313,
-             0.03, 0.022, 0.03,
-             0.0313, 0.03, 0.0217,
-             0.025, 0.0268, 0.0313,
-             0.0313, 0.024, 0.0156}),
+        CC_
+        (
+            0.2786, 0.03, 0.0313,
+            0.03, 0.022, 0.03,
+            0.0313, 0.03, 0.0217,
+            0.025, 0.0268, 0.0313,
+            0.0313, 0.024, 0.0156
+        ),
         // Nitrogen Content
         N_aa_(0.007), N_bac_(0.005714),
+        // Kinetic Rate Coeffs (TODO: change names)
+        RC
+        (
+            defineRC("Meso")
+        ),
+        K_I
+        (
+            defineKI("Meso")
+        ),
+        K_S
+        (
+            defineKS("Meso")
+        ),
         // Acid Base Kinetics
-        kAB({1e10, 1e10, 1e10,
-             1e10, 1e10, 1e10}),
+        // TODO: check and simplify this
+        kAB
+        (
+            1e10, 1e10, 1e10,
+            1e10, 1e10, 1e10
+        ),
         // Acide base Equilibrium Para
-        Ka({1.380e-5, 1.514e-5, 1.318e-5,
-            1.738e-5, 4.467e-7, 5.623e-10,
-            1e-14}),
+        Ka
+        (
+            1.380e-5, 1.514e-5, 1.318e-5,
+            1.738e-5, 4.467e-7, 5.623e-10, 1e-14
+        ),
         // Henry's Law Coefficients
-        KH({7.384654293536963e-04, // h2
-            0.001161902733673,     // ch4
-            0.027146692900075,     // co2
-            0.031300000000000}),   // h2o
-
+        KH
+        (
+            7.384654293536963e-04,  // h2
+            0.001161902733673,      // ch4
+            0.027146692900075,      // co2
+            0.031300000000000       // h2o
+        ),
         // Gas Transfer Coefficients
-        // kL({200, 200, 200}),
-    	kLa(200),
+    	kLa(dimless/dimTime, 200),
         // pH bounds
         pH_UL_aa(5.5), pH_LL_aa(4),
         pH_UL_ac(7), pH_LL_ac(6),
         pH_UL_h2(6), pH_LL_h2(5)
     {
-    	defineRCMeso();
-    	defineYieldsMeso();
-    	defineKIMeso();
-    	defineKSMeso();
-    	defineSTOI();
-    	defineAcidBaseDAE();
+        defineInitialState("Meso");
+    	// defineSTOI();
+    	// defineAcidBaseDAE();
     };
 
-	// member functions
+    admPara(word runMode);
 
-    void setOpMode(label idxMode);
+// * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
-	const reactionRateConstant getRC() const { return RC; }
+	// const reactionRateConstant getRC() const { return RC; }
 
-	const yieldBiomass getYieldBio() const { return yB_; }
+	// const yieldBiomass getYieldBio() const { return yB_; }
 
-	const yieldProduct getYieldPro() const { return yP_; }
+	// const yieldProduct getYieldPro() const { return yP_; }
 
-	const carbonContent getCarbonCon() const { return CC_; }
+	// const carbonContent getCarbonCon() const { return CC_; }
 
-    scalar getTbase() const { return Tbase_; }
+    dimensionedScalar getTbase() const { return Tbase_; }
 
-    scalar getYini(label idx) const { return Yini[idx]; }
-    scalar getGini(label idx) const { return Gini[idx]; }
-    scalar getEini(label idx) const { return Eini[idx]; }
-    scalar getMini(label idx) const { return Mini[idx]; }
+    scalar getGini(label idx) const { return Gini_[idx]; }
+    scalar getEini(label idx) const { return Eini_[idx]; }
+    scalar getMini(label idx) const { return Mini_[idx]; }
     
 };
 

@@ -3,7 +3,8 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "~/works/OpenFOAM/2212-user/src/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

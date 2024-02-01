@@ -41,7 +41,22 @@ const Foam::word Foam::ADMno1::propertiesName("admno1Properties");
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
-
+void Foam::ADMno1::modeCheckErr()
+{
+    if (!namesOpMode.found(opMode_))
+    {
+        std::cerr << nl << "--> FOAM FATAL IO ERROR:" << nl
+                  << "Unknown operation mode type: " << opMode_
+                  << "\n\nValid operation mode types:\n";
+        std::cerr << namesOpMode.size() << "(\n";
+        forAll(namesOpMode, i)
+        {
+            std::cerr << namesOpMode[i] << nl;
+        }
+        std::cerr << ")\n";
+        std::exit(1);
+    }
+}
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
@@ -53,7 +68,7 @@ Foam::ADMno1::ADMno1
 )
 :
     IOdictionary(ADMno1Dict),
-    para_(ADMno1Dict.get<word>("mode")),
+    opMode_(ADMno1Dict.get<word>("mode")),
     Sc_(ADMno1Dict.lookupOrDefault("Sc", 0.2)),
     R_(ADMno1Dict.lookupOrDefault("R", 0.083145)),
     fac_
@@ -96,7 +111,11 @@ Foam::ADMno1::ADMno1
     San_(ADMno1Dict.lookupOrDefault("San", 0.0052))
 {
 
-    Info<< "\nSelecting ADM no1 operation mode " << ADMno1Dict.get<word>("mode") << endl;
+    Info<< "\nSelecting ADM no1 operation mode " << opMode_ << endl;
+    
+    modeCheckErr();
+
+    para_.setOpMode(namesOpMode.find(opMode_));
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -217,8 +236,6 @@ Foam::ADMno1::ADMno1
             )
         );
     }
-    
-
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -378,7 +395,7 @@ Foam::ADMno1::ADMno1
                 mesh,
                 dimensionedScalar
                 (
-                    dimMass/dimVolume/dimTime, 
+                    dimless, 
                     Zero
                 )
             )
@@ -430,25 +447,25 @@ void Foam::ADMno1::correct(volScalarField& Top)
     KineticRate(Top);
 
     //- calculate with biochemical rate coefficients
-    // for(label j = 0; j < 7; j++)
-    // {
-    //     // dYPtrs_[j] = dimensionedScalar(dimless, 0);
+    for(label j = 0; j < 7; j++)
+    {
+        // dYPtrs_[j] = dimensionedScalar(dimless, 0);
 
-    //     for (int i = 0; i < 19; i++)
-    //     {
-    //         dYPtrs_[j] += (para_.STOI[i][j]) * (KRPtrs_[i]); //check if it works
-    //     }
-    // }
+        for (int i = 0; i < 19; i++)
+        {
+            dYPtrs_[j] += (para_.STOI[i][j]) * (KRPtrs_[i]); //check if it works
+        }
+    }
 
-    // for(label j = 8; j < YPtrs_.size(); j++)
-    // {
-    //     // dYPtrs_[j] = dimensionedScalar(dimless, 0);
+    for(label j = 8; j < YPtrs_.size(); j++)
+    {
+        // dYPtrs_[j] = dimensionedScalar(dimless, 0);
 
-    //     for (int i = 0; i < 19; i++)
-    //     {
-    //         dYPtrs_[j] += (para_.STOI[i][j]) * (KRPtrs_[i]);
-    //     }
-    // }
+        for (int i = 0; i < 19; i++)
+        {
+            dYPtrs_[j] += (para_.STOI[i][j]) * (KRPtrs_[i]);
+        }
+    }
 
     //- calculate dSh2 iteratively
     // RSh2(); // TODO: implement it! with Rosen et al.

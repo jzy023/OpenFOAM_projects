@@ -67,7 +67,7 @@ PtrList<volScalarField>& YPtrs = reaction->Y();
          ==
             fvOptions(Yi)
         //  TODO: add local biochemical reaction as source term
-          + reaction->R(i, Yi)
+        //   + reaction->R(i, Yi)
         // + fvOptions(rho, Yi)
         );
 

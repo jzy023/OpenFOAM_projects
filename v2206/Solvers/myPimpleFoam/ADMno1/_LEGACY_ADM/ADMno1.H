@@ -37,6 +37,15 @@ Description
 #ifndef ADMno1_H
 #define ADMno1_H
 
+#include "IOdictionary.H"
+#include "typeInfo.H"
+#include "fvCFD.H"
+#include "autoPtr.H"
+#include "ODESystem.H"
+#include "volFields.H"
+#include "simpleMatrix.H"
+
+#include "typeDefs.H"
 #include "ADMno1Parameter.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -54,11 +63,17 @@ class ADMno1
 
 private:
 
-    //- ADM no1 parameters
-    admPara para_;
+    //- Operation mode
+    word opMode_;
 
     //- Schmidt number
     scalar Sc_;
+
+    //- ADM no1 parameters
+    admPara para_;
+
+    //- Ihibition factors
+    scalarList nIh_ {3};
 
     //- Gas constant
     scalar R_;
@@ -68,9 +83,6 @@ private:
 
     //- pH value
     volScalarField pH_;
-
-    //- Ihibition factors
-    scalarList nIh_{3};
 
     //- List of pointers to the field of specie concentrations
     PtrList<volScalarField> YPtrs_;
@@ -104,7 +116,10 @@ private:
     mutable scalarField c_;
  
     //- Temporary rate-of-change of concentration field
-    mutable scalarField dcdt_; 
+    mutable scalarField dcdt_;
+
+    //- Operation modes (thermal conditions for biomass)
+    const wordList namesOpMode = {"Meso", "MesoSolid", "Thermo"};  
 
     //- Species names for soluable
     //- !!! Sh2 is calculated iteratively 
@@ -137,12 +152,15 @@ private:
 
     //- Pirvate Helper Functions
     #include "ADMno1Helpers.H"
-    
+
     //- Calculate kinetic rate
     void KineticRate(volScalarField& Top);
 
     //-
     void RSh2();
+
+
+    
 
 
 public:
@@ -209,6 +227,11 @@ public:
 
     //- Return dYPtrs_
     inline PtrList<volScalarField::Internal>& dY();
+
+
+    // Inline Member Functions
+    //- Print Error messages
+    void modeCheckErr();
 
     //- Correct components consumption rate
     void correct(volScalarField& Top);

@@ -33,15 +33,6 @@ License
 void Foam::ADMno1::KineticRate(volScalarField& Top)
 {
 
-    //- Thermal condition factor
-    // TODO: fix dimensions!
-
-    volScalarField TopDummy(Top);
-
-    TopDummy.dimensions().reset(dimless);
-
-    fac_ = (1.0 / para_.getTbase() - 1.0 / TopDummy) / (100.0 * R_);
-
     //- Inhibiitons
 
     IPtrs_[0] = calcInhibitionHP // aa
@@ -72,6 +63,13 @@ void Foam::ADMno1::KineticRate(volScalarField& Top)
     // IPtrs_[3] = calcInhibition // IN
     // (
     //     YPtrs_[10], // SIN
+    //     para_.K_S.IN
+    // );
+
+    // TODO: make an overload
+    // dimensionedScalar KS
+    // (
+    //     dimMass/dimVolume,
     //     para_.K_S.IN
     // );
 
@@ -244,6 +242,14 @@ void Foam::ADMno1::KineticRate(volScalarField& Top)
         para_.RC.dec_xh2,
         YPtrs_[22] // Xh2
     );
+
+    //- Thermal condition factor
+
+    volScalarField TopDummy(Top);
+
+    TopDummy.dimensions().reset(dimless);
+
+    fac_ = (1.0 / para_.getTbase().value() - 1.0 / TopDummy) / (100.0 * R_);
 
     GRPtrs_[0] = para_.kLa * (YPtrs_[7] - R_ * TopDummy * GPtrs_[0] * para_.KH.h2 * exp(-4180.0 * fac_));
 
