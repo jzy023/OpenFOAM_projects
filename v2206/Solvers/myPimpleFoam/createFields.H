@@ -63,7 +63,7 @@ volScalarField Top
     (
         "TopDefault", 
         dimensionSet(0,0,0,1,0,0,0), 
-        reaction->paraPtr()->getTbase().value()
+        reaction->paraPtr()->getTop().value()
     )
 );
 

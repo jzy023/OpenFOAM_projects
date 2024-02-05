@@ -52,6 +52,9 @@ private:
     //- Base operational temperature
     dimensionedScalar Tbase_;   
 
+    //- Operational temperature
+    dimensionedScalar Top_;   
+
     //- Yield of biomass (Y)
 	yieldBiomass yB_;
 
@@ -81,6 +84,8 @@ private:
 
     dimensionedScalar defineTbase(word runMode);
 
+    dimensionedScalar defineTop(word runMode);
+
 	reactionRateConstant defineRC(word runMode);
 
     yieldBiomass defineYields(word runMode);
@@ -89,7 +94,8 @@ private:
 
     inhibitionParaS defineKS(word runMode);
 
-	// void defineSTOI();
+	void defineSTOI();
+
 	// void defineAcidBaseDAE();
 
     void listResizing();
@@ -98,9 +104,11 @@ private:
 
 public:
 
-	std::vector<std::vector<scalar>> STOI;
+    //- Biochemical rate coefficients (nu_ij)
+    List<List<dimensionedScalar>> STOI;
 
-	std::vector<std::vector<scalar>> abDAE;
+    //- Some acied base stuff
+	List<List<dimensionedScalar>> abDAE;
 
 	reactionRateConstant RC; // k_dis; k_dec; k_hyd; k_m;
 
@@ -108,7 +116,8 @@ public:
 
 	inhibitionParaS K_S;	// 
 
-	admAcidBaseKinetic kAB;	// 
+	// admAcidBaseKinetic kAB;	// 
+    dimensionedScalar kAB;  //
 
 	admAcidBaseEq Ka;		// 
 
@@ -139,6 +148,10 @@ public:
         Tbase_
         (
             defineTbase("Meso")
+        ),
+        Top_
+        (
+            defineTop("Meso")
         ),
         // Yields of product
         yB_
@@ -177,12 +190,12 @@ public:
             defineKS("Meso")
         ),
         // Acid Base Kinetics
-        // TODO: check and simplify this
-        kAB
-        (
-            1e10, 1e10, 1e10,
-            1e10, 1e10, 1e10
-        ),
+        // kAB
+        // (
+        //     1e10, 1e10, 1e10,
+        //     1e10, 1e10, 1e10
+        // ),
+        kAB(dimMoles/dimTime, 1e8),
         // Acide base Equilibrium Para
         Ka
         (
@@ -205,7 +218,7 @@ public:
         pH_UL_h2(6), pH_LL_h2(5)
     {
         defineInitialState("Meso");
-    	// defineSTOI();
+    	defineSTOI();
     	// defineAcidBaseDAE();
     };
 
@@ -222,6 +235,8 @@ public:
 	// const carbonContent getCarbonCon() const { return CC_; }
 
     dimensionedScalar getTbase() const { return Tbase_; }
+
+    dimensionedScalar getTop() const { return Top_; }
 
     scalar getGini(label idx) const { return Gini_[idx]; }
     scalar getEini(label idx) const { return Eini_[idx]; }

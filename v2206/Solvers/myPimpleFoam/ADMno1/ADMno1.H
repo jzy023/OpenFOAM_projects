@@ -63,6 +63,13 @@ private:
     //- Gas constant
     scalar R_;
 
+    // TODO: this is only for benchmark case
+    //- Gas volume fraction
+    scalar fracG_ = 3/37;
+
+    //- Liquid volume fraction
+    scalar fracL_ = 34/37;
+
     //- Thermal condition factor
     volScalarField fac_;				
 
@@ -84,6 +91,9 @@ private:
     //- List of pointers to the field of gas concentrations
     PtrList<volScalarField> GPtrs_;
 
+    //- List of pointers to the field of gas concentrations derivatives
+    PtrList<volScalarField::Internal> dGPtrs_;
+
     //- List of pointers to the field of electrolytes concentrations
     PtrList<volScalarField> EPtrs_;
 
@@ -94,10 +104,12 @@ private:
     PtrList<volScalarField> IPtrs_;
 
     //- List of pointers to kinetic rate per specie [kg/m3/s] and [mol/m3/s]
-    PtrList<volScalarField> KRPtrs_;
+    // PtrList<volScalarField> KRPtrs_;
+    PtrList<volScalarField::Internal> KRPtrs_;
 
     //- List of pointers to gas trasfer rate
-    PtrList<volScalarField> GRPtrs_;
+    // PtrList<volScalarField> GRPtrs_;
+    PtrList<volScalarField::Internal> GRPtrs_;
 
     //- Temporary concentration fields
     // PtrList<volScalarField>& YPtrsTemps_;
@@ -138,6 +150,12 @@ private:
     //- Pirvate Helper Functions
     #include "ADMno1Helpers.H"
     
+    //- Gas phase transfer 
+    void GasPhaseRate(volScalarField& Top);
+
+    //- Gas exit rates
+    void GasExitRate(volScalarField& Top);
+
     //- Calculate kinetic rate
     void KineticRate(volScalarField& Top);
 
@@ -210,12 +228,22 @@ public:
     //- Return dYPtrs_
     inline PtrList<volScalarField::Internal>& dY();
 
+    //- Return GPtrs_
+    inline PtrList<volScalarField>& G();
+
+    //- Return dGPtrs_
+    inline PtrList<volScalarField::Internal>& dG();
+
+    //- Clear derivative pointer lists
+    void clear();
+
     //- Correct components consumption rate
     void correct(volScalarField& Top);
 
     //- Return components consumption rate matrix, i.e. source term.
     tmp<fvScalarMatrix> R(label i, volScalarField& Yi) const;
-    // void R(label i, volScalarField& Yi) const;
+
+    tmp<volScalarField::Internal> R(label i) const;
 
    
     //- Return const access to the chemical source terms for specie, i

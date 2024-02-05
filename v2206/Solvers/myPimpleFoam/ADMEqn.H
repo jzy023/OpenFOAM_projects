@@ -67,7 +67,8 @@ PtrList<volScalarField>& YPtrs = reaction->Y();
          ==
             fvOptions(Yi)
         //  TODO: add local biochemical reaction as source term
-        //   + reaction->R(i, Yi)
+          + reaction->R(i)
+        // + reaction->R(i, Yi)
         // + fvOptions(rho, Yi)
         );
 
@@ -79,6 +80,34 @@ PtrList<volScalarField>& YPtrs = reaction->Y();
 
         fvOptions.correct(Yi);
     }
+
+    // forAll(GPtrs, i)
+    // {
+    //     volScalarField& Gi = GPtrs[i];
+
+    //     fvScalarMatrix GiEqn
+    //     (
+    //         fvm::ddt(Gi)
+    //       + fvm::div(phi, Gi)
+    //       - fvm::laplacian(Deff, Gi) 
+    //     //  TODO: add turbulent diffusion
+    //     // - fvm::laplacian(turbulence->muEff(), Yi)
+    //      ==
+    //         fvOptions(Gi)
+    //     //  TODO: add local gas transfer as source term
+    //     //   + reaction->RG(i)
+    //     );
+
+    //     GiEqn.relax();
+
+    //     fvOptions.constrain(GiEqn);
+
+    //     GiEqn.solve(mesh.solver("Gi"));
+
+    //     fvOptions.correct(Gi);
+    // }
+
+    reaction->clear();
 }
 
 

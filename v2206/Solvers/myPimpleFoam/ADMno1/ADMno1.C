@@ -218,6 +218,34 @@ Foam::ADMno1::ADMno1
         );
     }
     
+    //- Initializing derivatives
+
+    dGPtrs_.resize(namesGaseous.size());
+
+    for(label i = 0; i < namesGaseous.size(); i++)
+    {
+        dGPtrs_.set
+        (
+            i,
+            new volScalarField::Internal
+            (
+                IOobject
+                (
+                    "d" + GPtrs_[i].name(),
+                    mesh.time().timeName(),
+                    mesh,
+                    IOobject::NO_READ,
+                    IOobject::NO_WRITE
+                ),
+                mesh,
+                dimensionedScalar
+                (
+                    dimMass/dimVolume/dimTime, 
+                    Zero
+                )
+            )
+        );
+    }
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -334,7 +362,7 @@ Foam::ADMno1::ADMno1
         KRPtrs_.set
         (
             i,
-            new volScalarField
+            new volScalarField::Internal
             (
                 IOobject
                 (
@@ -365,7 +393,7 @@ Foam::ADMno1::ADMno1
         GRPtrs_.set
         (
             i,
-            new volScalarField
+            new volScalarField::Internal
             (
                 IOobject
                 (
@@ -423,42 +451,58 @@ Foam::autoPtr<Foam::ADMno1> Foam::ADMno1::New
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
+void Foam::ADMno1::clear()
+{
+    forAll(dYPtrs_, i)
+    {
+        dYPtrs_[i] *= 0.0;
+    }
+
+    forAll(dGPtrs_, i)
+    {
+        dGPtrs_[i] *= 0.0;
+    }
+}
+
 void Foam::ADMno1::correct(volScalarField& Top)
 {
+    //- calculate gas phase transfer rates
+    GasPhaseRate(Top);
+
+    //- calculate gas exit rates
+    // GasExitRate(Top);
 
     //- calculate raction rates
     KineticRate(Top);
 
-    //- calculate with biochemical rate coefficients
-    // for(label j = 0; j < 7; j++)
-    // {
-    //     // dYPtrs_[j] = dimensionedScalar(dimless, 0);
+    //- calculate dY with STOI
+    for(label j = 0; j < 7; j++)
+    {
+        for (int i = 0; i < 19; i++)
+        {
+            dYPtrs_[j] += (para_.STOI[i][j]) * (KRPtrs_[i]); //check if it works
+        }
+    }
 
-    //     for (int i = 0; i < 19; i++)
-    //     {
-    //         dYPtrs_[j] += (para_.STOI[i][j]) * (KRPtrs_[i]); //check if it works
-    //     }
-    // }
-
-    // for(label j = 8; j < YPtrs_.size(); j++)
-    // {
-    //     // dYPtrs_[j] = dimensionedScalar(dimless, 0);
-
-    //     for (int i = 0; i < 19; i++)
-    //     {
-    //         dYPtrs_[j] += (para_.STOI[i][j]) * (KRPtrs_[i]);
-    //     }
-    // }
+    for(label j = 8; j < YPtrs_.size(); j++)
+    {
+        for (int i = 0; i < 19; i++)
+        {
+            dYPtrs_[j] += (para_.STOI[i][j]) * (KRPtrs_[i]);
+        }
+    }
 
     //- calculate dSh2 iteratively
     // RSh2(); // TODO: implement it! with Rosen et al.
 
+    //- calculate with STOI and gas transer
+    dYPtrs_[8] -= GRPtrs_[1]; // Sch4 - Gch4
+    dYPtrs_[9] -= GRPtrs_[2]; // SIC - Gco2
 
 }
 
 
 tmp<fvScalarMatrix> Foam::ADMno1::R
-// void Foam::ADMno1::R
 (
     label i,
     volScalarField& Yi
@@ -471,8 +515,8 @@ tmp<fvScalarMatrix> Foam::ADMno1::R
     (
         new fvScalarMatrix
         (
-            Yi, 
-            dimensionSet(1,3,-1,0,0,0,0)
+            Yi,
+            dimMass/dimTime
         )
     );
 
@@ -482,6 +526,17 @@ tmp<fvScalarMatrix> Foam::ADMno1::R
     return tSu;
 
 }; 
+
+
+tmp<volScalarField::Internal> Foam::ADMno1::R
+(
+    label i
+) const
+{
+    tmp<volScalarField::Internal> tdY = dYPtrs_[i];
+
+    return tdY;
+}
 
 
 

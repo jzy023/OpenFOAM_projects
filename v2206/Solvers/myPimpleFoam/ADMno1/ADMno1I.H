@@ -45,6 +45,16 @@ inline Foam::PtrList<Foam::volScalarField::Internal>& Foam::ADMno1::dY()
     return dYPtrs_;
 }
 
+inline Foam::PtrList<Foam::volScalarField>& Foam::ADMno1::G()
+{
+    return GPtrs_;
+}
+
+inline Foam::PtrList<Foam::volScalarField::Internal>& Foam::ADMno1::dG()
+{
+    return dGPtrs_;
+}
+
 // inline PtrList<volScalarField>& ADMno1::Y()
 // {
 //     return YPtrs_;
