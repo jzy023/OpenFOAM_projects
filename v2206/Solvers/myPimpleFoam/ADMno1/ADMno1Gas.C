@@ -49,26 +49,42 @@ void Foam::ADMno1::GasPhaseRate(volScalarField& Top)
 }
 
 
-// void Foam::ADMno1::GasExitRate(volScalarField& Top)
-// {
-//     scalar volGas = GPtrs_[0].mesh().V() * fracG_;             // particle scaled gas volume
+void Foam::ADMno1::GasExitRate(volScalarField& Top)
+{
+    // forAll(GPtrs_[0], celli)
+    // {
 
-//     scalar volLiq = GPtrs_[0].mesh().V() * fracL_;             // particle scaled liquid volume
+    // }
 
-//     scalar kp = KP * (GPtrs_[0].mesh().V() / (volGas + volLiq));   // particle scaled pipe resistance
+    // field of cell volume for mesh 
+    scalarField volMeshField = GPtrs_[0].mesh().V().field();            
 
-//     scalar Pgas = (GPtrs_[0] / 16.0 + GPtrs_[1] / 64.0 + GPtrs_[2]) * R_ * Top_ + 
-//                    para_.KH.h2 * exp(5290.0 * fac_ * 100 * R);
+    // particle scaled gas volume
+    scalarField volGas = volMeshField * fracG_; 
 
-//     // TODO: 1.013 -> atmospheric pressure!
-//     scalar qGasLocal = kp * (Pgas - 1.013); 
+    // particle scaled liquid volume
+    scalarField volLiq = volMeshField * fracL_;
 
-// 	if (qGasLocal <= 0) { qGasLocal = 1e-18; }
+    // particle scaled pipe resistance
+    volScalarField kp = 0.0*fac_;
+    kp.field() = KP_ * (volMeshField / (volGas + volLiq));   
 
-//     dGPtrs_[0] = GRPtrs_[0] * volLiq / volGas - GPtrs_[0] * qGasLocal / volGas;
+    volScalarField Pgas = (GPtrs_[0] / 16.0 + GPtrs_[1] / 64.0 + GPtrs_[2]) * R_ * Top + 
+                           para_.KH.h2 * exp(5290.0 * fac_ * 100 * R_);
 
-//     dGPtrs_[1] = GRPtrs_[1] * volLiq / volGas - GPtrs_[1] * qGasLocal / volGas;
+    // TODO: 1.013 -> atmospheric pressure!
+    volScalarField qGasLocal = kp * (Pgas - 1.013); 
 
-//     dGPtrs_[2] = GRPtrs_[2] * volLiq / volGas - GPtrs_[2] * qGasLocal / volGas;
+    // // TODO: how to do this?
+	// // if (qGasLocal <= 0) { qGasLocal = 1e-18; }
+
+    // dGPtrs_[0] = GRPtrs_[0] * volLiq / volGas - GPtrs_[0] * qGasLocal / volGas;
+
+    // dGPtrs_[1] = GRPtrs_[1] * volLiq / volGas - GPtrs_[1] * qGasLocal / volGas;
+
+    // dGPtrs_[2] = GRPtrs_[2] * volLiq / volGas - GPtrs_[2] * qGasLocal / volGas;
     
-// };
+};
+
+
+// ************************************************************************* //

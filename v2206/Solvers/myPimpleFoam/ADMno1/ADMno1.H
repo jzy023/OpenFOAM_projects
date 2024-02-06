@@ -70,6 +70,10 @@ private:
     //- Liquid volume fraction
     scalar fracL_ = 34/37;
 
+    //- Pipe resistance coefficient [m³d⁻¹Bar⁻¹]
+    // TODO: "pipe" DOES NOT EXIST in this case!!!
+    scalar KP_ = 5e4;         
+
     //- Thermal condition factor
     volScalarField fac_;				
 
