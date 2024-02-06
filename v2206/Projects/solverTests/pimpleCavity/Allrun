@@ -7,8 +7,8 @@ runApplication blockMesh
 
 restore0Dir
 
-runApplication topoSet
-
 runApplication $(getApplication)
+
+touch foam.foam
 
 #------------------------------------------------------------------------------

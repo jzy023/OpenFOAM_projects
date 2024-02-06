@@ -172,7 +172,7 @@ public:
 
 	const carbonContent getCarbonCon() const { return CC_; }
 
-    scalar getTbase() const { return Tbase_; }
+    scalar Tbase()() const { return Tbase_; }
 
     scalar getYini(label idx) const { return Yini[idx]; }
     scalar getGini(label idx) const { return Gini[idx]; }

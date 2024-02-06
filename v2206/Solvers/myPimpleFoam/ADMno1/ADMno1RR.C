@@ -38,119 +38,119 @@ void Foam::ADMno1::KineticRate(volScalarField& Top)
     IPtrs_[0] = calcInhibitionHP // aa
     (
         EPtrs_.last(), // ShP
-        para_.pH_UL_aa, 
-        para_.pH_LL_aa,
-        nIh_[0]
+        para_.pHL().ULaa, 
+        para_.pHL().LLaa,
+        nIaa_
     );
 
     IPtrs_[1] = calcInhibitionHP // ac
     (
         EPtrs_.last(), // ShP
-        para_.pH_UL_ac, 
-        para_.pH_LL_ac,
-        nIh_[1]
+        para_.pHL().ULac, 
+        para_.pHL().LLac,
+        nIac_
     );
 
     IPtrs_[2] = calcInhibitionHP // h2
     (
         EPtrs_.last(), // ShP
-        para_.pH_UL_h2, 
-        para_.pH_LL_h2,
-        nIh_[2]
+        para_.pHL().ULh2, 
+        para_.pHL().LLh2,
+        nIh2_
     );
 
     // >>> TODO: which one is correct ???
     // IPtrs_[3] = calcInhibition // IN
     // (
     //     YPtrs_[10], // SIN
-    //     para_.K_S.IN
+    //     para_.KS().IN
     // );
 
-    IPtrs_[3] = 1 / (1 + (para_.K_S.IN / YPtrs_[10]));
+    IPtrs_[3] = 1 / (1 + (para_.KS().IN / YPtrs_[10]));
     
 
 	IPtrs_[4] = calcInhibition // h2fa
     (
         YPtrs_[7], // Sh2
-        para_.K_I.h2fa
+        para_.KI().h2fa
     );
 
 	IPtrs_[5] = calcInhibition // h2c4
     (
         YPtrs_[7], // Sh2
-        para_.K_I.h2c4
+        para_.KI().h2c4
     );
 
 	IPtrs_[6] = calcInhibition // h2pro
     (
         YPtrs_[7], // Sh2
-        para_.K_I.h2pro
+        para_.KI().h2pro
     );
 
 	IPtrs_[7] = calcInhibition // nh3
     (
         MPtrs_[1], // Snh3
-        para_.K_I.nh3
+        para_.KI().nh3
     );
 
     //- Kinetic rates
 
     KRPtrs_[0] = calcRho
     (
-        para_.RC.dis,
+        para_.kDec().dis,
         YPtrs_[12] // Xc
     );
 
     KRPtrs_[1] = calcRho
     (
-        para_.RC.hyd_ch,
+        para_.kDec().hyd_ch,
         YPtrs_[13] // Xch
     );
 
     KRPtrs_[2] = calcRho
     (
-        para_.RC.hyd_pr,
+        para_.kDec().hyd_pr,
         YPtrs_[14] // Xpr
     );
 
     KRPtrs_[3] = calcRho
     (
-        para_.RC.hyd_li,
+        para_.kDec().hyd_li,
         YPtrs_[15] // Xli
     );
 
     KRPtrs_[4] = calcRho
     (
-        para_.RC.m_su,
+        para_.kDec().m_su,
         YPtrs_[0], // Ssu
-        para_.K_S.su,
+        para_.KS().su,
         YPtrs_[16], // Xsu
         IPtrs_[0] * IPtrs_[3] // Iphaa*IIN
     );
 
     KRPtrs_[5] = calcRho
     (
-        para_.RC.m_aa,
+        para_.kDec().m_aa,
         YPtrs_[1], // Saa
-        para_.K_S.aa,
+        para_.KS().aa,
         YPtrs_[17], // Xaa
         IPtrs_[0] * IPtrs_[3] // Iphaa*IIN
     );
 
     KRPtrs_[6] = calcRho
     (
-        para_.RC.m_fa,
+        para_.kDec().m_fa,
         YPtrs_[2], // Sfa
-        para_.K_S.fa,
+        para_.KS().fa,
         YPtrs_[18], // Xfa
         IPtrs_[0] * IPtrs_[3] * IPtrs_[4] //Iphaa*IIN*Ih2fa
     );
 
     KRPtrs_[7] = calcRho
     (
-        para_.RC.m_c4,
+        para_.kDec().m_c4,
         YPtrs_[3], // Sva
-        para_.K_S.c4,
+        para_.KS().c4,
         YPtrs_[19], // Xc4
         YPtrs_[4],  // Sbu
         IPtrs_[0] * IPtrs_[3] * IPtrs_[5] //Iphaa*IIN*Ih2c4
@@ -158,9 +158,9 @@ void Foam::ADMno1::KineticRate(volScalarField& Top)
 
     KRPtrs_[8] = calcRho
     (
-        para_.RC.m_c4,
+        para_.kDec().m_c4,
         YPtrs_[4], // Sbu
-        para_.K_S.c4,
+        para_.KS().c4,
         YPtrs_[19], // Xc4
         YPtrs_[3],  // Sva
         IPtrs_[0] * IPtrs_[3] * IPtrs_[5] //Iphaa*IIN*Ih2c4
@@ -168,18 +168,18 @@ void Foam::ADMno1::KineticRate(volScalarField& Top)
 
     KRPtrs_[9] = calcRho
     (
-        para_.RC.m_pro,
+        para_.kDec().m_pro,
         YPtrs_[5], // Spro
-        para_.K_S.pro,
+        para_.KS().pro,
         YPtrs_[20], // Xpro
         IPtrs_[0] * IPtrs_[3] * IPtrs_[6]  //Iphaa*IIN*Ih2pro
     );
 
     KRPtrs_[10] = calcRho
     (
-        para_.RC.m_ac,
+        para_.kDec().m_ac,
         YPtrs_[6], // Sac
-        para_.K_S.ac,
+        para_.KS().ac,
         YPtrs_[21], // Xac
         IPtrs_[1] * IPtrs_[3] * IPtrs_[7] // Iphac*IIN*Inh3
     );
@@ -187,52 +187,52 @@ void Foam::ADMno1::KineticRate(volScalarField& Top)
 	// >>> in Rosen et al. implementation, no intermediate used for S_h2
 	KRPtrs_[11] = calcRho
     (
-        para_.RC.m_h2,
+        para_.kDec().m_h2,
         YPtrs_[7], // Sh2
-        para_.K_S.h2,
+        para_.KS().h2,
         YPtrs_[22], // Xh2
         IPtrs_[2] * IPtrs_[3] // Iphh2*IIN
     );
 
 	KRPtrs_[12] = calcRho
     (
-        para_.RC.dec_xsu,
+        para_.kDec().dec_xsu,
         YPtrs_[16] // Xsu
     );
 
     KRPtrs_[13] = calcRho
     (
-        para_.RC.dec_xaa,
+        para_.kDec().dec_xaa,
         YPtrs_[17] // Xaa
     );
 
     KRPtrs_[14] = calcRho
     (
-        para_.RC.dec_xfa,
+        para_.kDec().dec_xfa,
         YPtrs_[18] // Xfa
     );
 
     KRPtrs_[15] = calcRho
     (
-        para_.RC.dec_xc4,
+        para_.kDec().dec_xc4,
         YPtrs_[19] // Xc4
     );
 
     KRPtrs_[16] = calcRho
     (
-        para_.RC.dec_xpro,
+        para_.kDec().dec_xpro,
         YPtrs_[20] // Xpro
     );
 
     KRPtrs_[17] = calcRho
     (
-        para_.RC.dec_xac,
+        para_.kDec().dec_xac,
         YPtrs_[21] // Xac
     );
 
     KRPtrs_[18] = calcRho
     (
-        para_.RC.dec_xh2,
+        para_.kDec().dec_xh2,
         YPtrs_[22] // Xh2
     );
 

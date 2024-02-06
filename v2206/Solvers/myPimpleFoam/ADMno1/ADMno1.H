@@ -65,10 +65,10 @@ private:
 
     // TODO: this is only for benchmark case
     //- Gas volume fraction
-    scalar fracG_ = 3/37;
+    scalar fracG_ = 3.0/37.0;
 
     //- Liquid volume fraction
-    scalar fracL_ = 34/37;
+    scalar fracL_ = 34.0/37.0;
 
     //- Pipe resistance coefficient [m³d⁻¹Bar⁻¹]
     // TODO: "pipe" DOES NOT EXIST in this case!!!
@@ -81,7 +81,11 @@ private:
     volScalarField pH_;
 
     //- Ihibition factors
-    scalarList nIh_{3};
+    dimensionedScalar nIaa_;
+
+    dimensionedScalar nIac_;
+
+    dimensionedScalar nIh2_;
 
     //- List of pointers to the field of specie concentrations
     PtrList<volScalarField> YPtrs_;

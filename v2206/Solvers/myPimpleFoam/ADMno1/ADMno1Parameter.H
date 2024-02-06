@@ -49,11 +49,17 @@ private:
     //- Error message
     int errMessage;
 
+    //- Day-to-second conversion
+    const scalar DTOS_ = 1.0/86400.0;
+
     //- Base operational temperature
     dimensionedScalar Tbase_;   
 
     //- Operational temperature
     dimensionedScalar Top_;   
+
+    //- Decay rate [1/day]
+    decayRate kDec_; 
 
     //- Yield of biomass (Y)
 	yieldBiomass yB_;
@@ -64,11 +70,29 @@ private:
     //- Carbon content
 	carbonContent CC_;	
 
-    //- Nitrogen content
-	scalar N_aa_;
+    //- Inhibition factor for h2 and nh3
+	inhibitionParaI KI_;
 
-    //- Nitrogen content Biomass
-	scalar N_bac_; 
+    //- Inhibition factor
+	inhibitionParaS KS_;
+
+	//- Acid-base kinematic para [M/day]
+    dimensionedScalar kAB_;
+
+    //- Acid-base equilibrium para [M]
+	admAcidBaseEq Ka_;
+
+    //- Henry's Law coeffecients
+	gasHenryCoe KH_;
+
+    // Gas transfer rate coefficients [d^-1]
+    dimensionedScalar kLa_;  
+
+    // pH Limits
+    limPH pHL_;
+
+    //- Nitrogen content
+	nitrogenContent NC_;
 
     // List<scalar> Yini;  // main
 
@@ -86,7 +110,7 @@ private:
 
     dimensionedScalar defineTop(word runMode);
 
-	reactionRateConstant defineRC(word runMode);
+	decayRate defineRC(word runMode);
 
     yieldBiomass defineYields(word runMode);
 
@@ -110,34 +134,6 @@ public:
     //- Some acied base stuff
 	List<List<dimensionedScalar>> abDAE;
 
-	reactionRateConstant RC; // k_dis; k_dec; k_hyd; k_m;
-
-	inhibitionParaI K_I;	// 
-
-	inhibitionParaS K_S;	// 
-
-	// admAcidBaseKinetic kAB;	// 
-    dimensionedScalar kAB;  //
-
-	admAcidBaseEq Ka;		// 
-
-	gasHenryCoe KH;			// Henry's Law
-
-    dimensionedScalar kLa;  // gas transfer rate coefficients [d^-1]
-
-    // pH Limits
-	scalar pH_UL_aa;
-
-	scalar pH_LL_aa;
-
-	scalar pH_UL_ac;
-
-	scalar pH_LL_ac;
-
-	scalar pH_UL_h2;
-
-	scalar pH_LL_h2;
-
     //- Constructor
 
     admPara() : 
@@ -153,19 +149,22 @@ public:
         (
             defineTop("Meso")
         ),
-        // Yields of product
+        kDec_
+        (
+            defineRC("Meso")
+        ),
         yB_
         (
             defineYields("Meso")
         ),
         yP_
-        (   0.10, 0.25, 0.20,
+        (   
+            0.10, 0.25, 0.20,
             0.20, 0.25, 0.95,
             0.19, 0.13, 0.27,
             0.41, 0.06, 0.23,
             0.26, 0.05, 0.40
         ),
-        // Carbon Content
         CC_
         (
             0.2786, 0.03, 0.0313,
@@ -174,48 +173,42 @@ public:
             0.025, 0.0268, 0.0313,
             0.0313, 0.024, 0.0156
         ),
-        // Nitrogen Content
-        N_aa_(0.007), N_bac_(0.005714),
-        // Kinetic Rate Coeffs (TODO: change names)
-        RC
-        (
-            defineRC("Meso")
-        ),
-        K_I
+        KI_
         (
             defineKI("Meso")
         ),
-        K_S
+        KS_
         (
             defineKS("Meso")
         ),
-        // Acid Base Kinetics
-        // kAB
-        // (
-        //     1e10, 1e10, 1e10,
-        //     1e10, 1e10, 1e10
-        // ),
-        kAB(dimMoles/dimTime, 1e8),
-        // Acide base Equilibrium Para
-        Ka
+        kAB_
+        (
+            dimMoles/dimTime, 1e8
+        ),
+        Ka_
         (
             1.380e-5, 1.514e-5, 1.318e-5,
             1.738e-5, 4.467e-7, 5.623e-10, 1e-14
         ),
-        // Henry's Law Coefficients
-        KH
+        KH_
         (
             7.384654293536963e-04,  // h2
             0.001161902733673,      // ch4
             0.027146692900075,      // co2
             0.031300000000000       // h2o
         ),
-        // Gas Transfer Coefficients
-    	kLa(dimless/dimTime, 200),
-        // pH bounds
-        pH_UL_aa(5.5), pH_LL_aa(4),
-        pH_UL_ac(7), pH_LL_ac(6),
-        pH_UL_h2(6), pH_LL_h2(5)
+    	kLa_
+        (
+            dimless/dimTime, 200
+        ),
+        pHL_
+        (
+            5.5, 4.0, 7.0, 6.0, 6.0, 5.0
+        ),
+        NC_
+        (
+            0.007, 0.005714
+        )
     {
         defineInitialState("Meso");
     	defineSTOI();
@@ -226,21 +219,41 @@ public:
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
-	// const reactionRateConstant getRC() const { return RC; }
+    scalar DTOS() const { return DTOS_; }
 
-	// const yieldBiomass getYieldBio() const { return yB_; }
+    const dimensionedScalar Tbase() const { return Tbase_; }
 
-	// const yieldProduct getYieldPro() const { return yP_; }
+    const dimensionedScalar Top() const { return Top_; }
 
-	// const carbonContent getCarbonCon() const { return CC_; }
+	const decayRate kDec() const { return kDec_; }
 
-    dimensionedScalar getTbase() const { return Tbase_; }
+	const yieldBiomass yB() const { return yB_; }
 
-    dimensionedScalar getTop() const { return Top_; }
+	const yieldProduct yP() const { return yP_; }
 
-    scalar getGini(label idx) const { return Gini_[idx]; }
-    scalar getEini(label idx) const { return Eini_[idx]; }
-    scalar getMini(label idx) const { return Mini_[idx]; }
+	const carbonContent CC() const { return CC_; }
+
+    const inhibitionParaI KI() const { return KI_; }
+
+    const inhibitionParaS KS() const { return KS_; }
+
+    const dimensionedScalar kAB() const { return kAB_; }
+
+    const admAcidBaseEq Ka() const { return Ka_; }
+
+    const gasHenryCoe KH() const { return KH_; }
+
+    const dimensionedScalar kLa() const { return kLa_; }
+
+    const limPH pHL() const { return pHL_; }
+
+    const nitrogenContent NC() const { return NC_; }
+
+    scalar Gini(label idx) const { return Gini_[idx]; }
+
+    scalar Eini(label idx) const { return Eini_[idx]; }
+
+    scalar Mini(label idx) const { return Mini_[idx]; }
     
 };
 

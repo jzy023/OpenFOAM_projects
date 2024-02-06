@@ -40,7 +40,7 @@ void Foam::ADMno1::KineticRate(volScalarField& Top)
 
     TopDummy.dimensions().reset(dimless);
 
-    fac_ = (1.0 / para_.getTbase() - 1.0 / TopDummy) / (100.0 * R_);
+    fac_ = (1.0 / para_.Tbase()() - 1.0 / TopDummy) / (100.0 * R_);
 
     //- Inhibiitons
 

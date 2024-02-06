@@ -38,23 +38,19 @@ void Foam::ADMno1::GasPhaseRate(volScalarField& Top)
 
     TopDummy.dimensions().reset(dimless);
 
-    fac_ = (1.0 / para_.getTbase().value() - 1.0 / TopDummy) / (100.0 * R_);
+    fac_ = (1.0 / para_.Tbase().value() - 1.0 / TopDummy) / (100.0 * R_);
 
-    GRPtrs_[0] = para_.kLa * (YPtrs_[7] - R_ * TopDummy * GPtrs_[0] * para_.KH.h2 * exp(-4180.0 * fac_));
+    GRPtrs_[0] = para_.kLa() * (YPtrs_[7] - R_ * TopDummy * GPtrs_[0] * para_.KH().h2 * exp(-4180.0 * fac_));
 
-    GRPtrs_[1] = para_.kLa * (YPtrs_[8] - R_ * TopDummy * GPtrs_[1] * para_.KH.ch4 * exp(-14240.0 * fac_));
+    GRPtrs_[1] = para_.kLa() * (YPtrs_[8] - R_ * TopDummy * GPtrs_[1] * para_.KH().ch4 * exp(-14240.0 * fac_));
 
-    GRPtrs_[2] = para_.kLa * (YPtrs_[9] - R_ * TopDummy * GPtrs_[2] * para_.KH.co2 * exp(-19410.0 * fac_));
+    GRPtrs_[2] = para_.kLa() * (YPtrs_[9] - R_ * TopDummy * GPtrs_[2] * para_.KH().co2 * exp(-19410.0 * fac_));
 
 }
 
 
 void Foam::ADMno1::GasExitRate(volScalarField& Top)
 {
-    // forAll(GPtrs_[0], celli)
-    // {
-
-    // }
 
     // field of cell volume for mesh 
     scalarField volMeshField = GPtrs_[0].mesh().V().field();            
@@ -67,22 +63,36 @@ void Foam::ADMno1::GasExitRate(volScalarField& Top)
 
     // particle scaled pipe resistance
     volScalarField kp = 0.0*fac_;
-    kp.field() = KP_ * (volMeshField / (volGas + volLiq));   
 
-    volScalarField Pgas = (GPtrs_[0] / 16.0 + GPtrs_[1] / 64.0 + GPtrs_[2]) * R_ * Top + 
-                           para_.KH.h2 * exp(5290.0 * fac_ * 100 * R_);
+    kp.dimensions().reset(dimVolume/dimTime/dimPressure);
+
+    kp.field() = KP_ * (volMeshField / (volGas + volLiq));  
+
+    //- gas pressure
+    volScalarField TopDummy(Top);
+
+    TopDummy.dimensions().reset(dimless); 
+
+    volScalarField Ph2o = GPtrs_[0];
+
+    Ph2o.field() = para_.KH().h2 * exp(5290.0 * fac_ * 100 * R_);
+
+    volScalarField Pgas = (GPtrs_[0] / 16.0 + GPtrs_[1] / 64.0 + GPtrs_[2]) * R_ * TopDummy + Ph2o;
+
+    Pgas.dimensions().reset(dimPressure);
 
     // TODO: 1.013 -> atmospheric pressure!
-    volScalarField qGasLocal = kp * (Pgas - 1.013); 
+    dimensionedScalar Patm( dimPressure, 1.013 );
 
-    // // TODO: how to do this?
-	// // if (qGasLocal <= 0) { qGasLocal = 1e-18; }
+    volScalarField qGasLocal = kp * (Pgas - Patm); 
 
-    // dGPtrs_[0] = GRPtrs_[0] * volLiq / volGas - GPtrs_[0] * qGasLocal / volGas;
+	qGasLocal.min(0.0);
 
-    // dGPtrs_[1] = GRPtrs_[1] * volLiq / volGas - GPtrs_[1] * qGasLocal / volGas;
+    dGPtrs_[0].field() = GRPtrs_[0].field() * volLiq / volGas - GPtrs_[0].field() * qGasLocal.field() / volGas;
 
-    // dGPtrs_[2] = GRPtrs_[2] * volLiq / volGas - GPtrs_[2] * qGasLocal / volGas;
+    dGPtrs_[1].field() = GRPtrs_[1].field() * volLiq / volGas - GPtrs_[1].field() * qGasLocal.field() / volGas;
+
+    dGPtrs_[2].field() = GRPtrs_[2].field() * volLiq / volGas - GPtrs_[2].field() * qGasLocal.field() / volGas;
     
 };
 

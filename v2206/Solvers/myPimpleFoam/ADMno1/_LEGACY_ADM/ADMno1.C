@@ -404,9 +404,9 @@ Foam::ADMno1::ADMno1
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-    nIh_[0] = 3.0 / (para_.pH_UL_aa - para_.pH_LL_aa);  // aa
-    nIh_[1] = 3.0 / (para_.pH_UL_ac - para_.pH_LL_ac);  // ac
-    nIh_[2] = 3.0 / (para_.pH_UL_h2 - para_.pH_LL_h2);  // h2
+    nIaa_ = 3.0 / (para_.pH_UL_aa - para_.pH_LL_aa);  // aa
+    nIac_ = 3.0 / (para_.pH_UL_ac - para_.pH_LL_ac);  // ac
+    nIh2_ = 3.0 / (para_.pH_UL_h2 - para_.pH_LL_h2);  // h2
 
 }
 

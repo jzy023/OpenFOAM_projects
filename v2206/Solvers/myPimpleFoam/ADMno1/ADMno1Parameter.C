@@ -52,19 +52,22 @@ admPara::admPara
     (
         defineTop(runMode)
     ),
-    // Yields of product
+    kDec_
+    (
+        defineRC(runMode)
+    ),
     yB_
     (
         defineYields(runMode)
     ),
     yP_
-    (   0.10, 0.25, 0.20,
+    (  
+        0.10, 0.25, 0.20,
         0.20, 0.25, 0.95,
         0.19, 0.13, 0.27,
         0.41, 0.06, 0.23,
         0.26, 0.05, 0.40
     ),
-    // Carbon Content
     CC_
     (
         0.2786, 0.03, 0.0313,
@@ -73,43 +76,42 @@ admPara::admPara
         0.025, 0.0268, 0.0313,
         0.0313, 0.024, 0.0156
     ),
-    // Nitrogen Content
-    N_aa_(0.007), N_bac_(0.005714),
-    // Kinetic Rate Coeffs (TODO: change names)
-    RC
-    (
-        defineRC(runMode)
-    ),
-    K_I
+    KI_
     (
         defineKI(runMode)
     ),
-    K_S
+    KS_
     (
         defineKS(runMode)
     ),
-    // Acid Base Kinetics
-    kAB(dimMoles/dimTime, 1e8),
-    // Acide base Equilibrium Para
-    Ka
+    kAB_
+    (
+        dimMoles/dimTime, 1e8
+    ),
+    Ka_
     (
         1.380e-5, 1.514e-5, 1.318e-5,
         1.738e-5, 4.467e-7, 5.623e-10, 1e-14
     ),
-    // Henry's Law Coefficients
-    KH
+    KH_
     (
         7.384654293536963e-04,  // h2
         0.001161902733673,      // ch4
         0.027146692900075,      // co2
         0.031300000000000       // h2o
     ),
-    // Gas Transfer Coefficients
-	kLa(dimless/dimTime, 200),
-    // pH bounds
-    pH_UL_aa(5.5), pH_LL_aa(4),
-    pH_UL_ac(7), pH_LL_ac(6),
-    pH_UL_h2(6), pH_LL_h2(5)
+	kLa_
+    (
+        dimless/dimTime, 200
+    ),
+    pHL_
+    (
+        5.5, 4.0, 7.0, 6.0, 6.0, 5.0
+    ),
+    NC_
+    (
+        0.007, 0.005714
+    )
 {
     defineInitialState(runMode);
 	defineSTOI();
@@ -170,14 +172,14 @@ dimensionedScalar admPara::defineTop
     }
 }
 
-reactionRateConstant admPara::defineRC
+decayRate admPara::defineRC
 (
     word runMode
 )
 {
     if(runMode == "Meso")
     {
-        return reactionRateConstant
+        return decayRate
         (
             0.4,    // dis
             0.25,   // hyd_ch
@@ -201,7 +203,7 @@ reactionRateConstant admPara::defineRC
     }
     else if(runMode == "MesoSolid")
     {
-        return reactionRateConstant
+        return decayRate
         (
             0.5,    // dis
             10.0,   // hyd_ch
@@ -225,7 +227,7 @@ reactionRateConstant admPara::defineRC
     }
     else
     {
-        return reactionRateConstant
+        return decayRate
         (
             1.0,    // dis
             10.0,   // hyd_ch
@@ -390,7 +392,7 @@ void admPara::defineSTOI()
 	STOI[4][5] = (1 - yB_.su) * yP_.pro_su;
 	STOI[4][6] = (1 - yB_.su) * yP_.ac_su;
 	STOI[4][7] = (1 - yB_.su) * yP_.h2_su;
-	STOI[4][10] = -yB_.su * N_bac_;
+	STOI[4][10] = -yB_.su * NC_.bac;
 
 	STOI[5][1] = -1;
 	STOI[5][3] = (1 - yB_.aa) * yP_.va_aa;
@@ -398,36 +400,36 @@ void admPara::defineSTOI()
 	STOI[5][5] = (1 - yB_.aa) * yP_.pro_aa;
 	STOI[5][6] = (1 - yB_.aa) * yP_.ac_aa;
 	STOI[5][7] = (1 - yB_.aa) * yP_.h2_aa;
-	STOI[5][10] = N_aa_ - yB_.aa * N_bac_;
+	STOI[5][10] = NC_.aa - yB_.aa * NC_.bac;
 
 	STOI[6][2] = -1;
 	STOI[6][6] = (1 - yB_.fa) * 0.7;
 	STOI[6][7] = (1 - yB_.fa) * 0.3;
-	STOI[6][10] = -yB_.fa * N_bac_;
+	STOI[6][10] = -yB_.fa * NC_.bac;
 
 	STOI[7][3] = -1;
 	STOI[7][5] = (1 - yB_.c4) * 0.54;
 	STOI[7][6] = (1 - yB_.c4) * 0.31;
 	STOI[7][7] = (1 - yB_.c4) * 0.15;
-	STOI[7][10] = -yB_.c4 * N_bac_;
+	STOI[7][10] = -yB_.c4 * NC_.bac;
 
 	STOI[8][4] = -1;
 	STOI[8][6] = (1 - yB_.c4) * 0.8;
 	STOI[8][7] = (1 - yB_.c4) * 0.2;
-	STOI[8][10] = -yB_.c4 * N_bac_;
+	STOI[8][10] = -yB_.c4 * NC_.bac;
 
 	STOI[9][5] = -1;
 	STOI[9][6] = (1 - yB_.pro) * 0.57;
 	STOI[9][7] = (1 - yB_.pro) * 0.43;
-	STOI[9][10] = -yB_.pro * N_bac_;
+	STOI[9][10] = -yB_.pro * NC_.bac;
 
 	STOI[10][6] = -1;
 	STOI[10][8] = (1 - yB_.ac);
-	STOI[10][10] = -yB_.ac * N_bac_;
+	STOI[10][10] = -yB_.ac * NC_.bac;
 
 	STOI[11][7] = -1;
 	STOI[11][8] = (1 - yB_.h2);
-	STOI[11][10] = -yB_.h2 * N_bac_;
+	STOI[11][10] = -yB_.h2 * NC_.bac;
 
 	STOI[0][12] = -1;
 	STOI[0][13] = yP_.ch_xc;

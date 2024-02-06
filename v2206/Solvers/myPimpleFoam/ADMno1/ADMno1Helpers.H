@@ -41,9 +41,9 @@ volScalarField calcInhibition
 volScalarField calcInhibitionHP
 (
     volScalarField Shp,
-    scalar UL,
-    scalar LL,
-    label n
+    dimensionedScalar UL,
+    dimensionedScalar LL,
+    dimensionedScalar n
 );
 
 //- Kinetic rate calculations

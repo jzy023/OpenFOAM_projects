@@ -49,11 +49,11 @@ Description
 
 
 
-// /** =======================================================================
-//  * STOI Components
-//  * @brief	ADM-1 Table 6.2, raction first order prameters [d^-1]
-//  */
-struct reactionRateConstant
+/** =======================================================================
+ * STOI Components
+ * @brief	ADM-1 Table 6.2, raction first order prameters [d^-1]
+ */
+struct decayRate
 {
 	dimensionedScalar dis;	   //[1/d]
 	dimensionedScalar hyd_ch; //[1/d]
@@ -74,7 +74,7 @@ struct reactionRateConstant
 	dimensionedScalar dec_xac;    //[1/d]
 	dimensionedScalar dec_xh2;    //[1/d]
 
-    reactionRateConstant
+    decayRate
     (
         scalar dis_,
         scalar hyd_ch_,
@@ -179,9 +179,9 @@ struct yieldBiomass
     {};   
 };
 
-// /** =======================================================================
-//  * @brief	ADM-1 Table 6.1, default Yields of product (f) [kgCOD/kgCOD]
-//  */
+/** =======================================================================
+ * @brief	ADM-1 Table 6.1, default Yields of product (f) [kgCOD/kgCOD]
+ */
 struct yieldProduct
 {
 	dimensionedScalar si_xc;  //[kgCOD/kgCOD]
@@ -237,12 +237,11 @@ struct yieldProduct
     {};
 };
 
-// /** =======================================================================
-//  * @brief	default Carbon contents of substrates
-//  * 			_bac and _biom are interchangeable
-//  * 			Kmole/KgCOD
-//  */
-// TODO: fix dimension
+/** =======================================================================
+ * @brief	default Carbon contents of substrates
+ * 			_bac and _biom are interchangeable
+ * 			Kmole/KgCOD
+ */
 struct carbonContent
 {
 	dimensionedScalar xc;  //[kmol/kgCOD]
@@ -324,9 +323,9 @@ struct inhibitionParaI
     {};
 };
 
-// /** =======================================================================
-//  * @brief	default Inhibition parameters for [Ks]
-//  */
+/** =======================================================================
+ * @brief	default Inhibition parameters for [Ks]
+ */
 struct inhibitionParaS
 {
 	dimensionedScalar IN;  //[kmol/m3]
@@ -364,11 +363,10 @@ struct inhibitionParaS
     {};
 };
 
-// /** =======================================================================
-//  * @brief structure to keep the Acide base Kinematic Para [kAB][/M/day]
-//  *
-//  */
-// TODO: fix dimenstions 
+/** =======================================================================
+ * @brief structure to keep the Acid base Kinematic Para [kAB_][/M/day]
+ *
+ */
 struct admAcidBaseKinetic
 {
 	dimensionedScalar va;  //[m3/kmol/day]
@@ -397,10 +395,9 @@ struct admAcidBaseKinetic
     {};
 };
 
-// /** =======================================================================
-//  * @brief structure to keep the Acide base Equilibrium Para [Ka][M]
-//  */
-// TODO: fix dimenstions 
+/** =======================================================================
+ * @brief structure to keep the Acid base Equilibrium Para [M]
+ */
 struct admAcidBaseEq
 {
 	dimensionedScalar va;  //[M]
@@ -431,6 +428,58 @@ struct admAcidBaseEq
         W( dimMass, W_)
     {};
 };
+
+/** =======================================================================
+ * @brief pH Limits
+ */
+struct limPH
+{
+    dimensionedScalar ULaa;
+    dimensionedScalar LLaa;
+    dimensionedScalar ULac;
+    dimensionedScalar LLac;
+    dimensionedScalar ULh2;
+    dimensionedScalar LLh2;
+
+    limPH
+    (
+        scalar ULaa_,
+        scalar LLaa_,
+        scalar ULac_,
+        scalar LLac_,
+        scalar ULh2_,
+        scalar LLh2_
+    )
+    :
+        ULaa( dimless, ULaa_),
+        LLaa( dimless, LLaa_),
+        ULac( dimless, ULac_),
+        LLac( dimless, LLac_),
+        ULh2( dimless, ULh2_),
+        LLh2( dimless, LLh2_)
+    {};
+};
+
+/** =======================================================================
+ * @brief Nitrogen content
+ */
+// TODO: check dimensions
+struct nitrogenContent
+{
+    dimensionedScalar aa;
+    dimensionedScalar bac; // biomass
+
+    nitrogenContent
+    (
+        scalar aa_,
+        scalar bac_
+    )
+    :
+        aa( dimless, aa_ ),
+        bac( dimless, bac_)
+    {};
+};
+
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

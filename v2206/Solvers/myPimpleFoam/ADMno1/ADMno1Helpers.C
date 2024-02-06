@@ -44,20 +44,16 @@ volScalarField Foam::ADMno1::calcInhibition
 volScalarField Foam::ADMno1::calcInhibitionHP
 (
     volScalarField Shp,
-    scalar UL,
-    scalar LL,
-    label n
+    dimensionedScalar UL,
+    dimensionedScalar LL,
+    dimensionedScalar n
 )
 {
-    scalar Kph = pow(10, -0.5 * (UL + LL));
+    dimensionedScalar Kph = pow(10, -0.5 * (UL + LL));
 
-    dimensionedScalar dimKph
-    (
-        dimMass/dimVolume,
-        Kph
-    );
+    Kph.dimensions().reset(dimMass/dimVolume);
 
-    return pow(dimKph, n) / (pow(Shp, n) + pow(dimKph, n));
+    return pow(Kph, n) / (pow(Shp, n) + pow(Kph, n));
 }
 
 //- Kinetic rate calculations

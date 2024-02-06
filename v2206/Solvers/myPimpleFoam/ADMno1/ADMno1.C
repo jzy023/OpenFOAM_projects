@@ -212,7 +212,7 @@ Foam::ADMno1::ADMno1
                 (
                     namesGaseous[i] + "Default", 
                     dimMass/dimVolume, // TODO: dimension check
-                    para_.getGini(i)
+                    para_.Gini(i)
                 )
             )
         );
@@ -276,7 +276,7 @@ Foam::ADMno1::ADMno1
                 (
                     namesElectrolyte[i] + "Default", 
                     dimMass/dimVolume, // TODO: dimension check
-                    para_.getEini(i)
+                    para_.Eini(i)
                 )
             )
         );
@@ -310,7 +310,7 @@ Foam::ADMno1::ADMno1
                 (
                     namesMedians[i] + "Default", 
                     dimMass/dimVolume, // TODO: dimension check
-                    para_.getMini(i)
+                    para_.Mini(i)
                 )
             )
         );
@@ -415,9 +415,9 @@ Foam::ADMno1::ADMno1
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-    nIh_[0] = 3.0 / (para_.pH_UL_aa - para_.pH_LL_aa);  // aa
-    nIh_[1] = 3.0 / (para_.pH_UL_ac - para_.pH_LL_ac);  // ac
-    nIh_[2] = 3.0 / (para_.pH_UL_h2 - para_.pH_LL_h2);  // h2
+    nIaa_ = 3.0 / (para_.pHL().ULaa - para_.pHL().LLaa);  // aa
+    nIac_ = 3.0 / (para_.pHL().ULac - para_.pHL().LLac);  // ac
+    nIh2_ = 3.0 / (para_.pHL().ULh2 - para_.pHL().LLh2);  // h2
 
 }
 
@@ -469,8 +469,8 @@ void Foam::ADMno1::correct(volScalarField& Top)
     //- calculate gas phase transfer rates
     GasPhaseRate(Top);
 
-    //- calculate gas exit rates
-    // GasExitRate(Top);
+    // //- calculate gas exit rates
+    GasExitRate(Top);
 
     //- calculate raction rates
     KineticRate(Top);
@@ -493,11 +493,25 @@ void Foam::ADMno1::correct(volScalarField& Top)
     }
 
     //- calculate dSh2 iteratively
-    // RSh2(); // TODO: implement it! with Rosen et al.
+    // TODO: implement it! with Rosen et al.
+    // RSh2(); 
 
     //- calculate with STOI and gas transer
     dYPtrs_[8] -= GRPtrs_[1]; // Sch4 - Gch4
+
     dYPtrs_[9] -= GRPtrs_[2]; // SIC - Gco2
+
+
+    //- convert to second-base time scale
+    forAll(dYPtrs_, j)
+    {
+        dYPtrs_[j] *= para_.DTOS();
+    }
+
+    forAll(dGPtrs_, j)
+    {
+        dGPtrs_[j] *= para_.DTOS();
+    }
 
 }
 
