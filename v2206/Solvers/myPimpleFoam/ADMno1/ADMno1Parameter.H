@@ -34,7 +34,6 @@ Description
 #ifndef ADMno1Parameter_H
 #define ADMno1Parameter_H
 
-// #include "typeDefs.H"
 #include "ADMno1Types.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -219,46 +218,52 @@ public:
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
-    scalar DTOS() const { return DTOS_; }
+    inline scalar DTOS() const;
 
-    const dimensionedScalar Tbase() const { return Tbase_; }
+    inline const dimensionedScalar Tbase() const;
 
-    const dimensionedScalar Top() const { return Top_; }
+    inline const dimensionedScalar Top() const;
 
-	const decayRate kDec() const { return kDec_; }
+	inline const decayRate kDec() const;
 
-	const yieldBiomass yB() const { return yB_; }
+	inline const yieldBiomass yB() const;
 
-	const yieldProduct yP() const { return yP_; }
+	inline const yieldProduct yP() const;
 
-	const carbonContent CC() const { return CC_; }
+	inline const carbonContent CC() const;
 
-    const inhibitionParaI KI() const { return KI_; }
+    inline const inhibitionParaI KI() const;
 
-    const inhibitionParaS KS() const { return KS_; }
+    inline const inhibitionParaS KS() const;
 
-    const dimensionedScalar kAB() const { return kAB_; }
+    inline const dimensionedScalar kAB() const;
 
-    const admAcidBaseEq Ka() const { return Ka_; }
+    inline const admAcidBaseEq Ka() const;
 
-    const gasHenryCoe KH() const { return KH_; }
+    inline const gasHenryCoe KH() const;
 
-    const dimensionedScalar kLa() const { return kLa_; }
+    inline const dimensionedScalar kLa() const;
 
-    const limPH pHL() const { return pHL_; }
+    inline const limPH pHL() const;
 
-    const nitrogenContent NC() const { return NC_; }
+    inline const nitrogenContent NC() const;
 
-    scalar Gini(label idx) const { return Gini_[idx]; }
+    inline scalar Gini(label idx) const;
 
-    scalar Eini(label idx) const { return Eini_[idx]; }
+    inline scalar Eini(label idx) const;
 
-    scalar Mini(label idx) const { return Mini_[idx]; }
+    inline scalar Mini(label idx) const;
     
 };
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+ 
+#include "ADMno1ParameterI.H"
+// #ifdef NoRepository
+//     #include "ADMno1Templates.C"
+// #endif
 
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 #endif
 
 // ************************************************************************* //

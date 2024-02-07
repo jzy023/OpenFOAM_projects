@@ -158,6 +158,8 @@ private:
     //- Pirvate Helper Functions
     #include "ADMno1Helpers.H"
     
+// * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
+
     //- Gas phase transfer 
     void GasPhaseRate(volScalarField& Top);
 
@@ -195,7 +197,7 @@ public:
     static const word propertiesName;
 
 
-    // Constructors
+// * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
     ADMno1
     ( 
@@ -222,6 +224,7 @@ public:
 
     ~ADMno1() = default;
 
+// * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
     // Inline Member Functions
     //- Return Schmidt number

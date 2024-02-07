@@ -529,10 +529,6 @@ void admPara::listResizing()
     Mini_.resize(3); 
 }
 
-// * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
-
-//TODO: need work
-
 void admPara::defineInitialState(word runMode)
 {
     listResizing();
