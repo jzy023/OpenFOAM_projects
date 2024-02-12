@@ -467,15 +467,17 @@ void Foam::ADMno1::clear()
 void Foam::ADMno1::correct(volScalarField& Top)
 {
     //- calculate gas phase transfer rates
-    GasPhaseRate(Top);
+    // GasPhaseRate(Top);
 
     // //- calculate gas exit rates
-    GasExitRate(Top);
+    // GasExitRate(Top);
 
     //- calculate raction rates
     KineticRate(Top);
 
     //- calculate dY with STOI
+    // >>> TEST
+    // dYPtrs_[7].field() = 0.01*2.5055e-7;
     for(label j = 0; j < 7; j++)
     {
         for (int i = 0; i < 19; i++)
@@ -491,15 +493,15 @@ void Foam::ADMno1::correct(volScalarField& Top)
             dYPtrs_[j] += (para_.STOI[i][j]) * (KRPtrs_[i]);
         }
     }
-
+    
     //- calculate dSh2 iteratively
     // TODO: implement it! with Rosen et al.
     // RSh2(); 
 
     //- calculate with STOI and gas transer
-    dYPtrs_[8] -= GRPtrs_[1]; // Sch4 - Gch4
+    // dYPtrs_[8] -= GRPtrs_[1]; // Sch4 - Gch4
 
-    dYPtrs_[9] -= GRPtrs_[2]; // SIC - Gco2
+    // dYPtrs_[9] -= GRPtrs_[2]; // SIC - Gco2
 
 
     //- convert to second-base time scale
@@ -525,6 +527,40 @@ tmp<fvScalarMatrix> Foam::ADMno1::R
     // TODO: you need ot fix all the dimensions
     // TODO: quite different from OpenFOAM implementations; need tests
 
+    // tmp<fvScalarMatrix> tSu
+    // (
+    //     new fvScalarMatrix
+    //     (
+    //         Yi,
+    //         dimMass/dimTime
+    //     )
+    // );
+
+    // fvScalarMatrix& Su = tSu.ref();
+    // Su += dYPtrs_[i];
+
+    // return tSu;
+
+    // =================================================
+
+    volScalarField dY
+    (
+        IOobject
+        (
+            "dYtemp",
+            YPtrs_[0].mesh().time().timeName(),
+            YPtrs_[0].mesh(),
+            IOobject::NO_READ,
+            IOobject::NO_WRITE
+        ),
+        YPtrs_[0].mesh(),
+        dimensionedScalar
+        (
+            dimMass/dimVolume/dimTime, 
+            Zero
+        )
+    );
+
     tmp<fvScalarMatrix> tSu
     (
         new fvScalarMatrix
@@ -534,8 +570,13 @@ tmp<fvScalarMatrix> Foam::ADMno1::R
         )
     );
 
+    scalarField vol = dY.mesh().V().field();
+
+    dY.field() = vol * dYPtrs_[i];
+
     fvScalarMatrix& Su = tSu.ref();
-    Su += dYPtrs_[i];
+
+    Su += dY;
 
     return tSu;
 
