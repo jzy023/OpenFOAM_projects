@@ -9,48 +9,40 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    object      fvSchemes;
+    class       volScalarField;
+    object      CH4;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-ddtSchemes
+dimensions      [0 0 0 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
 {
-    // default         steadyState;
-    // default         backward;
-    default         Euler;
-}
+    fuel
+    {
+        type            fixedValue;
+        value           uniform 1;
+    }
 
-gradSchemes
-{
-    default         Gauss linear;
-}
+    air
+    {
+        type            fixedValue;
+        value           uniform 0;
+    }
 
-divSchemes
-{
-    default         Gauss linear;
+    outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 0;
+        value           uniform 1;
+    }
 
-    div(phi,U)      Gauss LUST grad(U);
-
-    div(phi,k)      Gauss limitedLinear 1;
-    div(phi,S*)     bounded Gauss limitedLinear 1;
-    div(phi,G*)     bounded Gauss limitedLinear 1;
-    div((nuEff*dev2(T(grad(U))))) Gauss linear;
-}
-
-laplacianSchemes
-{
-    default         Gauss linear corrected;
-}
-
-interpolationSchemes
-{
-    default         linear;
-}
-
-snGradSchemes
-{
-    default         corrected;
+    frontAndBack
+    {
+        type            empty;
+    }
 }
 
 

@@ -10,47 +10,58 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      fvSchemes;
+    object      fvSolution;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-ddtSchemes
+solvers
 {
-    // default         steadyState;
-    // default         backward;
-    default         Euler;
+    "rho.*"
+    {
+        solver          diagonal;
+    }
+
+    p
+    {
+        solver           PCG;
+        preconditioner   DIC;
+        tolerance        1e-6;
+        relTol           0.1;
+    }
+
+    pFinal
+    {
+        $p;
+        tolerance        1e-6;
+        relTol           0.0;
+    }
+
+    "(U|h|k|epsilon)"
+    {
+        solver          PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-6;
+        relTol          0.1;
+    }
+
+    "(U|h|k|epsilon)Final"
+    {
+        $U;
+        relTol          0;
+    }
+
+    Yi
+    {
+        $hFinal;
+    }
 }
 
-gradSchemes
+PIMPLE
 {
-    default         Gauss linear;
-}
-
-divSchemes
-{
-    default         Gauss linear;
-
-    div(phi,U)      Gauss LUST grad(U);
-
-    div(phi,k)      Gauss limitedLinear 1;
-    div(phi,S*)     bounded Gauss limitedLinear 1;
-    div(phi,G*)     bounded Gauss limitedLinear 1;
-    div((nuEff*dev2(T(grad(U))))) Gauss linear;
-}
-
-laplacianSchemes
-{
-    default         Gauss linear corrected;
-}
-
-interpolationSchemes
-{
-    default         linear;
-}
-
-snGradSchemes
-{
-    default         corrected;
+    momentumPredictor no;
+    nOuterCorrectors  1;
+    nCorrectors       2;
+    nNonOrthogonalCorrectors 0;
 }
 
 

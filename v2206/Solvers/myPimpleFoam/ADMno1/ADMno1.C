@@ -520,78 +520,30 @@ void Foam::ADMno1::correct(volScalarField& Top)
 
 tmp<fvScalarMatrix> Foam::ADMno1::R
 (
-    label i,
-    volScalarField& Yi
+    label i
 ) const
 {
-    // TODO: you need ot fix all the dimensions
     // TODO: quite different from OpenFOAM implementations; need tests
 
-    // tmp<fvScalarMatrix> tSu
-    // (
-    //     new fvScalarMatrix
-    //     (
-    //         Yi,
-    //         dimMass/dimTime
-    //     )
-    // );
-
-    // fvScalarMatrix& Su = tSu.ref();
-    // Su += dYPtrs_[i];
-
-    // return tSu;
-
-    // =================================================
-
-    volScalarField dY
-    (
-        IOobject
-        (
-            "dYtemp",
-            YPtrs_[0].mesh().time().timeName(),
-            YPtrs_[0].mesh(),
-            IOobject::NO_READ,
-            IOobject::NO_WRITE
-        ),
-        YPtrs_[0].mesh(),
-        dimensionedScalar
-        (
-            dimMass/dimVolume/dimTime, 
-            Zero
-        )
-    );
+    DimensionedField<scalar, volMesh> dY = dYPtrs_[i] * dYPtrs_[i].mesh().V();
+    Info << dY.dimensions() << endl;
 
     tmp<fvScalarMatrix> tSu
     (
         new fvScalarMatrix
         (
-            Yi,
-            dimMass/dimTime
+            YPtrs_[i],
+            dY.dimensions()
         )
     );
 
-    scalarField vol = dY.mesh().V().field();
-
-    dY.field() = vol * dYPtrs_[i];
-
     fvScalarMatrix& Su = tSu.ref();
+    Su += dY; // <<< causing dimension issue!!!!
 
-    Su += dY;
+    // Info << tSu.dimensions() << endl;
 
     return tSu;
-
 }; 
-
-
-tmp<volScalarField::Internal> Foam::ADMno1::R
-(
-    label i
-) const
-{
-    tmp<volScalarField::Internal> tdY = dYPtrs_[i];
-
-    return tdY;
-}
 
 
 

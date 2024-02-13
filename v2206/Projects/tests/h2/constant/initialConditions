@@ -10,48 +10,24 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      fvSchemes;
+    object      initialConditions;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-ddtSchemes
+constantProperty pressure;
+
+fractionBasis  mole;
+
+fractions
 {
-    // default         steadyState;
-    // default         backward;
-    default         Euler;
+    H2              1;
+    N2              3.76;
+    O2              1;
 }
 
-gradSchemes
-{
-    default         Gauss linear;
-}
+p               202650;
 
-divSchemes
-{
-    default         Gauss linear;
-
-    div(phi,U)      Gauss LUST grad(U);
-
-    div(phi,k)      Gauss limitedLinear 1;
-    div(phi,S*)     bounded Gauss limitedLinear 1;
-    div(phi,G*)     bounded Gauss limitedLinear 1;
-    div((nuEff*dev2(T(grad(U))))) Gauss linear;
-}
-
-laplacianSchemes
-{
-    default         Gauss linear corrected;
-}
-
-interpolationSchemes
-{
-    default         linear;
-}
-
-snGradSchemes
-{
-    default         corrected;
-}
+T               1000;
 
 
 // ************************************************************************* //

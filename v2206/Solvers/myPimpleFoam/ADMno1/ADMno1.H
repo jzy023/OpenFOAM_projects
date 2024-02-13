@@ -252,10 +252,7 @@ public:
     void correct(volScalarField& Top);
 
     //- Return components consumption rate matrix, i.e. source term.
-    tmp<fvScalarMatrix> R(label i, volScalarField& Yi) const;
-
-    tmp<volScalarField::Internal> R(label i) const;
-
+    tmp<fvScalarMatrix> R(label i) const;
    
     //- Return const access to the chemical source terms for specie, i
     // inline const volScalarField::Internal& RR ( const label i ) const;

@@ -40,12 +40,9 @@ Description
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 Info << "ADM convection-diffusion calculation" << endl;
-// TODO: make it an input from ./constant/ADMpara file
+
 volScalarField Deff = turbulence->nu() / reaction->Sc();
 
-// Create ADM class instance (ADMno1 constructor)
-// reaction->R(Yi) becomses the source term
-// PtrList<volScalarField>& YPtrs = reaction.Y();
 PtrList<volScalarField>& YPtrs = reaction->Y();
 
 {
@@ -57,19 +54,19 @@ PtrList<volScalarField>& YPtrs = reaction->Y();
     {
         volScalarField& Yi = YPtrs[i];
 
+        // Info << "Yi.dim -> " << Yi.dimensions() << endl;
+        // fvScalarMatrix test1(fvm::ddt(rho, Yi));
+        // fvScalarMatrix test2(reaction->R(i, Yi));
+        // Info << test1.dimensions() << "\n" << test2.dimensions() << "\n" << endl;
+
         fvScalarMatrix YiEqn
         (
             fvm::ddt(Yi)
           + fvm::div(phi, Yi)
-          - fvm::laplacian(Deff, Yi) 
-        //  TODO: add turbulent diffusion
-        // - fvm::laplacian(turbulence->muEff(), Yi)
+          - fvm::laplacian(Deff, Yi)
          ==
             fvOptions(Yi)
-        //  TODO: add local biochemical reaction as source term
-        //   + reaction->R(i)
-          + reaction->R(i, Yi)
-        // + fvOptions(rho, Yi)
+          + reaction->R(i)
         );
 
         YiEqn.relax();
@@ -81,6 +78,31 @@ PtrList<volScalarField>& YPtrs = reaction->Y();
         fvOptions.correct(Yi);
     }
 
+    // Gas Phase ============================================================ //
+    // TODO: add rho and make adjustment for compressibility
+
+    // <<< TEST ---------------------------------------------------------------- //
+    // volScalarField rho
+    // (
+    //     IOobject
+    //     (
+    //         "rho",
+    //         runTime.timeName(),
+    //         mesh,
+    //         IOobject::READ_IF_PRESENT,
+    //         IOobject::NO_WRITE
+    //     ),
+    //     mesh,
+    //     dimensionedScalar
+    //     (
+    //         "rho", 
+    //         dimensionSet(1,-3,0,0,0,0,0), 
+    //         1000
+    //     )
+    // );
+    // volScalarField DMuEff = Deff*rho;
+    // <<< TEST ---------------------------------------------------------------- //
+
     // forAll(GPtrs, i)
     // {
     //     volScalarField& Gi = GPtrs[i];
@@ -89,13 +111,10 @@ PtrList<volScalarField>& YPtrs = reaction->Y();
     //     (
     //         fvm::ddt(Gi)
     //       + fvm::div(phi, Gi)
-    //       - fvm::laplacian(Deff, Gi) 
-    //     //  TODO: add turbulent diffusion
-    //     // - fvm::laplacian(turbulence->muEff(), Yi)
+    //       - fvm::laplacian(Deff, Gi)
     //      ==
     //         fvOptions(Gi)
-    //     //  TODO: add local gas transfer as source term
-    //     //   + reaction->RG(i)
+    //     //   + reaction->RG(i, Gi)
     //     );
 
     //     GiEqn.relax();
@@ -106,6 +125,8 @@ PtrList<volScalarField>& YPtrs = reaction->Y();
 
     //     fvOptions.correct(Gi);
     // }
+
+    // Gas Phase ============================================================ //
 
     reaction->clear();
 }

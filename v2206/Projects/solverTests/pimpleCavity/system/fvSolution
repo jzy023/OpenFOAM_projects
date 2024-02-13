@@ -30,7 +30,7 @@ solvers
         relTol          0;
     }
 
-    "(U|k|B|nuTilda|Yi)"
+    "(U|k|B|nuTilda)"
     {
         solver          smoothSolver;
         smoother        GaussSeidel;
@@ -42,6 +42,14 @@ solvers
     {
         $U;
         relTol          0;
+    }
+
+    Yi
+    {
+        solver          PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-6;
+        relTol          0.1;
     }
 
     "YiFinal"

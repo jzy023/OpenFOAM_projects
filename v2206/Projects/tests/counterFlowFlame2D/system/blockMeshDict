@@ -10,48 +10,74 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      fvSchemes;
+    object      blockMeshDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-ddtSchemes
-{
-    // default         steadyState;
-    // default         backward;
-    default         Euler;
-}
+scale   1;
 
-gradSchemes
-{
-    default         Gauss linear;
-}
+vertices
+(
+    (0.0  -0.01 -0.01)
+    (0.02 -0.01 -0.01)
+    (0.02  0.01 -0.01)
+    (0.0   0.01 -0.01)
+    (0.0  -0.01  0.01)
+    (0.02 -0.01  0.01)
+    (0.02  0.01  0.01)
+    (0.0   0.01  0.01)
+);
 
-divSchemes
-{
-    default         Gauss linear;
+blocks
+(
+    hex (0 1 2 3 4 5 6 7) (100 40 1) simpleGrading (1 1 1)
+);
 
-    div(phi,U)      Gauss LUST grad(U);
+edges
+(
+);
 
-    div(phi,k)      Gauss limitedLinear 1;
-    div(phi,S*)     bounded Gauss limitedLinear 1;
-    div(phi,G*)     bounded Gauss limitedLinear 1;
-    div((nuEff*dev2(T(grad(U))))) Gauss linear;
-}
+boundary
+(
+    fuel
+    {
+        type patch;
+        faces
+        (
+            (0 4 7 3)
+        );
+    }
+    air
+    {
+        type patch;
+        faces
+        (
+            (1 2 6 5)
+        );
+    }
+    outlet
+    {
+        type patch;
+        faces
+        (
+            (0 1 5 4)
+            (7 6 2 3)
+        );
+    }
+    frontAndBack
+    {
+        type empty;
+        faces
+        (
+            (4 5 6 7)
+            (0 3 2 1)
+        );
+    }
+);
 
-laplacianSchemes
-{
-    default         Gauss linear corrected;
-}
-
-interpolationSchemes
-{
-    default         linear;
-}
-
-snGradSchemes
-{
-    default         corrected;
-}
+mergePatchPairs
+(
+);
 
 
 // ************************************************************************* //

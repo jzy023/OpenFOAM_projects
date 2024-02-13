@@ -10,48 +10,24 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      fvSchemes;
+    object      thermophysicalProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-ddtSchemes
+thermoType
 {
-    // default         steadyState;
-    // default         backward;
-    default         Euler;
+    type            hePsiThermo;
+    mixture         reactingMixture;
+    transport       sutherland;
+    thermo          janaf;
+    energy          sensibleEnthalpy;
+    equationOfState perfectGas;
+    specie          specie;
 }
 
-gradSchemes
-{
-    default         Gauss linear;
-}
-
-divSchemes
-{
-    default         Gauss linear;
-
-    div(phi,U)      Gauss LUST grad(U);
-
-    div(phi,k)      Gauss limitedLinear 1;
-    div(phi,S*)     bounded Gauss limitedLinear 1;
-    div(phi,G*)     bounded Gauss limitedLinear 1;
-    div((nuEff*dev2(T(grad(U))))) Gauss linear;
-}
-
-laplacianSchemes
-{
-    default         Gauss linear corrected;
-}
-
-interpolationSchemes
-{
-    default         linear;
-}
-
-snGradSchemes
-{
-    default         corrected;
-}
+CHEMKINFile         "<case>/chemkin/chem.inp";
+CHEMKINThermoFile   "<case>/chemkin/therm.dat";
+CHEMKINTransportFile "<case>/chemkin/transportProperties";
 
 
 // ************************************************************************* //
