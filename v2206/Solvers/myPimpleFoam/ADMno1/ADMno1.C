@@ -477,7 +477,8 @@ void Foam::ADMno1::correct(volScalarField& Top)
 
     //- calculate dY with STOI
     // >>> TEST
-    // dYPtrs_[7].field() = 0.01*2.5055e-7;
+    dYPtrs_[7].field() = 0.01*2.5055e-7;
+
     for(label j = 0; j < 7; j++)
     {
         for (int i = 0; i < 19; i++)
@@ -525,22 +526,39 @@ tmp<fvScalarMatrix> Foam::ADMno1::R
 {
     // TODO: quite different from OpenFOAM implementations; need tests
 
-    DimensionedField<scalar, volMesh> dY = dYPtrs_[i] * dYPtrs_[i].mesh().V();
-    Info << dY.dimensions() << endl;
+    // DimensionedField<scalar, volMesh> dY = dYPtrs_[i] * dYPtrs_[i].mesh().V();
+    // Info << dY.dimensions() << endl;
+
+    // tmp<fvScalarMatrix> tSu
+    // (
+    //     new fvScalarMatrix
+    //     (
+    //         YPtrs_[i],
+    //         dY.dimensions()
+    //     )
+    // );
+
+    // fvScalarMatrix& Su = tSu.ref();
+    // Su += dY; // <<< causing dimension issue!!!!
+
+
+    // ======================================================
+    DimensionedField<scalar, volMesh> dY = dYPtrs_[i];
 
     tmp<fvScalarMatrix> tSu
     (
         new fvScalarMatrix
         (
             YPtrs_[i],
-            dY.dimensions()
+            dimMass/dimTime
         )
     );
 
     fvScalarMatrix& Su = tSu.ref();
     Su += dY; // <<< causing dimension issue!!!!
+    // https://www.openfoam.com/documentation/guides/latest/api/fvMatrix_8C_source.html#l01708
+    // ======================================================
 
-    // Info << tSu.dimensions() << endl;
 
     return tSu;
 }; 
