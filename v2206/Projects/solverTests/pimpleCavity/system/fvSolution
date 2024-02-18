@@ -34,8 +34,8 @@ solvers
     {
         solver          smoothSolver;
         smoother        GaussSeidel;
-        tolerance       1e-05;
-        relTol          0;
+        tolerance       1e-16;
+        relTol          1e-16;
     }
 
     UFinal
@@ -44,18 +44,18 @@ solvers
         relTol          0;
     }
 
-    Yi
+    "(Yi|S*|G*)"
     {
         solver          PBiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-6;
-        relTol          0.1;
+        preconditioner  diagonal; // DILU;
+        tolerance       1e-16;
+        relTol          1e-16;
     }
 
-    "YiFinal"
+    "(Yi|S*|G*)Final"
     {
         $Sch4;
-        relTol          0;
+        relTol          1e-16;
     }
 }
 

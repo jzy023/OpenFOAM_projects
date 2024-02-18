@@ -1,0 +1,87 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2212                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _c9081d5d-20230220 OPENFOAM=2212 patch=230110 version=v2212
+Arch   : "LSB;label=64;scalar=64"
+Exec   : myPimpleFoam
+Date   : Feb 18 2024
+Time   : 16:19:32
+Host   : DESKTOP-E2PB5N9
+PID    : 26466
+I/O    : uncollated
+Case   : /home/noreff/works/OpenFOAM-user/v2206/Projects/solverTests/pimpleCavity
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+
+PIMPLE: Operating solver in PISO mode
+
+Reading field p
+
+Reading field U
+
+Reading/calculating face flux field phi
+
+Selecting incompressible transport model Newtonian
+Selecting turbulence model type laminar
+Selecting laminar stress model Stokes
+
+Selecting ADM no1 operation mode MesoSolid
+Reading ADM no1 initial concentrations for soluables
+Reading ADMno1 initial concentrations for particulates
+Reading ADM no1 initial concentrations for gaseuoses
+Initializing concentrations for electrolyte
+Initializing concentrations for medians
+Reading field operational temperature
+No MRF models present
+
+No finite volume options present
+Courant Number mean: 0 max: 0
+Courant Number mean: 0 max: 0
+
+Starting time loop
+
+Courant Number mean: 0 max: 0
+deltaT = 0.01200048001920077
+Time = 0.0120005
+
+PIMPLE: iteration 1
+smoothSolver:  Solving for Ux, Initial residual = 0, Final residual = 0, No Iterations 0
+smoothSolver:  Solving for Uy, Initial residual = 0, Final residual = 0, No Iterations 0
+GAMG:  Solving for p, Initial residual = 0, Final residual = 0, No Iterations 0
+time step continuity errors : sum local = 0, global = 0, cumulative = 0
+ADM convection-diffusion calculation
+Yi.dim -> [0 0 0 0 0 0 0]
+ddt.dim -> [0 3 -1 0 0 0 0]
+R().dim -> 
+
+--> FOAM FATAL ERROR: (openfoam-2212 patch=230110)
+Incompatible dimensions for operation
+    [Sh2[0 -3 -1 0 0 0 0] ] += [dSh2[1 -3 -1 0 0 0 0] ]
+
+    From void Foam::checkMethod(const Foam::fvMatrix<Type>&, const Foam::DimensionedField<Type, Foam::volMesh>&, const char*) [with Type = double]
+    in file /home/noreff/works/OpenFOAM/2212-user/src/finiteVolume/lnInclude/fvMatrix.C at line 1939.
+
+FOAM aborting
+
+#0  Foam::error::printStack(Foam::Ostream&) in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libOpenFOAM.so
+#1  Foam::error::simpleExit(int, bool) in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libOpenFOAM.so
+#2  void Foam::checkMethod<double>(Foam::fvMatrix<double> const&, Foam::DimensionedField<double, Foam::volMesh> const&, char const*) in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/bin/myPimpleFoam
+#3  Foam::fvMatrix<double>::operator+=(Foam::DimensionedField<double, Foam::volMesh> const&) in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libfiniteVolume.so
+#4  Foam::ADMno1::R(long) const in ~/works/OpenFOAM-user/v2206/platforms/linux64GccDPInt64Opt/lib/libADM.so
+#5  ? in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/bin/myPimpleFoam
+#6  ? in /lib/x86_64-linux-gnu/libc.so.6
+#7  __libc_start_main in /lib/x86_64-linux-gnu/libc.so.6
+#8  ? in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/bin/myPimpleFoam
+Aborted
