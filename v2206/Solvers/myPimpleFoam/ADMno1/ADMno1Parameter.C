@@ -44,6 +44,12 @@ admPara::admPara
     (
         printErrMessage(runMode)
     ),
+    rho_
+    (
+        "rhoBase", 
+        dimDensity, 
+        1.0
+    ),
     Tbase_
     (
         defineTbase(runMode)

@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "bashrc": "shellscript",
+        "pimpleFoam.C": "cpp",
+        "myTestPimpleFoam.C": "cpp"
+    }
+}

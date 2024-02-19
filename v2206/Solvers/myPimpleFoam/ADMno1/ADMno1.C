@@ -418,6 +418,8 @@ Foam::ADMno1::ADMno1
     nIaa_ = 3.0 / (para_.pHL().ULaa - para_.pHL().LLaa);  // aa
     nIac_ = 3.0 / (para_.pHL().ULac - para_.pHL().LLac);  // ac
     nIh2_ = 3.0 / (para_.pHL().ULh2 - para_.pHL().LLh2);  // h2
+    // >>> TEST
+    dYPtrs_[7].field() = 0.01*2.5055e-7;
 
 }
 
@@ -476,9 +478,6 @@ void Foam::ADMno1::correct(volScalarField& Top)
     KineticRate(Top);
 
     //- calculate dY with STOI
-    // >>> TEST
-    dYPtrs_[7].field() = 0.01*2.5055e-7;
-
     for(label j = 0; j < 7; j++)
     {
         for (int i = 0; i < 19; i++)
@@ -557,8 +556,22 @@ tmp<fvScalarMatrix> Foam::ADMno1::R
     fvScalarMatrix& Su = tSu.ref();
     Su += dY; // <<< causing dimension issue!!!!
     // https://www.openfoam.com/documentation/guides/latest/api/fvMatrix_8C_source.html#l01708
+    
     // ======================================================
+    // DimensionedField<scalar, volMesh> dY = dYPtrs_[i];
+    // dY.dimensions().reset(dY.dimensions()/dimDensity);
 
+    // tmp<fvScalarMatrix> tSu
+    // (
+    //     new fvScalarMatrix
+    //     (
+    //         YPtrs_[i],
+    //         dimVolume/dimTime
+    //     )
+    // );
+
+    // fvScalarMatrix& Su = tSu.ref();
+    // Su += dY; // <<< causing dimension issue!!!!
 
     return tSu;
 }; 

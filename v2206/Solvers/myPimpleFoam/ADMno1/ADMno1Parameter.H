@@ -51,6 +51,9 @@ private:
     //- Day-to-second conversion
     const scalar DTOS_ = 1.0/86400.0;
 
+    //- Base density
+    dimensionedScalar rho_;
+
     //- Base operational temperature
     dimensionedScalar Tbase_;   
 
@@ -219,6 +222,8 @@ public:
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
     inline scalar DTOS() const;
+
+    inline const dimensionedScalar rho() const;
 
     inline const dimensionedScalar Tbase() const;
 

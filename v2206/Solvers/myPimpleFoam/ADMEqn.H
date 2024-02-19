@@ -41,33 +41,75 @@ Description
 
 Info << "ADM convection-diffusion calculation" << endl;
 
-volScalarField Deff = turbulence->nu() / reaction->Sc();
-
 PtrList<volScalarField>& YPtrs = reaction->Y();
 
+volScalarField Deff = turbulence->nu() / reaction->Sc();
+
+volScalarField rho
+(
+    IOobject
+    (
+        "rho",
+        mesh.time().timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    mesh,
+    reaction->paraPtr()->rho()
+);
+Deff.dimensions().reset(Deff.dimensions()*dimDensity);
+multivariateSurfaceInterpolationScheme<scalar>::fieldTable fields;
+forAll(YPtrs, i)
 {
-    reaction->correct(Top);
+    fields.add(YPtrs[i]);
+}
+tmp<fv::convectionScheme<scalar>> mvConvection
+(
+    fv::convectionScheme<scalar>::New
+    (
+        mesh,
+        fields,
+        phi,
+        mesh.divScheme("div(phi,Yi)")
+    )
+);
+
+
+{
+    // reaction->correct(Top);
     // Qdot = reaction->Qdot();
     // volScalarField Yt(0.0*Y[0]);
+
+    volScalarField& Yi = YPtrs[7];
+    Info << Yi.dimensions() << endl;
+    Info << fvm::ddt(rho, Yi)->dimensions() << endl;
+    Info << mvConvection->fvmDiv(phi, Yi)->dimensions() << endl;
+    Info << reaction->R(7)->dimensions() << endl;
 
     forAll(YPtrs, i)
     {
         volScalarField& Yi = YPtrs[i];
 
-        // Info << "Yi.dim -> " << Yi.dimensions() << endl;
-        // fvScalarMatrix test1(fvm::ddt(rho, Yi));
-        // fvScalarMatrix test2(reaction->R(i, Yi));
-        // Info << test1.dimensions() << "\n" << test2.dimensions() << "\n" << endl;
-
         fvScalarMatrix YiEqn
         (
-            fvm::ddt(Yi)
-          + fvm::div(phi, Yi)
+            fvm::ddt(rho, Yi)
+        //   + mvConvection->fvmDiv(phi, Yi)
           - fvm::laplacian(Deff, Yi)
          ==
-            fvOptions(Yi)
+            fvOptions(rho, Yi)
           + reaction->R(i)
         );
+
+        // fvScalarMatrix YiEqn
+        // (
+        //     fvm::ddt(Yi)
+        //   + fvm::div(phi, Yi)
+        //   - fvm::laplacian(Deff, Yi)
+        //  ==
+        //     fvOptions(Yi)
+        //   + reaction->R(i)
+        // );
 
         YiEqn.relax();
 
@@ -128,7 +170,7 @@ PtrList<volScalarField>& YPtrs = reaction->Y();
 
     // Gas Phase ============================================================ //
 
-    reaction->clear();
+    // reaction->clear();
 }
 
 
