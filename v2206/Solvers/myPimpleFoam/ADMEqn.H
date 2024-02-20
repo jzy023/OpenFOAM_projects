@@ -34,9 +34,6 @@ Description
 #ifndef ADMEqn_H
 #define ADMEqn_H
 
-// #include "typeDefs.H"
-// #include "ADMno1Parameter.H"
-
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 Info << "ADM convection-diffusion calculation" << endl;
@@ -45,61 +42,19 @@ PtrList<volScalarField>& YPtrs = reaction->Y();
 
 volScalarField Deff = turbulence->nu() / reaction->Sc();
 
-volScalarField rho
-(
-    IOobject
-    (
-        "rho",
-        mesh.time().timeName(),
-        mesh,
-        IOobject::NO_READ,
-        IOobject::NO_WRITE
-    ),
-    mesh,
-    reaction->paraPtr()->rho()
-);
-// Deff.dimensions().reset(Deff.dimensions()*dimDensity);
-multivariateSurfaceInterpolationScheme<scalar>::fieldTable fields;
-forAll(YPtrs, i)
 {
-    fields.add(YPtrs[i]);
-}
-tmp<fv::convectionScheme<scalar>> mvConvection
-(
-    fv::convectionScheme<scalar>::New
-    (
-        mesh,
-        fields,
-        phi,
-        mesh.divScheme("div(phi,Yi)")
-    )
-);
-
-
-{
-    // reaction->correct(Top);
+    reaction->correct(Top);
     // Qdot = reaction->Qdot();
-    // volScalarField Yt(0.0*Y[0]);
 
     // volScalarField& Yi = YPtrs[7];
     // Info << Yi.dimensions() << endl;
-    // Info << fvm::ddt(rho, Yi)->dimensions() << endl;
-    // Info << mvConvection->fvmDiv(phi, Yi)->dimensions() << endl;
+    // Info << fvm::ddt(Yi)->dimensions() << endl;
+    // Info << fvm::div(phi, Yi)->dimensions() << endl;
     // Info << reaction->R(7)->dimensions() << endl;
 
     forAll(YPtrs, i)
     {
         volScalarField& Yi = YPtrs[i];
-
-        // fvScalarMatrix YiEqn
-        // (
-        //     fvm::ddt(rho, Yi)
-        //   + mvConvection->fvmDiv(phi, Yi)
-        //   - fvm::laplacian(Deff, Yi)
-        //  ==
-        //     fvOptions(rho, Yi)
-        //   + reaction->R(i)
-        // );
 
         fvScalarMatrix YiEqn
         (
@@ -170,7 +125,8 @@ tmp<fv::convectionScheme<scalar>> mvConvection
 
     // Gas Phase ============================================================ //
 
-    // reaction->clear();
+    reaction->clear();
+
 }
 
 

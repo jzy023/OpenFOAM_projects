@@ -303,6 +303,8 @@ struct carbonContent
  */
 struct inhibitionParaI
 {
+    dimensionSet ds;
+
     dimensionedScalar h2fa;     // [KgCOD/m3] 
     dimensionedScalar h2c4;     // [KgCOD/m3] 
     dimensionedScalar h2pro;    // [KgCOD/m3] 
@@ -310,17 +312,29 @@ struct inhibitionParaI
 
     inhibitionParaI
     (
+        dimensionSet ds_,
         scalar h2fa_,
         scalar h2c4_,
         scalar h2pro_,
         scalar nh3_
     )
     :
-        h2fa( dimMass/dimVolume, h2fa_ ),
-        h2c4( dimMass/dimVolume, h2c4_ ),
-        h2pro( dimMass/dimVolume, h2pro_ ),
-        nh3( dimMass/dimVolume, nh3_ )
+        h2fa( ds_, h2fa_ ),
+        h2c4( ds_, h2c4_ ),
+        h2pro( ds_, h2pro_ ),
+        nh3( ds_, nh3_ )
     {};
+
+    void setDimension
+    (
+        dimensionSet ds
+    )
+    {
+        h2fa.dimensions().reset(ds);
+        h2c4.dimensions().reset(ds);
+        h2pro.dimensions().reset(ds);
+        nh3.dimensions().reset(ds);
+    }
 };
 
 /** =======================================================================
@@ -328,6 +342,8 @@ struct inhibitionParaI
  */
 struct inhibitionParaS
 {
+    dimensionSet ds;
+
 	dimensionedScalar IN;  //[kmol/m3]
 	dimensionedScalar nh3; //[kmol/m3]
 	dimensionedScalar su;  //[kgCOD/m3]
@@ -340,6 +356,7 @@ struct inhibitionParaS
 
     inhibitionParaS
     (
+        dimensionSet ds_,
         scalar IN_,
         scalar nh3_,
         scalar su_,
@@ -351,16 +368,32 @@ struct inhibitionParaS
         scalar h2_
     )
     :
-        IN( dimMass/dimVolume, IN_ ),
-        nh3( dimMass/dimVolume, nh3_ ),
-        su( dimMass/dimVolume, su_ ),
-        aa( dimMass/dimVolume, aa_ ),
-        fa( dimMass/dimVolume, fa_ ),
-        c4( dimMass/dimVolume, c4_ ),
-        pro( dimMass/dimVolume, pro_ ),
-        ac( dimMass/dimVolume, ac_ ),
-        h2( dimMass/dimVolume, h2_ )
+        IN( ds_, IN_ ),
+        nh3( ds_, nh3_ ),
+        su( ds_, su_ ),
+        aa( ds_, aa_ ),
+        fa( ds_, fa_ ),
+        c4( ds_, c4_ ),
+        pro( ds_, pro_ ),
+        ac( ds_, ac_ ),
+        h2( ds_, h2_ )
     {};
+
+    void setDimension
+    (
+        dimensionSet ds
+    )
+    {
+        IN.dimensions().reset(ds);
+        nh3.dimensions().reset(ds);
+        su.dimensions().reset(ds);
+        aa.dimensions().reset(ds);
+        fa.dimensions().reset(ds);
+        c4.dimensions().reset(ds);
+        pro.dimensions().reset(ds);
+        ac.dimensions().reset(ds);
+        h2.dimensions().reset(ds);
+    }
 };
 
 /** =======================================================================
@@ -400,6 +433,8 @@ struct admAcidBaseKinetic
  */
 struct admAcidBaseEq
 {
+    dimensionSet ds;
+
 	dimensionedScalar va;  //[M]
 	dimensionedScalar bu;  //[M]
 	dimensionedScalar pro; //[M]

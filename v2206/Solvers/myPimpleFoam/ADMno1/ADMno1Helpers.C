@@ -50,8 +50,7 @@ volScalarField Foam::ADMno1::calcInhibitionHP
 )
 {
     dimensionedScalar Kph = pow(10, -0.5 * (UL + LL));
-
-    Kph.dimensions().reset(dimMass/dimVolume);
+    Kph.dimensions().reset(Shp.dimensions());
 
     return pow(Kph, n) / (pow(Shp, n) + pow(Kph, n));
 }

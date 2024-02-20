@@ -44,11 +44,9 @@ admPara::admPara
     (
         printErrMessage(runMode)
     ),
-    rho_
+    ds_
     (
-        "rhoBase", 
-        dimDensity, 
-        1.0
+        dimMass/dimVolume
     ),
     Tbase_
     (
@@ -299,6 +297,7 @@ inhibitionParaI admPara::defineKI
     {
         return inhibitionParaI
         (
+            ds_,
             5.0e-6, // h2fa
 	        1.0e-5, // h2c4
 	        3.5e-6, // h2pro
@@ -309,6 +308,7 @@ inhibitionParaI admPara::defineKI
     {   // TODO: check value!
         return inhibitionParaI
         (
+            ds_,
             5.0e-6, // h2fa
 	        1.0e-5, // h2c4
 	        3.5e-6, // h2pro
@@ -319,6 +319,7 @@ inhibitionParaI admPara::defineKI
     {
         return inhibitionParaI
         (   // from Rosen ADM-BSM DIGESTERPAR[55]
+            ds_,
             5.0e-6, // h2fa
 	        3.0e-5, // h2c4
 	        1e-5,   // h2pro
@@ -336,6 +337,7 @@ inhibitionParaS admPara::defineKS
     {
         return inhibitionParaS
         (
+            ds_,
             1e-4,   // IN
             1e-4,   // nh3
             0.5,    // su
@@ -351,6 +353,7 @@ inhibitionParaS admPara::defineKS
     {   // TODO: check value!
         return inhibitionParaS
         (
+            ds_,
             1e-4,   // IN
             1e-4,   // nh3
             0.5,    // su
@@ -366,6 +369,7 @@ inhibitionParaS admPara::defineKS
     {
         return inhibitionParaS
         (
+            ds_,
             1e-4,   // IN
             1e-4,   // nh3
             1.0,    // su
@@ -594,5 +598,20 @@ void admPara::defineInitialState(word runMode)
         Mini_[2] = 0.092584;     // S_nh4
     }
 }
+
+// * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
+
+void admPara::setParaDim
+(
+    dimensionSet ds
+)
+{
+    ds_.reset(ds);
+
+    KI_.setDimension(ds);
+
+    KS_.setDimension(ds);
+
+};
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

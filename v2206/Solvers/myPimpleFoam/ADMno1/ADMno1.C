@@ -42,11 +42,9 @@ const Foam::word Foam::ADMno1::propertiesName("admno1Properties");
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
 
-
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
 Foam::ADMno1::ADMno1
-// ADMno1::ADMno1
 (
     const fvMesh& mesh,
     const IOdictionary& ADMno1Dict
@@ -177,7 +175,7 @@ Foam::ADMno1::ADMno1
                 mesh,
                 dimensionedScalar
                 (
-                    dimMass/dimVolume/dimTime, 
+                    YPtrs_[0].dimensions()/dimTime, 
                     Zero
                 )
             )
@@ -211,7 +209,7 @@ Foam::ADMno1::ADMno1
                 dimensionedScalar
                 (
                     namesGaseous[i] + "Default", 
-                    dimMass/dimVolume, // TODO: dimension check
+                    YPtrs_[0].dimensions(),
                     para_.Gini(i)
                 )
             )
@@ -240,7 +238,7 @@ Foam::ADMno1::ADMno1
                 mesh,
                 dimensionedScalar
                 (
-                    dimMass/dimVolume/dimTime, 
+                    GPtrs_[0].dimensions()/dimTime, 
                     Zero
                 )
             )
@@ -275,7 +273,7 @@ Foam::ADMno1::ADMno1
                 dimensionedScalar
                 (
                     namesElectrolyte[i] + "Default", 
-                    dimMass/dimVolume, // TODO: dimension check
+                    YPtrs_[0].dimensions(),
                     para_.Eini(i)
                 )
             )
@@ -309,7 +307,7 @@ Foam::ADMno1::ADMno1
                 dimensionedScalar
                 (
                     namesMedians[i] + "Default", 
-                    dimMass/dimVolume, // TODO: dimension check
+                    YPtrs_[0].dimensions(),
                     para_.Mini(i)
                 )
             )
@@ -375,7 +373,7 @@ Foam::ADMno1::ADMno1
                 mesh,
                 dimensionedScalar
                 (
-                    dimMass/dimVolume/dimTime, 
+                    dYPtrs_[0].dimensions(), 
                     Zero
                 )
             )
@@ -406,7 +404,7 @@ Foam::ADMno1::ADMno1
                 mesh,
                 dimensionedScalar
                 (
-                    dimMass/dimVolume/dimTime, 
+                    dGPtrs_[0].dimensions(), 
                     Zero
                 )
             )
@@ -415,11 +413,14 @@ Foam::ADMno1::ADMno1
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
+    para_.setParaDim(YPtrs_[0].dimensions());
+
     nIaa_ = 3.0 / (para_.pHL().ULaa - para_.pHL().LLaa);  // aa
     nIac_ = 3.0 / (para_.pHL().ULac - para_.pHL().LLac);  // ac
     nIh2_ = 3.0 / (para_.pHL().ULh2 - para_.pHL().LLh2);  // h2
+
     // >>> TEST
-    dYPtrs_[7].field() = 0.01*2.5055e-7;
+    // dYPtrs_[7].field() = 0.01*2.5055e-7;
 
 }
 
@@ -482,7 +483,7 @@ void Foam::ADMno1::correct(volScalarField& Top)
     {
         for (int i = 0; i < 19; i++)
         {
-            dYPtrs_[j] += (para_.STOI[i][j]) * (KRPtrs_[i]); //check if it works
+            dYPtrs_[j] += para_.STOI[i][j] * KRPtrs_[i] * para_.DTOS(); //check if it works
         }
     }
 
@@ -490,7 +491,7 @@ void Foam::ADMno1::correct(volScalarField& Top)
     {
         for (int i = 0; i < 19; i++)
         {
-            dYPtrs_[j] += (para_.STOI[i][j]) * (KRPtrs_[i]);
+            dYPtrs_[j] += para_.STOI[i][j] * KRPtrs_[i] * para_.DTOS();
         }
     }
     
@@ -503,18 +504,6 @@ void Foam::ADMno1::correct(volScalarField& Top)
 
     // dYPtrs_[9] -= GRPtrs_[2]; // SIC - Gco2
 
-
-    //- convert to second-base time scale
-    forAll(dYPtrs_, j)
-    {
-        dYPtrs_[j] *= para_.DTOS();
-    }
-
-    forAll(dGPtrs_, j)
-    {
-        dGPtrs_[j] *= para_.DTOS();
-    }
-
 }
 
 
@@ -523,55 +512,22 @@ tmp<fvScalarMatrix> Foam::ADMno1::R
     label i
 ) const
 {
-    // TODO: quite different from OpenFOAM implementations; need tests
-
-    // DimensionedField<scalar, volMesh> dY = dYPtrs_[i] * dYPtrs_[i].mesh().V();
-    // Info << dY.dimensions() << endl;
-
-    // tmp<fvScalarMatrix> tSu
-    // (
-    //     new fvScalarMatrix
-    //     (
-    //         YPtrs_[i],
-    //         dY.dimensions()
-    //     )
-    // );
-
-    // fvScalarMatrix& Su = tSu.ref();
-    // Su += dY; // <<< causing dimension issue!!!!
-
-
-    // ======================================================
-    // DimensionedField<scalar, volMesh> dY = dYPtrs_[i];
-
-    // tmp<fvScalarMatrix> tSu
-    // (
-    //     new fvScalarMatrix
-    //     (
-    //         YPtrs_[i],
-    //         dimMass/dimTime
-    //     )
-    // );
-
-    // fvScalarMatrix& Su = tSu.ref();
-    // Su += dY; // <<< causing dimension issue!!!!
-    // https://www.openfoam.com/documentation/guides/latest/api/fvMatrix_8C_source.html#l01708
-    
-    // ======================================================
     DimensionedField<scalar, volMesh> dY = dYPtrs_[i];
-    dY.dimensions().reset(dY.dimensions()/dimDensity);
 
-    tmp<fvScalarMatrix> tSu
-    (
-        new fvScalarMatrix
+        tmp<fvScalarMatrix> tSu
         (
-            YPtrs_[i],
-            dimVolume/dimTime
-        )
-    );
+            new fvScalarMatrix
+            (
+                YPtrs_[i],
+                dY.dimensions()*dimVolume
+                // dimMass/dimTime // <- for compressible flow and uses fvm::ddt(rho, Yi)
+            )
+        );
 
     fvScalarMatrix& Su = tSu.ref();
-    Su += dY; // <<< causing dimension issue!!!!
+    
+    // https://www.openfoam.com/documentation/guides/latest/api/fvMatrix_8C_source.html#l01708
+    Su += dY; 
 
     return tSu;
 }; 

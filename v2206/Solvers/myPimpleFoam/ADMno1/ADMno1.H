@@ -112,11 +112,9 @@ private:
     PtrList<volScalarField> IPtrs_;
 
     //- List of pointers to kinetic rate per specie [kg/m3/s] and [mol/m3/s]
-    // PtrList<volScalarField> KRPtrs_;
     PtrList<volScalarField::Internal> KRPtrs_;
 
     //- List of pointers to gas trasfer rate
-    // PtrList<volScalarField> GRPtrs_;
     PtrList<volScalarField::Internal> GRPtrs_;
 
     //- Temporary concentration fields
@@ -257,15 +255,12 @@ public:
     //- Return const access to the chemical source terms for specie, i
     // inline const volScalarField::Internal& RR ( const label i ) const;
 
-
     //- Return non const access to chemical source terms [kg/m3/s]
     // virtual volScalarField::Internal& RR ( const label i );
-
 
     // combustionModels/laminar.C -> template<class ReactionThermo>
                                   // Foam::tmp<Foam::fvScalarMatrix>
                                   // Foam::combustionModels::laminar<ReactionThermo>::R(volScalarField& Y) const
-
 
 };
 

@@ -51,8 +51,8 @@ private:
     //- Day-to-second conversion
     const scalar DTOS_ = 1.0/86400.0;
 
-    //- Base density
-    dimensionedScalar rho_;
+    //- Base dimension (kg/m3; mol/m3; mass fraction)
+    dimensionSet ds_;
 
     //- Base operational temperature
     dimensionedScalar Tbase_;   
@@ -143,6 +143,10 @@ public:
         (
             printErrMessage("Meso")
         ),
+        ds_
+        (
+            dimMass/dimVolume
+        ),
         Tbase_
         (
             defineTbase("Meso")
@@ -217,13 +221,16 @@ public:
     	// defineAcidBaseDAE();
     };
 
-    admPara(word runMode);
+    admPara
+    (
+        word runMode
+    );
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
-    inline scalar DTOS() const;
+    void setParaDim(dimensionSet ds);
 
-    inline const dimensionedScalar rho() const;
+    inline scalar DTOS() const;
 
     inline const dimensionedScalar Tbase() const;
 

@@ -33,11 +33,6 @@ License
         return DTOS_;
     }
 
-    inline const dimensionedScalar admPara::rho() const
-    {
-        return rho_;
-    }
-
     inline const dimensionedScalar admPara::Tbase() const 
     {
         return Tbase_;
