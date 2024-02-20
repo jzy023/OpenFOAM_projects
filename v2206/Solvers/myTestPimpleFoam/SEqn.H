@@ -1,5 +1,4 @@
 volScalarField Deff = turbulence->nu();
-// Deff.dimensions().reset(Deff.dimensions()*dimDensity);
 
 multivariateSurfaceInterpolationScheme<scalar>::fieldTable fields;
 fields.add(Sh2);
@@ -15,16 +14,16 @@ tmp<fv::convectionScheme<scalar>> mvConvection
     )
 );
 
-{
-    Info << endl;
-    Info << "Sh2: " << Sh2.dimensions() << endl;
-    Info << "phi: " << phi.dimensions() << endl;
-    Info << "ddt: " << fvm::ddt(Sh2)->dimensions() << endl;
-    Info << "div: " << fvm::div(phi, Sh2)->dimensions() << endl;
-    Info << "mvC: " << mvConvection->fvmDiv(phi, Sh2)->dimensions() << endl;
-    Info << "lap: " << fvm::laplacian(Deff, Sh2)->dimensions() << endl;
-    Info << "R(): " << tSu.dimensions() << endl;
+Info << endl;
+Info << "phi: " << phi.dimensions() << endl;
+Info << "ddt: " << fvm::ddt(Sh2)->dimensions() << endl;
+Info << "div: " << fvm::div(phi, Sh2)->dimensions() << endl;
+Info << "mvC: " << mvConvection->fvmDiv(phi, Sh2)->dimensions() << endl;
+Info << "lap: " << fvm::laplacian(Deff, Sh2)->dimensions() << endl;
+Info << "R(): " << tSu.dimensions() << endl;
+Info << "Sh2: " << Sh2.dimensions() << endl;
 
+{
     // fvScalarMatrix Sh2Eqn
     // (
     //     fvm::ddt(rho, Sh2)
@@ -40,10 +39,9 @@ tmp<fv::convectionScheme<scalar>> mvConvection
         fvm::ddt(Sh2)
       + fvm::div(phi, Sh2)
       - fvm::laplacian(Deff, Sh2)
-    //   - tSu
      ==
         fvOptions(Sh2)
-        + tSu
+      + tSu
     );
 
     Sh2Eqn.relax();

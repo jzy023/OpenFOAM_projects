@@ -91,40 +91,17 @@ volScalarField dSh2
     dimensionedScalar
     (
         dimMass/dimVolume/dimTime, 
-        0.01
+        0.1
     )
 );
 
-// tmp<fvScalarMatrix> tSu
-// (
-//     new fvScalarMatrix
-//     (
-//         Sh2,
-//         dimMass/dimTime
-//     )
-// );
-// fvScalarMatrix& Su = tSu.ref();
-// Su += dSh2; // <<< causing dimension issue!!!!
-
-// tmp<fvScalarMatrix> tSu
-// (
-//     new fvScalarMatrix
-//     (
-//         Sh2,
-//         dimVolume/dimTime
-//     )
-// );
-// fvScalarMatrix& Su = tSu.ref();
-// Su += (dSh2/rho); // <<< causing dimension issue!!!!
 
 fvScalarMatrix tSu
 (
     Sh2,
-    dimVolume/dimTime
+    dimVolume/dimTime // depends on phi.dimensions()
     
 );
-// scalarField s(tSu.source().size(), 1e-2);
-// tSu.source() += s;
 tSu += (dSh2/rho); // <<< causing dimension issue!!!!
 
 // --------------------------------------------------------------- //

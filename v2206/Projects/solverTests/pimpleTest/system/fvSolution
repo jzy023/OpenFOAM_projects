@@ -19,7 +19,7 @@ solvers
     p
     {
         solver          GAMG;
-        tolerance       1e-08;
+        tolerance       1e-06;
         relTol          0.1;
         smoother        GaussSeidel;
     }
@@ -34,8 +34,8 @@ solvers
     {
         solver          smoothSolver;
         smoother        GaussSeidel;
-        tolerance       1e-8;
-        relTol          1e-8;
+        tolerance       1e-16;
+        relTol          1e-16;
     }
 
     UFinal
@@ -44,18 +44,18 @@ solvers
         relTol          0;
     }
 
-    "(Yi|S*|G*)"
+    "Sh2"
     {
         solver          PBiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-8;
-        relTol          1e-8;
+        preconditioner  diagonal; // DILU;
+        tolerance       1e-16;
+        relTol          1e-16;
     }
 
-    "(Yi|S*|G*)Final"
+    "(Sh2)Final"
     {
         $Sch4;
-        relTol          1e-8;
+        relTol          1e-16;
     }
 }
 

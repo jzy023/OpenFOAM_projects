@@ -542,36 +542,36 @@ tmp<fvScalarMatrix> Foam::ADMno1::R
 
 
     // ======================================================
-    DimensionedField<scalar, volMesh> dY = dYPtrs_[i];
-
-    tmp<fvScalarMatrix> tSu
-    (
-        new fvScalarMatrix
-        (
-            YPtrs_[i],
-            dimMass/dimTime
-        )
-    );
-
-    fvScalarMatrix& Su = tSu.ref();
-    Su += dY; // <<< causing dimension issue!!!!
-    // https://www.openfoam.com/documentation/guides/latest/api/fvMatrix_8C_source.html#l01708
-    
-    // ======================================================
     // DimensionedField<scalar, volMesh> dY = dYPtrs_[i];
-    // dY.dimensions().reset(dY.dimensions()/dimDensity);
 
     // tmp<fvScalarMatrix> tSu
     // (
     //     new fvScalarMatrix
     //     (
     //         YPtrs_[i],
-    //         dimVolume/dimTime
+    //         dimMass/dimTime
     //     )
     // );
 
     // fvScalarMatrix& Su = tSu.ref();
     // Su += dY; // <<< causing dimension issue!!!!
+    // https://www.openfoam.com/documentation/guides/latest/api/fvMatrix_8C_source.html#l01708
+    
+    // ======================================================
+    DimensionedField<scalar, volMesh> dY = dYPtrs_[i];
+    dY.dimensions().reset(dY.dimensions()/dimDensity);
+
+    tmp<fvScalarMatrix> tSu
+    (
+        new fvScalarMatrix
+        (
+            YPtrs_[i],
+            dimVolume/dimTime
+        )
+    );
+
+    fvScalarMatrix& Su = tSu.ref();
+    Su += dY; // <<< causing dimension issue!!!!
 
     return tSu;
 }; 
