@@ -1,1 +1,0 @@
-../_LEGACY_ADM/makeAdModelTypes.H
