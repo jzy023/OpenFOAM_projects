@@ -41,16 +41,20 @@ void Foam::ADMno1::GasPhaseRate(volScalarField& Top)
 
     fac_ = (1.0 / para_.Tbase().value() - 1.0 / TopDummy) / (100.0 * R_);
 
-    GRPtrs_[0] = para_.kLa() * (YPtrs_[7] - R_ * TopDummy * GPtrs_[0] * para_.KH().h2 * exp(-4180.0 * fac_));
+    GRPtrs_[0] = para_.DTOS() * para_.kLa() 
+               * (YPtrs_[7] - R_ * TopDummy * GPtrs_[0] * para_.KH().h2 * exp(-4180.0 * fac_));
 
-    GRPtrs_[1] = para_.kLa() * (YPtrs_[8] - R_ * TopDummy * GPtrs_[1] * para_.KH().ch4 * exp(-14240.0 * fac_));
+    GRPtrs_[1] = para_.DTOS() * para_.kLa() 
+               * (YPtrs_[8] - R_ * TopDummy * GPtrs_[1] * para_.KH().ch4 * exp(-14240.0 * fac_));
 
-    GRPtrs_[2] = para_.kLa() * (YPtrs_[9] - R_ * TopDummy * GPtrs_[2] * para_.KH().co2 * exp(-19410.0 * fac_));
+    GRPtrs_[2] = para_.DTOS() * para_.kLa() // Sco2 instead of SIC
+               * (MPtrs_[0] - R_ * TopDummy * GPtrs_[2] * para_.KH().co2 * exp(-19410.0 * fac_));
+            // * (YPtrs_[9] - R_ * TopDummy * GPtrs_[2] * para_.KH().co2 * exp(-19410.0 * fac_));
 
 }
 
 
-void Foam::ADMno1::GasExitRate(volScalarField& Top)
+void Foam::ADMno1::GasSourceRate(volScalarField& Top)
 {
 
     // field of cell volume for mesh 

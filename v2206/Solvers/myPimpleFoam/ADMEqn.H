@@ -39,10 +39,34 @@ Description
 Info << "ADM convection-diffusion calculation" << endl;
 
 PtrList<volScalarField>& YPtrs = reaction->Y();
+PtrList<volScalarField>& GPtrs = reaction->G();
 
 volScalarField Deff = turbulence->nu() / reaction->Sc();
 
 {
+    // <<< TEST ---------------------------------------------------------------- //
+    // volScalarField rho
+    // (
+    //     IOobject
+    //     (
+    //         "rho",
+    //         runTime.timeName(),
+    //         mesh,
+    //         IOobject::READ_IF_PRESENT,
+    //         IOobject::NO_WRITE
+    //     ),
+    //     mesh,
+    //     dimensionedScalar
+    //     (
+    //         "rho", 
+    //         dimensionSet(1,-3,0,0,0,0,0), 
+    //         1000
+    //     )
+    // );
+    // volScalarField DMuEff = Deff*rho;
+    // <<< TEST ---------------------------------------------------------------- //
+
+    reaction->clear();
     reaction->correct(Top);
     // Qdot = reaction->Qdot();
 
@@ -78,54 +102,32 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
     // Gas Phase ============================================================ //
     // TODO: add rho and make adjustment for compressibility
 
-    // <<< TEST ---------------------------------------------------------------- //
-    // volScalarField rho
-    // (
-    //     IOobject
-    //     (
-    //         "rho",
-    //         runTime.timeName(),
-    //         mesh,
-    //         IOobject::READ_IF_PRESENT,
-    //         IOobject::NO_WRITE
-    //     ),
-    //     mesh,
-    //     dimensionedScalar
-    //     (
-    //         "rho", 
-    //         dimensionSet(1,-3,0,0,0,0,0), 
-    //         1000
-    //     )
-    // );
-    // volScalarField DMuEff = Deff*rho;
-    // <<< TEST ---------------------------------------------------------------- //
+    forAll(GPtrs, i)
+    {
+        volScalarField& Gi = GPtrs[i];
 
-    // forAll(GPtrs, i)
-    // {
-    //     volScalarField& Gi = GPtrs[i];
+        fvScalarMatrix GiEqn
+        (
+            fvm::ddt(Gi)
+          + fvm::div(phi, Gi)
+          - fvm::laplacian(Deff, Gi)
+         ==
+            fvOptions(Gi)
+          + reaction->RG(i)
+        );
 
-    //     fvScalarMatrix GiEqn
-    //     (
-    //         fvm::ddt(Gi)
-    //       + fvm::div(phi, Gi)
-    //       - fvm::laplacian(Deff, Gi)
-    //      ==
-    //         fvOptions(Gi)
-    //     //   + reaction->RG(i, Gi)
-    //     );
+        GiEqn.relax();
 
-    //     GiEqn.relax();
+        fvOptions.constrain(GiEqn);
 
-    //     fvOptions.constrain(GiEqn);
+        GiEqn.solve(mesh.solver("Yi"));
 
-    //     GiEqn.solve(mesh.solver("Gi"));
-
-    //     fvOptions.correct(Gi);
-    // }
+        fvOptions.correct(Gi);
+    }
 
     // Gas Phase ============================================================ //
 
-    reaction->clear();
+    
 
 }
 

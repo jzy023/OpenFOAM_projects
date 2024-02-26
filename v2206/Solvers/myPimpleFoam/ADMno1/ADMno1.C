@@ -233,7 +233,8 @@ Foam::ADMno1::ADMno1
                     mesh.time().timeName(),
                     mesh,
                     IOobject::NO_READ,
-                    IOobject::NO_WRITE
+                    // IOobject::NO_WRITE
+                    IOobject::AUTO_WRITE
                 ),
                 mesh,
                 dimensionedScalar
@@ -301,7 +302,7 @@ Foam::ADMno1::ADMno1
                     mesh.time().timeName(),
                     mesh,
                     IOobject::READ_IF_PRESENT,
-                    IOobject::NO_WRITE
+                    IOobject::AUTO_WRITE
                 ),
                 mesh,
                 dimensionedScalar
@@ -452,6 +453,19 @@ Foam::autoPtr<Foam::ADMno1> Foam::ADMno1::New
 }
 
 
+// * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
+
+void Foam::ADMno1::updateMedians()
+{
+    // Sco2 = SIC - Shco3N
+    MPtrs_[0] = YPtrs_[9] - EPtrs_[4];
+
+    // Snh3 calculated with acid-base
+
+    // Shn4 = SIN - Snh3
+    
+}
+
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
 void Foam::ADMno1::clear()
@@ -469,40 +483,20 @@ void Foam::ADMno1::clear()
 
 void Foam::ADMno1::correct(volScalarField& Top)
 {
-    //- calculate gas phase transfer rates
-    // GasPhaseRate(Top);
+    //- update Medians
+    updateMedians();
 
-    // //- calculate gas exit rates
-    // GasExitRate(Top);
+    //- calculate gas phase transfer rates
+    GasPhaseRate(Top);
+
+    //- calculate gas exit rates
+    GasSourceRate(Top);
 
     //- calculate raction rates
-    KineticRate(Top);
+    KineticRate();
 
     //- calculate dY with STOI
-    for(label j = 0; j < 7; j++)
-    {
-        for (int i = 0; i < 19; i++)
-        {
-            dYPtrs_[j] += para_.STOI[i][j] * KRPtrs_[i] * para_.DTOS(); //check if it works
-        }
-    }
-
-    for(label j = 8; j < YPtrs_.size(); j++)
-    {
-        for (int i = 0; i < 19; i++)
-        {
-            dYPtrs_[j] += para_.STOI[i][j] * KRPtrs_[i] * para_.DTOS();
-        }
-    }
-    
-    //- calculate dSh2 iteratively
-    // TODO: implement it! with Rosen et al.
-    // RSh2(); 
-
-    //- calculate with STOI and gas transer
-    // dYPtrs_[8] -= GRPtrs_[1]; // Sch4 - Gch4
-
-    // dYPtrs_[9] -= GRPtrs_[2]; // SIC - Gco2
+    SulSourceRate();
 
 }
 
@@ -533,5 +527,29 @@ tmp<fvScalarMatrix> Foam::ADMno1::R
 }; 
 
 
+tmp<fvScalarMatrix> Foam::ADMno1::RG
+(
+    label i
+) const
+{
+    DimensionedField<scalar, volMesh> dG = dGPtrs_[i];
+
+        tmp<fvScalarMatrix> tSu
+        (
+            new fvScalarMatrix
+            (
+                GPtrs_[i],
+                dG.dimensions()*dimVolume
+                // dimMass/dimTime // <- for compressible flow and uses fvm::ddt(rho, Yi)
+            )
+        );
+
+    fvScalarMatrix& Su = tSu.ref();
+    
+    // https://www.openfoam.com/documentation/guides/latest/api/fvMatrix_8C_source.html#l01708
+    Su += dG; 
+
+    return tSu;
+}; 
 
 // ************************************************************************* //

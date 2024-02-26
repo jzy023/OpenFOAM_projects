@@ -22,19 +22,20 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         10000;
+// endTime         10;
+endTime         1500;
 
 deltaT          1;
 
 writeControl    adjustable;
 
-writeInterval   200;
+writeInterval   10;
 
 purgeWrite      0;
 
 writeFormat     ascii; // binary;
 
-writePrecision  16;
+writePrecision  6;
 
 writeCompression off;
 

@@ -30,7 +30,7 @@ License
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
-void Foam::ADMno1::KineticRate(volScalarField& Top)
+void Foam::ADMno1::KineticRate()
 {
 
     //- Inhibiitons
@@ -235,8 +235,38 @@ void Foam::ADMno1::KineticRate(volScalarField& Top)
         para_.kDec().dec_xh2,
         YPtrs_[22] // Xh2
     );
+}
 
- 
+
+void Foam::ADMno1::SulSourceRate()
+{
+    for(label j = 0; j < 7; j++)
+    {
+        for (int i = 0; i < 19; i++)
+        {
+            dYPtrs_[j] += para_.STOI[i][j] * KRPtrs_[i] * para_.DTOS(); //check if it works
+        }
+    }
+
+    for(label j = 8; j < YPtrs_.size(); j++)
+    {
+        for (int i = 0; i < 19; i++)
+        {
+            dYPtrs_[j] += para_.STOI[i][j] * KRPtrs_[i] * para_.DTOS();
+        }
+    }
+    
+    //- calculate dSh2 iteratively
+    // TODO: implement it! with Rosen et al.
+    // RSh2(); 
+
+    //- calculate with STOI and gas transer
+    // dYPtrs_[7] -= GRPtrs_[0]; // Sh2 - Gh2
+
+    dYPtrs_[8] -= GRPtrs_[1]; // Sch4 - Gch4
+
+    // Sco2!
+    dYPtrs_[9] -= GRPtrs_[2]; // SIC - Gco2
 
 }
 

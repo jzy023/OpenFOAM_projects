@@ -93,13 +93,13 @@ private:
     //- List of pointers to the field of temperal specie concentrations
     PtrList<scalarField> YTempPtrs_;
 
-    //- List of pointers to the field of specie concentrations derivatives
+    //- List of pointers to the field of specie concentrations derivatives (source for local cell)
     PtrList<volScalarField::Internal> dYPtrs_;
 
     //- List of pointers to the field of gas concentrations
     PtrList<volScalarField> GPtrs_;
 
-    //- List of pointers to the field of gas concentrations derivatives
+    //- List of pointers to the field of gas concentrations derivatives (source for local cell)
     PtrList<volScalarField::Internal> dGPtrs_;
 
     //- List of pointers to the field of electrolytes concentrations
@@ -161,14 +161,20 @@ private:
     //- Gas phase transfer 
     void GasPhaseRate(volScalarField& Top);
 
-    //- Gas exit rates
-    void GasExitRate(volScalarField& Top);
+    //- Gas exit rates dG
+    void GasSourceRate(volScalarField& Top);
 
     //- Calculate kinetic rate
-    void KineticRate(volScalarField& Top);
+    void KineticRate();
 
-    //-
+    //- Calculate derivative of species dY
+    void SulSourceRate();
+
+    //- Calculate acid-base reactions
     void RSh2();
+
+    //- Calculate Medians
+    void updateMedians();
 
 
 public:
@@ -251,6 +257,9 @@ public:
 
     //- Return components consumption rate matrix, i.e. source term.
     tmp<fvScalarMatrix> R(label i) const;
+
+    //- Return components consumption rate matrix, i.e. source term.
+    tmp<fvScalarMatrix> RG(label i) const;
    
     //- Return const access to the chemical source terms for specie, i
     // inline const volScalarField::Internal& RR ( const label i ) const;
