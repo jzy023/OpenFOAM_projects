@@ -75,16 +75,18 @@ Note
 \*---------------------------------------------------------------------------*/
 
 #include "fvCFD.H"
+#include "fvcSmooth.H"
 #include "dynamicFvMesh.H"
 #include "singlePhaseTransportModel.H"
 #include "turbulentTransportModel.H"
-#include "multivariateScheme.H"
-#include "pimpleControl.H"
+#include "radiationModel.H"
 #include "CorrectPhi.H"
 #include "fvOptions.H"
+#include "pimpleControl.H"
+
 #include "localEulerDdtScheme.H"
-#include "fvcSmooth.H"
 #include "ADMno1.H"
+// #include "multivariateScheme.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -92,6 +94,7 @@ int main(int argc, char *argv[])
 {
     argList::addNote
     (
+        // TODO: add new note
         "Transient solver for incompressible, turbulent flow"
         " of Newtonian fluids on a moving mesh."
     );
@@ -102,20 +105,20 @@ int main(int argc, char *argv[])
     #include "setRootCaseLists.H"
     #include "createTime.H"
     #include "createDynamicFvMesh.H"
-    #include "initContinuityErrs.H"
     #include "createDyMControls.H"
     #include "createFields.H"
     #include "createUfIfPresent.H"
     #include "CourantNo.H"
     #include "setInitialDeltaT.H"
+    #include "initContinuityErrs.H"
 
     turbulence->validate();
 
-    if (!LTS)
-    {
-        #include "CourantNo.H"
-        #include "setInitialDeltaT.H"
-    }    
+    // if (!LTS)
+    // {
+    //     #include "CourantNo.H"
+    //     #include "setInitialDeltaT.H"
+    // }    
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -124,16 +127,18 @@ int main(int argc, char *argv[])
     while (runTime.run())
     {
         #include "readDyMControls.H"
+        #include "CourantNo.H"
+        #include "setDeltaT.H"
 
-        if (LTS)
-        {
-            #include "setRDeltaT.H"
-        }
-        else
-        {
-            #include "CourantNo.H"
-            #include "setDeltaT.H"
-        }
+        // if (LTS)
+        // {
+        //     #include "setRDeltaT.H"
+        // }
+        // else
+        // {
+        //     #include "CourantNo.H"
+        //     #include "setDeltaT.H"
+        // }
 
         ++runTime;
 
@@ -171,6 +176,7 @@ int main(int argc, char *argv[])
             }
 
             #include "UEqn.H"
+            #include "TEqn.H"
 
             // --- Pressure corrector loop
             while (pimple.correct())

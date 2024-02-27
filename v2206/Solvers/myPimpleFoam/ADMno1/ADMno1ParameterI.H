@@ -38,7 +38,7 @@ License
         return Tbase_;
     }
 
-    inline const dimensionedScalar admPara::Top() const 
+    inline const dimensionedScalar admPara::T() const 
     {
         return Top_;
     }

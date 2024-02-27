@@ -1,11 +1,37 @@
 #include "createRDeltaT.H"
 
-Info<< "Reading field p\n" << endl;
-volScalarField p
+// ADM reactions
+autoPtr<ADMno1> reaction
+(
+    ADMno1::New(mesh)
+);
+
+Info<< "Reading field operational temperature" << endl;
+volScalarField T
 (
     IOobject
     (
-        "p",
+        "T",
+        runTime.timeName(),
+        mesh,
+        IOobject::READ_IF_PRESENT,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar
+    (
+        "TDefault", 
+        dimensionSet(0,0,0,1,0,0,0), 
+        reaction->paraPtr()->T().value()
+    )
+);
+
+Info<< "Reading field p_rgh\n" << endl;
+volScalarField p_rgh
+(
+    IOobject
+    (
+        "p_rgh",
         runTime.timeName(),
         mesh,
         IOobject::MUST_READ,
@@ -30,42 +56,83 @@ volVectorField U
 
 #include "createPhi.H"
 
-label pRefCell = 0;
-scalar pRefValue = 0.0;
-setRefCell(p, pimple.dict(), pRefCell, pRefValue);
-mesh.setFluxRequired(p.name());
-
 singlePhaseTransportModel laminarTransport(U, phi);
+
+#include "readTransportProperties.H"
 
 autoPtr<incompressible::turbulenceModel> turbulence
 (
     incompressible::turbulenceModel::New(U, phi, laminarTransport)
 );
 
-autoPtr<ADMno1> reaction
-(
-    ADMno1::New(mesh)
-);
-
-Info<< "Reading field operational temperature" << endl;
-volScalarField Top
+// Kinematic density for buoyancy force
+volScalarField rhok
 (
     IOobject
     (
-        "Top",
+        "rhok",
         runTime.timeName(),
-        mesh,
-        IOobject::READ_IF_PRESENT,
-        IOobject::AUTO_WRITE
+        mesh
     ),
-    mesh,
-    dimensionedScalar
-    (
-        "TopDefault", 
-        dimensionSet(0,0,0,1,0,0,0), 
-        reaction->paraPtr()->Top().value()
-    )
+    1.0 - beta*(T - TRef)
 );
 
+// kinematic turbulent thermal thermal conductivity m2/s
+Info<< "Reading field alphat\n" << endl;
+volScalarField alphat
+(
+    IOobject
+    (
+        "alphat",
+        runTime.timeName(),
+        mesh,
+        IOobject::MUST_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh
+);
+
+#include "readGravitationalAcceleration.H"
+#include "readhRef.H"
+#include "gh.H"
+
+// Pressure field
+volScalarField p
+(
+    IOobject
+    (
+        "p",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    p_rgh + rhok*gh
+);
+
+label pRefCell = 0;
+scalar pRefValue = 0.0;
+setRefCell
+(
+    p,
+    p_rgh,
+    pimple.dict(),
+    pRefCell,
+    pRefValue
+);
+
+if (p_rgh.needReference())
+{
+    p += dimensionedScalar
+    (
+        "p",
+        p.dimensions(),
+        pRefValue - getRefCellValue(p, pRefCell)
+    );
+}
+
+mesh.setFluxRequired(p_rgh.name());
+
 #include "createMRF.H"
+#include "createIncompressibleRadiationModel.H"
 #include "createFvOptions.H"

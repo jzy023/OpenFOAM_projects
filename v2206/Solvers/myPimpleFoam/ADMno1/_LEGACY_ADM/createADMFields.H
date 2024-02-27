@@ -1,10 +1,10 @@
 dimensionedScalar TopDefault("TopDefault", dimensionSet(0,0,0,1,0,0,0), 308.15); 
 Info<< "Reading field Operating Temperature" << endl;
-volScalarField Top
+volScalarField T
 (
     IOobject
     (
-        "Top",
+        "T",
         runTime.timeName(),
         mesh,
         IOobject::READ_IF_PRESENT,

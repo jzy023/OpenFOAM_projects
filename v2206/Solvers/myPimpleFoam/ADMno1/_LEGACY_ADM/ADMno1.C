@@ -440,11 +440,11 @@ Foam::autoPtr<Foam::ADMno1> Foam::ADMno1::New
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
-void Foam::ADMno1::correct(volScalarField& Top)
+void Foam::ADMno1::correct(volScalarField& T)
 {
 
     //- calculate raction rates
-    KineticRate(Top);
+    KineticRate(T);
 
     //- calculate with biochemical rate coefficients
     for(label j = 0; j < 7; j++)

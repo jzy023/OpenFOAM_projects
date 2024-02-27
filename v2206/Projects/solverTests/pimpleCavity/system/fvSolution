@@ -16,21 +16,21 @@ FoamFile
 
 solvers
 {
-    p
+    p_rgh
     {
-        solver          GAMG;
-        tolerance       1e-08;
-        relTol          0.1;
-        smoother        GaussSeidel;
+        solver          PCG;
+        preconditioner  DIC;
+        tolerance       1e-8;
+        relTol          0.01;
     }
 
-    pFinal
+    p_rghFinal
     {
-        $p;
+        $p_rgh;
         relTol          0;
     }
 
-    "(U|k|B|nuTilda)"
+    "(U|T|k|epsilon|R)"
     {
         solver          smoothSolver;
         smoother        GaussSeidel;
@@ -38,7 +38,7 @@ solvers
         relTol          1e-8;
     }
 
-    UFinal
+    "(U|T|k|epsilon|R)Final"
     {
         $U;
         relTol          0;
@@ -61,20 +61,13 @@ solvers
 
 PIMPLE
 {
+    momentumPredictor no;
+    nOuterCorrectors 1;
+    nCorrectors     2;
     nNonOrthogonalCorrectors 0;
-    consistent      yes;
-
-    pRefCell 0;
-    pRefValue 0;
+    pRefCell        0;
+    pRefValue       0;
 }
-
-// PISO
-// {
-//     nCorrectors     2;
-//     nNonOrthogonalCorrectors 0;
-//     pRefCell 0;
-//     pRefValue 0;
-// }
 
 relaxationFactors
 {

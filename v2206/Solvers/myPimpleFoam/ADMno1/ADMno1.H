@@ -63,6 +63,9 @@ private:
     //- Gas constant
     scalar R_;
 
+    //- Gas exit ambient pressure
+    dimensionedScalar Pext_; 
+
     // TODO: this is only for benchmark case
     //- Gas volume fraction
     scalar fracG_ = 3.0/37.0;
@@ -81,11 +84,7 @@ private:
     volScalarField pH_;
 
     //- Ihibition factors
-    dimensionedScalar nIaa_;
-
-    dimensionedScalar nIac_;
-
-    dimensionedScalar nIh2_;
+    dimensionedScalar nIaa_, nIac_, nIh2_;
 
     //- List of pointers to the field of specie concentrations
     PtrList<volScalarField> YPtrs_;
@@ -159,10 +158,10 @@ private:
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
     //- Gas phase transfer 
-    void GasPhaseRate(volScalarField& Top);
+    void GasPhaseRate(volScalarField& T);
 
     //- Gas exit rates dG
-    void GasSourceRate(volScalarField& Top);
+    void GasSourceRate(volScalarField& T);
 
     //- Calculate kinetic rate
     void KineticRate();
@@ -253,7 +252,7 @@ public:
     void clear();
 
     //- Correct components consumption rate
-    void correct(volScalarField& Top);
+    void correct(volScalarField& T);
 
     //- Return components consumption rate matrix, i.e. source term.
     tmp<fvScalarMatrix> R(label i) const;

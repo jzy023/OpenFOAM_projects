@@ -20,16 +20,28 @@ internalField   uniform 0;
 
 boundaryField
 {
+    // movingWall
+    // {
+    //     type            zeroGradient;
+    //     // type            fixedValue; //inletOutlet;
+    //     // value           uniform 0;
+    // }
+
+    // fixedWalls
+    // {
+    //     type            zeroGradient;
+    // }
+
     movingWall
     {
-        type            zeroGradient;
-        // type            fixedValue; //inletOutlet;
-        // value           uniform 0;
+        type            calculated;
+        value           $internalField;
     }
 
     fixedWalls
     {
-        type            zeroGradient;
+        type            calculated;
+        value           $internalField;
     }
 
     frontAndBack

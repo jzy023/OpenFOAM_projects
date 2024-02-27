@@ -234,7 +234,7 @@ public:
 
     inline const dimensionedScalar Tbase() const;
 
-    inline const dimensionedScalar Top() const;
+    inline const dimensionedScalar T() const;
 
 	inline const decayRate kDec() const;
 

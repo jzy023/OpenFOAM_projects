@@ -31,11 +31,11 @@ License
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 // TODO: check volume!! 
 
-void Foam::ADMno1::GasPhaseRate(volScalarField& Top)
+void Foam::ADMno1::GasPhaseRate(volScalarField& T)
 {
     //- Thermal condition factor
 
-    volScalarField TopDummy(Top);
+    volScalarField TopDummy(T);
 
     TopDummy.dimensions().reset(dimless);
 
@@ -54,7 +54,7 @@ void Foam::ADMno1::GasPhaseRate(volScalarField& Top)
 }
 
 
-void Foam::ADMno1::GasSourceRate(volScalarField& Top)
+void Foam::ADMno1::GasSourceRate(volScalarField& T)
 {
 
     // field of cell volume for mesh 
@@ -71,10 +71,10 @@ void Foam::ADMno1::GasSourceRate(volScalarField& Top)
 
     kp.dimensions().reset(dimVolume/dimTime/dimPressure);
 
-    kp.field() = KP_ * (volMeshField / (volGas + volLiq));  
+    kp.field() = KP_ * (volMeshField / (volGas + volLiq)); // <---- this would be calculated
 
     //- gas pressure
-    volScalarField TopDummy(Top);
+    volScalarField TopDummy(T);
 
     TopDummy.dimensions().reset(dimless); 
 
@@ -86,10 +86,8 @@ void Foam::ADMno1::GasSourceRate(volScalarField& Top)
 
     Pgas.dimensions().reset(dimPressure);
 
-    // TODO: 1.013 -> atmospheric pressure!
-    dimensionedScalar Patm( dimPressure, 1.013 );
-
-    volScalarField qGasLocal = kp * (Pgas - Patm); 
+    volScalarField qGasLocal = kp * (Pgas - Pext_);
+    //  volScalarField qGasLocal = kp * (Pgas - Pext_)*(Pgas/Pext_); 
 
 	qGasLocal.min(0.0);
 

@@ -54,6 +54,12 @@ Foam::ADMno1::ADMno1
     para_(ADMno1Dict.get<word>("mode")),
     Sc_(ADMno1Dict.lookupOrDefault("Sc", 0.2)),
     R_(ADMno1Dict.lookupOrDefault("R", 0.083145)),
+    Pext_
+    (
+        "Pext", 
+        dimPressure,
+        ADMno1Dict.lookupOrDefault("Pext", 1.013)
+    ),
     fac_
     (
         IOobject
@@ -481,16 +487,16 @@ void Foam::ADMno1::clear()
     }
 }
 
-void Foam::ADMno1::correct(volScalarField& Top)
+void Foam::ADMno1::correct(volScalarField& T)
 {
     //- update Medians
     updateMedians();
 
     //- calculate gas phase transfer rates
-    GasPhaseRate(Top);
+    GasPhaseRate(T);
 
     //- calculate gas exit rates
-    GasSourceRate(Top);
+    GasSourceRate(T);
 
     //- calculate raction rates
     KineticRate();
