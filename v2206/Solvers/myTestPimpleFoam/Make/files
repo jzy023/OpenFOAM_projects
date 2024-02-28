@@ -1,3 +1,0 @@
-myTestPimpleFoam.C
-
-EXE = $(FOAM_APPBIN)/myTestPimpleFoam

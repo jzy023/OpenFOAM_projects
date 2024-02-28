@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "bashrc": "shellscript",
-        "buoyantBoussinesqSimpleFoam.C": "cpp",
-        "myBuoyantBoussinesqSimpleFoam.C": "cpp"
-    }
-}
