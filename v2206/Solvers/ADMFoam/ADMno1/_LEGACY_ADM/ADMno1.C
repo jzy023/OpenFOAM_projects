@@ -444,7 +444,7 @@ void Foam::ADMno1::correct(volScalarField& T)
 {
 
     //- calculate raction rates
-    KineticRate(T);
+    kineticRate(T);
 
     //- calculate with biochemical rate coefficients
     for(label j = 0; j < 7; j++)

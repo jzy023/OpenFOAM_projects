@@ -17,7 +17,9 @@
         "ADMno1Gas.C": "cpp",
         "random": "cpp",
         "ADMPimpleFoam.C": "cpp",
-        "ADMFoam.C": "cpp"
+        "ADMFoam.C": "cpp",
+        "ADMAcidBase.C": "cpp",
+        "ADMno1AcidBase.C": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

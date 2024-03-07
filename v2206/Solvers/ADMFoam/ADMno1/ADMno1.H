@@ -80,14 +80,14 @@ private:
     //- pH value
     volScalarField pH_;
 
+    //-
+    // volScalarField TopDummy_;
+
     //- Ihibition factors
     dimensionedScalar nIaa_, nIac_, nIh2_;
 
     //- List of pointers to the field of specie concentrations
     PtrList<volScalarField> YPtrs_;
-
-    //- List of pointers to the field of temperal specie concentrations
-    PtrList<scalarField> YTempPtrs_;
 
     //- List of pointers to the field of specie concentrations derivatives (source for local cell)
     PtrList<volScalarField::Internal> dYPtrs_;
@@ -100,6 +100,9 @@ private:
 
     //- List of pointers to the field of electrolytes concentrations
     PtrList<volScalarField> EPtrs_;
+
+    //- List of pointers to the field of temperal electrolytes concentrations
+    PtrList<volScalarField> ETempPtrs_;
 
     //- List of pointers to the field of medians concentrations
     PtrList<volScalarField> MPtrs_;
@@ -154,19 +157,24 @@ private:
     
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
-    //- Gas phase transfer 
-    void GasPhaseRate(volScalarField& T);
+    //- Thermal condition factor
+    void thermalFac(volScalarField& T);
+
+    //- Gas phase transfer rate
+    void gasPhaseRate(volScalarField& T);
 
     //- Gas exit rates dG
-    void GasSourceRate(volScalarField& T);
+    void gasSourceRate(volScalarField& T);
 
     //- Calculate kinetic rate
-    void KineticRate();
+    void kineticRate();
 
     //- Calculate derivative of species dY
-    void SulSourceRate();
+    void sulSourceRate();
 
     //- Calculate acid-base reactions
+    void calcShp();
+
     void RSh2();
 
     //- Calculate Medians

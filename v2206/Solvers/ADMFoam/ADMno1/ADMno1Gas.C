@@ -31,9 +31,8 @@ License
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 // TODO: check volume!! 
 
-void Foam::ADMno1::GasPhaseRate(volScalarField& T)
+void Foam::ADMno1::gasPhaseRate(volScalarField& T)
 {
-    //- Thermal condition factor
 
     volScalarField TopDummy(T);
 
@@ -54,7 +53,7 @@ void Foam::ADMno1::GasPhaseRate(volScalarField& T)
 }
 
 
-void Foam::ADMno1::GasSourceRate(volScalarField& T)
+void Foam::ADMno1::gasSourceRate(volScalarField& T)
 {
 
     // field of cell volume for mesh 

@@ -30,7 +30,7 @@ License
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
-void Foam::ADMno1::KineticRate()
+void Foam::ADMno1::kineticRate()
 {
 
     //- Inhibiitons
@@ -238,7 +238,7 @@ void Foam::ADMno1::KineticRate()
 }
 
 
-void Foam::ADMno1::SulSourceRate()
+void Foam::ADMno1::sulSourceRate()
 {
     for(label j = 0; j < 7; j++)
     {

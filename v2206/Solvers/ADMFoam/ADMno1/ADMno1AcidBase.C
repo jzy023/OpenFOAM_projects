@@ -5,8 +5,8 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2013-2017 OpenFOAM Foundation
-    Copyright (C) 2019-2020 OpenCFD Ltd.
+    Copyright (C) 2011-2016 OpenFOAM Foundation
+    Copyright (C) 2017-2021 OpenCFD Ltd.
 -------------------------------------------------------------------------------
 License
     This file is part of OpenFOAM.
@@ -25,70 +25,15 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
  
 \*---------------------------------------------------------------------------*/
-
-// #include "fvCFD.H"
+ 
+#include "ADMno1.H"
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
-//- Inhibition calculations
-
-volScalarField calcInhibition
-(
-    volScalarField Y, 
-    dimensionedScalar denom
-);
-
-volScalarField calcInhibitionHP
-(
-    volScalarField Shp,
-    dimensionedScalar UL,
-    dimensionedScalar LL,
-    dimensionedScalar n
-);
-
-//- Kinetic rate calculations
-
-volScalarField calcRho
-(
-    dimensionedScalar k, 
-    volScalarField X
-);
-
-volScalarField calcRho
-(
-    dimensionedScalar k, 
-    volScalarField S,
-    dimensionedScalar K,
-    volScalarField X,
-    volScalarField I
-);
-
-volScalarField calcRho
-(
-    dimensionedScalar k, 
-    volScalarField S1,
-    dimensionedScalar K,
-    volScalarField X,
-    volScalarField S2,
-    volScalarField I
-);
-
-//- Components source term calculations
-
-
-
-//- Acid-base calculations
-
-volScalarField fSion
-(
-    dimensionedScalar Kax,
-    volScalarField Sx,
-    volScalarField Shp
-);
-
-volScalarField fShp();
-
-volScalarField dfShp();
+void Foam::ADMno1::calcShp()
+{
+    volScalarField EShp = fShp(); 
+}
 
 
 // ************************************************************************* //

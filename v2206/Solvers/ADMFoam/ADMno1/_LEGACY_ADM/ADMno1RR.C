@@ -30,7 +30,7 @@ License
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
-void Foam::ADMno1::KineticRate(volScalarField& Top)
+void Foam::ADMno1::kineticRate(volScalarField& Top)
 {
 
     //- Thermal condition factor

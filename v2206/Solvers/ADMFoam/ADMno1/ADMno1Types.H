@@ -462,6 +462,20 @@ struct admAcidBaseEq
         IN( dimMass, IN_),
         W( dimMass, W_)
     {};
+
+    void setDimension
+    (
+        dimensionSet ds
+    )
+    {
+        va.dimensions().reset(ds);
+        bu.dimensions().reset(ds);
+        pro.dimensions().reset(ds);
+        ac.dimensions().reset(ds);
+        co2.dimensions().reset(ds);
+        IN.dimensions().reset(ds);
+        W.dimensions().reset(ds);
+    }
 };
 
 /** =======================================================================

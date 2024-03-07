@@ -289,6 +289,34 @@ Foam::ADMno1::ADMno1
         );
     }
 
+    ETempPtrs_.resize(namesElectrolyte.size());
+
+    forAll(namesElectrolyte, i)
+    {
+        ETempPtrs_.set
+        (
+            i,
+            new volScalarField
+            (
+                IOobject
+                (
+                    namesElectrolyte[i],
+                    mesh.time().timeName(),
+                    mesh,
+                    IOobject::READ_IF_PRESENT,
+                    IOobject::NO_WRITE
+                ),
+                mesh,
+                dimensionedScalar
+                (
+                    namesElectrolyte[i] + "temp", 
+                    YPtrs_[0].dimensions(),
+                    para_.Eini(i)
+                )
+            )
+        );
+    }
+
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
     //-  Medians initialization
@@ -463,6 +491,15 @@ Foam::autoPtr<Foam::ADMno1> Foam::ADMno1::New
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
+// void Foam::ADMno1::thermalFac(volScalarField& T)
+// {
+//     TopDummy_ = T;
+
+//     TopDummy_.dimensions().reset(dimless);
+
+//     fac_ = (1.0 / para_.Tbase().value() - 1.0 / TopDummy_) / (100.0 * R_);
+// }
+
 void Foam::ADMno1::updateMedians()
 {
     // Sco2 = SIC - Shco3N
@@ -491,20 +528,26 @@ void Foam::ADMno1::clear()
 
 void Foam::ADMno1::correct(volScalarField& T)
 {
+    //- calculate thermal factor
+    // thermalFac(T);
+
     //- update Medians
     updateMedians();
 
     //- calculate gas phase transfer rates
-    GasPhaseRate(T);
+    gasPhaseRate(T);
 
     //- calculate gas exit rates
-    GasSourceRate(T);
+    gasSourceRate(T);
 
     //- calculate raction rates
-    KineticRate();
+    kineticRate();
+
+    //- Acid-base calculations
+    calcShp();
 
     //- calculate dY with STOI
-    SulSourceRate();
+    sulSourceRate();
 
 }
 

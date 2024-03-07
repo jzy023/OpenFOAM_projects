@@ -154,7 +154,7 @@ private:
     #include "ADMno1Helpers.H"
 
     //- Calculate kinetic rate
-    void KineticRate(volScalarField& Top);
+    void kineticRate(volScalarField& Top);
 
     //-
     void RSh2();

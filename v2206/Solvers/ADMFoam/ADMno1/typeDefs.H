@@ -87,7 +87,7 @@ struct reactionRateConstant
  * @brief coefficients for gas mass transfer [d^-1]
  *
  */
-struct GasPhaseRate
+struct gasPhaseRate
 {
 	scalar h2{};
 	scalar ch4{};

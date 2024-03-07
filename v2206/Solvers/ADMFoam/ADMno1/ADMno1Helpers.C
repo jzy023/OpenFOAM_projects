@@ -108,4 +108,65 @@ volScalarField Foam::ADMno1::calcRho
 //     return concComponent;
 // }
 
+//- Acid-base calculations
+
+volScalarField Foam::ADMno1::fSion
+(
+    dimensionedScalar Kax,
+    volScalarField Sx,
+    volScalarField Shp
+)
+{
+    return Kax * Sx / (Kax + Shp);
+}
+
+
+volScalarField Foam::ADMno1::fShp()
+{
+    ETempPtrs_[0] = fSion // SvaN
+    (
+        para_.Ka().va,
+        YPtrs_[3],
+        ETempPtrs_[6]
+    );
+
+    ETempPtrs_[1] = fSion // SbuN
+    (
+        para_.Ka().bu,
+        YPtrs_[4],
+        ETempPtrs_[6]
+    ); 
+
+    ETempPtrs_[2] = fSion // SproN
+    (
+        para_.Ka().pro,
+        YPtrs_[5],
+        ETempPtrs_[6]
+    ); 
+
+    ETempPtrs_[3] = fSion // SacN
+    (
+        para_.Ka().ac,
+        YPtrs_[6],
+        ETempPtrs_[6]
+    );
+
+    ETempPtrs_[4] = fSion // Shco3N
+    (
+        para_.Ka().co2,
+        YPtrs_[9], // SIC
+        ETempPtrs_[6]
+    ); 
+
+    // calc Snh4/Snh3
+    // calc SohN
+
+    // return Scat_ - San_ - // + Shp - SohN + Snh4
+    //        ETempPtrs_[4] - ETempPtrs_[3]/64 - ETempPtrs_[2]/112 - ETempPtrs_[1]/160 - ETempPtrs_[0]/208;
+
+    return ETempPtrs_[4] - ETempPtrs_[3]/64 - ETempPtrs_[2]/112 - ETempPtrs_[1]/160 - ETempPtrs_[0]/208;
+    
+           
+}
+
 // ************************************************************************* //

@@ -612,6 +612,8 @@ void admPara::setParaDim
 
     KS_.setDimension(ds);
 
+    Ka_.setDimension(ds);
+
 };
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
