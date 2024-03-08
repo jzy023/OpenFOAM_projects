@@ -89,7 +89,7 @@ void Foam::ADMno1::kineticRate()
 
 	IPtrs_[7] = calcInhibition // nh3
     (
-        MPtrs_[1], // Snh3
+        EPtrs_[1], // Snh3
         para_.KI().nh3
     );
 

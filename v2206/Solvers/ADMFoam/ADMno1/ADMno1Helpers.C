@@ -120,7 +120,6 @@ volScalarField Foam::ADMno1::fSion
     return Kax * Sx / (Kax + Shp);
 }
 
-
 volScalarField Foam::ADMno1::fShp()
 {
     ETempPtrs_[0] = fSion // SvaN
@@ -158,14 +157,26 @@ volScalarField Foam::ADMno1::fShp()
         ETempPtrs_[6]
     ); 
 
-    // calc Snh4/Snh3
+    MPtrs_[1] = fSion // Snh3
+    (
+        para_.Ka().IN,
+        YPtrs_[10], // SIN
+        ETempPtrs_[6]
+    );
+
     // calc SohN
+    // TODO: the original ADMno1 is quite inconsistent with the dimensions
+    // TODO: maybe reverse the dimensionsScalar to scalar in para_?
+    volScalarField SohN = para_.Ka().W / ETempPtrs_[6]; 
+    SohN.dimensions().reset(ETempPtrs_[6].dimensions()); 
+    ETempPtrs_[5] = SohN;
 
-    // return Scat_ - San_ - // + Shp - SohN + Snh4
-    //        ETempPtrs_[4] - ETempPtrs_[3]/64 - ETempPtrs_[2]/112 - ETempPtrs_[1]/160 - ETempPtrs_[0]/208;
+    //     Scat_ - San_ + ShP           - SohN          + (SIN - Snh3)                 
+    return Scat_ - San_ + ETempPtrs_[6] - ETempPtrs_[5] + (YPtrs_[10] - MPtrs_[1]) - 
+           ETempPtrs_[4] - ETempPtrs_[3]/64 - ETempPtrs_[2]/112 - ETempPtrs_[1]/160 - ETempPtrs_[0]/208;
+    //     Shco3N        - SacN/64          - SproN/112         - SbuN/160          - SvaN/208
 
-    return ETempPtrs_[4] - ETempPtrs_[3]/64 - ETempPtrs_[2]/112 - ETempPtrs_[1]/160 - ETempPtrs_[0]/208;
-    
+    // return Scat_ - San_ - ETempPtrs_[4] - ETempPtrs_[3]/64 - ETempPtrs_[2]/112 - ETempPtrs_[1]/160 - ETempPtrs_[0]/208;
            
 }
 

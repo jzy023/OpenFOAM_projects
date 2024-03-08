@@ -80,9 +80,6 @@ private:
     //- pH value
     volScalarField pH_;
 
-    //-
-    // volScalarField TopDummy_;
-
     //- Ihibition factors
     dimensionedScalar nIaa_, nIac_, nIh2_;
 
@@ -127,6 +124,8 @@ private:
     //- !!! Sh2 is calculated iteratively 
     const wordList namesSoluable = {"Ssu", "Saa", "Sfa", "Sva", "Sbu", "Spro",
                                     "Sac", "Sh2", "Sch4", "SIC", "SIN", "SI"};
+    // const wordList namesSoluable = {"Ssu", "Saa", "Sfa", "Sva", "Sbu", "Spro",
+    //                                 "Sac", "Sh2", "Sch4", "SIC", "SIN", "SI", "Sco2"};    
 
     //- Species names for particulate
     const wordList namesParticulate = {"Xc", "Xch", "Xpr", "Xli", "Xsu", "Xaa",
@@ -141,16 +140,16 @@ private:
                                        "ShP"};
 
     //- calculated by simple subtractions
-    const wordList namesMedians = {"Sco2", "Snh3", "Snh4"};
+    const wordList namesMedians = {"Sco2", "Snh3"};
 
     //- inert substances
     const wordList namesInerts = {"Scat", "San"};
 
     //- Cation concentration (inert)
-    scalar Scat_;
+    dimensionedScalar Scat_;
 
     //- Anion concentration (inert)
-    scalar San_;
+    dimensionedScalar San_;
 
     //- Pirvate Helper Functions
     #include "ADMno1Helpers.H"
@@ -178,7 +177,7 @@ private:
     void RSh2();
 
     //- Calculate Medians
-    void updateMedians();
+    // void updateMedians();
 
 
 public:

@@ -559,7 +559,7 @@ void admPara::defineInitialState(word runMode)
 
         Mini_[0] = 0.00942;      // S_co2
         Mini_[1] = 0.001884;     // S_nh3
-        Mini_[2] = 0.092584;     // S_nh4
+        // Mini_[2] = 0.092584;     // S_nh4
     }
     else if(runMode == "MesoSolid")
     {
@@ -577,7 +577,7 @@ void admPara::defineInitialState(word runMode)
 
         Mini_[0] = 0.00942;      // S_co2
         Mini_[1] = 0.001884;     // S_nh3
-        Mini_[2] = 0.092584;     // S_nh4
+        // Mini_[2] = 0.092584;     // S_nh4
     }
     else
     {// TODO: update values
@@ -595,7 +595,7 @@ void admPara::defineInitialState(word runMode)
 
         Mini_[0] = 0.00942;      // S_co2
         Mini_[1] = 0.001884;     // S_nh3
-        Mini_[2] = 0.092584;     // S_nh4
+        // Mini_[2] = 0.092584;     // S_nh4
     }
 }
 

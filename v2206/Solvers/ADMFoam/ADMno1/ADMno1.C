@@ -98,8 +98,18 @@ Foam::ADMno1::ADMno1
             ADMno1Dict.lookupOrDefault("pH", 7.26)
         )
     ),
-    Scat_(ADMno1Dict.lookupOrDefault("Scat", 0.00)),
-    San_(ADMno1Dict.lookupOrDefault("San", 0.0052))
+    Scat_
+    (
+        "Scat",
+        dimMass/dimVolume,
+        ADMno1Dict.lookupOrDefault("Scat", 0.00)
+    ),
+    San_
+    (
+        "San",
+        dimMass/dimVolume,
+        ADMno1Dict.lookupOrDefault("San", 0.0052)
+    )
 {
 
     Info<< "\nSelecting ADM no1 operation mode " << ADMno1Dict.get<word>("mode") << endl;
@@ -241,8 +251,7 @@ Foam::ADMno1::ADMno1
                     mesh.time().timeName(),
                     mesh,
                     IOobject::NO_READ,
-                    // IOobject::NO_WRITE
-                    IOobject::AUTO_WRITE
+                    IOobject::NO_WRITE
                 ),
                 mesh,
                 dimensionedScalar
@@ -452,6 +461,9 @@ Foam::ADMno1::ADMno1
 
     para_.setParaDim(YPtrs_[0].dimensions());
 
+    Scat_.dimensions().reset(YPtrs_[0].dimensions());
+    San_.dimensions().reset(YPtrs_[0].dimensions());
+
     nIaa_ = 3.0 / (para_.pHL().ULaa - para_.pHL().LLaa);  // aa
     nIac_ = 3.0 / (para_.pHL().ULac - para_.pHL().LLac);  // ac
     nIh2_ = 3.0 / (para_.pHL().ULh2 - para_.pHL().LLh2);  // h2
@@ -500,16 +512,16 @@ Foam::autoPtr<Foam::ADMno1> Foam::ADMno1::New
 //     fac_ = (1.0 / para_.Tbase().value() - 1.0 / TopDummy_) / (100.0 * R_);
 // }
 
-void Foam::ADMno1::updateMedians()
-{
-    // Sco2 = SIC - Shco3N
-    MPtrs_[0] = YPtrs_[9] - EPtrs_[4];
+// void Foam::ADMno1::updateMedians()
+// {
+//     // Sco2 = SIC - Shco3N
+//     MPtrs_[0] = YPtrs_[9] - EPtrs_[4];
 
-    // Snh3 calculated with acid-base
+//     // Snh3 calculated with acid-base
 
-    // Shn4 = SIN - Snh3
+//     // Shn4 = SIN - Snh3
     
-}
+// }
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
@@ -530,9 +542,6 @@ void Foam::ADMno1::correct(volScalarField& T)
 {
     //- calculate thermal factor
     // thermalFac(T);
-
-    //- update Medians
-    updateMedians();
 
     //- calculate gas phase transfer rates
     gasPhaseRate(T);
