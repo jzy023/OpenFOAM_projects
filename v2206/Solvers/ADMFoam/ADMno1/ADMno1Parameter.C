@@ -106,7 +106,7 @@ admPara::admPara
     ),
 	kLa_
     (
-        dimless/dimTime, 200
+        dimless/dimTime, 200.0
     ),
     pHL_
     (
@@ -392,64 +392,64 @@ void admPara::defineSTOI()
 	}
 	// rows for processes and columns for substrates (visco[j,i] from the table)
 	STOI[0][11] = yP_.si_xc;
-	STOI[1][0] = 1;
-	STOI[2][1] = 1;
-	STOI[3][0] = 1 - yP_.fa_li;
+	STOI[1][0] = 1.0;
+	STOI[2][1] = 1.0;
+	STOI[3][0] = 1.0- yP_.fa_li;
 	STOI[3][2] = yP_.fa_li;
 
-	STOI[4][0] = -1;
-	STOI[4][4] = (1 - yB_.su) * yP_.bu_su;
-	STOI[4][5] = (1 - yB_.su) * yP_.pro_su;
-	STOI[4][6] = (1 - yB_.su) * yP_.ac_su;
-	STOI[4][7] = (1 - yB_.su) * yP_.h2_su;
+	STOI[4][0] = -1.0;
+	STOI[4][4] = (1.0- yB_.su) * yP_.bu_su;
+	STOI[4][5] = (1.0- yB_.su) * yP_.pro_su;
+	STOI[4][6] = (1.0- yB_.su) * yP_.ac_su;
+	STOI[4][7] = (1.0- yB_.su) * yP_.h2_su;
 	STOI[4][10] = -yB_.su * NC_.bac;
 
-	STOI[5][1] = -1;
-	STOI[5][3] = (1 - yB_.aa) * yP_.va_aa;
-	STOI[5][4] = (1 - yB_.aa) * yP_.bu_aa;
-	STOI[5][5] = (1 - yB_.aa) * yP_.pro_aa;
-	STOI[5][6] = (1 - yB_.aa) * yP_.ac_aa;
-	STOI[5][7] = (1 - yB_.aa) * yP_.h2_aa;
+	STOI[5][1] = -1.0;
+	STOI[5][3] = (1.0- yB_.aa) * yP_.va_aa;
+	STOI[5][4] = (1.0- yB_.aa) * yP_.bu_aa;
+	STOI[5][5] = (1.0- yB_.aa) * yP_.pro_aa;
+	STOI[5][6] = (1.0- yB_.aa) * yP_.ac_aa;
+	STOI[5][7] = (1.0- yB_.aa) * yP_.h2_aa;
 	STOI[5][10] = NC_.aa - yB_.aa * NC_.bac;
 
-	STOI[6][2] = -1;
-	STOI[6][6] = (1 - yB_.fa) * 0.7;
-	STOI[6][7] = (1 - yB_.fa) * 0.3;
+	STOI[6][2] = -1.0;
+	STOI[6][6] = (1.0- yB_.fa) * 0.7;
+	STOI[6][7] = (1.0- yB_.fa) * 0.3;
 	STOI[6][10] = -yB_.fa * NC_.bac;
 
-	STOI[7][3] = -1;
-	STOI[7][5] = (1 - yB_.c4) * 0.54;
-	STOI[7][6] = (1 - yB_.c4) * 0.31;
-	STOI[7][7] = (1 - yB_.c4) * 0.15;
+	STOI[7][3] = -1.0;
+	STOI[7][5] = (1.0- yB_.c4) * 0.54;
+	STOI[7][6] = (1.0- yB_.c4) * 0.31;
+	STOI[7][7] = (1.0- yB_.c4) * 0.15;
 	STOI[7][10] = -yB_.c4 * NC_.bac;
 
-	STOI[8][4] = -1;
-	STOI[8][6] = (1 - yB_.c4) * 0.8;
-	STOI[8][7] = (1 - yB_.c4) * 0.2;
+	STOI[8][4] = -1.0;
+	STOI[8][6] = (1.0- yB_.c4) * 0.8;
+	STOI[8][7] = (1.0- yB_.c4) * 0.2;
 	STOI[8][10] = -yB_.c4 * NC_.bac;
 
-	STOI[9][5] = -1;
-	STOI[9][6] = (1 - yB_.pro) * 0.57;
-	STOI[9][7] = (1 - yB_.pro) * 0.43;
+	STOI[9][5] = -1.0;
+	STOI[9][6] = (1.0- yB_.pro) * 0.57;
+	STOI[9][7] = (1.0- yB_.pro) * 0.43;
 	STOI[9][10] = -yB_.pro * NC_.bac;
 
-	STOI[10][6] = -1;
-	STOI[10][8] = (1 - yB_.ac);
+	STOI[10][6] = -1.0;
+	STOI[10][8] = (1.0- yB_.ac);
 	STOI[10][10] = -yB_.ac * NC_.bac;
 
-	STOI[11][7] = -1;
-	STOI[11][8] = (1 - yB_.h2);
+	STOI[11][7] = -1.0;
+	STOI[11][8] = (1.0- yB_.h2);
 	STOI[11][10] = -yB_.h2 * NC_.bac;
 
-	STOI[0][12] = -1;
+	STOI[0][12] = -1.0;
 	STOI[0][13] = yP_.ch_xc;
 	STOI[0][14] = yP_.pr_xc;
 	STOI[0][15] = yP_.li_xc;
 	STOI[0][23] = yP_.xi_xc;
 
-	STOI[1][13] = -1;
-	STOI[2][14] = -1;
-	STOI[3][15] = -1;
+	STOI[1][13] = -1.0;
+	STOI[2][14] = -1.0;
+	STOI[3][15] = -1.0;
 
 	STOI[4][16] = yB_.su;
 	STOI[5][17] = yB_.aa;
@@ -463,8 +463,8 @@ void admPara::defineSTOI()
 
 	for (int i = 12; i < 19; i++)
 	{
-		STOI[i][12] = 1;
-		STOI[i][i + 4] = -1;
+		STOI[i][12] = 1.0;
+		STOI[i][i + 4] = -1.0;
 	}
 
 	//for loop for Carbon content Using Rosen
@@ -522,10 +522,10 @@ void admPara::defineSTOI()
 // 	abDAE[7][6] = 1;
 
 // 	abDAE[8][0] = -1;		//OH-
-// 	abDAE[8][1] = static_cast<scalar> (-1 / 208); //vaN
-// 	abDAE[8][2] = static_cast<scalar> (-1 / 160); //buN
-// 	abDAE[8][3] = static_cast<scalar> (-1 / 112); //proN
-// 	abDAE[8][4] = static_cast<scalar> (-1 / 64);	//acN
+// 	abDAE[8][1] = static_cast<scalar> (-1.0/ 208); //vaN
+// 	abDAE[8][2] = static_cast<scalar> (-1.0/ 160); //buN
+// 	abDAE[8][3] = static_cast<scalar> (-1.0/ 112); //proN
+// 	abDAE[8][4] = static_cast<scalar> (-1.0/ 64);	//acN
 // 	abDAE[8][5] = -1;		//hco3N
 // 	abDAE[8][6] = 0;		//nh3
 // 	abDAE[8][7] = 1;		//nh+
@@ -554,7 +554,7 @@ void admPara::defineInitialState(word runMode)
         Eini_[2] = 0.017511;     // S_proN
         Eini_[3] = 0.089035;     // S_acN
         Eini_[4] = 0.08568;      // S_hco3N
-        Eini_[5] = 0;            // S_ohN
+        Eini_[5] = 0.0;          // S_ohN
         Eini_[6] = 5.4562e-8;    // S_hP
 
         Mini_[0] = 0.00942;      // S_co2
@@ -572,7 +572,7 @@ void admPara::defineInitialState(word runMode)
         Eini_[2] = 0.017511;     // S_proN
         Eini_[3] = 0.089035;     // S_acN
         Eini_[4] = 0.08568;      // S_hco3N
-        Eini_[5] = 0;            // S_ohN
+        Eini_[5] = 0.0;          // S_ohN
         Eini_[6] = 5.4562e-8;    // S_hP
 
         Mini_[0] = 0.00942;      // S_co2
@@ -590,7 +590,7 @@ void admPara::defineInitialState(word runMode)
         Eini_[2] = 0.017511;     // S_proN
         Eini_[3] = 0.089035;     // S_acN
         Eini_[4] = 0.08568;      // S_hco3N
-        Eini_[5] = 0;            // S_ohN
+        Eini_[5] = 0.0;          // S_ohN
         Eini_[6] = 5.4562e-8;    // S_hP
 
         Mini_[0] = 0.00942;      // S_co2

@@ -205,7 +205,7 @@ public:
         ),
     	kLa_
         (
-            dimless/dimTime, 200
+            dimless/dimTime, 200.0
         ),
         pHL_
         (

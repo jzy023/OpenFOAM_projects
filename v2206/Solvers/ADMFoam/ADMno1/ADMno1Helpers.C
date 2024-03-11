@@ -38,7 +38,7 @@ volScalarField Foam::ADMno1::calcInhibition
     dimensionedScalar denum
 )
 {
-    return 1 / (1 + (Y / denum));
+    return 1.0/ (1.0 + (Y / denum));
 }
 
 volScalarField Foam::ADMno1::calcInhibitionHP
@@ -88,7 +88,7 @@ volScalarField Foam::ADMno1::calcRho
     volScalarField I
 )
 {
-    return k * (S1 / (K + S1)) * X * (1 / (1 + (S2 / S1))) * I;
+    return k * (S1 / (K + S1)) * X * (1.0 / (1.0 + (S2 / S1))) * I;
 }
 
 //- Components source term calculations
@@ -120,64 +120,15 @@ volScalarField Foam::ADMno1::fSion
     return Kax * Sx / (Kax + Shp);
 }
 
-volScalarField Foam::ADMno1::fShp()
+volScalarField Foam::ADMno1::dfSion
+(
+    dimensionedScalar Kax,
+    volScalarField Sx,
+    volScalarField Shp
+)
 {
-    ETempPtrs_[0] = fSion // SvaN
-    (
-        para_.Ka().va,
-        YPtrs_[3],
-        ETempPtrs_[6]
-    );
-
-    ETempPtrs_[1] = fSion // SbuN
-    (
-        para_.Ka().bu,
-        YPtrs_[4],
-        ETempPtrs_[6]
-    ); 
-
-    ETempPtrs_[2] = fSion // SproN
-    (
-        para_.Ka().pro,
-        YPtrs_[5],
-        ETempPtrs_[6]
-    ); 
-
-    ETempPtrs_[3] = fSion // SacN
-    (
-        para_.Ka().ac,
-        YPtrs_[6],
-        ETempPtrs_[6]
-    );
-
-    ETempPtrs_[4] = fSion // Shco3N
-    (
-        para_.Ka().co2,
-        YPtrs_[9], // SIC
-        ETempPtrs_[6]
-    ); 
-
-    MPtrs_[1] = fSion // Snh3
-    (
-        para_.Ka().IN,
-        YPtrs_[10], // SIN
-        ETempPtrs_[6]
-    );
-
-    // calc SohN
-    // TODO: the original ADMno1 is quite inconsistent with the dimensions
-    // TODO: maybe reverse the dimensionsScalar to scalar in para_?
-    volScalarField SohN = para_.Ka().W / ETempPtrs_[6]; 
-    SohN.dimensions().reset(ETempPtrs_[6].dimensions()); 
-    ETempPtrs_[5] = SohN;
-
-    //     Scat_ - San_ + ShP           - SohN          + (SIN - Snh3)                 
-    return Scat_ - San_ + ETempPtrs_[6] - ETempPtrs_[5] + (YPtrs_[10] - MPtrs_[1]) - 
-           ETempPtrs_[4] - ETempPtrs_[3]/64 - ETempPtrs_[2]/112 - ETempPtrs_[1]/160 - ETempPtrs_[0]/208;
-    //     Shco3N        - SacN/64          - SproN/112         - SbuN/160          - SvaN/208
-
-    // return Scat_ - San_ - ETempPtrs_[4] - ETempPtrs_[3]/64 - ETempPtrs_[2]/112 - ETempPtrs_[1]/160 - ETempPtrs_[0]/208;
-           
+    return -Kax * Sx / ((Kax + Shp) * (Kax + Shp));
 }
+
 
 // ************************************************************************* //

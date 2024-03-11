@@ -86,9 +86,12 @@ volScalarField fSion
     volScalarField Shp
 );
 
-volScalarField fShp();
-
-volScalarField dfShp();
+volScalarField dfSion
+(
+    dimensionedScalar Kax,
+    volScalarField Sx,
+    volScalarField Shp
+);
 
 
 // ************************************************************************* //

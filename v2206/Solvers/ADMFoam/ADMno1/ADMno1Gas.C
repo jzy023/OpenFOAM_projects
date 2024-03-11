@@ -61,10 +61,10 @@ void Foam::ADMno1::gasSourceRate(volScalarField& T)
     scalarField volMeshField = GPtrs_[0].mesh().V().field();            
 
     // particle scaled gas volume
-    scalarField volGas = volMeshField / (1 + (1/Vfrac_)); 
+    scalarField volGas = volMeshField / (1.0 + (1.0/Vfrac_)); 
 
     // particle scaled liquid volume
-    scalarField volLiq = volMeshField / (1 + Vfrac_);
+    scalarField volLiq = volMeshField / (1.0 + Vfrac_);
 
     // particle scaled pipe resistance
     volScalarField kp = 0.0*fac_;

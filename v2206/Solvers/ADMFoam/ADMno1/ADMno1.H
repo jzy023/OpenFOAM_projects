@@ -172,6 +172,10 @@ private:
     void sulSourceRate();
 
     //- Calculate acid-base reactions
+    volScalarField fShp();
+
+    volScalarField dfShp();
+
     void calcShp();
 
     void RSh2();

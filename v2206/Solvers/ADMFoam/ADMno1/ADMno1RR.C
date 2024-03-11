@@ -66,7 +66,7 @@ void Foam::ADMno1::kineticRate()
     //     para_.KS().IN
     // );
 
-    IPtrs_[3] = 1 / (1 + (para_.KS().IN / YPtrs_[10]));
+    IPtrs_[3] = 1.0 / (1.0 + (para_.KS().IN / YPtrs_[10]));
     
 
 	IPtrs_[4] = calcInhibition // h2fa

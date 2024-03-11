@@ -30,9 +30,124 @@ License
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
+volScalarField Foam::ADMno1::fShp()
+{
+    ETempPtrs_[0] = fSion // SvaN
+    (
+        para_.Ka().va,
+        YPtrs_[3],
+        ETempPtrs_[6]
+    );
+
+    ETempPtrs_[1] = fSion // SbuN
+    (
+        para_.Ka().bu,
+        YPtrs_[4],
+        ETempPtrs_[6]
+    ); 
+
+    ETempPtrs_[2] = fSion // SproN
+    (
+        para_.Ka().pro,
+        YPtrs_[5],
+        ETempPtrs_[6]
+    ); 
+
+    ETempPtrs_[3] = fSion // SacN
+    (
+        para_.Ka().ac,
+        YPtrs_[6],
+        ETempPtrs_[6]
+    );
+
+    ETempPtrs_[4] = fSion // Shco3N
+    (
+        para_.Ka().co2,
+        YPtrs_[9], // SIC
+        ETempPtrs_[6]
+    ); 
+
+    MPtrs_[1] = fSion // Snh3
+    (
+        para_.Ka().IN,
+        YPtrs_[10], // SIN
+        ETempPtrs_[6]
+    );
+
+    // calc SohN
+    // TODO: the original ADMno1 is quite inconsistent with the dimensions
+    // TODO: maybe reverse the dimensionsScalar to scalar in para_?
+    volScalarField SohN = para_.Ka().W / ETempPtrs_[6]; 
+    SohN.dimensions().reset(ETempPtrs_[6].dimensions()); 
+    ETempPtrs_[5] = SohN;
+
+    //     Scat_ - San_ + ShP           - SohN          + (SIN - Snh3)                 
+    return Scat_ - San_ + ETempPtrs_[6] - ETempPtrs_[5] + (YPtrs_[10] - MPtrs_[1]) - 
+    //     Shco3N        - SacN/64            - SproN/112           - SbuN/160            - SvaN/208
+           ETempPtrs_[4] - ETempPtrs_[3]/64.0 - ETempPtrs_[2]/112.0 - ETempPtrs_[1]/160.0 - ETempPtrs_[0]/208.0;
+           
+}
+
+volScalarField Foam::ADMno1::dfShp()
+{
+    volScalarField dSvaN = dfSion
+    (
+        para_.Ka().va,
+        YPtrs_[3],
+        ETempPtrs_[6]
+    );
+
+    volScalarField dSbuN = dfSion
+    (
+        para_.Ka().bu,
+        YPtrs_[4],
+        ETempPtrs_[6]
+    );
+
+    volScalarField dSproN = dfSion
+    (
+        para_.Ka().pro,
+        YPtrs_[5],
+        ETempPtrs_[6]
+    );
+
+    volScalarField dSacN = dfSion
+    (
+        para_.Ka().ac,
+        YPtrs_[6],
+        ETempPtrs_[6]
+    );
+
+    volScalarField dShco3N = dfSion
+    (
+        para_.Ka().co2,
+        YPtrs_[9], // SIC
+        ETempPtrs_[6]
+    );
+
+    volScalarField dSnh3 = fSion // Snh3
+    (
+        para_.Ka().IN,
+        YPtrs_[10], // SIN
+        ETempPtrs_[6]
+    );
+
+    // calc SohN
+    // TODO: the original ADMno1 is quite inconsistent with the dimensions
+    // TODO: maybe reverse the dimensionsScalar to scalar in para_?
+    volScalarField dSohN = - para_.Ka().W  / (ETempPtrs_[6] * ETempPtrs_[6]);
+    dSohN.dimensions().reset(ETempPtrs_[6].dimensions()); 
+
+    return ETempPtrs_[6];
+    
+    return 1.0 - dSnh3 - dShco3N - dSacN/64.0 - dSproN/112.0 - dSbuN/160.0 - dSvaN/208.0 - dSohN;
+
+}
+
 void Foam::ADMno1::calcShp()
 {
-    volScalarField EShp = fShp(); 
+    volScalarField EShp = fShp();
+    volScalarField dEShp = dfShp();
 }
 
 
