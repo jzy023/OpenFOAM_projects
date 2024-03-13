@@ -125,7 +125,7 @@ volScalarField Foam::ADMno1::dfShp()
         ETempPtrs_[6]
     );
 
-    volScalarField dSnh3 = fSion // Snh3
+    volScalarField dSnh3 = dfSion // Snh3
     (
         para_.Ka().IN,
         YPtrs_[10], // SIN
@@ -136,18 +136,57 @@ volScalarField Foam::ADMno1::dfShp()
     // TODO: the original ADMno1 is quite inconsistent with the dimensions
     // TODO: maybe reverse the dimensionsScalar to scalar in para_?
     volScalarField dSohN = - para_.Ka().W  / (ETempPtrs_[6] * ETempPtrs_[6]);
-    dSohN.dimensions().reset(ETempPtrs_[6].dimensions()); 
+    dSohN.dimensions().reset(dSvaN.dimensions());
 
-    return ETempPtrs_[6];
-    
-    return 1.0 - dSnh3 - dShco3N - dSacN/64.0 - dSproN/112.0 - dSbuN/160.0 - dSvaN/208.0 - dSohN;
+    dimensionedScalar uniField
+    (
+        // YPtrs_[0].dimensions(),
+        dimless,
+        One
+    );
+
+    return uniField - dSnh3 - dShco3N - dSacN/64.0 - dSproN/112.0 - dSbuN/160.0 - dSvaN/208.0 - dSohN;
 
 }
 
 void Foam::ADMno1::calcShp()
 {
-    volScalarField EShp = fShp();
-    volScalarField dEShp = dfShp();
+
+    //TODO: IO dictionary for these parameters
+    scalar tol = 1e-16;
+    label nIter = 1e3;
+    label i = 0;
+
+    // initial value of x, E and dEdx
+    volScalarField x0 = ETempPtrs_[6];
+    volScalarField x = ETempPtrs_[6];
+    volScalarField E = ETempPtrs_[6];
+    volScalarField dE = ETempPtrs_[6];
+
+    Info << max(mag(E.field())) << endl;
+    
+    while
+    (
+        max(mag(E.field())) > tol &&
+        i < nIter
+    )
+    {
+        E.field() = fShp().field();
+        dE.field() = dfShp().field();
+        // store old value x
+        x0 = x;
+        // update x
+        x.field() = x0.field() - E.field()/dE.field();
+        // false check
+        // if (x.field())
+        // {
+        //     /* code */
+        // }
+        i++;
+    };
+
+    Info << "Newton-Raphson:\tSolving for Sh+, No Interations " << i << endl;
+    ETempPtrs_[6] = x;
 }
 
 
