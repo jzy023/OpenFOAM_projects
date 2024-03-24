@@ -30,118 +30,116 @@ License
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
-volScalarField Foam::ADMno1::fShp
+volScalarField::Internal Foam::ADMno1::fShp
 (
-    volScalarField& ShpTemp
+    volScalarField::Internal& ShpTemp
 )
 {
-    ETempPtrs_[0] = fSion // SvaN
+    volScalarField::Internal SvaN = fSion // SvaN
     (
         para_.Ka().va,
-        YPtrs_[3],
+        YPtrs_[3].internalField(),
         ShpTemp
     );
 
-    ETempPtrs_[1] = fSion // SbuN
+    volScalarField::Internal SbuN = fSion // SbuN
     (
         para_.Ka().bu,
-        YPtrs_[4],
+        YPtrs_[4].internalField(),
         ShpTemp
     ); 
 
-    ETempPtrs_[2] = fSion // SproN
+    volScalarField::Internal SproN = fSion // SproN
     (
         para_.Ka().pro,
-        YPtrs_[5],
+        YPtrs_[5].internalField(),
         ShpTemp
     ); 
 
-    ETempPtrs_[3] = fSion // SacN
+    volScalarField::Internal SacN = fSion // SacN
     (
         para_.Ka().ac,
-        YPtrs_[6],
+        YPtrs_[6].internalField(),
         ShpTemp
     );
 
-    ETempPtrs_[4] = fSion // Shco3N
+    volScalarField::Internal Shco3N = fSion // Shco3N
     (
         para_.Ka().co2,
-        YPtrs_[9], // SIC
+        YPtrs_[9].internalField(), // SIC
         ShpTemp
     ); 
 
-    MPtrs_[1] = fSion // Snh3
+    MPtrs_[1].internalFieldRef() = fSion // Snh3
     (
         para_.Ka().IN,
-        YPtrs_[10], // SIN
+        YPtrs_[10].internalField(), // SIN
         ShpTemp
     );
 
     // calc SohN
     // TODO: the original ADMno1 is quite inconsistent with the dimensions
     // TODO: maybe reverse the dimensionsScalar to scalar in para_?
-    volScalarField SohN = para_.Ka().W / ShpTemp; 
+    volScalarField::Internal SohN = para_.Ka().W / ShpTemp; 
     SohN.dimensions().reset(ShpTemp.dimensions()); 
-    ETempPtrs_[5] = SohN;
-
-    //     Scat_ - San_ + ShP           - SohN          + (SIN - Snh3)                 
-    return Scat_ - San_ + ShpTemp - ETempPtrs_[5] + (YPtrs_[10] - MPtrs_[1]) - 
-    //     Shco3N        - SacN/64            - SproN/112           - SbuN/160            - SvaN/208
-           ETempPtrs_[4] - ETempPtrs_[3]/64.0 - ETempPtrs_[2]/112.0 - ETempPtrs_[1]/160.0 - ETempPtrs_[0]/208.0;
+    
+        // Scat_ - San_ + ShP     - SohN + (SIN                        - Snh3)                 
+    return Scat_ - San_ + ShpTemp - SohN + (YPtrs_[10].internalField() - MPtrs_[1].internalField()) - 
+           Shco3N - SacN/64.0 - SproN/112.0 - SbuN/160.0 - SvaN/208.0;
            
 }
 
-volScalarField Foam::ADMno1::dfShp
+volScalarField::Internal Foam::ADMno1::dfShp
 (
-    volScalarField& ShpTemp
+    volScalarField::Internal& ShpTemp
 )
 {
-    volScalarField dSvaN = dfSion
+    volScalarField::Internal dSvaN = dfSion
     (
         para_.Ka().va,
-        YPtrs_[3],
+        YPtrs_[3].internalField(),
         ShpTemp
     );
 
-    volScalarField dSbuN = dfSion
+    volScalarField::Internal dSbuN = dfSion
     (
         para_.Ka().bu,
-        YPtrs_[4],
+        YPtrs_[4].internalField(),
         ShpTemp
     );
 
-    volScalarField dSproN = dfSion
+    volScalarField::Internal dSproN = dfSion
     (
         para_.Ka().pro,
-        YPtrs_[5],
+        YPtrs_[5].internalField(),
         ShpTemp
     );
 
-    volScalarField dSacN = dfSion
+    volScalarField::Internal dSacN = dfSion
     (
         para_.Ka().ac,
-        YPtrs_[6],
+        YPtrs_[6].internalField(),
         ShpTemp
     );
 
-    volScalarField dShco3N = dfSion
+    volScalarField::Internal dShco3N = dfSion
     (
         para_.Ka().co2,
-        YPtrs_[9], // SIC
+        YPtrs_[9].internalField(), // SIC
         ShpTemp
     );
 
-    volScalarField dSnh3 = dfSion // Snh3
+    volScalarField::Internal dSnh3 = dfSion // Snh3
     (
         para_.Ka().IN,
-        YPtrs_[10], // SIN
+        YPtrs_[10].internalField(), // SIN
         ShpTemp
     );
 
     // calc SohN
     // TODO: the original ADMno1 is quite inconsistent with the dimensions
     // TODO: maybe reverse the dimensionsScalar to scalar in para_?
-    volScalarField dSohN = - para_.Ka().W  / (ShpTemp * ShpTemp);
+    volScalarField::Internal dSohN = - para_.Ka().W / (ShpTemp * ShpTemp);
     dSohN.dimensions().reset(dSvaN.dimensions());
 
     dimensionedScalar uniField
@@ -159,15 +157,15 @@ void Foam::ADMno1::calcShp()
 {
 
     //TODO: IO dictionary for these parameters
-    scalar tol = 1e-8;
+    scalar tol = 1e-16;
     label nIter = 1e3;
     label i = 0;
 
     // initial value of x, E and dEdx
-    volScalarField x = ETempPtrs_[6];
-    volScalarField x0 = ETempPtrs_[6];
-    volScalarField E = ETempPtrs_[6];
-    volScalarField dE = ETempPtrs_[6];
+    volScalarField::Internal x = ShP_;
+    // volScalarField::Internal x0 = ShP_;
+    volScalarField::Internal E = ShP_;
+    volScalarField::Internal dE = ShP_;
     
     while
     (
@@ -177,20 +175,19 @@ void Foam::ADMno1::calcShp()
     {
         E.field() = fShp(x).field();
         dE.field() = dfShp(x).field();
-        // store old value x
-        x0 = x;
         // update x
-        x.field() = x0.field() - E.field()/dE.field();
+        x.field() = x.field() - E.field()/dE.field();
         // false check
         // if (x.field())
         // {
         //     /* code */
         // }
+        // Info << max(x.field()) << endl;
         i++;
     };
 
     Info << "Newton-Raphson:\tSolving for Sh+, No Interations " << i << endl;
-    ETempPtrs_[6] = x;
+    ShP_ = x;
 }
 
 

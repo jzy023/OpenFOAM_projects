@@ -83,6 +83,9 @@ private:
     //- Ihibition factors
     dimensionedScalar nIaa_, nIac_, nIh2_;
 
+    //-
+    volScalarField::Internal ShP_;
+
     //- List of pointers to the field of specie concentrations
     PtrList<volScalarField> YPtrs_;
 
@@ -97,9 +100,6 @@ private:
 
     //- List of pointers to the field of electrolytes concentrations
     PtrList<volScalarField> EPtrs_;
-
-    //- List of pointers to the field of temperal electrolytes concentrations
-    PtrList<volScalarField> ETempPtrs_;
 
     //- List of pointers to the field of medians concentrations
     PtrList<volScalarField> MPtrs_;
@@ -172,9 +172,9 @@ private:
     void sulSourceRate();
 
     //- Calculate acid-base reactions
-    volScalarField fShp(volScalarField& ShpTemp);
+    volScalarField::Internal fShp(volScalarField::Internal& ShpTemp);
 
-    volScalarField dfShp(volScalarField& ShpTemp);
+    volScalarField::Internal dfShp(volScalarField::Internal& ShpTemp);
 
     void calcShp();
 

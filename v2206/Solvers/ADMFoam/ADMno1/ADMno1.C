@@ -98,16 +98,35 @@ Foam::ADMno1::ADMno1
             ADMno1Dict.lookupOrDefault("pH", 7.26)
         )
     ),
+    ShP_
+    (
+        IOobject
+        (
+            "ShP",
+            mesh.time().timeName(),
+            mesh,
+            IOobject::READ_IF_PRESENT,
+            IOobject::AUTO_WRITE
+        ),
+        mesh,
+        dimensionedScalar
+        (
+           "ShP_Default", 
+            dimMass/dimVolume,
+            //YPtrs_[0].dimensions(),
+            para_.Eini(6)
+        )
+    ),
     Scat_
     (
         "Scat",
-        dimMass/dimVolume,
+        dimMass/dimVolume, //TODO
         ADMno1Dict.lookupOrDefault("Scat", 0.00)
     ),
     San_
     (
         "San",
-        dimMass/dimVolume,
+        dimMass/dimVolume, //TODO
         ADMno1Dict.lookupOrDefault("San", 0.0052)
     )
 {
@@ -292,35 +311,6 @@ Foam::ADMno1::ADMno1
                 dimensionedScalar
                 (
                     namesElectrolyte[i] + "Default", 
-                    YPtrs_[0].dimensions(),
-                    para_.Eini(i)
-                )
-            )
-        );
-    }
-
-    ETempPtrs_.resize(namesElectrolyte.size());
-
-    forAll(namesElectrolyte, i)
-    {
-        ETempPtrs_.set
-        (
-            i,
-            new volScalarField
-            (
-                IOobject
-                (
-                    namesElectrolyte[i] + "temp",
-                    mesh.time().timeName(),
-                    mesh,
-                    IOobject::READ_IF_PRESENT,
-                    // IOobject::NO_WRITE
-                    IOobject::AUTO_WRITE
-                ),
-                mesh,
-                dimensionedScalar
-                (
-                    namesElectrolyte[i] + "temp", 
                     YPtrs_[0].dimensions(),
                     para_.Eini(i)
                 )

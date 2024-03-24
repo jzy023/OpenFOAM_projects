@@ -110,21 +110,21 @@ volScalarField Foam::ADMno1::calcRho
 
 //- Acid-base calculations
 
-volScalarField Foam::ADMno1::fSion
+volScalarField::Internal Foam::ADMno1::fSion
 (
     dimensionedScalar Kax,
-    volScalarField Sx,
-    volScalarField Shp
+    volScalarField::Internal Sx,
+    volScalarField::Internal Shp
 )
 {
     return Kax * Sx / (Kax + Shp);
 }
 
-volScalarField Foam::ADMno1::dfSion
+volScalarField::Internal Foam::ADMno1::dfSion
 (
     dimensionedScalar Kax,
-    volScalarField Sx,
-    volScalarField Shp
+    volScalarField::Internal Sx,
+    volScalarField::Internal Shp
 )
 {
     return -Kax * Sx / ((Kax + Shp) * (Kax + Shp));

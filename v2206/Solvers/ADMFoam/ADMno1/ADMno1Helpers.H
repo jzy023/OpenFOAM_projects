@@ -79,18 +79,18 @@ volScalarField calcRho
 
 //- Acid-base calculations
 
-volScalarField fSion
+volScalarField::Internal fSion
 (
     dimensionedScalar Kax,
-    volScalarField Sx,
-    volScalarField Shp
+    volScalarField::Internal Sx,
+    volScalarField::Internal Shp
 );
 
-volScalarField dfSion
+volScalarField::Internal dfSion
 (
     dimensionedScalar Kax,
-    volScalarField Sx,
-    volScalarField Shp
+    volScalarField::Internal Sx,
+    volScalarField::Internal Shp
 );
 
 
