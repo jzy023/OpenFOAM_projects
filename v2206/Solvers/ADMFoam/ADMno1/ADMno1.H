@@ -172,9 +172,9 @@ private:
     void sulSourceRate();
 
     //- Calculate acid-base reactions
-    volScalarField fShp();
+    volScalarField fShp(volScalarField& ShpTemp);
 
-    volScalarField dfShp();
+    volScalarField dfShp(volScalarField& ShpTemp);
 
     void calcShp();
 
