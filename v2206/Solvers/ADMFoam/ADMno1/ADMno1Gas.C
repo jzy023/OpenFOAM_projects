@@ -40,8 +40,6 @@ void Foam::ADMno1::gasPhaseRate(volScalarField& T)
 
     fac_ = (1.0 / para_.Tbase().value() - 1.0 / TopDummy) / (100.0 * R_);
 
-    MPtrs_[0] =YPtrs_[9] - EPtrs_[4]; // Sco2
-
     GRPtrs_[0] = para_.DTOS() * para_.kLa() 
                * (YPtrs_[7] - R_ * TopDummy * GPtrs_[0] * para_.KH().h2 * exp(-4180.0 * fac_));
 

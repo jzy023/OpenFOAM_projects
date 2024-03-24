@@ -35,42 +35,46 @@ volScalarField::Internal Foam::ADMno1::fShp
     volScalarField::Internal& ShpTemp
 )
 {
-    volScalarField::Internal SvaN = fSion // SvaN
+    volScalarField::Internal SvaN = fSion
     (
         para_.Ka().va,
         YPtrs_[3].internalField(),
         ShpTemp
     );
 
-    volScalarField::Internal SbuN = fSion // SbuN
+    volScalarField::Internal SbuN = fSion
     (
         para_.Ka().bu,
         YPtrs_[4].internalField(),
         ShpTemp
     ); 
 
-    volScalarField::Internal SproN = fSion // SproN
+    volScalarField::Internal SproN = fSion
     (
         para_.Ka().pro,
         YPtrs_[5].internalField(),
         ShpTemp
     ); 
 
-    volScalarField::Internal SacN = fSion // SacN
+    volScalarField::Internal SacN = fSion
     (
         para_.Ka().ac,
         YPtrs_[6].internalField(),
         ShpTemp
     );
 
-    volScalarField::Internal Shco3N = fSion // Shco3N
+    volScalarField::Internal Shco3N = fSion
     (
         para_.Ka().co2,
         YPtrs_[9].internalField(), // SIC
         ShpTemp
     ); 
 
-    MPtrs_[1].internalFieldRef() = fSion // Snh3
+    // Sco2
+    MPtrs_[0].internalFieldRef() = YPtrs_[9].internalField() - Shco3N; 
+
+    // Snh3
+    MPtrs_[1].internalFieldRef() = fSion
     (
         para_.Ka().IN,
         YPtrs_[10].internalField(), // SIN

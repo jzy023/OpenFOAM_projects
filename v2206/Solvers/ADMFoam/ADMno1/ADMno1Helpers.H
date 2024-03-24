@@ -32,15 +32,15 @@ License
 
 //- Inhibition calculations
 
-volScalarField calcInhibition
+volScalarField::Internal calcInhibition
 (
     volScalarField Y, 
     dimensionedScalar denom
 );
 
-volScalarField calcInhibitionHP
+volScalarField::Internal calcInhibitionHP
 (
-    volScalarField Shp,
+    volScalarField::Internal Shp,
     dimensionedScalar UL,
     dimensionedScalar LL,
     dimensionedScalar n
@@ -48,29 +48,29 @@ volScalarField calcInhibitionHP
 
 //- Kinetic rate calculations
 
-volScalarField calcRho
+volScalarField::Internal calcRho
 (
     dimensionedScalar k, 
     volScalarField X
 );
 
-volScalarField calcRho
+volScalarField::Internal calcRho
 (
     dimensionedScalar k, 
     volScalarField S,
     dimensionedScalar K,
     volScalarField X,
-    volScalarField I
+    volScalarField::Internal I
 );
 
-volScalarField calcRho
+volScalarField::Internal calcRho
 (
     dimensionedScalar k, 
     volScalarField S1,
     dimensionedScalar K,
     volScalarField X,
     volScalarField S2,
-    volScalarField I
+    volScalarField::Internal I
 );
 
 //- Components source term calculations

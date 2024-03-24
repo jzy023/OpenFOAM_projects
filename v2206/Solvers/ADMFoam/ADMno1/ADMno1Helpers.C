@@ -32,18 +32,18 @@ License
 
 //- Inhibition calculations
 
-volScalarField Foam::ADMno1::calcInhibition
+volScalarField::Internal Foam::ADMno1::calcInhibition
 (
     volScalarField Y, 
     dimensionedScalar denum
 )
 {
-    return 1.0/ (1.0 + (Y / denum));
+    return 1.0/ (1.0 + (Y.internalField() / denum));
 }
 
-volScalarField Foam::ADMno1::calcInhibitionHP
+volScalarField::Internal Foam::ADMno1::calcInhibitionHP
 (
-    volScalarField Shp,
+    volScalarField::Internal Shp,
     dimensionedScalar UL,
     dimensionedScalar LL,
     dimensionedScalar n
@@ -57,7 +57,7 @@ volScalarField Foam::ADMno1::calcInhibitionHP
 
 //- Kinetic rate calculations
 
-volScalarField Foam::ADMno1::calcRho
+volScalarField::Internal Foam::ADMno1::calcRho
 (
     dimensionedScalar k,
     volScalarField X
@@ -66,29 +66,30 @@ volScalarField Foam::ADMno1::calcRho
     return k * X;
 }
 
-volScalarField Foam::ADMno1::calcRho
+volScalarField::Internal Foam::ADMno1::calcRho
 (
     dimensionedScalar k, 
     volScalarField S,
     dimensionedScalar K,
     volScalarField X,
-    volScalarField I
+    volScalarField::Internal I
 )
 {
-    return k * (S / (K + S)) * X * I;
+    return k * (S / (K + S.internalField())) * X.internalField() * I;
 }
 
-volScalarField Foam::ADMno1::calcRho
+volScalarField::Internal Foam::ADMno1::calcRho
 (
     dimensionedScalar k, 
     volScalarField S1,
     dimensionedScalar K,
     volScalarField X,
     volScalarField S2,
-    volScalarField I
+    volScalarField::Internal I
 )
 {
-    return k * (S1 / (K + S1)) * X * (1.0 / (1.0 + (S2 / S1))) * I;
+    return k * (S1.internalField() / (K + S1.internalField())) * X.internalField() * 
+           (1.0 / (1.0 + (S2.internalField() / S1.internalField()))) * I;
 }
 
 //- Components source term calculations

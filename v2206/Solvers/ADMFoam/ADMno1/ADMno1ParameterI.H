@@ -111,20 +111,17 @@ License
         return Gini_[idx]; 
     }
 
-    inline scalar admPara::Eini
-    (
-        label idx
-    ) const
-    {
-        return Eini_[idx]; 
-    }
-
     inline scalar admPara::Mini
     (
         label idx
     ) const
     {
         return Mini_[idx]; 
+    }
+
+    inline scalar admPara::Pini() const 
+    {
+        return Pini_;
     }
 
 // ************************************************************************* //

@@ -77,13 +77,13 @@ private:
     //- Thermal condition factor
     volScalarField fac_;				
 
-    //- pH value
-    volScalarField pH_;
-
     //- Ihibition factors
     dimensionedScalar nIaa_, nIac_, nIh2_;
 
-    //-
+    //- pH value
+    volScalarField pH_;
+
+    //- Concentration of proton ions (H+)
     volScalarField::Internal ShP_;
 
     //- List of pointers to the field of specie concentrations
@@ -98,14 +98,11 @@ private:
     //- List of pointers to the field of gas concentrations derivatives (source for local cell)
     PtrList<volScalarField::Internal> dGPtrs_;
 
-    //- List of pointers to the field of electrolytes concentrations
-    PtrList<volScalarField> EPtrs_;
-
     //- List of pointers to the field of medians concentrations
     PtrList<volScalarField> MPtrs_;
 
     //- List of pointers to inhibition 
-    PtrList<volScalarField> IPtrs_;
+    PtrList<volScalarField::Internal> IPtrs_;
 
     //- List of pointers to kinetic rate per specie [kg/m3/s] and [mol/m3/s]
     PtrList<volScalarField::Internal> KRPtrs_;
@@ -124,20 +121,13 @@ private:
     //- !!! Sh2 is calculated iteratively 
     const wordList namesSoluable = {"Ssu", "Saa", "Sfa", "Sva", "Sbu", "Spro",
                                     "Sac", "Sh2", "Sch4", "SIC", "SIN", "SI"};
-    // const wordList namesSoluable = {"Ssu", "Saa", "Sfa", "Sva", "Sbu", "Spro",
-    //                                 "Sac", "Sh2", "Sch4", "SIC", "SIN", "SI", "Sco2"};    
-
+  
     //- Species names for particulate
     const wordList namesParticulate = {"Xc", "Xch", "Xpr", "Xli", "Xsu", "Xaa",
                                        "Xfa", "Xc4", "Xpro", "Xac", "Xh2", "XI"};
 
     //- Species names for gaseouse
     const wordList namesGaseous = {"Gh2", "Gch4", "Gco2"};
-
-    //- Species names for acid-base medians
-    //- !!! All calculated iteratively
-    const wordList namesElectrolyte = {"SvaN", "SbuN", "SproN", "SacN", "Shco3N", "SohN",
-                                       "ShP"};
 
     //- calculated by simple subtractions
     const wordList namesMedians = {"Sco2", "Snh3"};

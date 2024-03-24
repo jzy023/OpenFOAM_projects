@@ -535,7 +535,6 @@ void admPara::defineSTOI()
 void admPara::listResizing()
 {
     Gini_.resize(3);
-    Eini_.resize(7);
     Mini_.resize(3); 
 }
 
@@ -549,17 +548,18 @@ void admPara::defineInitialState(word runMode)
         Gini_[1] = 1.6535;       // G_ch4
         Gini_[2] = 0.0135;       // G_co2
 
-        Eini_[0] = 0.012284;     // S_vaN
-        Eini_[1] = 0.013953;     // S_buN
-        Eini_[2] = 0.017511;     // S_proN
-        Eini_[3] = 0.089035;     // S_acN
-        Eini_[4] = 0.08568;      // S_hco3N
-        Eini_[5] = 0.0;          // S_ohN
-        Eini_[6] = 5.4562e-8;    // S_hP
+        // Eini_[0] = 0.012284;     // S_vaN
+        // Eini_[1] = 0.013953;     // S_buN
+        // Eini_[2] = 0.017511;     // S_proN
+        // Eini_[3] = 0.089035;     // S_acN
+        // Eini_[4] = 0.08568;      // S_hco3N
+        // Eini_[5] = 0.0;          // S_ohN
+        // Eini_[6] = 5.4562e-8;    // S_hP
 
         Mini_[0] = 0.00942;      // S_co2
         Mini_[1] = 0.001884;     // S_nh3
-        // Mini_[2] = 0.092584;     // S_nh4
+
+        Pini_ = 5.4562e-8;       // S_hP
     }
     else if(runMode == "MesoSolid")
     {
@@ -567,17 +567,10 @@ void admPara::defineInitialState(word runMode)
         Gini_[1] = 1.6535;       // G_ch4
         Gini_[2] = 0.0135;       // G_co2
 
-        Eini_[0] = 0.012284;     // S_vaN
-        Eini_[1] = 0.013953;     // S_buN
-        Eini_[2] = 0.017511;     // S_proN
-        Eini_[3] = 0.089035;     // S_acN
-        Eini_[4] = 0.08568;      // S_hco3N
-        Eini_[5] = 0.0;          // S_ohN
-        Eini_[6] = 5.4562e-8;    // S_hP
-
         Mini_[0] = 0.00942;      // S_co2
         Mini_[1] = 0.001884;     // S_nh3
-        // Mini_[2] = 0.092584;     // S_nh4
+
+        Pini_ = 5.4562e-8;       // S_hP
     }
     else
     {// TODO: update values
@@ -585,17 +578,10 @@ void admPara::defineInitialState(word runMode)
         Gini_[1] = 1.6535;       // G_ch4
         Gini_[2] = 0.0135;       // G_co2
 
-        Eini_[0] = 0.012284;     // S_vaN
-        Eini_[1] = 0.013953;     // S_buN
-        Eini_[2] = 0.017511;     // S_proN
-        Eini_[3] = 0.089035;     // S_acN
-        Eini_[4] = 0.08568;      // S_hco3N
-        Eini_[5] = 0.0;          // S_ohN
-        Eini_[6] = 5.4562e-8;    // S_hP
-
         Mini_[0] = 0.00942;      // S_co2
         Mini_[1] = 0.001884;     // S_nh3
-        // Mini_[2] = 0.092584;     // S_nh4
+
+        Pini_ = 5.4562e-8;       // S_hP
     }
 }
 

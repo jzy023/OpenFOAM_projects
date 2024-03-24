@@ -96,13 +96,10 @@ private:
     //- Nitrogen content
 	nitrogenContent NC_;
 
-    // List<scalar> Yini;  // main
-
+    //- Initial values
     List<scalar> Gini_;   // gas
-
-    List<scalar> Eini_;   // electrolytes
-
     List<scalar> Mini_;   // medians
+    scalar Pini_;   // initial for protons
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
@@ -262,9 +259,9 @@ public:
 
     inline scalar Gini(label idx) const;
 
-    inline scalar Eini(label idx) const;
-
     inline scalar Mini(label idx) const;
+
+    inline scalar Pini() const;
     
 };
 

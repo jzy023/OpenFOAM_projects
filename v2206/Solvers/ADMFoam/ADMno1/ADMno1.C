@@ -112,9 +112,8 @@ Foam::ADMno1::ADMno1
         dimensionedScalar
         (
            "ShP_Default", 
-            dimMass/dimVolume,
-            //YPtrs_[0].dimensions(),
-            para_.Eini(6)
+            dimMass,
+            para_.Pini()
         )
     ),
     Scat_
@@ -285,41 +284,6 @@ Foam::ADMno1::ADMno1
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-    //-  Electrolytes (calculated) initialization
-
-    Info<< "Initializing concentrations for electrolyte" << endl;
-
-    EPtrs_.resize(namesElectrolyte.size());
-
-    forAll(namesElectrolyte, i)
-    {
-        EPtrs_.set
-        (
-            i,
-            new volScalarField
-            (
-                IOobject
-                (
-                    namesElectrolyte[i],
-                    mesh.time().timeName(),
-                    mesh,
-                    IOobject::READ_IF_PRESENT,
-                    IOobject::NO_WRITE
-                    // IOobject::AUTO_WRITE
-                ),
-                mesh,
-                dimensionedScalar
-                (
-                    namesElectrolyte[i] + "Default", 
-                    YPtrs_[0].dimensions(),
-                    para_.Eini(i)
-                )
-            )
-        );
-    }
-
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-
     //-  Medians initialization
 
     Info<< "Initializing concentrations for medians" << endl;
@@ -351,10 +315,6 @@ Foam::ADMno1::ADMno1
             )
         );
     }
-
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-
-    //- Set up temperal concentration fields
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -451,11 +411,13 @@ Foam::ADMno1::ADMno1
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
+    // reset dimensions 
     para_.setParaDim(YPtrs_[0].dimensions());
-
+    ShP_.dimensions().reset(YPtrs_[0].dimensions());
     Scat_.dimensions().reset(YPtrs_[0].dimensions());
     San_.dimensions().reset(YPtrs_[0].dimensions());
 
+    // 
     nIaa_ = 3.0 / (para_.pHL().ULaa - para_.pHL().LLaa);  // aa
     nIac_ = 3.0 / (para_.pHL().ULac - para_.pHL().LLac);  // ac
     nIh2_ = 3.0 / (para_.pHL().ULh2 - para_.pHL().LLh2);  // h2
@@ -495,25 +457,7 @@ Foam::autoPtr<Foam::ADMno1> Foam::ADMno1::New
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
-// void Foam::ADMno1::thermalFac(volScalarField& T)
-// {
-//     TopDummy_ = T;
 
-//     TopDummy_.dimensions().reset(dimless);
-
-//     fac_ = (1.0 / para_.Tbase().value() - 1.0 / TopDummy_) / (100.0 * R_);
-// }
-
-// void Foam::ADMno1::updateMedians()
-// {
-//     // Sco2 = SIC - Shco3N
-//     MPtrs_[0] = YPtrs_[9] - EPtrs_[4];
-
-//     // Snh3 calculated with acid-base
-
-//     // Shn4 = SIN - Snh3
-    
-// }
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 

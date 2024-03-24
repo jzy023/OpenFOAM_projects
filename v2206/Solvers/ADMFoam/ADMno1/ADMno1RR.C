@@ -37,7 +37,7 @@ void Foam::ADMno1::kineticRate()
 
     IPtrs_[0] = calcInhibitionHP // aa
     (
-        EPtrs_.last(), // ShP
+        ShP_,
         para_.pHL().ULaa, 
         para_.pHL().LLaa,
         nIaa_
@@ -45,7 +45,7 @@ void Foam::ADMno1::kineticRate()
 
     IPtrs_[1] = calcInhibitionHP // ac
     (
-        EPtrs_.last(), // ShP
+        ShP_,
         para_.pHL().ULac, 
         para_.pHL().LLac,
         nIac_
@@ -53,7 +53,7 @@ void Foam::ADMno1::kineticRate()
 
     IPtrs_[2] = calcInhibitionHP // h2
     (
-        EPtrs_.last(), // ShP
+        ShP_,
         para_.pHL().ULh2, 
         para_.pHL().LLh2,
         nIh2_
@@ -89,7 +89,7 @@ void Foam::ADMno1::kineticRate()
 
 	IPtrs_[7] = calcInhibition // nh3
     (
-        EPtrs_[1], // Snh3
+        MPtrs_[1], // Snh3
         para_.KI().nh3
     );
 
