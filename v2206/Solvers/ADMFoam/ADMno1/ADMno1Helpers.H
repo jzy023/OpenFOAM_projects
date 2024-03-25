@@ -41,33 +41,33 @@ volScalarField::Internal calcInhibition
 volScalarField::Internal calcInhibitionHP
 (
     volScalarField::Internal Shp,
-    dimensionedScalar UL,
-    dimensionedScalar LL,
-    dimensionedScalar n
+    const dimensionedScalar UL,
+    const dimensionedScalar LL,
+    const dimensionedScalar n
 );
 
 //- Kinetic rate calculations
 
 volScalarField::Internal calcRho
 (
-    dimensionedScalar k, 
+    const dimensionedScalar k, 
     volScalarField X
 );
 
 volScalarField::Internal calcRho
 (
-    dimensionedScalar k, 
+    const dimensionedScalar k, 
     volScalarField S,
-    dimensionedScalar K,
+    const dimensionedScalar K,
     volScalarField X,
     volScalarField::Internal I
 );
 
 volScalarField::Internal calcRho
 (
-    dimensionedScalar k, 
+    const dimensionedScalar k, 
     volScalarField S1,
-    dimensionedScalar K,
+    const dimensionedScalar K,
     volScalarField X,
     volScalarField S2,
     volScalarField::Internal I
@@ -75,20 +75,42 @@ volScalarField::Internal calcRho
 
 //- Components source term calculations
 
+volScalarField::Internal concPerComponent
+(
+    label j,
+    const admPara para,
+    PtrList<volScalarField::Internal> KRPtrs
+);
+
+//- Sh2 
+
+volScalarField::Internal fSh2
+(
+    // dimensionedScalar Kax,
+    // volScalarField::Internal Sx,
+    // volScalarField::Internal Shp
+);
+
+volScalarField::Internal dfSh2
+(
+    // dimensionedScalar Kax,
+    // volScalarField::Internal Sx,
+    // volScalarField::Internal Shp
+);
 
 
 //- Acid-base calculations
 
 volScalarField::Internal fSion
 (
-    dimensionedScalar Kax,
+    const dimensionedScalar Kax,
     volScalarField::Internal Sx,
     volScalarField::Internal Shp
 );
 
 volScalarField::Internal dfSion
 (
-    dimensionedScalar Kax,
+    const dimensionedScalar Kax,
     volScalarField::Internal Sx,
     volScalarField::Internal Shp
 );

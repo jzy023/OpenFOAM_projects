@@ -71,10 +71,10 @@ volScalarField::Internal Foam::ADMno1::fShp
     ); 
 
     // Sco2
-    MPtrs_[0].internalFieldRef() = YPtrs_[9].internalField() - Shco3N; 
+    MPtrs_[0].ref() = YPtrs_[9].internalField() - Shco3N; 
 
     // Snh3
-    MPtrs_[1].internalFieldRef() = fSion
+    MPtrs_[1].ref() = fSion
     (
         para_.Ka().IN,
         YPtrs_[10].internalField(), // SIN
@@ -166,32 +166,51 @@ void Foam::ADMno1::calcShp()
     label i = 0;
 
     // initial value of x, E and dEdx
-    volScalarField::Internal x = ShP_;
-    // volScalarField::Internal x0 = ShP_;
-    volScalarField::Internal E = ShP_;
-    volScalarField::Internal dE = ShP_;
+    volScalarField::Internal x = ShP_;   // x = Shp
+    volScalarField::Internal E = ShP_;   // E = dShp/dt
+    volScalarField::Internal dE = ShP_;  // dE = (dShp/dt)/dShp
     
+    do
+    {
+        E.field() = fShp(x).field();
+        dE.field() = dfShp(x).field();
+        x.field() = x.field() - E.field()/dE.field();
+        // false check
+        if( min(x.field()) < 0 )
+        {
+            std::cerr << nl << "--> FOAM FATAL IO ERROR:" << nl
+                      << "Proton (H+) concentration below Zero\n";
+            std::exit(1);
+        }
+        i++;
+    }
     while
     (
         max(mag(E.field())) > tol &&
         i < nIter
-    )
-    {
-        E.field() = fShp(x).field();
-        dE.field() = dfShp(x).field();
-        // update x
-        x.field() = x.field() - E.field()/dE.field();
-        // false check
-        // if (x.field())
-        // {
-        //     /* code */
-        // }
-        // Info << max(x.field()) << endl;
-        i++;
-    };
+    );
 
-    Info << "Newton-Raphson:\tSolving for Sh+, No Interations " << i << endl;
+    Info << "Newton-Raphson:\tSolving for Sh+, No Interations " << i // << endl;
+         << ", min Shp: " << min(x.field()) << ", max Shp: " << max(x.field()) << endl;
+
+    // ShP
     ShP_ = x;
+
+    // Sco2
+    MPtrs_[0].ref() = YPtrs_[9].internalField() - fSion
+    (
+        para_.Ka().co2,
+        YPtrs_[9].internalField(), // SIC
+        ShP_
+    ); 
+
+    // Snh3
+    MPtrs_[1].ref() = fSion
+    (
+        para_.Ka().IN,
+        YPtrs_[10].internalField(), // SIN
+        ShP_
+    );
 }
 
 

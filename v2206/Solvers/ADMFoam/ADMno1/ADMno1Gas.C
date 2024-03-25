@@ -65,8 +65,26 @@ void Foam::ADMno1::gasSourceRate(volScalarField& T)
     scalarField volLiq = volMeshField / (1.0 + Vfrac_);
 
     // particle scaled pipe resistance
-    volScalarField kp = 0.0*fac_;
+    volScalarField kp
+    (
+        IOobject
+        (
+            "kp",
+            fac_.mesh().time().timeName(),
+            fac_.mesh(),
+            IOobject::NO_READ,
+            IOobject::NO_WRITE
+        ),
+        fac_.mesh(),
+        dimensionedScalar
+        (
+           "kp_Default", 
+            dimless,
+            Zero
+        )
+    );
 
+    // TODO: might lead to error if Gas dimension is different
     kp.dimensions().reset(dimVolume/dimTime/dimPressure);
 
     kp.field() = KP_ * (volMeshField / (volGas + volLiq)); // <---- this would be calculated

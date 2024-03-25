@@ -35,7 +35,7 @@ void Foam::ADMno1::kineticRate()
 
     //- Inhibiitons
 
-    IPtrs_[0] = calcInhibitionHP // aa
+    IPtrs_[0] = calcInhibitionHP // pH_aa
     (
         ShP_,
         para_.pHL().ULaa, 
@@ -43,7 +43,7 @@ void Foam::ADMno1::kineticRate()
         nIaa_
     );
 
-    IPtrs_[1] = calcInhibitionHP // ac
+    IPtrs_[1] = calcInhibitionHP // pH_ac
     (
         ShP_,
         para_.pHL().ULac, 
@@ -51,7 +51,7 @@ void Foam::ADMno1::kineticRate()
         nIac_
     );
 
-    IPtrs_[2] = calcInhibitionHP // h2
+    IPtrs_[2] = calcInhibitionHP // pH_h2
     (
         ShP_,
         para_.pHL().ULh2, 
@@ -69,19 +69,19 @@ void Foam::ADMno1::kineticRate()
     IPtrs_[3] = 1.0 / (1.0 + (para_.KS().IN / YPtrs_[10]));
     
 
-	IPtrs_[4] = calcInhibition // h2fa
+	IPtrs_[4] = calcInhibition // h2_fa
     (
         YPtrs_[7], // Sh2
         para_.KI().h2fa
     );
 
-	IPtrs_[5] = calcInhibition // h2c4
+	IPtrs_[5] = calcInhibition // h2_c4
     (
         YPtrs_[7], // Sh2
         para_.KI().h2c4
     );
 
-	IPtrs_[6] = calcInhibition // h2pro
+	IPtrs_[6] = calcInhibition // h2_pro
     (
         YPtrs_[7], // Sh2
         para_.KI().h2pro
@@ -240,22 +240,32 @@ void Foam::ADMno1::kineticRate()
 
 void Foam::ADMno1::sulSourceRate()
 {
+//     for(label j = 0; j < 7; j++)
+//     {
+//         for (int i = 0; i < 19; i++)
+//         {
+//             dYPtrs_[j] += para_.STOI[i][j] * KRPtrs_[i] * para_.DTOS(); //check if it works
+//         }
+//     }
+
+//     for(label j = 8; j < YPtrs_.size(); j++)
+//     {
+//         for (int i = 0; i < 19; i++)
+//         {
+//             dYPtrs_[j] += para_.STOI[i][j] * KRPtrs_[i] * para_.DTOS();
+//         }
+//     }
+
     for(label j = 0; j < 7; j++)
     {
-        for (int i = 0; i < 19; i++)
-        {
-            dYPtrs_[j] += para_.STOI[i][j] * KRPtrs_[i] * para_.DTOS(); //check if it works
-        }
+        dYPtrs_[j] = concPerComponent(j, para_, KRPtrs_);
     }
 
     for(label j = 8; j < YPtrs_.size(); j++)
     {
-        for (int i = 0; i < 19; i++)
-        {
-            dYPtrs_[j] += para_.STOI[i][j] * KRPtrs_[i] * para_.DTOS();
-        }
+        dYPtrs_[j] = concPerComponent(j, para_, KRPtrs_);
     }
-    
+
     //- calculate dSh2 iteratively
     // TODO: implement it! with Rosen et al.
     // RSh2(); 

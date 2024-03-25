@@ -44,9 +44,9 @@ volScalarField::Internal Foam::ADMno1::calcInhibition
 volScalarField::Internal Foam::ADMno1::calcInhibitionHP
 (
     volScalarField::Internal Shp,
-    dimensionedScalar UL,
-    dimensionedScalar LL,
-    dimensionedScalar n
+    const dimensionedScalar UL,
+    const dimensionedScalar LL,
+    const dimensionedScalar n
 )
 {
     dimensionedScalar Kph = pow(10, -0.5 * (UL + LL));
@@ -59,7 +59,7 @@ volScalarField::Internal Foam::ADMno1::calcInhibitionHP
 
 volScalarField::Internal Foam::ADMno1::calcRho
 (
-    dimensionedScalar k,
+    const dimensionedScalar k,
     volScalarField X
 )
 {
@@ -68,9 +68,9 @@ volScalarField::Internal Foam::ADMno1::calcRho
 
 volScalarField::Internal Foam::ADMno1::calcRho
 (
-    dimensionedScalar k, 
+    const dimensionedScalar k, 
     volScalarField S,
-    dimensionedScalar K,
+    const dimensionedScalar K,
     volScalarField X,
     volScalarField::Internal I
 )
@@ -80,9 +80,9 @@ volScalarField::Internal Foam::ADMno1::calcRho
 
 volScalarField::Internal Foam::ADMno1::calcRho
 (
-    dimensionedScalar k, 
+    const dimensionedScalar k, 
     volScalarField S1,
-    dimensionedScalar K,
+    const dimensionedScalar K,
     volScalarField X,
     volScalarField S2,
     volScalarField::Internal I
@@ -94,26 +94,44 @@ volScalarField::Internal Foam::ADMno1::calcRho
 
 //- Components source term calculations
 
-// volScalarField Foam::ADMno1::concPerComponent
-// (
-//     const admPara *paraPtr, 
-//     int *jPtr
-// )
-// {
-//     data_type concComponent = 0;
-//     for (int i = 0; i < 19; i++) {
-//         data_type temp = (paraPtr->STOI[i][*jPtr]) * (rho[i]); //check if it works
-//         concComponent += temp;
-//     }
-//     *jPtr += 1;
-//     return concComponent;
-// }
+volScalarField::Internal Foam::ADMno1::concPerComponent
+(
+    label j,
+    const admPara para,
+    PtrList<volScalarField::Internal> KRPtrs
+)
+{
+    volScalarField::Internal dY
+    (
+        IOobject
+        (
+            "dY",
+            KRPtrs[0].mesh().time().timeName(),
+            KRPtrs[0].mesh(),
+            IOobject::NO_READ,
+            IOobject::NO_WRITE
+        ),
+        KRPtrs[0].mesh(),
+        dimensionedScalar
+        (
+           "dY_Default", 
+            KRPtrs[0].dimensions(),
+            Zero
+        )
+    );
+
+    // TODO: room for optimization (dont loop through all 19 elements since a lot of them are 0s)
+    for (int i = 0; i < 19; i++) {
+        dY += para.STOI[i][j] * KRPtrs[i] * para.DTOS(); //check if it works
+    }
+    return dY;
+}
 
 //- Acid-base calculations
 
 volScalarField::Internal Foam::ADMno1::fSion
 (
-    dimensionedScalar Kax,
+    const dimensionedScalar Kax,
     volScalarField::Internal Sx,
     volScalarField::Internal Shp
 )
@@ -123,7 +141,7 @@ volScalarField::Internal Foam::ADMno1::fSion
 
 volScalarField::Internal Foam::ADMno1::dfSion
 (
-    dimensionedScalar Kax,
+    const dimensionedScalar Kax,
     volScalarField::Internal Sx,
     volScalarField::Internal Shp
 )
