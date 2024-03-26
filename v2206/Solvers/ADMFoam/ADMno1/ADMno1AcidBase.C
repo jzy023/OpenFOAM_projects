@@ -35,9 +35,6 @@ volScalarField::Internal Foam::ADMno1::fShp
     volScalarField::Internal& ShpTemp
 )
 {
-    // TEST
-    scalar fac = (1.0 / para_.Tbase().value() - 1.0 / 308.15) / (100.0 * R_);
-
     volScalarField::Internal SvaN = fSion
     (
         para_.Ka().va,
@@ -68,7 +65,7 @@ volScalarField::Internal Foam::ADMno1::fShp
 
     volScalarField::Internal Shco3N = fSion
     (
-        para_.Ka().co2 * exp(7646.0 * fac),  // <<<<!!!!
+        para_.Ka().co2 * exp(7646.0 * fac_),  // <<<<!!!!
         YPtrs_[9].internalField(), // SIC
         ShpTemp
     ); 
@@ -79,7 +76,7 @@ volScalarField::Internal Foam::ADMno1::fShp
     // Snh3
     MPtrs_[1].ref() = fSion
     (
-        para_.Ka().IN * exp(51965.0 * fac),  // <<<<!!!!
+        para_.Ka().IN * exp(51965.0 * fac_),  // <<<<!!!!
         YPtrs_[10].internalField(), // SIN
         ShpTemp
     );
@@ -87,19 +84,18 @@ volScalarField::Internal Foam::ADMno1::fShp
     // calc SohN
     // TODO: the original ADMno1 is quite inconsistent with the dimensions
     // TODO: maybe reverse the dimensionsScalar to scalar in para_?
-    volScalarField::Internal SohN = para_.Ka().W * exp(55900.0 * fac) / ShpTemp;    // <<<<!!!!
-    // volScalarField::Internal SohN = 1e-14*exp(55900.0 * fac) / ShpTemp;    // <<<<!!!!
+    volScalarField::Internal SohN = para_.Ka().W * exp(55900.0 * fac_.internalField()) / ShpTemp;
     SohN.dimensions().reset(ShpTemp.dimensions()); 
 
-    // TEST
-    Info << ">>>\n" <<
-            "SohN:\t" << max(SohN.field()) << "\n" <<
-            "Snh3:\t" << max(MPtrs_[1].field()) << "\n" <<
-            "Shco3N:\t" << max(Shco3N.field()) << "\n" <<
-            "SacN:\t" << max(SacN.field()) << "\n" <<
-            "SproN:\t" << max(SproN.field()) << "\n" <<
-            "SbuN:\t" << max(SbuN.field()) << "\n" <<
-            "SvaN:\t" << max(SvaN.field()) << "\n" << endl;
+    // DEBUG
+    // Info << ">>>\n" <<
+    //         "SohN:\t" << max(SohN.field()) << "\n" <<
+    //         "Snh3:\t" << max(MPtrs_[1].field()) << "\n" <<
+    //         "Shco3N:\t" << max(Shco3N.field()) << "\n" <<
+    //         "SacN:\t" << max(SacN.field()) << "\n" <<
+    //         "SproN:\t" << max(SproN.field()) << "\n" <<
+    //         "SbuN:\t" << max(SbuN.field()) << "\n" <<
+    //         "SvaN:\t" << max(SvaN.field()) << "\n" << endl;
 
     
     //     Scat_ - San_ + ShP     - SohN + (SIN                        - Snh3)                 
@@ -113,9 +109,6 @@ volScalarField::Internal Foam::ADMno1::dfShp
     volScalarField::Internal& ShpTemp
 )
 {
-    // TEST
-    scalar fac = (1.0 / para_.Tbase().value() - 1.0 / 308.0) / (100.0 * R_);
-
     volScalarField::Internal dSvaN = dfSion
     (
         para_.Ka().va,
@@ -146,14 +139,14 @@ volScalarField::Internal Foam::ADMno1::dfShp
 
     volScalarField::Internal dShco3N = dfSion
     (
-        para_.Ka().co2 * exp(7646.0 * fac),  // <<<<!!!!
+        para_.Ka().co2 * exp(7646.0 * fac_),
         YPtrs_[9].internalField(), // SIC
         ShpTemp
     );
 
     volScalarField::Internal dSnh3 = dfSion // Snh3
     (
-        para_.Ka().IN * exp(51965.0 * fac),  // <<<<!!!!
+        para_.Ka().IN * exp(51965.0 * fac_),
         YPtrs_[10].internalField(), // SIN
         ShpTemp
     );
@@ -161,7 +154,7 @@ volScalarField::Internal Foam::ADMno1::dfShp
     // calc SohN
     // TODO: the original ADMno1 is quite inconsistent with the dimensions
     // TODO: maybe reverse the dimensionsScalar to scalar in para_?
-    volScalarField::Internal dSohN = - para_.Ka().W * exp(55900.0 * fac) / (ShpTemp * ShpTemp);    // <<<<!!!!
+    volScalarField::Internal dSohN = - para_.Ka().W * exp(55900.0 * fac_.internalField()) / (ShpTemp * ShpTemp);
     dSohN.dimensions().reset(dSvaN.dimensions());
 
     dimensionedScalar uniField
@@ -201,8 +194,6 @@ void Foam::ADMno1::calcShp()
             std::exit(1);
         }
         i++;
-        // TEST
-        Info << max(x.field()) << endl;
     }
     while
     (
@@ -210,8 +201,10 @@ void Foam::ADMno1::calcShp()
         i < nIter
     );
 
-    Info << "Newton-Raphson:\tSolving for Sh+, No Interations " << i // << endl;
-         << ", min Shp: " << min(x.field()) << ", max Shp: " << max(x.field()) << endl;
+    Info << "Newton-Raphson:\tSolving for Sh+" 
+         << ", min Shp: " << min(x.field()) 
+         << ", max Shp: " << max(x.field()) 
+         << ", No Interations " << i << endl;
 
     // ShP
     ShP_ = x;

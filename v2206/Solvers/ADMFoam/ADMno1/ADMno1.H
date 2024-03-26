@@ -75,7 +75,7 @@ private:
     dimensionedScalar Pext_; 
 
     //- Thermal condition factor
-    volScalarField fac_;				
+    volScalarField fac_;					
 
     //- Ihibition factors
     dimensionedScalar nIaa_, nIac_, nIh2_;
@@ -149,7 +149,7 @@ private:
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
     //- Thermal condition factor
-    void thermalFac(volScalarField& T);
+    void calcFac(volScalarField& T);
 
     //- Gas phase transfer rate
     void gasPhaseRate(volScalarField& T);

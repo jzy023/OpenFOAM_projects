@@ -457,6 +457,17 @@ Foam::autoPtr<Foam::ADMno1> Foam::ADMno1::New
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
+void Foam::ADMno1::calcFac
+(
+    volScalarField& T
+)
+{
+    volScalarField TopDummy(T);
+
+    TopDummy.dimensions().reset(dimless);
+
+    fac_ = (1.0 / para_.Tbase().value() - 1.0 / TopDummy) / (100.0 * R_);
+}
 
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
@@ -481,22 +492,22 @@ void Foam::ADMno1::correct
 )
 {
     //- calculate thermal factor
-    // thermalFac(T);
+    calcFac(T);
 
     //- Acid-base calculations
     calcShp();
 
-    // //- calculate gas phase transfer rates
-    // gasPhaseRate(T);
+    //- calculate gas phase transfer rates
+    gasPhaseRate(T);
 
-    // //- calculate gas exit rates
-    // gasSourceRate(T);
+    //- calculate gas exit rates
+    gasSourceRate(T);
 
-    // //- calculate raction rates
-    // kineticRate();
+    //- calculate raction rates
+    kineticRate();
 
-    // //- calculate dY with STOI
-    // dYUpdate(flux);
+    //- calculate dY with STOI
+    dYUpdate(flux);
 
 }
 
