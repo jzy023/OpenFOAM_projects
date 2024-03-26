@@ -29,7 +29,12 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
     // <<< TEST ---------------------------------------------------------------- //
 
     reaction->clear();
-    reaction->correct(T);
+    reaction->correct(phi, T);
+
+    //- TEST
+    // volScalarField test(fvc::div(phi, 1000.0*YPtrs[0]));
+    // Info << test << endl;
+
     // Qdot = reaction->Qdot();
 
     // volScalarField& Yi = YPtrs[7];

@@ -474,25 +474,29 @@ void Foam::ADMno1::clear()
     }
 }
 
-void Foam::ADMno1::correct(volScalarField& T)
+void Foam::ADMno1::correct
+(
+    const surfaceScalarField &flux,
+    volScalarField& T
+)
 {
     //- calculate thermal factor
     // thermalFac(T);
 
-    //- calculate gas phase transfer rates
-    gasPhaseRate(T);
-
-    //- calculate gas exit rates
-    gasSourceRate(T);
-
-    //- calculate raction rates
-    kineticRate();
-
     //- Acid-base calculations
     calcShp();
 
-    //- calculate dY with STOI
-    sulSourceRate();
+    // //- calculate gas phase transfer rates
+    // gasPhaseRate(T);
+
+    // //- calculate gas exit rates
+    // gasSourceRate(T);
+
+    // //- calculate raction rates
+    // kineticRate();
+
+    // //- calculate dY with STOI
+    // dYUpdate(flux);
 
 }
 

@@ -104,14 +104,14 @@ volScalarField::Internal dfSh2
 volScalarField::Internal fSion
 (
     const dimensionedScalar Kax,
-    volScalarField::Internal Sx,
+    const volScalarField::Internal& Sx,
     volScalarField::Internal Shp
 );
 
 volScalarField::Internal dfSion
 (
     const dimensionedScalar Kax,
-    volScalarField::Internal Sx,
+    const volScalarField::Internal& Sx,
     volScalarField::Internal Shp
 );
 

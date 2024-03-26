@@ -55,6 +55,7 @@ volScalarField::Internal Foam::ADMno1::calcInhibitionHP
     return pow(Kph, n) / (pow(Shp, n) + pow(Kph, n));
 }
 
+
 //- Kinetic rate calculations
 
 volScalarField::Internal Foam::ADMno1::calcRho
@@ -92,6 +93,30 @@ volScalarField::Internal Foam::ADMno1::calcRho
            (1.0 / (1.0 + (S2.internalField() / S1.internalField()))) * I;
 }
 
+
+//- Acid-base calculations
+
+volScalarField::Internal Foam::ADMno1::fSion
+(
+    const dimensionedScalar Kax,
+    const volScalarField::Internal& Sx,
+    volScalarField::Internal Shp
+)
+{
+    return Kax * Sx / (Kax + Shp);
+}
+
+volScalarField::Internal Foam::ADMno1::dfSion
+(
+    const dimensionedScalar Kax,
+    const volScalarField::Internal& Sx,
+    volScalarField::Internal Shp
+)
+{
+    return - Kax * Sx / ((Kax + Shp) * (Kax + Shp));
+}
+
+
 //- Components source term calculations
 
 volScalarField::Internal Foam::ADMno1::concPerComponent
@@ -126,28 +151,5 @@ volScalarField::Internal Foam::ADMno1::concPerComponent
     }
     return dY;
 }
-
-//- Acid-base calculations
-
-volScalarField::Internal Foam::ADMno1::fSion
-(
-    const dimensionedScalar Kax,
-    volScalarField::Internal Sx,
-    volScalarField::Internal Shp
-)
-{
-    return Kax * Sx / (Kax + Shp);
-}
-
-volScalarField::Internal Foam::ADMno1::dfSion
-(
-    const dimensionedScalar Kax,
-    volScalarField::Internal Sx,
-    volScalarField::Internal Shp
-)
-{
-    return -Kax * Sx / ((Kax + Shp) * (Kax + Shp));
-}
-
 
 // ************************************************************************* //

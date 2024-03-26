@@ -153,11 +153,13 @@ dimensionedScalar admPara::defineTbase
 {
     if(runMode == "Thermo")
     { // TODO: need check
-        return dimensionedScalar(dimTemperature, 55);
+        // return dimensionedScalar(dimTemperature, 55);
+        return dimensionedScalar(dimTemperature, 298.15);
     }
     else
     {
-        return dimensionedScalar(dimTemperature, 25);
+        // return dimensionedScalar(dimTemperature, 25);
+        return dimensionedScalar(dimTemperature, 298.15);
     }
 }
 

@@ -157,7 +157,7 @@ private:
     void kineticRate(volScalarField& Top);
 
     //-
-    void RSh2();
+    void calcSh2();
 
 
     

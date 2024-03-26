@@ -238,24 +238,11 @@ void Foam::ADMno1::kineticRate()
 }
 
 
-void Foam::ADMno1::sulSourceRate()
+void Foam::ADMno1::dYUpdate
+(
+    const surfaceScalarField &flux
+)
 {
-//     for(label j = 0; j < 7; j++)
-//     {
-//         for (int i = 0; i < 19; i++)
-//         {
-//             dYPtrs_[j] += para_.STOI[i][j] * KRPtrs_[i] * para_.DTOS(); //check if it works
-//         }
-//     }
-
-//     for(label j = 8; j < YPtrs_.size(); j++)
-//     {
-//         for (int i = 0; i < 19; i++)
-//         {
-//             dYPtrs_[j] += para_.STOI[i][j] * KRPtrs_[i] * para_.DTOS();
-//         }
-//     }
-
     for(label j = 0; j < 7; j++)
     {
         dYPtrs_[j] = concPerComponent(j, para_, KRPtrs_);
@@ -268,7 +255,7 @@ void Foam::ADMno1::sulSourceRate()
 
     //- calculate dSh2 iteratively
     // TODO: implement it! with Rosen et al.
-    // RSh2(); 
+    // calcSh2(); 
 
     //- calculate with STOI and gas transer
     // dYPtrs_[7] -= GRPtrs_[0]; // Sh2 - Gh2

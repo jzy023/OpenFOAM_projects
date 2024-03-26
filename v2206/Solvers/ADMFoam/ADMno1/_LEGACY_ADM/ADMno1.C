@@ -468,7 +468,7 @@ void Foam::ADMno1::correct(volScalarField& T)
     }
 
     //- calculate dSh2 iteratively
-    // RSh2(); // TODO: implement it! with Rosen et al.
+    // calcSh2(); // TODO: implement it! with Rosen et al.
 
 
 }

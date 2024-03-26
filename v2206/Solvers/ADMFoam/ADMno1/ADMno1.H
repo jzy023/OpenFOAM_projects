@@ -119,8 +119,10 @@ private:
 
     //- Species names for soluable
     //- !!! Sh2 is calculated iteratively 
+    //                               0      1      2      3      4      5
     const wordList namesSoluable = {"Ssu", "Saa", "Sfa", "Sva", "Sbu", "Spro",
                                     "Sac", "Sh2", "Sch4", "SIC", "SIN", "SI"};
+    //                               6      7      8       9      10     11
   
     //- Species names for particulate
     const wordList namesParticulate = {"Xc", "Xch", "Xpr", "Xli", "Xsu", "Xaa",
@@ -159,16 +161,21 @@ private:
     void kineticRate();
 
     //- Calculate derivative of species dY
-    void sulSourceRate();
+    void dYUpdate(const surfaceScalarField &flux);
 
-    //- Calculate acid-base reactions
+    //- Calculate acid-base reactions (iteratively)
     volScalarField::Internal fShp(volScalarField::Internal& ShpTemp);
 
     volScalarField::Internal dfShp(volScalarField::Internal& ShpTemp);
 
     void calcShp();
 
-    void RSh2();
+    //- Calculate Sh2 (iteratively)
+    volScalarField::Internal fSh2(volScalarField::Internal& Sh2Temp);
+
+    volScalarField::Internal dfSh2(volScalarField::Internal& Sh2Temp);
+
+    void calcSh2();
 
     //- Calculate Medians
     // void updateMedians();
@@ -250,7 +257,7 @@ public:
     void clear();
 
     //- Correct components consumption rate
-    void correct(volScalarField& T);
+    void correct(const surfaceScalarField &flux, volScalarField& T);
 
     //- Return components consumption rate matrix, i.e. source term.
     tmp<fvScalarMatrix> R(label i) const;
