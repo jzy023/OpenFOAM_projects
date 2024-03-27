@@ -49,7 +49,7 @@ solvers
         solver          PBiCGStab;
         preconditioner  DILU;
         tolerance       1e-6;
-        relTol          0.01;
+        relTol          1e-6; // <--- high relTol leads to inhomogeneity issue
     }
 
     "(Yi|S*|G*)Final"
