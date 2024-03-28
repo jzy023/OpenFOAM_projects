@@ -38,7 +38,17 @@ volScalarField::Internal Foam::ADMno1::calcInhibition
     dimensionedScalar denum
 )
 {
-    return 1.0/ (1.0 + (Y.internalField() / denum));
+    // return 1.0/ (1.0 + (Y.internalField() / denum));
+    return 1.0/ (1.0 + (Y / denum));
+}
+
+volScalarField::Internal Foam::ADMno1::dCalcInhibition
+(
+    volScalarField Y, 
+    dimensionedScalar denom
+)
+{
+    return (-1 / (denom * (1 + (Y/denom)) * (1 + (Y/denom))));
 }
 
 volScalarField::Internal Foam::ADMno1::calcInhibitionHP
@@ -64,7 +74,7 @@ volScalarField::Internal Foam::ADMno1::calcRho
     volScalarField X
 )
 {
-    return k * X;
+    return k * X.internalField();
 }
 
 volScalarField::Internal Foam::ADMno1::calcRho
@@ -76,7 +86,7 @@ volScalarField::Internal Foam::ADMno1::calcRho
     volScalarField::Internal I
 )
 {
-    return k * (S / (K + S.internalField())) * X.internalField() * I;
+    return k * (S.internalField() / (K + S.internalField())) * X.internalField() * I;
 }
 
 volScalarField::Internal Foam::ADMno1::calcRho
@@ -91,6 +101,152 @@ volScalarField::Internal Foam::ADMno1::calcRho
 {
     return k * (S1.internalField() / (K + S1.internalField())) * X.internalField() * 
            (1.0 / (1.0 + (S2.internalField() / S1.internalField()))) * I;
+}
+
+
+//- Components source term calculations
+
+volScalarField::Internal Foam::ADMno1::concPerComponent
+(
+    label j,
+    const admPara para,
+    PtrList<volScalarField::Internal> KRPtrs
+)
+{
+    volScalarField::Internal dY
+    (
+        IOobject
+        (
+            "dY",
+            KRPtrs[0].mesh().time().timeName(),
+            KRPtrs[0].mesh(),
+            IOobject::NO_READ,
+            IOobject::NO_WRITE
+        ),
+        KRPtrs[0].mesh(),
+        dimensionedScalar
+        (
+           "dY_Default", 
+            KRPtrs[0].dimensions(),
+            Zero
+        )
+    );
+
+    // TODO: room for optimization (dont loop through all 19 elements since a lot of them are 0s)
+    for (int i = 0; i < 19; i++) {
+        dY += para.STOI[i][j] * KRPtrs[i] * para.DTOS(); //check if it works
+    }
+    return dY;
+}
+
+
+//- Sh2 calculations
+
+volScalarField::Internal Foam::ADMno1::fSh2
+(
+    const surfaceScalarField &flux,
+    volScalarField Sh2Temp
+)
+{
+	volScalarField::Internal I_h2fa = calcInhibition // h2_fa
+    (
+        Sh2Temp,
+        para_.KI().h2fa
+    );
+
+	volScalarField::Internal I_h2c4 = calcInhibition // h2_c4
+    (
+        Sh2Temp,
+        para_.KI().h2c4
+    );
+
+	volScalarField::Internal I_h2pro = calcInhibition // h2_pro
+    (
+        Sh2Temp,
+        para_.KI().h2pro
+    );
+
+    PtrList<volScalarField::Internal> KRPtrs_temp = KRPtrs_;
+
+    KRPtrs_temp[6] = KRPtrs_temp[6]/IPtrs_[4]*I_h2fa;
+    KRPtrs_temp[7] = KRPtrs_temp[7]/IPtrs_[5]*I_h2c4;
+    KRPtrs_temp[8] = KRPtrs_temp[8]/IPtrs_[5]*I_h2c4;
+    KRPtrs_temp[9] = KRPtrs_temp[9]/IPtrs_[6]*I_h2pro;
+
+    KRPtrs_temp[11] = calcRho
+    (
+        para_.kDec().m_h2,
+        Sh2Temp,
+        para_.KS().h2,
+        YPtrs_[22], // Xh2
+        IPtrs_[2] * IPtrs_[3] // Iphh2*IIN
+    );
+
+    return concPerComponent(7, para_, KRPtrs_temp); // + convection - fGasRhoH2(paraPtr, Sh2);
+
+    // return I_h2pro;
+    
+    // rho_temp[6] = calcRho(paraPtr->RC.m_fa, ConcTemp_.S_fa, paraPtr->K_S.fa, ConcTemp_.X_fa, I.phaa * I.IN * I_h2fa_temp);
+    // rho_temp[7] = calcRho(paraPtr->RC.m_c4, ConcTemp_.S_va, paraPtr->K_S.c4, ConcTemp_.X_c4, ConcTemp_.S_bu, I.phaa * I.IN * I_h2c4_temp);
+    // rho_temp[8] = calcRho(paraPtr->RC.m_c4, ConcTemp_.S_bu, paraPtr->K_S.c4, ConcTemp_.X_c4, ConcTemp_.S_va, I.phaa * I.IN * I_h2c4_temp);
+    // rho_temp[9] = calcRho(paraPtr->RC.m_pro, ConcTemp_.S_pro, paraPtr->K_S.pro, ConcTemp_.X_pro, I.phaa * I.IN * I_h2pro_temp);
+    // rho_temp[11] = calcRho(paraPtr->RC.m_h2, Sh2, paraPtr->K_S.h2, ConcTemp_.X_h2, I.phh2 * I.IN);
+
+    // int j = 7; // Sh2 as the Conc_[7] to be used in STOI matrix
+    // return concPerComponentNR(paraPtr, &j, rho_temp) + qLocal*(CInflow_.S_h2 - Sh2) - fGasRhoH2(paraPtr, Sh2);
+}
+
+volScalarField::Internal Foam::ADMno1::dfSh2
+(
+    const surfaceScalarField &flux,
+    volScalarField Sh2Temp
+)
+{
+    volScalarField::Internal I_h2fa = dCalcInhibition // h2_fa
+    (
+        Sh2Temp,
+        para_.KI().h2fa
+    );
+
+	volScalarField::Internal I_h2c4 = dCalcInhibition // h2_c4
+    (
+        Sh2Temp,
+        para_.KI().h2c4
+    );
+
+	volScalarField::Internal I_h2pro = dCalcInhibition // h2_pro
+    (
+        Sh2Temp,
+        para_.KI().h2pro
+    );
+
+    PtrList<volScalarField::Internal> KRPtrs_temp = KRPtrs_;
+
+    KRPtrs_temp[6] = KRPtrs_temp[6]/IPtrs_[4]*I_h2fa;
+    KRPtrs_temp[7] = KRPtrs_temp[7]/IPtrs_[5]*I_h2c4;
+    KRPtrs_temp[8] = KRPtrs_temp[8]/IPtrs_[5]*I_h2c4;
+    KRPtrs_temp[9] = KRPtrs_temp[9]/IPtrs_[6]*I_h2pro;
+
+    // KRPtrs_temp[11] = calcRho
+    // (
+    //     para_.kDec().m_h2,
+    //     Sh2Temp,
+    //     para_.KS().h2,
+    //     YPtrs_[22], // Xh2
+    //     IPtrs_[2] * IPtrs_[3] // Iphh2*IIN
+    // );
+
+    return I_h2pro; // + convection
+
+    // rho_temp[6] = calcRho(paraPtr->RC.m_fa, ConcTemp_.S_fa, paraPtr->K_S.fa, ConcTemp_.X_fa, I.phaa * I.IN * I_h2fa_temp);
+    // rho_temp[7] = calcRho(paraPtr->RC.m_c4, ConcTemp_.S_va, paraPtr->K_S.c4, ConcTemp_.X_c4, ConcTemp_.S_bu, I.phaa * I.IN * I_h2c4_temp);
+    // rho_temp[8] = calcRho(paraPtr->RC.m_c4, ConcTemp_.S_bu, paraPtr->K_S.c4, ConcTemp_.X_c4, ConcTemp_.S_va, I.phaa * I.IN * I_h2c4_temp);
+    // rho_temp[9] = calcRho(paraPtr->RC.m_pro, ConcTemp_.S_pro, paraPtr->K_S.pro, ConcTemp_.X_pro, I.phaa * I.IN * I_h2pro_temp);
+    // data_type temp = paraPtr->K_S.h2 + Sh2;
+    // rho_temp[11] = (paraPtr->RC.m_h2 * ConcTemp_.X_h2 * I.phh2 * I.IN * paraPtr->K_S.h2) / (temp * temp);
+    
+    // int j = 7; // Sh2 as the Conc_[7] to be used in STOI matrix
+    // return concPerComponentNR(paraPtr, &j, rho_temp) - qLocal - dfGasRhoH2(paraPtr);
 }
 
 
@@ -136,40 +292,5 @@ volScalarField::Internal Foam::ADMno1::dfSion
     return - Kax.internalField() * Sx / ((Kax + Shp) * (Kax + Shp));
 }
 
-
-//- Components source term calculations
-
-volScalarField::Internal Foam::ADMno1::concPerComponent
-(
-    label j,
-    const admPara para,
-    PtrList<volScalarField::Internal> KRPtrs
-)
-{
-    volScalarField::Internal dY
-    (
-        IOobject
-        (
-            "dY",
-            KRPtrs[0].mesh().time().timeName(),
-            KRPtrs[0].mesh(),
-            IOobject::NO_READ,
-            IOobject::NO_WRITE
-        ),
-        KRPtrs[0].mesh(),
-        dimensionedScalar
-        (
-           "dY_Default", 
-            KRPtrs[0].dimensions(),
-            Zero
-        )
-    );
-
-    // TODO: room for optimization (dont loop through all 19 elements since a lot of them are 0s)
-    for (int i = 0; i < 19; i++) {
-        dY += para.STOI[i][j] * KRPtrs[i] * para.DTOS(); //check if it works
-    }
-    return dY;
-}
 
 // ************************************************************************* //

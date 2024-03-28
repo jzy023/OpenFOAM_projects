@@ -210,20 +210,20 @@ void Foam::ADMno1::calcShp()
     ShP_ = x;
 
     // Sco2
-    MPtrs_[0].ref() = YPtrs_[9].internalField() - fSion
-    (
-        para_.Ka().co2,
-        YPtrs_[9].internalField(), // SIC
-        ShP_
-    ); 
+    // MPtrs_[0].ref() = YPtrs_[9].internalField() - fSion
+    // (
+    //     para_.Ka().co2,
+    //     YPtrs_[9].internalField(), // SIC
+    //     ShP_
+    // ); 
 
-    // Snh3
-    MPtrs_[1].ref() = fSion
-    (
-        para_.Ka().IN,
-        YPtrs_[10].internalField(), // SIN
-        ShP_
-    );
+    // // Snh3
+    // MPtrs_[1].ref() = fSion
+    // (
+    //     para_.Ka().IN,
+    //     YPtrs_[10].internalField(), // SIN
+    //     ShP_
+    // );
 }
 
 

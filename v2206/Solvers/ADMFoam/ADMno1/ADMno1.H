@@ -164,16 +164,30 @@ private:
     void dYUpdate(const surfaceScalarField &flux);
 
     //- Calculate acid-base reactions (iteratively)
-    volScalarField::Internal fShp(volScalarField::Internal& ShpTemp);
+    volScalarField::Internal fShp
+    (
+        volScalarField::Internal& ShpTemp
+    );
 
-    volScalarField::Internal dfShp(volScalarField::Internal& ShpTemp);
+    volScalarField::Internal dfShp
+    (
+        volScalarField::Internal& ShpTemp
+    );
 
     void calcShp();
 
     //- Calculate Sh2 (iteratively)
-    volScalarField::Internal fSh2(volScalarField::Internal& Sh2Temp);
+    volScalarField::Internal fSh2
+    (
+        const surfaceScalarField &flux,
+        volScalarField::Internal& Sh2Temp
+    );
 
-    volScalarField::Internal dfSh2(volScalarField::Internal& Sh2Temp);
+    volScalarField::Internal dfSh2
+    (
+        const surfaceScalarField &flux,
+        volScalarField::Internal& Sh2Temp
+    );
 
     void calcSh2();
 

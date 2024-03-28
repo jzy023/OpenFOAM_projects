@@ -38,6 +38,12 @@ volScalarField::Internal calcInhibition
     dimensionedScalar denom
 );
 
+volScalarField::Internal dCalcInhibition
+(
+    volScalarField Y, 
+    dimensionedScalar denom
+);
+
 volScalarField::Internal calcInhibitionHP
 (
     volScalarField::Internal Shp,
@@ -82,20 +88,18 @@ volScalarField::Internal concPerComponent
     PtrList<volScalarField::Internal> KRPtrs
 );
 
-//- Sh2 
+//- Sh2 calculations
 
 volScalarField::Internal fSh2
 (
-    // dimensionedScalar Kax,
-    // volScalarField::Internal Sx,
-    // volScalarField::Internal Shp
+    const surfaceScalarField &flux,
+    volScalarField Sh2Temp
 );
 
 volScalarField::Internal dfSh2
 (
-    // dimensionedScalar Kax,
-    // volScalarField::Internal Sx,
-    // volScalarField::Internal Shp
+    const surfaceScalarField &flux,
+    volScalarField Sh2Temp
 );
 
 

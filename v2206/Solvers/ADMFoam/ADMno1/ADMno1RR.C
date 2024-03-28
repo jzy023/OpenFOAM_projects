@@ -30,6 +30,12 @@ License
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
+
+
+
+
+
+
 void Foam::ADMno1::kineticRate()
 {
 
