@@ -102,8 +102,12 @@ void Foam::ADMno1::gasSourceRate(volScalarField& T)
 
     Pgas.dimensions().reset(dimPressure);
 
-    volScalarField qGasLocal = kp * (Pgas - Pext_);
     //  volScalarField qGasLocal = kp * (Pgas - Pext_)*(Pgas/Pext_); 
+    volScalarField qGasLocal = kp * (Pgas - Pext_);
+    forAll( qGasLocal.field(), i )
+    {
+        if ( qGasLocal.field()[i] < 0.0 ) { qGasLocal.field()[i] = 0.0; }
+    }
 
 	qGasLocal.min(0.0);
 
