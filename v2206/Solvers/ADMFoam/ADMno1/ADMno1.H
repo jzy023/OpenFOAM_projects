@@ -125,8 +125,10 @@ private:
     //                               6      7      8       9      10     11
   
     //- Species names for particulate
+    //                                  12    13     14     15     16     17
     const wordList namesParticulate = {"Xc", "Xch", "Xpr", "Xli", "Xsu", "Xaa",
                                        "Xfa", "Xc4", "Xpro", "Xac", "Xh2", "XI"};
+    //                                  18     19     20      21     22     23
 
     //- Species names for gaseouse
     const wordList namesGaseous = {"Gh2", "Gch4", "Gco2"};
@@ -166,12 +168,12 @@ private:
     //- Calculate acid-base reactions (iteratively)
     volScalarField::Internal fShp
     (
-        volScalarField::Internal& ShpTemp
+        volScalarField::Internal &ShpTemp
     );
 
     volScalarField::Internal dfShp
     (
-        volScalarField::Internal& ShpTemp
+        volScalarField::Internal &ShpTemp
     );
 
     void calcShp();
@@ -180,16 +182,19 @@ private:
     volScalarField::Internal fSh2
     (
         const surfaceScalarField &flux,
-        volScalarField::Internal& Sh2Temp
+        volScalarField &Sh2Temp
     );
 
     volScalarField::Internal dfSh2
     (
         const surfaceScalarField &flux,
-        volScalarField::Internal& Sh2Temp
+        volScalarField &Sh2Temp
     );
 
-    void calcSh2();
+    void calcSh2
+    (
+        const surfaceScalarField &flux
+    );
 
     //- Calculate Medians
     // void updateMedians();

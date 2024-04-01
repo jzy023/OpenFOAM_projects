@@ -88,20 +88,6 @@ volScalarField::Internal concPerComponent
     PtrList<volScalarField::Internal> KRPtrs
 );
 
-//- Sh2 calculations
-
-volScalarField::Internal fSh2
-(
-    const surfaceScalarField &flux,
-    volScalarField Sh2Temp
-);
-
-volScalarField::Internal dfSh2
-(
-    const surfaceScalarField &flux,
-    volScalarField Sh2Temp
-);
-
 
 //- Acid-base calculations
 

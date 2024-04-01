@@ -30,11 +30,141 @@ License
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
+//- Sh2 calculations
 
+volScalarField::Internal Foam::ADMno1::fSh2
+(
+    const surfaceScalarField &flux,
+    volScalarField &Sh2Temp
+)
+{
+	volScalarField::Internal I_h2fa = calcInhibition // h2_fa
+    (
+        Sh2Temp,
+        para_.KI().h2fa
+    );
 
+	volScalarField::Internal I_h2c4 = calcInhibition // h2_c4
+    (
+        Sh2Temp,
+        para_.KI().h2c4
+    );
 
+	volScalarField::Internal I_h2pro = calcInhibition // h2_pro
+    (
+        Sh2Temp,
+        para_.KI().h2pro
+    );
 
+    PtrList<volScalarField::Internal> KRPtrs_temp = KRPtrs_;
 
+    KRPtrs_temp[6] = KRPtrs_temp[6]/IPtrs_[4]*I_h2fa;
+    KRPtrs_temp[7] = KRPtrs_temp[7]/IPtrs_[5]*I_h2c4;
+    KRPtrs_temp[8] = KRPtrs_temp[8]/IPtrs_[5]*I_h2c4;
+    KRPtrs_temp[9] = KRPtrs_temp[9]/IPtrs_[6]*I_h2pro;
+
+    KRPtrs_temp[11] = calcRho
+    (
+        para_.kDec().m_h2,
+        Sh2Temp,
+        para_.KS().h2,
+        YPtrs_[22], // Xh2
+        IPtrs_[2] * IPtrs_[3] // Iphh2*IIN
+    );
+
+    volScalarField conv(fvc::div(flux, Sh2Temp));
+
+    volScalarField::Internal GRSh2Temp = para_.kLa() * (Sh2Temp - GRPtrs_[0]); // TODO!!
+
+    //     reaction + convection - fGasRhoH2(paraPtr, Sh2);
+    return concPerComponent(7, para_, KRPtrs_temp) + conv - GRSh2Temp; 
+}
+
+volScalarField::Internal Foam::ADMno1::dfSh2
+(
+    const surfaceScalarField &flux,
+    volScalarField &Sh2Temp
+)
+{
+    volScalarField::Internal I_h2fa = dCalcInhibition // h2_fa
+    (
+        Sh2Temp,
+        para_.KI().h2fa
+    );
+
+	volScalarField::Internal I_h2c4 = dCalcInhibition // h2_c4
+    (
+        Sh2Temp,
+        para_.KI().h2c4
+    );
+
+	volScalarField::Internal I_h2pro = dCalcInhibition // h2_pro
+    (
+        Sh2Temp,
+        para_.KI().h2pro
+    );
+
+    PtrList<volScalarField::Internal> dKRPtrs_temp = KRPtrs_;
+
+    dKRPtrs_temp[6] = dKRPtrs_temp[6]/IPtrs_[4]*I_h2fa;
+    dKRPtrs_temp[7] = dKRPtrs_temp[7]/IPtrs_[5]*I_h2c4;
+    dKRPtrs_temp[8] = dKRPtrs_temp[8]/IPtrs_[5]*I_h2c4;
+    dKRPtrs_temp[9] = dKRPtrs_temp[9]/IPtrs_[6]*I_h2pro;
+
+    dKRPtrs_temp[11] = para_.kDec().m_h2 * YPtrs_[22].internalField() * IPtrs_[2] * IPtrs_[3] * para_.KS().h2
+                     * (para_.KS().h2 + Sh2Temp.internalField()) * (para_.KS().h2 + Sh2Temp.internalField());
+
+    volScalarField dConv(fvc::div(flux, Sh2Temp));
+
+    //     dReaction + dConvection - dfGasRhoH2(paraPtr, Sh2);
+    return concPerComponent(7, para_, dKRPtrs_temp) + dConv - para_.kLa();
+}
+
+void Foam::ADMno1::calcSh2
+(
+    const surfaceScalarField &flux
+)
+{
+    //TODO: IO dictionary for these parameters
+    scalar tol = 1e-16;
+    label nIter = 1e3;
+    label i = 0;
+
+    // initial value of x, E and dEdx
+    volScalarField x = YPtrs_[7];   // x = Sh2
+    volScalarField::Internal E = YPtrs_[7].internalField();   // E = dSh2/dt
+    volScalarField::Internal dE = YPtrs_[7].internalField();  // dE = (dSh2/dt)/dSh2
+    
+    do
+    {
+        E.field() = fSh2(flux, x).field();
+        dE.field() = dfSh2(flux, x).field();
+        x.field() = x.field() - E.field()/dE.field();
+        // false check
+        if( min(x.field()) < 0 )
+        {
+            std::cerr << nl << "--> FOAM FATAL IO ERROR:" << nl
+                      << "Sh2 concentration below Zero\n";
+            std::exit(1);
+        }
+        i++;
+    }
+    while
+    (
+        max(mag(E.field())) > tol &&
+        i < nIter
+    );
+
+    Info << "Newton-Raphson:\tSolving for Sh2" 
+         << ", min Sh2: " << min(x.field()) 
+         << ", max Sh2: " << max(x.field()) 
+         << ", No Interations " << i << endl;
+
+    // Sh2
+    YPtrs_[7].ref() = x;
+}
+
+//- Other reactions
 
 void Foam::ADMno1::kineticRate()
 {
