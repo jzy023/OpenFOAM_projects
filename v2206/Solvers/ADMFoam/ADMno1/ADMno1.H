@@ -57,6 +57,9 @@ private:
     //- ADM no1 parameters
     admPara para_;
 
+    //- Thermally adjusted parameters
+    // volScalarField::Internal KHh2, KHch4, KHco2;
+
     //- Schmidt number
     scalar Sc_;
 
@@ -153,13 +156,19 @@ private:
     //- Thermal condition factor
     void calcFac(volScalarField& T);
 
+    //- Parameters adjustments
+    void calcPara(); 
+
     //- Gas phase transfer rate
     void gasPhaseRate(volScalarField& T);
 
     //- Gas exit rates dG
     void gasSourceRate(volScalarField& T);
 
-    //- Calculate kinetic rate
+    //- Calculate inhibition rates
+    void inhibitions();
+
+    //- Calculate kinetic rates
     void kineticRate();
 
     //- Calculate derivative of species dY

@@ -469,11 +469,22 @@ void Foam::ADMno1::calcFac
     fac_ = (1.0 / para_.Tbase().value() - 1.0 / TopDummy) / (100.0 * R_);
 }
 
+void Foam::ADMno1::calcPara()
+{
+    // KHh2 = para_.KH().h2 * exp(-4180.0 * fac_);
+    // KHch4 = para_.KH().ch4 * exp(-14240.0 * fac_);
+    // KHco2 = para_.KH().co2 * exp(-19410.0 * fac_);
+
+    // KHh2.dimensions().reset(dimMass/dimPressure);
+    // KHch4.dimensions().reset(dimMass/dimPressure);
+    // KHco2.dimensions().reset(dimMass/dimPressure);
+}
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
 void Foam::ADMno1::clear()
 {
+
     forAll(dYPtrs_, i)
     {
         dYPtrs_[i] *= 0.0;
@@ -494,6 +505,12 @@ void Foam::ADMno1::correct
     //- calculate thermal factor
     calcFac(T);
 
+    //- calculate thermally adjusted parameters
+    calcPara();
+
+    //- Inhibition rates
+    inhibitions();
+
     //- Acid-base calculations
     calcShp();
 
@@ -502,6 +519,9 @@ void Foam::ADMno1::correct
 
     //- calculate gas exit rates
     gasSourceRate(T);
+
+    //- Sh2 calculations
+    calcSh2(flux);
 
     //- calculate raction rates
     kineticRate();

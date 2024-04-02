@@ -74,10 +74,17 @@ volScalarField::Internal Foam::ADMno1::fSh2
 
     volScalarField conv(fvc::div(flux, Sh2Temp));
 
-    volScalarField::Internal GRSh2Temp = para_.kLa() * (Sh2Temp - GRPtrs_[0]); // TODO!!
+    // volScalarField::Internal GRSh2Temp = para_.kLa() * (Sh2Temp - GRPtrs_[0]); // TODO!!
+    // volScalarField TopDummy(T_);
+    // TopDummy.dimensions().reset(dimless);
+    volScalarField::Internal GRSh2Temp = para_.DTOS() * para_.kLa() 
+                                       * (Sh2Temp - R_ * 308.15 * GPtrs_[0] * para_.KH().h2 * exp(-4180.0 * fac_));
+
+    // Info << conv << endl;
 
     //     reaction + convection - fGasRhoH2(paraPtr, Sh2);
-    return concPerComponent(7, para_, KRPtrs_temp) + conv - GRSh2Temp; 
+    return concPerComponent(7, para_, KRPtrs_temp) + conv - GRSh2Temp;
+    // return I_h2fa;
 }
 
 volScalarField::Internal Foam::ADMno1::dfSh2
@@ -104,20 +111,26 @@ volScalarField::Internal Foam::ADMno1::dfSh2
         para_.KI().h2pro
     );
 
-    PtrList<volScalarField::Internal> dKRPtrs_temp = KRPtrs_;
 
-    dKRPtrs_temp[6] = dKRPtrs_temp[6]/IPtrs_[4]*I_h2fa;
-    dKRPtrs_temp[7] = dKRPtrs_temp[7]/IPtrs_[5]*I_h2c4;
-    dKRPtrs_temp[8] = dKRPtrs_temp[8]/IPtrs_[5]*I_h2c4;
-    dKRPtrs_temp[9] = dKRPtrs_temp[9]/IPtrs_[6]*I_h2pro;
+    PtrList<volScalarField::Internal> dKRPtrs_temp = KRPtrs_;
+    forAll(dKRPtrs_temp, i)
+    {
+        dKRPtrs_temp[i].dimensions().reset(dimless/dimTime);
+    }
+
+    dKRPtrs_temp[6] = KRPtrs_[6]/IPtrs_[4]*I_h2fa;
+    dKRPtrs_temp[7] = KRPtrs_[7]/IPtrs_[5]*I_h2c4;
+    dKRPtrs_temp[8] = KRPtrs_[8]/IPtrs_[5]*I_h2c4;
+    dKRPtrs_temp[9] = KRPtrs_[9]/IPtrs_[6]*I_h2pro;
 
     dKRPtrs_temp[11] = para_.kDec().m_h2 * YPtrs_[22].internalField() * IPtrs_[2] * IPtrs_[3] * para_.KS().h2
-                     * (para_.KS().h2 + Sh2Temp.internalField()) * (para_.KS().h2 + Sh2Temp.internalField());
+                     / ((para_.KS().h2 + Sh2Temp.internalField()) * (para_.KS().h2 + Sh2Temp.internalField()));
 
-    volScalarField dConv(fvc::div(flux, Sh2Temp));
+    volScalarField dConv(fvc::div(flux));
+    dimensionedScalar dGRSh2Temp = para_.kLa();
 
     //     dReaction + dConvection - dfGasRhoH2(paraPtr, Sh2);
-    return concPerComponent(7, para_, dKRPtrs_temp) + dConv - para_.kLa();
+    return concPerComponent(7, para_, dKRPtrs_temp) + dConv - dGRSh2Temp;
 }
 
 void Foam::ADMno1::calcSh2
@@ -126,7 +139,7 @@ void Foam::ADMno1::calcSh2
 )
 {
     //TODO: IO dictionary for these parameters
-    scalar tol = 1e-16;
+    scalar tol = 1e-8;
     label nIter = 1e3;
     label i = 0;
 
@@ -135,6 +148,14 @@ void Foam::ADMno1::calcSh2
     volScalarField::Internal E = YPtrs_[7].internalField();   // E = dSh2/dt
     volScalarField::Internal dE = YPtrs_[7].internalField();  // dE = (dSh2/dt)/dSh2
     
+    // E.field() = fSh2(flux, x).field();
+    // dE.field() = dfSh2(flux, x).field();
+    // x.field() = x.field() - E.field()/dE.field();
+
+    // Info << "x: " << x.field() << endl;
+    // Info << "E: " << E.field() << endl;
+    // Info << "dE: " << dE.field() << endl;
+
     do
     {
         E.field() = fSh2(flux, x).field();
@@ -147,6 +168,7 @@ void Foam::ADMno1::calcSh2
                       << "Sh2 concentration below Zero\n";
             std::exit(1);
         }
+        Info << max(x.field()) << endl;
         i++;
     }
     while
@@ -164,11 +186,10 @@ void Foam::ADMno1::calcSh2
     YPtrs_[7].ref() = x;
 }
 
-//- Other reactions
+//- Other calculations
 
-void Foam::ADMno1::kineticRate()
+void Foam::ADMno1::inhibitions()
 {
-
     //- Inhibiitons
 
     IPtrs_[0] = calcInhibitionHP // pH_aa
@@ -228,7 +249,10 @@ void Foam::ADMno1::kineticRate()
         MPtrs_[1], // Snh3
         para_.KI().nh3
     );
+}
 
+void Foam::ADMno1::kineticRate()
+{
     //- Kinetic rates
 
     KRPtrs_[0] = calcRho

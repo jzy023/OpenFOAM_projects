@@ -45,25 +45,28 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
 
     forAll(YPtrs, i)
     {
-        volScalarField& Yi = YPtrs[i];
+        if(i != 7)
+        {
+            volScalarField& Yi = YPtrs[i];
 
-        fvScalarMatrix YiEqn
-        (
-            fvm::ddt(Yi)
-          + fvm::div(phi, Yi)
-          - fvm::laplacian(Deff, Yi)
-         ==
-            fvOptions(Yi)
-          + reaction->R(i)
-        );
+            fvScalarMatrix YiEqn
+            (
+                fvm::ddt(Yi)
+            + fvm::div(phi, Yi)
+            - fvm::laplacian(Deff, Yi)
+            ==
+                fvOptions(Yi)
+            + reaction->R(i)
+            );
 
-        YiEqn.relax();
+            YiEqn.relax();
 
-        fvOptions.constrain(YiEqn);
+            fvOptions.constrain(YiEqn);
 
-        YiEqn.solve(mesh.solver("Yi"));
+            YiEqn.solve(mesh.solver("Yi"));
 
-        fvOptions.correct(Yi);
+            fvOptions.correct(Yi);
+        }
     }
 
     // Gas Phase ============================================================ //

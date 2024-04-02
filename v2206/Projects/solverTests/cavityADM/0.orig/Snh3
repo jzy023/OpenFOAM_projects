@@ -22,8 +22,7 @@ boundaryField
 {
     movingWall
     {
-        type            fixedValue;
-        value           uniform 0.001884;
+        type            zeroGradient;
     }
 
     fixedWalls
