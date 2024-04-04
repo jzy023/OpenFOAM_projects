@@ -93,44 +93,47 @@ volScalarField::Internal Foam::ADMno1::dfSh2
     volScalarField &Sh2Temp
 )
 {
-    volScalarField::Internal I_h2fa = dCalcInhibition // h2_fa
+    volScalarField::Internal dI_h2fa = dCalcInhibition // h2_fa
     (
         Sh2Temp,
         para_.KI().h2fa
     );
 
-	volScalarField::Internal I_h2c4 = dCalcInhibition // h2_c4
+	volScalarField::Internal dI_h2c4 = dCalcInhibition // h2_c4
     (
         Sh2Temp,
         para_.KI().h2c4
     );
 
-	volScalarField::Internal I_h2pro = dCalcInhibition // h2_pro
+	volScalarField::Internal dI_h2pro = dCalcInhibition // h2_pro
     (
         Sh2Temp,
         para_.KI().h2pro
     );
 
+    // Info << IPtrs_[4].dimensions() << dI_h2pro.dimensions() << endl;
 
     PtrList<volScalarField::Internal> dKRPtrs_temp = KRPtrs_;
     forAll(dKRPtrs_temp, i)
     {
-        dKRPtrs_temp[i].dimensions().reset(dimless/dimTime);
+        dKRPtrs_temp[i].dimensions().reset(KRPtrs_[0].dimensions()/Sh2Temp.dimensions());
     }
 
-    dKRPtrs_temp[6] = KRPtrs_[6]/IPtrs_[4]*I_h2fa;
-    dKRPtrs_temp[7] = KRPtrs_[7]/IPtrs_[5]*I_h2c4;
-    dKRPtrs_temp[8] = KRPtrs_[8]/IPtrs_[5]*I_h2c4;
-    dKRPtrs_temp[9] = KRPtrs_[9]/IPtrs_[6]*I_h2pro;
+    dKRPtrs_temp[6] = KRPtrs_[6]/IPtrs_[4]*dI_h2fa;
+    dKRPtrs_temp[7] = KRPtrs_[7]/IPtrs_[5]*dI_h2c4;
+    dKRPtrs_temp[8] = KRPtrs_[8]/IPtrs_[5]*dI_h2c4;
+    dKRPtrs_temp[9] = KRPtrs_[9]/IPtrs_[6]*dI_h2pro;
 
     dKRPtrs_temp[11] = para_.kDec().m_h2 * YPtrs_[22].internalField() * IPtrs_[2] * IPtrs_[3] * para_.KS().h2
                      / ((para_.KS().h2 + Sh2Temp.internalField()) * (para_.KS().h2 + Sh2Temp.internalField()));
 
     volScalarField dConv(fvc::div(flux));
-    dimensionedScalar dGRSh2Temp = para_.kLa();
+    dimensionedScalar dGRSh2Temp = para_.DTOS() * para_.kLa();
 
     //     dReaction + dConvection - dfGasRhoH2(paraPtr, Sh2);
     return concPerComponent(7, para_, dKRPtrs_temp) + dConv - dGRSh2Temp;
+
+    // return dI_h2pro;
 }
 
 void Foam::ADMno1::calcSh2
@@ -139,7 +142,7 @@ void Foam::ADMno1::calcSh2
 )
 {
     //TODO: IO dictionary for these parameters
-    scalar tol = 1e-8;
+    scalar tol = 1e-10;
     label nIter = 1e3;
     label i = 0;
 
@@ -147,14 +150,6 @@ void Foam::ADMno1::calcSh2
     volScalarField x = YPtrs_[7];   // x = Sh2
     volScalarField::Internal E = YPtrs_[7].internalField();   // E = dSh2/dt
     volScalarField::Internal dE = YPtrs_[7].internalField();  // dE = (dSh2/dt)/dSh2
-    
-    // E.field() = fSh2(flux, x).field();
-    // dE.field() = dfSh2(flux, x).field();
-    // x.field() = x.field() - E.field()/dE.field();
-
-    // Info << "x: " << x.field() << endl;
-    // Info << "E: " << E.field() << endl;
-    // Info << "dE: " << dE.field() << endl;
 
     do
     {
@@ -162,13 +157,14 @@ void Foam::ADMno1::calcSh2
         dE.field() = dfSh2(flux, x).field();
         x.field() = x.field() - E.field()/dE.field();
         // false check
-        if( min(x.field()) < 0 )
-        {
-            std::cerr << nl << "--> FOAM FATAL IO ERROR:" << nl
-                      << "Sh2 concentration below Zero\n";
-            std::exit(1);
-        }
-        Info << max(x.field()) << endl;
+        // if( min(x.field()) < 0 )
+        // {
+        //     std::cerr << nl << "--> FOAM FATAL IO ERROR:" << nl
+        //               << "Sh2 concentration below Zero\n";
+        //     std::exit(1);
+        //     break;
+        // }
+        // Info << max(x.field()) << endl;
         i++;
     }
     while
@@ -176,6 +172,11 @@ void Foam::ADMno1::calcSh2
         max(mag(E.field())) > tol &&
         i < nIter
     );
+
+    if( min(x.field()) < 0 )
+    {
+        x.field() = 0.0*x.field() + 1e-16;
+    }
 
     Info << "Newton-Raphson:\tSolving for Sh2" 
          << ", min Sh2: " << min(x.field()) 

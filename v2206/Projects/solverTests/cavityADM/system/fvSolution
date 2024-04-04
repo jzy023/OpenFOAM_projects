@@ -35,7 +35,7 @@ solvers
         solver          PBiCGStab;
         preconditioner  DILU;
         tolerance       1e-6;
-        relTol          0.01;
+        relTol          0.1;
     }
 
     "(U|T|k|epsilon|R)Final"
@@ -55,7 +55,7 @@ solvers
     "(Yi|S*|G*)Final"
     {
         $Sch4;
-        relTol          0.01;
+        relTol          0;
     }
 }
 
@@ -73,7 +73,7 @@ relaxationFactors
 {
     equations
     {
-        U               0.9; // 0.9 is more stable but 0.95 more convergent
+        // U               0.95; // 0.9 is more stable but 0.95 more convergent
     }
 }
 

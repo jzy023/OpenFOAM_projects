@@ -170,7 +170,6 @@ volScalarField::Internal Foam::ADMno1::dfShp
 
 void Foam::ADMno1::calcShp()
 {
-
     //TODO: IO dictionary for these parameters
     scalar tol = 1e-16;
     label nIter = 1e3;
@@ -187,12 +186,12 @@ void Foam::ADMno1::calcShp()
         dE.field() = dfShp(x).field();
         x.field() = x.field() - E.field()/dE.field();
         // false check
-        if( min(x.field()) < 0 )
-        {
-            std::cerr << nl << "--> FOAM FATAL IO ERROR:" << nl
-                      << "Proton (H+) concentration below Zero\n";
-            std::exit(1);
-        }
+        // if( min(x.field()) < 0 )
+        // {
+        //     std::cerr << nl << "--> FOAM FATAL IO ERROR:" << nl
+        //               << "Proton (H+) concentration below Zero\n";
+        //     std::exit(1);
+        // }
         i++;
     }
     while
@@ -200,6 +199,11 @@ void Foam::ADMno1::calcShp()
         max(mag(E.field())) > tol &&
         i < nIter
     );
+
+    if( min(x.field()) < 0 )
+    {
+        x.field() = 0.0*x.field() + 1e-16;
+    }
 
     Info << "Newton-Raphson:\tSolving for Sh+" 
          << ", min Shp: " << min(x.field()) 
@@ -209,21 +213,21 @@ void Foam::ADMno1::calcShp()
     // ShP
     ShP_ = x;
 
-    // Sco2
-    // MPtrs_[0].ref() = YPtrs_[9].internalField() - fSion
-    // (
-    //     para_.Ka().co2,
-    //     YPtrs_[9].internalField(), // SIC
-    //     ShP_
-    // ); 
+    // update Sco2
+    MPtrs_[0].ref() = YPtrs_[9].internalField() - fSion
+    (
+        para_.Ka().co2,
+        YPtrs_[9].internalField(), // SIC
+        ShP_
+    ); 
 
-    // // Snh3
-    // MPtrs_[1].ref() = fSion
-    // (
-    //     para_.Ka().IN,
-    //     YPtrs_[10].internalField(), // SIN
-    //     ShP_
-    // );
+    // update Snh3
+    MPtrs_[1].ref() = fSion
+    (
+        para_.Ka().IN,
+        YPtrs_[10].internalField(), // SIN
+        ShP_
+    );
 }
 
 
