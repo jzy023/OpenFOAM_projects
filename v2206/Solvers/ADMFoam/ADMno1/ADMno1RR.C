@@ -73,12 +73,8 @@ volScalarField::Internal Foam::ADMno1::fSh2
     );
 
     volScalarField conv(fvc::div(flux, Sh2Temp));
-
-    // volScalarField::Internal GRSh2Temp = para_.kLa() * (Sh2Temp - GRPtrs_[0]); // TODO!!
-    // volScalarField TopDummy(T_);
-    // TopDummy.dimensions().reset(dimless);
-    volScalarField::Internal GRSh2Temp = para_.DTOS() * para_.kLa() 
-                                       * (Sh2Temp - R_ * 308.15 * GPtrs_[0] * para_.KH().h2 * exp(-4180.0 * fac_));
+    volScalarField::Internal GRSh2Temp = para_.DTOS() * para_.kLa()
+                                       * (Sh2Temp.internalField() - R_ * 308.15 * GPtrs_[0].internalField() * KHh2_);
 
     // Info << conv << endl;
 

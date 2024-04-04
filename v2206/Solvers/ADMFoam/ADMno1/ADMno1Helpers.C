@@ -154,7 +154,7 @@ volScalarField::Internal Foam::ADMno1::fSion
 
 volScalarField::Internal Foam::ADMno1::fSion
 (
-    const volScalarField Kax,
+    const volScalarField::Internal& Kax,
     const volScalarField::Internal& Sx,
     volScalarField::Internal Shp
 )
@@ -174,12 +174,12 @@ volScalarField::Internal Foam::ADMno1::dfSion
 
 volScalarField::Internal Foam::ADMno1::dfSion
 (
-    const volScalarField Kax,
+    const volScalarField::Internal& Kax,
     const volScalarField::Internal& Sx,
     volScalarField::Internal Shp
 )
 {
-    return - Kax.internalField() * Sx / ((Kax + Shp) * (Kax + Shp));
+    return - Kax * Sx / ((Kax + Shp) * (Kax + Shp));
 }
 
 

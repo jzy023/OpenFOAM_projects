@@ -100,7 +100,7 @@ volScalarField::Internal fSion
 
 volScalarField::Internal fSion
 (
-    const volScalarField Kax,
+    const volScalarField::Internal& Kax,
     const volScalarField::Internal& Sx,
     volScalarField::Internal Shp
 );
@@ -114,7 +114,7 @@ volScalarField::Internal dfSion
 
 volScalarField::Internal dfSion
 (
-    const volScalarField Kax,
+    const volScalarField::Internal& Kax,
     const volScalarField::Internal& Sx,
     volScalarField::Internal Shp
 );

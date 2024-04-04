@@ -1,11 +1,5 @@
 #include "createRDeltaT.H"
 
-// ADM reactions
-autoPtr<ADMno1> reaction
-(
-    ADMno1::New(mesh)
-);
-
 Info<< "Reading field operational temperature" << endl;
 volScalarField T
 (
@@ -21,8 +15,9 @@ volScalarField T
     dimensionedScalar
     (
         "TDefault", 
-        dimTemperature, 
-        reaction->paraPtr()->T().value()
+        dimTemperature,
+        308.15 
+        // reaction->paraPtr()->T().value()
     )
 );
 
@@ -52,6 +47,12 @@ volVectorField U
         IOobject::AUTO_WRITE
     ),
     mesh
+);
+
+// ADM reactions
+autoPtr<ADMno1> reaction
+(
+    ADMno1::New(T, mesh)
 );
 
 #include "createPhi.H"

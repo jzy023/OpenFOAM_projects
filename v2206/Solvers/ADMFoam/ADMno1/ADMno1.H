@@ -57,9 +57,6 @@ private:
     //- ADM no1 parameters
     admPara para_;
 
-    //- Thermally adjusted parameters
-    // volScalarField::Internal KHh2, KHch4, KHco2;
-
     //- Schmidt number
     scalar Sc_;
 
@@ -77,8 +74,15 @@ private:
     //- Gas exit ambient pressure
     dimensionedScalar Pext_; 
 
+    //- 
+    volScalarField TopDummy_;
+
     //- Thermal condition factor
-    volScalarField fac_;					
+    volScalarField::Internal fac_;
+
+    //- Thermally adjusted parameters
+    volScalarField::Internal KHh2_, KHch4_, KHco2_,
+                             KaW_,  KaIN_,  Kaco2_;					
 
     //- Ihibition factors
     dimensionedScalar nIaa_, nIac_, nIh2_;
@@ -153,17 +157,14 @@ private:
     
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
-    //- Thermal condition factor
-    void calcFac(volScalarField& T);
-
-    //- Parameters adjustments
-    void calcPara(); 
+    //- Adjust for thermal condition
+    void calcThermal(volScalarField& T);
 
     //- Gas phase transfer rate
-    void gasPhaseRate(volScalarField& T);
+    void gasPhaseRate();
 
     //- Gas exit rates dG
-    void gasSourceRate(volScalarField& T);
+    void gasSourceRate();
 
     //- Calculate inhibition rates
     void inhibitions();
@@ -243,6 +244,7 @@ public:
 
     ADMno1
     ( 
+        volScalarField& T,
         const fvMesh& mesh,
         const IOdictionary& ADMno1Dict
     );
@@ -253,7 +255,11 @@ public:
     // template<class ADModel>
     // static autoPtr<ADModel> New (const fvMesh&);
 
-    static autoPtr<ADMno1> New (const fvMesh&);
+    static autoPtr<ADMno1> New
+    (
+        volScalarField& T,
+        const fvMesh&
+    );
 
 
     // Destructor

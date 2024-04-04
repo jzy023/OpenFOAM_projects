@@ -31,28 +31,22 @@ License
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 // TODO: check volume!! 
 
-void Foam::ADMno1::gasPhaseRate(volScalarField& T)
+void Foam::ADMno1::gasPhaseRate()
 {
 
-    volScalarField TopDummy(T);
-
-    TopDummy.dimensions().reset(dimless);
-
-    // fac_ = (1.0 / para_.Tbase().value() - 1.0 / TopDummy) / (100.0 * R_);
-
     GRPtrs_[0] = para_.DTOS() * para_.kLa() 
-               * (YPtrs_[7] - R_ * TopDummy * GPtrs_[0] * para_.KH().h2 * exp(-4180.0 * fac_));
+               * (YPtrs_[7].internalField() - R_ * TopDummy_.internalField() * GPtrs_[0].internalField() * KHh2_);
 
     GRPtrs_[1] = para_.DTOS() * para_.kLa() 
-               * (YPtrs_[8] - R_ * TopDummy * GPtrs_[1] * para_.KH().ch4 * exp(-14240.0 * fac_));
+               * (YPtrs_[8].internalField() - R_ * TopDummy_.internalField() * GPtrs_[1].internalField() * KHch4_);
 
     GRPtrs_[2] = para_.DTOS() * para_.kLa() // Sco2 instead of SIC
-               * (MPtrs_[0] - R_ * TopDummy * GPtrs_[2] * para_.KH().co2 * exp(-19410.0 * fac_));
+               * (MPtrs_[0].internalField() - R_ * TopDummy_.internalField() * GPtrs_[2].internalField() * KHco2_);
 
 }
 
 
-void Foam::ADMno1::gasSourceRate(volScalarField& T)
+void Foam::ADMno1::gasSourceRate()
 {
 
     // field of cell volume for mesh 
@@ -90,15 +84,11 @@ void Foam::ADMno1::gasSourceRate(volScalarField& T)
     kp.field() = KP_ * (volMeshField / (volGas + volLiq)); // <---- this would be calculated
 
     //- gas pressure
-    volScalarField TopDummy(T);
-
-    TopDummy.dimensions().reset(dimless); 
-
     volScalarField Ph2o = GPtrs_[0];
 
     Ph2o.field() = para_.KH().h2 * exp(5290.0 * fac_ * 100 * R_);
 
-    volScalarField Pgas = (GPtrs_[0] / 16.0 + GPtrs_[1] / 64.0 + GPtrs_[2]) * R_ * TopDummy + Ph2o;
+    volScalarField Pgas = (GPtrs_[0] / 16.0 + GPtrs_[1] / 64.0 + GPtrs_[2]) * R_ * TopDummy_ + Ph2o;
 
     Pgas.dimensions().reset(dimPressure);
 

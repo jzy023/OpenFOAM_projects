@@ -46,6 +46,7 @@ const Foam::word Foam::ADMno1::propertiesName("admno1Properties");
 
 Foam::ADMno1::ADMno1
 (
+    volScalarField& T,
     const fvMesh& mesh,
     const IOdictionary& ADMno1Dict
 )
@@ -62,6 +63,7 @@ Foam::ADMno1::ADMno1
         dimPressure,
         ADMno1Dict.lookupOrDefault("Pext", 1.013)
     ),
+    TopDummy_(T),
     fac_
     (
         IOobject
@@ -80,6 +82,12 @@ Foam::ADMno1::ADMno1
             ADMno1Dict.lookupOrDefault("fac", 1)
         )
     ),
+    KHh2_(fac_),
+    KHch4_(fac_),
+    KHco2_(fac_),
+    KaW_(fac_),
+    KaIN_(fac_),					
+    Kaco2_(fac_),
     pH_
     (
         IOobject
@@ -417,6 +425,15 @@ Foam::ADMno1::ADMno1
     Scat_.dimensions().reset(YPtrs_[0].dimensions());
     San_.dimensions().reset(YPtrs_[0].dimensions());
 
+    TopDummy_.dimensions().reset(dimless);
+
+    KHh2_.dimensions().reset(para_.KH().h2.dimensions());
+    KHch4_.dimensions().reset(para_.KH().ch4.dimensions());
+    KHco2_.dimensions().reset(para_.KH().co2.dimensions());
+    Kaco2_.dimensions().reset(para_.Ka().co2.dimensions());
+    KaIN_.dimensions().reset(para_.Ka().IN.dimensions());
+    KaW_.dimensions().reset(para_.Ka().W.dimensions());
+
     // 
     nIaa_ = 3.0 / (para_.pHL().ULaa - para_.pHL().LLaa);  // aa
     nIac_ = 3.0 / (para_.pHL().ULac - para_.pHL().LLac);  // ac
@@ -432,6 +449,7 @@ Foam::ADMno1::ADMno1
  
 Foam::autoPtr<Foam::ADMno1> Foam::ADMno1::New
 (
+    volScalarField& T,
     const fvMesh& mesh
 )
 {
@@ -450,30 +468,29 @@ Foam::autoPtr<Foam::ADMno1> Foam::ADMno1::New
 
     // TODO: do it properly!!! with virtual destructors and constructor hash tables 
     // new keywaord is not gonna last!
-    ADMno1* reactionPtr = new ADMno1(mesh, ADMno1Dict);
+    ADMno1* reactionPtr = new ADMno1(T, mesh, ADMno1Dict);
     return autoPtr<ADMno1>(reactionPtr);
 }
 
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
-void Foam::ADMno1::calcFac
+void Foam::ADMno1::calcThermal
 (
     volScalarField& T
 )
 {
-    volScalarField TopDummy(T);
+    TopDummy_.field() = T.field();
 
-    TopDummy.dimensions().reset(dimless);
-
-    fac_ = (1.0 / para_.Tbase().value() - 1.0 / TopDummy) / (100.0 * R_);
-}
-
-void Foam::ADMno1::calcPara()
-{
-    // KHh2 = para_.KH().h2 * exp(-4180.0 * fac_);
-    // KHch4 = para_.KH().ch4 * exp(-14240.0 * fac_);
-    // KHco2 = para_.KH().co2 * exp(-19410.0 * fac_);
+    fac_ = (1.0 / para_.Tbase().value() - 1.0 / TopDummy_) / (100.0 * R_);
+    
+    KHh2_ = para_.KH().h2 * exp(-4180.0 * fac_);
+    KHch4_ = para_.KH().ch4 * exp(-14240.0 * fac_);
+    KHco2_ = para_.KH().co2 * exp(-19410.0 * fac_);
+    
+    Kaco2_ = para_.Ka().co2 * exp(7646.0 * fac_);
+    KaIN_ = para_.Ka().IN * exp(51965.0 * fac_);
+    KaW_ = para_.Ka().W * exp(55900.0 * fac_);
 
     // KHh2.dimensions().reset(dimMass/dimPressure);
     // KHch4.dimensions().reset(dimMass/dimPressure);
@@ -502,11 +519,8 @@ void Foam::ADMno1::correct
     volScalarField& T
 )
 {
-    //- calculate thermal factor
-    calcFac(T);
-
-    //- calculate thermally adjusted parameters
-    calcPara();
+    //- calculate thermal factor and adjust parameters
+    calcThermal(T);
 
     //- Inhibition rates
     inhibitions();
@@ -515,10 +529,10 @@ void Foam::ADMno1::correct
     calcShp();
 
     //- calculate gas phase transfer rates
-    gasPhaseRate(T);
+    gasPhaseRate();
 
     //- calculate gas exit rates
-    gasSourceRate(T);
+    gasSourceRate();
 
     //- Sh2 calculations
     calcSh2(flux);

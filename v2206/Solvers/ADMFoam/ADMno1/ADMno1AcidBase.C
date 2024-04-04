@@ -65,7 +65,7 @@ volScalarField::Internal Foam::ADMno1::fShp
 
     volScalarField::Internal Shco3N = fSion
     (
-        para_.Ka().co2 * exp(7646.0 * fac_),  // <<<<!!!!
+        Kaco2_,
         YPtrs_[9].internalField(), // SIC
         ShpTemp
     ); 
@@ -76,7 +76,7 @@ volScalarField::Internal Foam::ADMno1::fShp
     // Snh3
     MPtrs_[1].ref() = fSion
     (
-        para_.Ka().IN * exp(51965.0 * fac_),  // <<<<!!!!
+        KaIN_,
         YPtrs_[10].internalField(), // SIN
         ShpTemp
     );
@@ -84,7 +84,7 @@ volScalarField::Internal Foam::ADMno1::fShp
     // calc SohN
     // TODO: the original ADMno1 is quite inconsistent with the dimensions
     // TODO: maybe reverse the dimensionsScalar to scalar in para_?
-    volScalarField::Internal SohN = para_.Ka().W * exp(55900.0 * fac_.internalField()) / ShpTemp;
+    volScalarField::Internal SohN = KaW_ / ShpTemp;
     SohN.dimensions().reset(ShpTemp.dimensions()); 
 
     // DEBUG
@@ -139,14 +139,14 @@ volScalarField::Internal Foam::ADMno1::dfShp
 
     volScalarField::Internal dShco3N = dfSion
     (
-        para_.Ka().co2 * exp(7646.0 * fac_),
+        Kaco2_,
         YPtrs_[9].internalField(), // SIC
         ShpTemp
     );
 
     volScalarField::Internal dSnh3 = dfSion // Snh3
     (
-        para_.Ka().IN * exp(51965.0 * fac_),
+        KaIN_,
         YPtrs_[10].internalField(), // SIN
         ShpTemp
     );
@@ -154,7 +154,7 @@ volScalarField::Internal Foam::ADMno1::dfShp
     // calc SohN
     // TODO: the original ADMno1 is quite inconsistent with the dimensions
     // TODO: maybe reverse the dimensionsScalar to scalar in para_?
-    volScalarField::Internal dSohN = - para_.Ka().W * exp(55900.0 * fac_.internalField()) / (ShpTemp * ShpTemp);
+    volScalarField::Internal dSohN = - KaW_ / (ShpTemp * ShpTemp);
     dSohN.dimensions().reset(dSvaN.dimensions());
 
     dimensionedScalar uniField
