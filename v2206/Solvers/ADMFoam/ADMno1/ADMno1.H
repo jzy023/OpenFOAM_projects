@@ -53,6 +53,8 @@ class ADMno1
 {
 
 private:
+    //- DEBUG
+    volScalarField::Internal QFLOW_;
 
     //- ADM no1 parameters
     admPara para_;
@@ -74,7 +76,7 @@ private:
     //- Gas exit ambient pressure
     dimensionedScalar Pext_; 
 
-    //- 
+    //- Dimensionless operating temperature field
     volScalarField TopDummy_;
 
     //- Thermal condition factor

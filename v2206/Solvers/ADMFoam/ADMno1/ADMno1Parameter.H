@@ -101,6 +101,9 @@ private:
     List<scalar> Mini_;   // medians
     scalar Pini_;   // initial for protons
 
+    //- DEBUG benchmark inflow
+    List<scalar> INFLOW_;
+
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
     int printErrMessage(word runMode);
@@ -119,11 +122,10 @@ private:
 
 	void defineSTOI();
 
-	// void defineAcidBaseDAE();
-
-    void listResizing();
-
     void defineInitialState(word runMode);
+
+    // DEBUG
+    void defineINFLOW(word runMode);
 
 public:
 
@@ -215,7 +217,6 @@ public:
     {
         defineInitialState("Meso");
     	defineSTOI();
-    	// defineAcidBaseDAE();
     };
 
     admPara

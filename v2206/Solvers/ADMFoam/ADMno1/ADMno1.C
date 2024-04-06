@@ -52,6 +52,26 @@ Foam::ADMno1::ADMno1
 )
 :
     IOdictionary(ADMno1Dict),
+    // DEBUG =======================================================
+    QFLOW_
+    (
+        IOobject
+        (
+            "qflow",
+            mesh.time().timeName(),
+            mesh,
+            IOobject::READ_IF_PRESENT,
+            IOobject::NO_WRITE
+        ),
+        mesh,
+        dimensionedScalar
+        (
+            "qflow", 
+            dimless, 
+            Zero
+        )
+    ),
+    // =============================================================
     para_(ADMno1Dict.get<word>("mode")),
     Sc_(ADMno1Dict.lookupOrDefault("Sc", 0.2)),
     R_(ADMno1Dict.lookupOrDefault("R", 0.083145)),
