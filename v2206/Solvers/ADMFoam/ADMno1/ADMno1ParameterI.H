@@ -124,4 +124,12 @@ License
         return Pini_;
     }
 
+    // inline scalar admPara::INFLOW
+    // (
+    //     label idx
+    // ) const
+    // {
+    //     return INFLOW_[idx];
+    // }
+
 // ************************************************************************* //

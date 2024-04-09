@@ -73,14 +73,11 @@ volScalarField::Internal Foam::ADMno1::fSh2
     );
 
     volScalarField conv(fvc::div(flux, Sh2Temp));
-    volScalarField::Internal GRSh2Temp = para_.DTOS() * para_.kLa()
+    volScalarField::Internal GRSh2Temp = para_.DTOS() * para_.kLa() // TODO: thermal
                                        * (Sh2Temp.internalField() - R_ * 308.15 * GPtrs_[0].internalField() * KHh2_);
 
-    // Info << conv << endl;
-
-    //     reaction + convection - fGasRhoH2(paraPtr, Sh2);
-    return concPerComponent(7, para_, KRPtrs_temp) + conv - GRSh2Temp;
-    // return I_h2fa;
+        // reaction + convection - fGasRhoH2(paraPtr, Sh2);
+    return concPerComponent(7, KRPtrs_temp) + conv - GRSh2Temp;
 }
 
 volScalarField::Internal Foam::ADMno1::dfSh2
@@ -107,8 +104,6 @@ volScalarField::Internal Foam::ADMno1::dfSh2
         para_.KI().h2pro
     );
 
-    // Info << IPtrs_[4].dimensions() << dI_h2pro.dimensions() << endl;
-
     PtrList<volScalarField::Internal> dKRPtrs_temp = KRPtrs_;
     forAll(dKRPtrs_temp, i)
     {
@@ -127,9 +122,7 @@ volScalarField::Internal Foam::ADMno1::dfSh2
     dimensionedScalar dGRSh2Temp = para_.DTOS() * para_.kLa();
 
     //     dReaction + dConvection - dfGasRhoH2(paraPtr, Sh2);
-    return concPerComponent(7, para_, dKRPtrs_temp) + dConv - dGRSh2Temp;
-
-    // return dI_h2pro;
+    return concPerComponent(7, dKRPtrs_temp) + dConv - dGRSh2Temp;
 }
 
 void Foam::ADMno1::calcSh2
@@ -402,12 +395,18 @@ void Foam::ADMno1::dYUpdate
 {
     for(label j = 0; j < 7; j++)
     {
-        dYPtrs_[j] = concPerComponent(j, para_, KRPtrs_);
+        volScalarField::Internal inOutFlow(dYPtrs_[0]);
+        inOutFlow = para_.DTOS() * (Qin_/Vliq_) * (para_.INFLOW(j) - YPtrs_[j]);
+        dYPtrs_[j] = concPerComponent(j, KRPtrs_) + inOutFlow;
+        // dYPtrs_[j] = concPerComponent(j, KRPtrs_);
     }
 
     for(label j = 8; j < YPtrs_.size(); j++)
     {
-        dYPtrs_[j] = concPerComponent(j, para_, KRPtrs_);
+        volScalarField::Internal inOutFlow(dYPtrs_[0]);
+        inOutFlow = para_.DTOS() * (Qin_/Vliq_) * (para_.INFLOW(j) - YPtrs_[j]);
+        dYPtrs_[j] = concPerComponent(j, KRPtrs_) + inOutFlow;
+        // dYPtrs_[j] = concPerComponent(j, KRPtrs_);
     }
 
     //- calculate dSh2 iteratively
@@ -415,7 +414,7 @@ void Foam::ADMno1::dYUpdate
     // calcSh2(); 
 
     //- calculate with STOI and gas transer
-    // dYPtrs_[7] -= GRPtrs_[0]; // Sh2 - Gh2
+    dYPtrs_[7] -= GRPtrs_[0]; // Sh2 - Gh2
 
     dYPtrs_[8] -= GRPtrs_[1]; // Sch4 - Gch4
 

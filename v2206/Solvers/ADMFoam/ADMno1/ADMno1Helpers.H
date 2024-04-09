@@ -84,7 +84,6 @@ volScalarField::Internal calcRho
 volScalarField::Internal concPerComponent
 (
     label j,
-    const admPara para,
     PtrList<volScalarField::Internal> KRPtrs
 );
 

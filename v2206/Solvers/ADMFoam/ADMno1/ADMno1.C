@@ -53,23 +53,23 @@ Foam::ADMno1::ADMno1
 :
     IOdictionary(ADMno1Dict),
     // DEBUG =======================================================
-    QFLOW_
+    Qin_
     (
-        IOobject
-        (
-            "qflow",
-            mesh.time().timeName(),
-            mesh,
-            IOobject::READ_IF_PRESENT,
-            IOobject::NO_WRITE
-        ),
-        mesh,
-        dimensionedScalar
-        (
-            "qflow", 
-            dimless, 
-            Zero
-        )
+        "Qin", 
+        dimVolume/dimTime, 
+        178.4674
+    ),
+    Vgas_
+    (
+        "Vgas", 
+        dimVolume, 
+        300
+    ),
+    Vliq_
+    (
+        "Vliq", 
+        dimVolume, 
+        3400
     ),
     // =============================================================
     para_(ADMno1Dict.get<word>("mode")),

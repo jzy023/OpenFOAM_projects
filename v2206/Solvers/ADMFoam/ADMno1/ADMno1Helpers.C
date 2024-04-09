@@ -109,7 +109,6 @@ volScalarField::Internal Foam::ADMno1::calcRho
 volScalarField::Internal Foam::ADMno1::concPerComponent
 (
     label j,
-    const admPara para,
     PtrList<volScalarField::Internal> KRPtrs
 )
 {
@@ -134,8 +133,9 @@ volScalarField::Internal Foam::ADMno1::concPerComponent
 
     // TODO: room for optimization (dont loop through all 19 elements since a lot of them are 0s)
     for (int i = 0; i < 19; i++) {
-        dY += para.STOI[i][j] * KRPtrs[i] * para.DTOS(); //check if it works
+        dY += para_.STOI[i][j] * KRPtrs[i] * para_.DTOS(); //check if it works
     }
+
     return dY;
 }
 

@@ -102,7 +102,8 @@ private:
     scalar Pini_;   // initial for protons
 
     //- DEBUG benchmark inflow
-    List<scalar> INFLOW_;
+    // List<scalar> INFLOW_;
+    List<dimensionedScalar> INFLOW_;
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
@@ -217,6 +218,7 @@ public:
     {
         defineInitialState("Meso");
     	defineSTOI();
+        defineINFLOW("Meso");
     };
 
     admPara
@@ -263,6 +265,13 @@ public:
     inline scalar Mini(label idx) const;
 
     inline scalar Pini() const;
+
+    // inline scalar INFLOW(label idx) const;
+
+    inline dimensionedScalar INFLOW(label idx) const
+    {
+        return INFLOW_[idx];
+    };
     
 };
 

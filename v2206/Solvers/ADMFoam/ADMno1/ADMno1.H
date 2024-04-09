@@ -54,7 +54,9 @@ class ADMno1
 
 private:
     //- DEBUG
-    volScalarField::Internal QFLOW_;
+    dimensionedScalar Qin_;
+    dimensionedScalar Vgas_;
+    dimensionedScalar Vliq_;
 
     //- ADM no1 parameters
     admPara para_;

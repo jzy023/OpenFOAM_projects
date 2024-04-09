@@ -119,6 +119,7 @@ admPara::admPara
 {
     defineInitialState(runMode);
 	defineSTOI();
+    defineINFLOW(runMode);
 };
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
@@ -504,7 +505,14 @@ void admPara::defineSTOI()
 	// STOI[16][9] = STOI[16][12] * CC_.xc + STOI[16][20]* CC_.bac;
 	// STOI[17][9] = STOI[17][12] * CC_.xc + STOI[17][21]* CC_.bac;
 	// STOI[18][9] = STOI[18][12] * CC_.xc + STOI[18][22]* CC_.bac;
-	
+
+    for (label i = 0; i < 19; i++)
+    {
+        for (label j = 0; j < 24; j++)
+        {
+            STOI[i][j].dimensions().reset(dimless);
+        }
+    }
 }
 
 // void admPara::defineAcidBaseDAE()
@@ -583,97 +591,194 @@ void admPara::defineInitialState(word runMode)
 }
 
 
-void admPara::defineINFLOW(word runMode)
+void admPara::defineINFLOW
+(
+    word runMode
+)
 {
     INFLOW_.resize(26);
-
+    
     if(runMode == "Meso")
     {// TODO: update values
-        INFLOW_[0] = .0;     // Ssu
-        INFLOW_[1] = .0439;  // Saa
-        INFLOW_[2] = .0;     // Sfa
-        INFLOW_[3] = .0;     // Sva
-        INFLOW_[4] = .0;     // Sbu
-        INFLOW_[5] = .0;     // Spro
-        INFLOW_[6] = .0;     // Sac
-        INFLOW_[7] = .0;     // Sh2
-        INFLOW_[8] = .0;     // Sch4
-        INFLOW_[9] = .0079;  // SIC
-        INFLOW_[10] = .002;  // SIN
-        INFLOW_[11] = .0281; // SI
-        INFLOW_[12] = .0;     // Xc
-        INFLOW_[13] = 3.7236; // Xch
-        INFLOW_[14] = 15.9235; // Xpr
-        INFLOW_[15] = 8.047; // Xli
-        INFLOW_[16] = .0;    // Xsu
-        INFLOW_[17] = .0;    // Xaa
-        INFLOW_[18] = .0;    // Xfa
-        INFLOW_[19] = .0;    // Xc4
-        INFLOW_[20] = .0;    // Xpro
-        INFLOW_[21] = .0;    // Xac
-        INFLOW_[22] = .0;    // Xh2
-        INFLOW_[23] = 17.0106; // XI
-        INFLOW_[24] = .0;    // Scat+
-        INFLOW_[25] = .0052; // San-
+        INFLOW_[0].value() = .0;     // Ssu
+        INFLOW_[1].value() = .0439;  // Saa
+        INFLOW_[2].value() = .0;     // Sfa
+        INFLOW_[3].value() = .0;     // Sva
+        INFLOW_[4].value() = .0;     // Sbu
+        INFLOW_[5].value() = .0;     // Spro
+        INFLOW_[6].value() = .0;     // Sac
+        INFLOW_[7].value() = .0;     // Sh2
+        INFLOW_[8].value() = .0;     // Sch4
+        INFLOW_[9].value() = .0079;  // SIC
+        INFLOW_[10].value() = .002;  // SIN
+        INFLOW_[11].value() = .0281; // SI
+        INFLOW_[12].value() = .0;     // Xc
+        INFLOW_[13].value() = 3.7236; // Xch
+        INFLOW_[14].value() = 15.9235; // Xpr
+        INFLOW_[15].value() = 8.047; // Xli
+        INFLOW_[16].value() = .0;    // Xsu
+        INFLOW_[17].value() = .0;    // Xaa
+        INFLOW_[18].value() = .0;    // Xfa
+        INFLOW_[19].value() = .0;    // Xc4
+        INFLOW_[20].value() = .0;    // Xpro
+        INFLOW_[21].value() = .0;    // Xac
+        INFLOW_[22].value() = .0;    // Xh2
+        INFLOW_[23].value() = 17.0106; // XI
+        INFLOW_[24].value() = .0;    // Scat+
+        INFLOW_[25].value() = .0052; // San-
     }
     else if(runMode == "MesoSolid")
     {
-        INFLOW_[0] = .0;     // Ssu
-        INFLOW_[1] = .0439;  // Saa
-        INFLOW_[2] = .0;     // Sfa
-        INFLOW_[3] = .0;     // Sva
-        INFLOW_[4] = .0;     // Sbu
-        INFLOW_[5] = .0;     // Spro
-        INFLOW_[6] = .0;     // Sac
-        INFLOW_[7] = .0;     // Sh2
-        INFLOW_[8] = .0;     // Sch4
-        INFLOW_[9] = .0079;  // SIC
-        INFLOW_[10] = .002;  // SIN
-        INFLOW_[11] = .0281; // SI
-        INFLOW_[12] = .0;     // Xc
-        INFLOW_[13] = 3.7236; // Xch
-        INFLOW_[14] = 15.9235; // Xpr
-        INFLOW_[15] = 8.047; // Xli
-        INFLOW_[16] = .0;    // Xsu
-        INFLOW_[17] = .0;    // Xaa
-        INFLOW_[18] = .0;    // Xfa
-        INFLOW_[19] = .0;    // Xc4
-        INFLOW_[20] = .0;    // Xpro
-        INFLOW_[21] = .0;    // Xac
-        INFLOW_[22] = .0;    // Xh2
-        INFLOW_[23] = 17.0106; // XI
-        INFLOW_[24] = .0;    // Scat+
-        INFLOW_[25] = .0052; // San-
+        INFLOW_[0].value() = .0;     // Ssu
+        INFLOW_[1].value() = .0439;  // Saa
+        INFLOW_[2].value() = .0;     // Sfa
+        INFLOW_[3].value() = .0;     // Sva
+        INFLOW_[4].value() = .0;     // Sbu
+        INFLOW_[5].value() = .0;     // Spro
+        INFLOW_[6].value() = .0;     // Sac
+        INFLOW_[7].value() = .0;     // Sh2
+        INFLOW_[8].value() = .0;     // Sch4
+        INFLOW_[9].value() = .0079;  // SIC
+        INFLOW_[10].value() = .002;  // SIN
+        INFLOW_[11].value() = .0281; // SI
+        INFLOW_[12].value() = .0;     // Xc
+        INFLOW_[13].value() = 3.7236; // Xch
+        INFLOW_[14].value() = 15.9235; // Xpr
+        INFLOW_[15].value() = 8.047; // Xli
+        INFLOW_[16].value() = .0;    // Xsu
+        INFLOW_[17].value() = .0;    // Xaa
+        INFLOW_[18].value() = .0;    // Xfa
+        INFLOW_[19].value() = .0;    // Xc4
+        INFLOW_[20].value() = .0;    // Xpro
+        INFLOW_[21].value() = .0;    // Xac
+        INFLOW_[22].value() = .0;    // Xh2
+        INFLOW_[23].value() = 17.0106; // XI
+        INFLOW_[24].value() = .0;    // Scat+
+        INFLOW_[25].value() = .0052; // San-
     }
     else
     {// TODO: update values
-        INFLOW_[0] = .0;     // Ssu
-        INFLOW_[1] = .0439;  // Saa
-        INFLOW_[2] = .0;     // Sfa
-        INFLOW_[3] = .0;     // Sva
-        INFLOW_[4] = .0;     // Sbu
-        INFLOW_[5] = .0;     // Spro
-        INFLOW_[6] = .0;     // Sac
-        INFLOW_[7] = .0;     // Sh2
-        INFLOW_[8] = .0;     // Sch4
-        INFLOW_[9] = .0079;  // SIC
-        INFLOW_[10] = .002;  // SIN
-        INFLOW_[11] = .0281; // SI
-        INFLOW_[12] = .0;     // Xc
-        INFLOW_[13] = 3.7236; // Xch
-        INFLOW_[14] = 15.9235; // Xpr
-        INFLOW_[15] = 8.047; // Xli
-        INFLOW_[16] = .0;    // Xsu
-        INFLOW_[17] = .0;    // Xaa
-        INFLOW_[18] = .0;    // Xfa
-        INFLOW_[19] = .0;    // Xc4
-        INFLOW_[20] = .0;    // Xpro
-        INFLOW_[21] = .0;    // Xac
-        INFLOW_[22] = .0;    // Xh2
-        INFLOW_[23] = 17.0106; // XI
-        INFLOW_[24] = .0;    // Scat+
-        INFLOW_[25] = .0052; // San-
+        INFLOW_[0].value() = .0;     // Ssu
+        INFLOW_[1].value() = .0439;  // Saa
+        INFLOW_[2].value() = .0;     // Sfa
+        INFLOW_[3].value() = .0;     // Sva
+        INFLOW_[4].value() = .0;     // Sbu
+        INFLOW_[5].value() = .0;     // Spro
+        INFLOW_[6].value() = .0;     // Sac
+        INFLOW_[7].value() = .0;     // Sh2
+        INFLOW_[8].value() = .0;     // Sch4
+        INFLOW_[9].value() = .0079;  // SIC
+        INFLOW_[10].value() = .002;  // SIN
+        INFLOW_[11].value() = .0281; // SI
+        INFLOW_[12].value() = .0;     // Xc
+        INFLOW_[13].value() = 3.7236; // Xch
+        INFLOW_[14].value() = 15.9235; // Xpr
+        INFLOW_[15].value() = 8.047; // Xli
+        INFLOW_[16].value() = .0;    // Xsu
+        INFLOW_[17].value() = .0;    // Xaa
+        INFLOW_[18].value() = .0;    // Xfa
+        INFLOW_[19].value() = .0;    // Xc4
+        INFLOW_[20].value() = .0;    // Xpro
+        INFLOW_[21].value() = .0;    // Xac
+        INFLOW_[22].value() = .0;    // Xh2
+        INFLOW_[23].value() = 17.0106; // XI
+        INFLOW_[24].value() = .0;    // Scat+
+        INFLOW_[25].value() = .0052; // San-
     }
+
+    for(label i = 0; i < 26; i++)
+    {
+        // Info << INFLOW_[i].dimensions();
+        INFLOW_[i].dimensions().reset(dimMass/dimVolume);
+    }
+    
+    // if(runMode == "Meso")
+    // {// TODO: update values
+    //     INFLOW_[0] = .0;     // Ssu
+    //     INFLOW_[1] = .0439;  // Saa
+    //     INFLOW_[2] = .0;     // Sfa
+    //     INFLOW_[3] = .0;     // Sva
+    //     INFLOW_[4] = .0;     // Sbu
+    //     INFLOW_[5] = .0;     // Spro
+    //     INFLOW_[6] = .0;     // Sac
+    //     INFLOW_[7] = .0;     // Sh2
+    //     INFLOW_[8] = .0;     // Sch4
+    //     INFLOW_[9] = .0079;  // SIC
+    //     INFLOW_[10] = .002;  // SIN
+    //     INFLOW_[11] = .0281; // SI
+    //     INFLOW_[12] = .0;     // Xc
+    //     INFLOW_[13] = 3.7236; // Xch
+    //     INFLOW_[14] = 15.9235; // Xpr
+    //     INFLOW_[15] = 8.047; // Xli
+    //     INFLOW_[16] = .0;    // Xsu
+    //     INFLOW_[17] = .0;    // Xaa
+    //     INFLOW_[18] = .0;    // Xfa
+    //     INFLOW_[19] = .0;    // Xc4
+    //     INFLOW_[20] = .0;    // Xpro
+    //     INFLOW_[21] = .0;    // Xac
+    //     INFLOW_[22] = .0;    // Xh2
+    //     INFLOW_[23] = 17.0106; // XI
+    //     INFLOW_[24] = .0;    // Scat+
+    //     INFLOW_[25] = .0052; // San-
+    // }
+    // else if(runMode == "MesoSolid")
+    // {
+    //     INFLOW_[0] = .0;     // Ssu
+    //     INFLOW_[1] = .0439;  // Saa
+    //     INFLOW_[2] = .0;     // Sfa
+    //     INFLOW_[3] = .0;     // Sva
+    //     INFLOW_[4] = .0;     // Sbu
+    //     INFLOW_[5] = .0;     // Spro
+    //     INFLOW_[6] = .0;     // Sac
+    //     INFLOW_[7] = .0;     // Sh2
+    //     INFLOW_[8] = .0;     // Sch4
+    //     INFLOW_[9] = .0079;  // SIC
+    //     INFLOW_[10] = .002;  // SIN
+    //     INFLOW_[11] = .0281; // SI
+    //     INFLOW_[12] = .0;     // Xc
+    //     INFLOW_[13] = 3.7236; // Xch
+    //     INFLOW_[14] = 15.9235; // Xpr
+    //     INFLOW_[15] = 8.047; // Xli
+    //     INFLOW_[16] = .0;    // Xsu
+    //     INFLOW_[17] = .0;    // Xaa
+    //     INFLOW_[18] = .0;    // Xfa
+    //     INFLOW_[19] = .0;    // Xc4
+    //     INFLOW_[20] = .0;    // Xpro
+    //     INFLOW_[21] = .0;    // Xac
+    //     INFLOW_[22] = .0;    // Xh2
+    //     INFLOW_[23] = 17.0106; // XI
+    //     INFLOW_[24] = .0;    // Scat+
+    //     INFLOW_[25] = .0052; // San-
+    // }
+    // else
+    // {// TODO: update values
+    //     INFLOW_[0] = .0;     // Ssu
+    //     INFLOW_[1] = .0439;  // Saa
+    //     INFLOW_[2] = .0;     // Sfa
+    //     INFLOW_[3] = .0;     // Sva
+    //     INFLOW_[4] = .0;     // Sbu
+    //     INFLOW_[5] = .0;     // Spro
+    //     INFLOW_[6] = .0;     // Sac
+    //     INFLOW_[7] = .0;     // Sh2
+    //     INFLOW_[8] = .0;     // Sch4
+    //     INFLOW_[9] = .0079;  // SIC
+    //     INFLOW_[10] = .002;  // SIN
+    //     INFLOW_[11] = .0281; // SI
+    //     INFLOW_[12] = .0;     // Xc
+    //     INFLOW_[13] = 3.7236; // Xch
+    //     INFLOW_[14] = 15.9235; // Xpr
+    //     INFLOW_[15] = 8.047; // Xli
+    //     INFLOW_[16] = .0;    // Xsu
+    //     INFLOW_[17] = .0;    // Xaa
+    //     INFLOW_[18] = .0;    // Xfa
+    //     INFLOW_[19] = .0;    // Xc4
+    //     INFLOW_[20] = .0;    // Xpro
+    //     INFLOW_[21] = .0;    // Xac
+    //     INFLOW_[22] = .0;    // Xh2
+    //     INFLOW_[23] = 17.0106; // XI
+    //     INFLOW_[24] = .0;    // Scat+
+    //     INFLOW_[25] = .0052; // San-
+    // }
 };
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
