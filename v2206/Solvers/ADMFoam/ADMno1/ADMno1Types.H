@@ -515,15 +515,21 @@ struct limPH
 // TODO: check dimensions
 struct nitrogenContent
 {
+    dimensionedScalar xc;
+    dimensionedScalar I;
     dimensionedScalar aa;
     dimensionedScalar bac; // biomass
 
     nitrogenContent
     (
+        scalar xc_,
+        scalar I_,
         scalar aa_,
         scalar bac_
     )
     :
+        xc( dimless, xc_ ),
+        I( dimless, I_ ),
         aa( dimless, aa_ ),
         bac( dimless, bac_)
     {};

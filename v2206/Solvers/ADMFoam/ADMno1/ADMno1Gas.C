@@ -53,10 +53,12 @@ void Foam::ADMno1::gasSourceRate()
     scalarField volMeshField = GPtrs_[0].mesh().V().field();            
 
     // particle scaled gas volume
-    scalarField volGas = volMeshField / (1.0 + (1.0/Vfrac_)); 
+    // scalarField volGas = volMeshField / (1.0 + (1.0/Vfrac_));
+    scalarField volGas = volMeshField * (Vgas_ / (Vgas_ + Vliq_)).value();
 
     // particle scaled liquid volume
-    scalarField volLiq = volMeshField / (1.0 + Vfrac_);
+    // scalarField volLiq = volMeshField / (1.0 + Vfrac_);
+    scalarField volLiq = volMeshField * (Vliq_ / (Vgas_ + Vliq_)).value();
 
     // particle scaled pipe resistance
     volScalarField kp
@@ -81,14 +83,17 @@ void Foam::ADMno1::gasSourceRate()
     // TODO: might lead to error if Gas dimension is different
     kp.dimensions().reset(dimVolume/dimTime/dimPressure);
 
-    kp.field() = KP_ * (volMeshField / (volGas + volLiq)); // <---- this would be calculated
+    kp.field() = para_.DTOS() * KP_ * (volMeshField / (Vgas_ + Vliq_).value()); // <---- this would be calculated
 
     //- gas pressure
     volScalarField Ph2o = GPtrs_[0];
 
-    Ph2o.field() = para_.KH().h2 * exp(5290.0 * fac_ * 100 * R_);
+    Ph2o.field() = para_.KH().h2o * exp(5290.0 * fac_ * 100 * R_);
 
+    // DEBUG
+    // Pgas.field() = 0.0*Pgas.field() + 1.064;
     volScalarField Pgas = (GPtrs_[0] / 16.0 + GPtrs_[1] / 64.0 + GPtrs_[2]) * R_ * TopDummy_ + Ph2o;
+    Info << max(Pgas.field()) << endl;
 
     Pgas.dimensions().reset(dimPressure);
 
@@ -98,8 +103,6 @@ void Foam::ADMno1::gasSourceRate()
     {
         if ( qGasLocal.field()[i] < 0.0 ) { qGasLocal.field()[i] = 0.0; }
     }
-
-	qGasLocal.min(0.0);
 
     dGPtrs_[0].field() = GRPtrs_[0].field() * volLiq / volGas - GPtrs_[0].field() * qGasLocal.field() / volGas;
 

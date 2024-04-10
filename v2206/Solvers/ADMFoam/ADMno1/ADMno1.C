@@ -63,7 +63,8 @@ Foam::ADMno1::ADMno1
     (
         "Vgas", 
         dimVolume, 
-        300
+        // 300
+        100
     ),
     Vliq_
     (
@@ -461,6 +462,7 @@ Foam::ADMno1::ADMno1
 
     // >>> TEST
     // dYPtrs_[7].field() = 0.01*2.5055e-7;
+    Vfrac_ = (Vgas_/Vliq_).value();
 
 }
 

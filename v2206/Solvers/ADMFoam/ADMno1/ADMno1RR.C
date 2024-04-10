@@ -409,16 +409,9 @@ void Foam::ADMno1::dYUpdate
         // dYPtrs_[j] = concPerComponent(j, KRPtrs_);
     }
 
-    //- calculate dSh2 iteratively
-    // TODO: implement it! with Rosen et al.
-    // calcSh2(); 
-
     //- calculate with STOI and gas transer
-    dYPtrs_[7] -= GRPtrs_[0]; // Sh2 - Gh2
-
+    // dYPtrs_[7] -= GRPtrs_[0]; // Sh2 - Gh2
     dYPtrs_[8] -= GRPtrs_[1]; // Sch4 - Gch4
-
-    // Sco2!
     dYPtrs_[9] -= GRPtrs_[2]; // SIC - Gco2
 
 }

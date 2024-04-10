@@ -132,8 +132,34 @@ volScalarField::Internal Foam::ADMno1::concPerComponent
     );
 
     // TODO: room for optimization (dont loop through all 19 elements since a lot of them are 0s)
-    for (int i = 0; i < 19; i++) {
-        dY += para_.STOI[i][j] * KRPtrs[i] * para_.DTOS(); //check if it works
+    if (j == 9 || j == 10) // SIC or SIN
+    {
+        for (int i = 0; i < 12; i++) 
+        {
+            dY += para_.DTOS() * para_.STOI[i][j] * KRPtrs[i] ; //check if it works
+        }
+        for (int i = 12; i < 19; i++) 
+        {
+            dY += para_.DTOS() * para_.STOI[12][j] * KRPtrs[i] ; //check if it works
+        }
+    }
+    // else if (j == 10) // SIN
+    // {
+    //     for (int i = 0; i < 12; i++) 
+    //     {
+    //         dY += para_.DTOS() * para_.STOI[i][j] * KRPtrs[i] ; //check if it works
+    //     }
+    //     for (int i = 12; i < 19; i++) 
+    //     {
+    //         dY += para_.DTOS() * para_.STOI[12][j] * KRPtrs[i] ; //check if it works
+    //     }
+    // }
+    else
+    {
+        for (int i = 0; i < 19; i++) 
+        {
+            dY += para_.DTOS() * para_.STOI[i][j] * KRPtrs[i] ; //check if it works
+        }
     }
 
     return dY;

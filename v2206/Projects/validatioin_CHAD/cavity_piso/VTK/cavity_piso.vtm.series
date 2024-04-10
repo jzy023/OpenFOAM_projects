@@ -1,0 +1,16 @@
+{
+  "file-series-version" : "1.0",
+  "files" : [
+    { "name" : "cavity_piso_0.vtm", "time" : 0 },
+    { "name" : "cavity_piso_400.vtm", "time" : 2 },
+    { "name" : "cavity_piso_800.vtm", "time" : 4 },
+    { "name" : "cavity_piso_1200.vtm", "time" : 6 },
+    { "name" : "cavity_piso_1600.vtm", "time" : 8 },
+    { "name" : "cavity_piso_2000.vtm", "time" : 10 },
+    { "name" : "cavity_piso_2400.vtm", "time" : 12 },
+    { "name" : "cavity_piso_2800.vtm", "time" : 14 },
+    { "name" : "cavity_piso_3200.vtm", "time" : 16 },
+    { "name" : "cavity_piso_3600.vtm", "time" : 18 },
+    { "name" : "cavity_piso_4000.vtm", "time" : 20 }
+  ]
+}

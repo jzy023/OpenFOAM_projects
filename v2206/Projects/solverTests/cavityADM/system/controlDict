@@ -25,8 +25,8 @@ stopAt          endTime;
 // endTime         10;
 // writeInterval   1;
 
-endTime         5000;
-writeInterval   100;
+endTime         7200;
+writeInterval   300;
 
 deltaT          1;
 
