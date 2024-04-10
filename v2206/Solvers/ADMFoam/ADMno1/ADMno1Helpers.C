@@ -136,29 +136,18 @@ volScalarField::Internal Foam::ADMno1::concPerComponent
     {
         for (int i = 0; i < 12; i++) 
         {
-            dY += para_.DTOS() * para_.STOI[i][j] * KRPtrs[i] ; //check if it works
+            dY += para_.DTOS() * para_.STOI[i][j] * KRPtrs[i] ; 
         }
         for (int i = 12; i < 19; i++) 
         {
-            dY += para_.DTOS() * para_.STOI[12][j] * KRPtrs[i] ; //check if it works
+            dY += para_.DTOS() * para_.STOI[12][j] * KRPtrs[i] ; 
         }
     }
-    // else if (j == 10) // SIN
-    // {
-    //     for (int i = 0; i < 12; i++) 
-    //     {
-    //         dY += para_.DTOS() * para_.STOI[i][j] * KRPtrs[i] ; //check if it works
-    //     }
-    //     for (int i = 12; i < 19; i++) 
-    //     {
-    //         dY += para_.DTOS() * para_.STOI[12][j] * KRPtrs[i] ; //check if it works
-    //     }
-    // }
     else
     {
         for (int i = 0; i < 19; i++) 
         {
-            dY += para_.DTOS() * para_.STOI[i][j] * KRPtrs[i] ; //check if it works
+            dY += para_.DTOS() * para_.STOI[i][j] * KRPtrs[i] ; 
         }
     }
 

@@ -110,6 +110,7 @@ admPara::admPara
     ),
     pHL_
     (
+    //  ULaa,LLaa,ULac,LLac,ULh2,LLh2
         5.5, 4.0, 7.0, 6.0, 6.0, 5.0
     ),
     NC_
