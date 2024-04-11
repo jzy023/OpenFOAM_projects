@@ -38,7 +38,6 @@ volScalarField::Internal Foam::ADMno1::calcInhibition
     dimensionedScalar denum
 )
 {
-    // return 1.0/ (1.0 + (Y.internalField() / denum));
     return 1.0/ (1.0 + (Y / denum));
 }
 

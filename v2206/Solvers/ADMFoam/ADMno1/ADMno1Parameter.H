@@ -109,8 +109,6 @@ private:
 
     int printErrMessage(word runMode);
 
-    dimensionedScalar defineTbase(word runMode);
-
     dimensionedScalar defineTop(word runMode);
 
 	decayRate defineRC(word runMode);
@@ -149,7 +147,7 @@ public:
         ),
         Tbase_
         (
-            defineTbase("Meso")
+            298.15
         ),
         Top_
         (
@@ -165,19 +163,39 @@ public:
         ),
         yP_
         (   
-            0.10, 0.25, 0.20,
-            0.20, 0.25, 0.95,
-            0.19, 0.13, 0.27,
-            0.41, 0.06, 0.23,
-            0.26, 0.05, 0.40
+            0.10, // si_xc
+            0.20, // 0.25, // xi_xc  <<< Rosen et al.
+            0.20, // ch_xc
+            0.20, // pr_xc
+            0.30, // 0.25, // li_xc  <<< Rosen et al.
+            0.95, // fa_li
+            0.19, // h2_su
+            0.13, // bu_su
+            0.27, // pro_su
+            0.41, // ac_su
+            0.06, // h2_aa
+            0.23, // va_aa
+            0.26, // bu_aa
+            0.05, // pro_aa
+            0.40  // ac_aa
         ),
         CC_
         (
-            0.2786, 0.03, 0.0313,
-            0.03, 0.022, 0.03,
-            0.0313, 0.03, 0.0217,
-            0.025, 0.0268, 0.0313,
-            0.0313, 0.024, 0.0156
+            0.2786, // xc
+            0.03,   // si
+            0.0313, // ch
+            0.03,   // pr
+            0.022,  // li
+            0.03,   // xi
+            0.0313, // su
+            0.03,   // aa
+            0.0217, // fa
+            0.025,  // bu
+            0.0268, // pro
+            0.0313, // ac
+            0.0313, // bac
+            0.024,  // va
+            0.0156  // ch4
         ),
         KI_
         (
@@ -193,8 +211,13 @@ public:
         ),
         Ka_
         (
-            1.380e-5, 1.514e-5, 1.318e-5,
-            1.738e-5, 4.467e-7, 5.623e-10, 1e-14
+            1.380e-5,  // va
+            1.514e-5,  // bu
+            1.318e-5,  // pro
+            1.738e-5,  // ac
+            4.467e-7,  // co2
+            5.623e-10, // IN
+            1e-14      // W
         ),
         KH_
         (
@@ -213,7 +236,10 @@ public:
         ),
         NC_
         (
-            0.0269, 0.004286, 0.007, 0.005714
+            0.0376/14.0, // xc
+            0.06/14.0,   // I
+            0.007,       // aa
+            0.08/14.0    // bac
         )
     {
         defineInitialState("Meso");

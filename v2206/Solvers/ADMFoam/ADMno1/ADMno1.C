@@ -62,9 +62,9 @@ Foam::ADMno1::ADMno1
     Vgas_
     (
         "Vgas", 
-        dimVolume, 
-        // 300
-        100
+        dimVolume,
+        300
+        // 100 // <<< Rosen et al.
     ),
     Vliq_
     (
@@ -77,7 +77,8 @@ Foam::ADMno1::ADMno1
     Sc_(ADMno1Dict.lookupOrDefault("Sc", 0.2)),
     R_(ADMno1Dict.lookupOrDefault("R", 0.083145)),
     KP_(ADMno1Dict.lookupOrDefault("Kpip", 5e4)),
-    Vfrac_(ADMno1Dict.lookupOrDefault("Vfrac", 0.088235)),
+    // Vfrac_(ADMno1Dict.lookupOrDefault("Vfrac", 0.0294118)), // 100/3400
+    Vfrac_(ADMno1Dict.lookupOrDefault("Vfrac", 0.0882353)), // 300/3400
     Pext_
     (
         "Pext", 
@@ -140,7 +141,7 @@ Foam::ADMno1::ADMno1
         mesh,
         dimensionedScalar
         (
-           "ShP_Default", 
+           "ShPDefault", 
             dimMass,
             para_.Pini()
         )
@@ -460,10 +461,8 @@ Foam::ADMno1::ADMno1
     nIac_ = 3.0 / (para_.pHL().ULac - para_.pHL().LLac);  // ac
     nIh2_ = 3.0 / (para_.pHL().ULh2 - para_.pHL().LLh2);  // h2
 
-    // >>> TEST
-    // dYPtrs_[7].field() = 0.01*2.5055e-7;
+    // DEBUG
     Vfrac_ = (Vgas_/Vliq_).value();
-
 }
 
 
@@ -505,6 +504,7 @@ void Foam::ADMno1::calcThermal
     TopDummy_.field() = T.field();
 
     fac_ = (1.0 / para_.Tbase().value() - 1.0 / TopDummy_) / (100.0 * R_);
+    // fac_ = (1.0 / 298.15 - 1.0 / 308.15) / (100.0 * R_);
     
     KHh2_ = para_.KH().h2 * exp(-4180.0 * fac_);
     KHch4_ = para_.KH().ch4 * exp(-14240.0 * fac_);
@@ -513,10 +513,6 @@ void Foam::ADMno1::calcThermal
     Kaco2_ = para_.Ka().co2 * exp(7646.0 * fac_);
     KaIN_ = para_.Ka().IN * exp(51965.0 * fac_);
     KaW_ = para_.Ka().W * exp(55900.0 * fac_);
-
-    // KHh2.dimensions().reset(dimMass/dimPressure);
-    // KHch4.dimensions().reset(dimMass/dimPressure);
-    // KHco2.dimensions().reset(dimMass/dimPressure);
 }
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //

@@ -97,11 +97,9 @@ volScalarField::Internal Foam::ADMno1::fShp
     //         "SbuN:\t" << max(SbuN.field()) << "\n" <<
     //         "SvaN:\t" << max(SvaN.field()) << "\n" << endl;
 
-    
     //     Scat_ - San_ + ShP     - SohN + (SIN                        - Snh3)                 
     return Scat_ - San_ + ShpTemp - SohN + (YPtrs_[10].internalField() - MPtrs_[1].internalField()) - 
            Shco3N - SacN/64.0 - SproN/112.0 - SbuN/160.0 - SvaN/208.0;
-           
 }
 
 volScalarField::Internal Foam::ADMno1::dfShp
@@ -159,13 +157,11 @@ volScalarField::Internal Foam::ADMno1::dfShp
 
     dimensionedScalar uniField
     (
-        // YPtrs_[0].dimensions(),
         dimless,
         One
     );
 
     return uniField - dSnh3 - dShco3N - dSacN/64.0 - dSproN/112.0 - dSbuN/160.0 - dSvaN/208.0 - dSohN;
-
 }
 
 void Foam::ADMno1::calcShp()
@@ -213,7 +209,6 @@ void Foam::ADMno1::calcShp()
     // ShP
     ShP_ = x;
     pH_.field() = -log10(ShP_.field());
-
 }
 
 

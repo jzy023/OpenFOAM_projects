@@ -33,7 +33,6 @@ License
 
 void Foam::ADMno1::gasPhaseRate()
 {
-
     GRPtrs_[0] = para_.DTOS() * para_.kLa() 
                * (YPtrs_[7].internalField() - R_ * TopDummy_.internalField() * GPtrs_[0].internalField() * KHh2_);
 
@@ -42,7 +41,6 @@ void Foam::ADMno1::gasPhaseRate()
 
     GRPtrs_[2] = para_.DTOS() * para_.kLa() // Sco2 instead of SIC
                * (MPtrs_[0].internalField() - R_ * TopDummy_.internalField() * GPtrs_[2].internalField() * KHco2_);
-
 }
 
 
@@ -53,12 +51,10 @@ void Foam::ADMno1::gasSourceRate()
     scalarField volMeshField = GPtrs_[0].mesh().V().field();            
 
     // particle scaled gas volume
-    // scalarField volGas = volMeshField / (1.0 + (1.0/Vfrac_));
-    scalarField volGas = volMeshField * (Vgas_ / (Vgas_ + Vliq_)).value();
+    scalarField volGas = volMeshField / (1.0 + (1.0/Vfrac_));
 
     // particle scaled liquid volume
-    // scalarField volLiq = volMeshField / (1.0 + Vfrac_);
-    scalarField volLiq = volMeshField * (Vliq_ / (Vgas_ + Vliq_)).value();
+    scalarField volLiq = volMeshField / (1.0 + Vfrac_);
 
     // particle scaled pipe resistance
     volScalarField kp
@@ -90,14 +86,13 @@ void Foam::ADMno1::gasSourceRate()
 
     Ph2o.field() = para_.KH().h2o * exp(5290.0 * fac_ * 100 * R_);
 
-    // DEBUG
-    // Pgas.field() = 0.0*Pgas.field() + 1.064;
     volScalarField Pgas = (GPtrs_[0] / 16.0 + GPtrs_[1] / 64.0 + GPtrs_[2]) * R_ * TopDummy_ + Ph2o;
+    // Pgas.field() = 0.0*Pgas.field() + 1.0645;
     Info << max(Pgas.field()) << endl;
 
     Pgas.dimensions().reset(dimPressure);
 
-    //  volScalarField qGasLocal = kp * (Pgas - Pext_)*(Pgas/Pext_); 
+    //  volScalarField qGasLocal = kp * (Pgas - Pext_) * (Pgas / Pext_); 
     volScalarField qGasLocal = kp * (Pgas - Pext_);
     forAll( qGasLocal.field(), i )
     {
@@ -109,7 +104,6 @@ void Foam::ADMno1::gasSourceRate()
     dGPtrs_[1].field() = GRPtrs_[1].field() * volLiq / volGas - GPtrs_[1].field() * qGasLocal.field() / volGas;
 
     dGPtrs_[2].field() = GRPtrs_[2].field() * volLiq / volGas - GPtrs_[2].field() * qGasLocal.field() / volGas;
-    
 };
 
 

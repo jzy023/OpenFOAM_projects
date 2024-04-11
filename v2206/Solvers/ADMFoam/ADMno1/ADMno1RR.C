@@ -73,10 +73,12 @@ volScalarField::Internal Foam::ADMno1::fSh2
     );
 
     volScalarField conv(fvc::div(flux, Sh2Temp));
-    volScalarField::Internal GRSh2Temp = para_.DTOS() * para_.kLa() // TODO: thermal
-                                       * (Sh2Temp.internalField() - R_ * 308.15 * GPtrs_[0].internalField() * KHh2_);
+    volScalarField::Internal GRSh2Temp = para_.DTOS() * para_.kLa() 
+                                       * (Sh2Temp.internalField() - R_ * TopDummy_.internalField() * GPtrs_[0].internalField() * KHh2_);
+    // volScalarField::Internal GRSh2Temp = para_.DTOS() * para_.kLa() // TODO: thermal
+    //                                    * (Sh2Temp.internalField() - R_ * 308.15 * GPtrs_[0].internalField() * KHh2_);
 
-        // reaction + convection - fGasRhoH2(paraPtr, Sh2);
+    //     reaction + convection - fGasRhoH2(paraPtr, Sh2);
     return concPerComponent(7, KRPtrs_temp) + conv - GRSh2Temp;
 }
 
