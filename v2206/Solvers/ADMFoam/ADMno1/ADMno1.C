@@ -170,6 +170,12 @@ Foam::ADMno1::ADMno1
         "San",
         dimMass/dimVolume, //TODO
         ADMno1Dict.lookupOrDefault("San", 0.0052)
+    ),
+    tc_
+    (
+        "timeScale",
+        dimTime, //TODO
+        One
     )
 {
 
@@ -527,6 +533,27 @@ void Foam::ADMno1::calcThermal
     KaW_ = para_.Ka().W * exp(55900.0 * fac_);
 }
 
+
+void Foam::ADMno1::calcTC()
+{
+
+    forAll(dYPtrs_, i)
+    {
+        if (i == 7)
+        {
+            continue;
+        }
+        
+        tc_ = min
+        (
+            min(mag(YPtrs_[i]/dYPtrs_[i])), 
+            tc_
+        );
+    }
+    
+    Info << "time scale: " << tc_.value() << endl;
+}
+
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
 void Foam::ADMno1::clear()
@@ -576,6 +603,9 @@ void Foam::ADMno1::correct
 
     //- Sh2 calculations
     calcSh2(flux);
+
+    //- 
+    calcTC();
 
 }
 

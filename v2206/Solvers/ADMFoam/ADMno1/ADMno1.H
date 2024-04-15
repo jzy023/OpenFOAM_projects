@@ -124,13 +124,6 @@ private:
     //- List of pointers to gas trasfer rate
     PtrList<volScalarField::Internal> GRPtrs_;
 
-    //- Temporary concentration fields
-    // PtrList<volScalarField>& YPtrsTemps_;
-    mutable scalarField c_;
- 
-    //- Temporary rate-of-change of concentration field
-    mutable scalarField dcdt_; 
-
     //- Species names for soluable
     //- !!! Sh2 is calculated iteratively 
     //                               0      1      2      3      4      5
@@ -158,6 +151,9 @@ private:
 
     //- Anion concentration (inert)
     dimensionedScalar San_;
+
+    //- Time Scale
+    dimensionedScalar tc_;
 
     //- Pirvate Helper Functions
     #include "ADMno1Helpers.H"
@@ -218,6 +214,10 @@ private:
 
     //- Calculate Medians
     // void updateMedians();
+
+    //- Calculate time scale for chemical reactions
+    void calcTC();
+
 
 
 public:
