@@ -28,11 +28,11 @@ stopAt          endTime;
 // endTime         7200;
 // writeInterval   300;
 
-endTime         86400;  // 1 days simulation
-writeInterval   3600;
-
-// endTime         864000; // 10 days simulation
+// endTime         86400;  // 1 days simulation
 // writeInterval   3600;
+
+endTime         864000; // 10 days simulation
+writeInterval   3600;
 
 deltaT          1;
 

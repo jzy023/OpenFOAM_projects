@@ -63,8 +63,8 @@ Foam::ADMno1::ADMno1
     (
         "Vgas", 
         dimVolume,
-        300
-        // 100 // <<< Rosen et al.
+        100 // <<< Rosen et al.
+        // 300
     ),
     Vliq_
     (
@@ -77,13 +77,26 @@ Foam::ADMno1::ADMno1
     Sc_(ADMno1Dict.lookupOrDefault("Sc", 0.2)),
     R_(ADMno1Dict.lookupOrDefault("R", 0.083145)),
     KP_(ADMno1Dict.lookupOrDefault("Kpip", 5e4)),
-    // Vfrac_(ADMno1Dict.lookupOrDefault("Vfrac", 0.0294118)), // 100/3400
-    Vfrac_(ADMno1Dict.lookupOrDefault("Vfrac", 0.0882353)), // 300/3400
+    Vfrac_(ADMno1Dict.lookupOrDefault("Vfrac", 0.0294118)), // 100/3400
+    // Vfrac_(ADMno1Dict.lookupOrDefault("Vfrac", 0.0882353)), // 300/3400
     Pext_
     (
         "Pext", 
         dimPressure,
         ADMno1Dict.lookupOrDefault("Pext", 1.013)
+    ),
+    Pgas_
+    (
+        IOobject
+        (
+            "Pgas",
+            mesh.time().timeName(),
+            mesh,
+            IOobject::NO_READ,
+            IOobject::AUTO_WRITE
+        ),
+        mesh,
+        Pext_
     ),
     TopDummy_(T),
     fac_
@@ -504,7 +517,6 @@ void Foam::ADMno1::calcThermal
     TopDummy_.field() = T.field();
 
     fac_ = (1.0 / para_.Tbase().value() - 1.0 / TopDummy_) / (100.0 * R_);
-    // fac_ = (1.0 / 298.15 - 1.0 / 308.15) / (100.0 * R_);
     
     KHh2_ = para_.KH().h2 * exp(-4180.0 * fac_);
     KHch4_ = para_.KH().ch4 * exp(-14240.0 * fac_);
@@ -537,29 +549,33 @@ void Foam::ADMno1::correct
     volScalarField& T
 )
 {
-    //- calculate thermal factor and adjust parameters
+
+    //- Calculate thermal factor and adjust parameters
     calcThermal(T);
+
+    //- Gas phase pressure
+    gasPressure();
 
     //- Inhibition rates
     inhibitions();
 
-    //- Acid-base calculations
-    calcShp();
+    //- calculate raction rates
+    kineticRate();
 
     //- calculate gas phase transfer rates
     gasPhaseRate();
 
+    //- calculate dY with STOI
+    dYUpdate(flux);
+
     //- calculate gas exit rates
     gasSourceRate();
 
+    //- Acid-base calculations
+    calcShp();
+
     //- Sh2 calculations
     calcSh2(flux);
-
-    //- calculate raction rates
-    kineticRate();
-
-    //- calculate dY with STOI
-    dYUpdate(flux);
 
 }
 

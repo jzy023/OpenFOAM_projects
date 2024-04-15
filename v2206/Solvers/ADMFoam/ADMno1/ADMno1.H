@@ -76,7 +76,10 @@ private:
     scalar Vfrac_;
 
     //- Gas exit ambient pressure
-    dimensionedScalar Pext_; 
+    dimensionedScalar Pext_;
+
+    //- Gas exit ambient pressure
+    volScalarField Pgas_; 
 
     //- Dimensionless operating temperature field
     volScalarField TopDummy_;
@@ -163,6 +166,9 @@ private:
 
     //- Adjust for thermal condition
     void calcThermal(volScalarField& T);
+
+    //- Gas phase pressure
+    void gasPressure();
 
     //- Gas phase transfer rate
     void gasPhaseRate();

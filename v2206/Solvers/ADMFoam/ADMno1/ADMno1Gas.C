@@ -31,6 +31,39 @@ License
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 // TODO: check volume!! 
 
+void Foam::ADMno1::gasPressure()
+{
+    //- gas pressure
+    // volScalarField Ph2o = GPtrs_[0];
+
+    volScalarField Ph2o
+    (
+        IOobject
+        (
+            "Ph2o",
+            fac_.mesh().time().timeName(),
+            fac_.mesh(),
+            IOobject::NO_READ,
+            IOobject::NO_WRITE
+        ),
+        fac_.mesh(),
+        dimensionedScalar
+        (
+           "Ph2oDefault", 
+            GPtrs_[0].dimensions(),
+            Zero
+        )
+    );
+
+    Ph2o.field() = para_.KH().h2o * exp(5290.0 * fac_ * 100 * R_);
+    Pgas_.field() = (GPtrs_[0] / 16.0 + GPtrs_[1] / 64.0 + GPtrs_[2]) * R_ * TopDummy_ + Ph2o;
+
+    // Pgas.field() = 0.0*Pgas.field() + 1.0645;
+    Info << max(Pgas_.field()) << endl;
+
+}
+
+
 void Foam::ADMno1::gasPhaseRate()
 {
     GRPtrs_[0] = para_.DTOS() * para_.kLa() 
@@ -79,21 +112,11 @@ void Foam::ADMno1::gasSourceRate()
     // TODO: might lead to error if Gas dimension is different
     kp.dimensions().reset(dimVolume/dimTime/dimPressure);
 
+    // TODO: actual volume would have effect on normalized kp
     kp.field() = para_.DTOS() * KP_ * (volMeshField / (Vgas_ + Vliq_).value()); // <---- this would be calculated
 
-    //- gas pressure
-    volScalarField Ph2o = GPtrs_[0];
-
-    Ph2o.field() = para_.KH().h2o * exp(5290.0 * fac_ * 100 * R_);
-
-    volScalarField Pgas = (GPtrs_[0] / 16.0 + GPtrs_[1] / 64.0 + GPtrs_[2]) * R_ * TopDummy_ + Ph2o;
-    // Pgas.field() = 0.0*Pgas.field() + 1.0645;
-    Info << max(Pgas.field()) << endl;
-
-    Pgas.dimensions().reset(dimPressure);
-
     //  volScalarField qGasLocal = kp * (Pgas - Pext_) * (Pgas / Pext_); 
-    volScalarField qGasLocal = kp * (Pgas - Pext_);
+    volScalarField qGasLocal = kp * (Pgas_ - Pext_);
     forAll( qGasLocal.field(), i )
     {
         if ( qGasLocal.field()[i] < 0.0 ) { qGasLocal.field()[i] = 0.0; }

@@ -650,12 +650,6 @@ void admPara::defineINFLOW
         INFLOW_[24] = .0;    // Scat+
         INFLOW_[25] = .0052; // San-
     }
-
-    for(label i = 0; i < 26; i++)
-    {
-        // Info << INFLOW_[i].dimensions();
-        INFLOW_[i].dimensions().reset(dimMass/dimVolume);
-    }
 };
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
@@ -672,6 +666,11 @@ void admPara::setParaDim
     KS_.setDimension(ds);
 
     Ka_.setDimension(ds);
+
+    for(label i = 0; i < 26; i++)
+    {
+        INFLOW_[i].dimensions().reset(ds);
+    }
 
 };
 

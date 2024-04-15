@@ -19,7 +19,9 @@
         "ADMPimpleFoam.C": "cpp",
         "ADMFoam.C": "cpp",
         "ADMAcidBase.C": "cpp",
-        "ADMno1AcidBase.C": "cpp"
+        "ADMno1AcidBase.C": "cpp",
+        "chrono": "cpp",
+        "limits": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
