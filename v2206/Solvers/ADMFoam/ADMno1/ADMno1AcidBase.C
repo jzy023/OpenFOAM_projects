@@ -209,6 +209,14 @@ void Foam::ADMno1::calcShp()
     // ShP
     ShP_ = x;
     pH_.field() = -log10(ShP_.field());
+
+    // update Sco2
+    // MPtrs_[0].ref() = YPtrs_[9].internalField() - fSion
+    // (
+    //     Kaco2_,
+    //     YPtrs_[9].internalField(), // SIC
+    //     ShP_
+    // ); 
 }
 
 

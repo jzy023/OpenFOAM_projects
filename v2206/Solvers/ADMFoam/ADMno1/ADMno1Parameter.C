@@ -146,9 +146,10 @@ admPara::admPara
         0.08/14.0    // bac
     )
 {
+    // DEBUG
+    defineINFLOW(runMode);
     defineInitialState(runMode);
 	defineSTOI();
-    defineINFLOW(runMode);
 };
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
@@ -479,16 +480,16 @@ void admPara::defineSTOI()
 	STOI[1][9] = -(STOI[1][0] * CC_.su +  STOI[1][13] * CC_.ch); // <<< added by Rosen et al.
 	STOI[2][9] = -(STOI[2][1] * CC_.aa + STOI[2][14] * CC_.pr); // <<< added by Rosen et al.
 	STOI[3][9] = -(STOI[3][0] * CC_.su + STOI[3][2] * CC_.fa + STOI[3][15] * CC_.li); // <<< added by Rosen et al.
-	STOI[4][9] = -(STOI[4][0] * CC_.su + STOI[4][4] * CC_.bu + STOI[4][5] * CC_.pro +
-				   STOI[4][6] * CC_.ac + STOI[4][16] * CC_.bac);
+    STOI[4][9] = -(STOI[4][0] * CC_.su + STOI[4][4] * CC_.bu + STOI[4][5] * CC_.pro +
+	               STOI[4][6] * CC_.ac + STOI[4][16] * CC_.bac);
 	STOI[5][9] = -(STOI[5][1] * CC_.aa + STOI[5][3] * CC_.va + STOI[5][4] * CC_.bu +
 				   STOI[5][5] * CC_.pro + STOI[5][6] * CC_.ac + STOI[5][17] * CC_.bac);
 	STOI[6][9] = -(STOI[6][2] * CC_.fa + STOI[6][6] * CC_.ac + STOI[6][18] * CC_.bac); // <<< added by Rosen et al.
 	STOI[7][9] = -(STOI[7][3] * CC_.va + STOI[7][5] * CC_.pro + STOI[7][6] * CC_.ac + STOI[7][19] * CC_.bac); // <<< added by Rosen et al.
-	STOI[8][9] = -(STOI[8][4] * CC_.bu + STOI[8][6] * CC_.ac + STOI[6][19] * CC_.bac); // <<< added by Rosen et al.
-	STOI[9][9] = -(STOI[9][5] * CC_.pro + STOI[9][6] * CC_.ac + STOI[9][20] * CC_.bac);
+    STOI[8][9] = -(STOI[8][4] * CC_.bu + STOI[8][6] * CC_.ac + STOI[8][19] * CC_.bac); // <<< added by Rosen et al.
+    STOI[9][9] = -(STOI[9][5] * CC_.pro + STOI[9][6] * CC_.ac + STOI[9][20] * CC_.bac);
 	STOI[10][9] = -(STOI[10][6] * CC_.ac + STOI[10][8] * CC_.ch4 + STOI[10][21] * CC_.bac);
-	STOI[11][9] = -(STOI[11][8] * CC_.ch4 + STOI[11][22] * CC_.bac);
+    STOI[11][9] = -(STOI[11][8] * CC_.ch4 + STOI[11][22] * CC_.bac);
 	STOI[12][9] = -(STOI[12][12] * CC_.xc +  STOI[12][16] * CC_.bac); // <<< added by Rosen et al.
 
     // SIN calculation according to Rosen paper

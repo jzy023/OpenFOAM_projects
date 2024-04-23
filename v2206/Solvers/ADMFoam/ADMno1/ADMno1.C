@@ -531,6 +531,9 @@ void Foam::ADMno1::calcThermal
     Kaco2_ = para_.Ka().co2 * exp(7646.0 * fac_);
     KaIN_ = para_.Ka().IN * exp(51965.0 * fac_);
     KaW_ = para_.Ka().W * exp(55900.0 * fac_);
+
+    Info << "KHco2: " << max(KHco2_.field()) << endl;
+    Info << "Kaco2: " << max(Kaco2_.field()) << endl;
 }
 
 

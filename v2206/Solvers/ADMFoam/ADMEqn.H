@@ -52,11 +52,12 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
             fvScalarMatrix YiEqn
             (
                 fvm::ddt(Yi)
-            + fvm::div(phi, Yi)
-            - fvm::laplacian(Deff, Yi)
-            ==
-                fvOptions(Yi)
-            + reaction->R(i)
+            //   + fvm::div(phi, Yi)
+            //   - fvm::laplacian(Deff, Yi)
+              ==
+            //     fvOptions(Yi)
+            //   + reaction->R(i)
+                reaction->R(i)
             );
 
             YiEqn.relax();
@@ -79,11 +80,12 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
         fvScalarMatrix GiEqn
         (
             fvm::ddt(Gi)
-          + fvm::div(phi, Gi)
-          - fvm::laplacian(Deff, Gi)
+        //   + fvm::div(phi, Gi)
+        //   - fvm::laplacian(Deff, Gi)
          ==
-            fvOptions(Gi)
-          + reaction->RG(i)
+        //     fvOptions(Gi)
+        //   + reaction->RG(i)
+            reaction->RG(i)
         );
 
         GiEqn.relax();
