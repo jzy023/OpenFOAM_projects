@@ -99,7 +99,8 @@ private:
     //- Initial values
     List<scalar> Gini_;   // gas
     List<scalar> Mini_;   // medians
-    scalar Pini_;   // initial for protons
+    scalar Pini_;         // initial for protons
+    List<scalar> Eini_;   // electrolytes
 
     //- DEBUG benchmark inflow
     // List<scalar> INFLOW_;
@@ -291,6 +292,8 @@ public:
     inline scalar Mini(label idx) const;
 
     inline scalar Pini() const;
+
+    inline scalar Eini(label idx) const;
 
     // inline scalar INFLOW(label idx) const;
 

@@ -115,6 +115,9 @@ private:
     //- List of pointers to the field of medians concentrations
     PtrList<volScalarField> MPtrs_;
 
+    //- List of pointers to the field of electrolytes concentrations
+    PtrList<volScalarField::Internal> EPtrs_;
+
     //- List of pointers to inhibition 
     PtrList<volScalarField::Internal> IPtrs_;
 
@@ -140,7 +143,11 @@ private:
     //- Species names for gaseouse
     const wordList namesGaseous = {"Gh2", "Gch4", "Gco2"};
 
-    //- calculated by simple subtractions
+    //- Species names for electrolytes
+    //                                   0       1       2        3       4
+    const wordList namesElectrolytes = {"SvaN", "SbuN", "SproN", "SacN", "Shco3N"};
+
+    //- Calculated by simple subtractions
     const wordList namesMedians = {"Sco2", "Snh3"};
 
     //- inert substances

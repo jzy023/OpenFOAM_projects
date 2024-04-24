@@ -114,13 +114,20 @@ admPara::admPara
     ),
     Ka_
     (
-        1.380e-5,  // va
-        1.514e-5,  // bu
-        1.318e-5,  // pro
-        1.738e-5,  // ac
-        4.467e-7,  // co2
-        5.623e-10, // IN
-        1e-14      // W
+        // 1.380e-5,  // va
+        // 1.514e-5,  // bu
+        // 1.318e-5,  // pro
+        // 1.738e-5,  // ac
+        // 4.467e-7,  // co2
+        // 5.623e-10, // IN
+        // 1e-14      // W
+        std::pow(10, -4.86),  // va
+        std::pow(10, -4.82),  // bu
+        std::pow(10, -4.88),  // pro
+        std::pow(10, -4.76),  // ac
+        std::pow(10, -6.35),  // co2
+        std::pow(10, -9.25),  // IN
+        std::pow(10, -14)     // W
     ),
     KH_
     (
@@ -148,6 +155,14 @@ admPara::admPara
 {
     // DEBUG
     defineINFLOW(runMode);
+    Info << "Ka_va:\t" << Ka_.va.value()
+         << "\nKa_bu:\t" << Ka_.bu.value()
+         << "\nKa_pro:\t" << Ka_.pro.value()
+         << "\nKa_ac:\t" << Ka_.ac.value()
+         << "\nKa_co2:\t" << Ka_.co2.value()
+         << "\nKa_IN:\t" << Ka_.IN.value()
+         << "\nKa_W:\t" << Ka_.W.value() << endl;
+
     defineInitialState(runMode);
 	defineSTOI();
 };
@@ -518,41 +533,52 @@ void admPara::defineInitialState(word runMode)
 {
     Gini_.resize(3);
     Mini_.resize(3);
+    Eini_.resize(5);
 
     if(runMode == "Meso")
     {// TODO: update values
-        Gini_[0] = 1.1032e-5;    // G_h2
-        Gini_[1] = 1.6535;       // G_ch4
-        Gini_[2] = 0.0135;       // G_co2
-        Mini_[0] = 0.00942;      // S_co2
-        Mini_[1] = 0.001884;     // S_nh3
-        Pini_ = 5.4562e-8;       // S_hP
+        Gini_[0] = 1.103241005083344e-05; // G_h2
+        Gini_[1] = 1.653498470386505;     // G_ch4
+        Gini_[2] = 0.013540127797408;     // G_co2
+        Mini_[0] = 0.00942;               // S_co2
+        Mini_[1] = 0.001884013268717;     // S_nh3
+        Pini_ = 5.456176966644033e-08;    // S_hP
 
-        // Eini_[0] = 0.012284;     // S_vaN
-        // Eini_[1] = 0.013953;     // S_buN
-        // Eini_[2] = 0.017511;     // S_proN
-        // Eini_[3] = 0.089035;     // S_acN
-        // Eini_[4] = 0.08568;      // S_hco3N
-        // Eini_[5] = 0.0;          // S_ohN
-        // Eini_[6] = 5.4562e-8;    // S_hP
+        Eini_[0] = 0.012283973156161;     // S_vaN
+        Eini_[1] = 0.013952735474510;     // S_buN
+        Eini_[2] = 0.017511435081451;     // S_proN
+        Eini_[3] = 0.089035207194772;     // S_acN
+        Eini_[4] = 0.085680011345346;     // S_hco3N
     }
     else if(runMode == "MesoSolid")
     {
-        Gini_[0] = 1.1032e-5;    // G_h2
-        Gini_[1] = 1.6535;       // G_ch4
-        Gini_[2] = 0.0135;       // G_co2
-        Mini_[0] = 0.00942;      // S_co2
-        Mini_[1] = 0.001884;     // S_nh3
-        Pini_ = 5.4562e-8;       // S_hP
+        Gini_[0] = 1.103241005083344e-05; // G_h2
+        Gini_[1] = 1.653498470386505;     // G_ch4
+        Gini_[2] = 0.013540127797408;     // G_co2
+        Mini_[0] = 0.00942;               // S_co2
+        Mini_[1] = 0.001884013268717;     // S_nh3
+        Pini_ = 5.456176966644033e-08;    // S_hP
+
+        Eini_[0] = 0.012283973156161;     // S_vaN
+        Eini_[1] = 0.013952735474510;     // S_buN
+        Eini_[2] = 0.017511435081451;     // S_proN
+        Eini_[3] = 0.089035207194772;     // S_acN
+        Eini_[4] = 0.085680011345346;     // S_hco3N
     }
     else
     {// TODO: update values
-        Gini_[0] = 1.1032e-5;    // G_h2
-        Gini_[1] = 1.6535;       // G_ch4
-        Gini_[2] = 0.0135;       // G_co2
-        Mini_[0] = 0.00942;      // S_co2
-        Mini_[1] = 0.001884;     // S_nh3
-        Pini_ = 5.4562e-8;       // S_hP
+        Gini_[0] = 1.103241005083344e-05; // G_h2
+        Gini_[1] = 1.653498470386505;     // G_ch4
+        Gini_[2] = 0.013540127797408;     // G_co2
+        Mini_[0] = 0.00942;               // S_co2
+        Mini_[1] = 0.001884013268717;     // S_nh3
+        Pini_ = 5.456176966644033e-08;    // S_hP
+
+        Eini_[0] = 0.012283973156161;     // S_vaN
+        Eini_[1] = 0.013952735474510;     // S_buN
+        Eini_[2] = 0.017511435081451;     // S_proN
+        Eini_[3] = 0.089035207194772;     // S_acN
+        Eini_[4] = 0.085680011345346;     // S_hco3N
     }
 }
 
@@ -565,9 +591,9 @@ void admPara::defineINFLOW
     INFLOW_.resize(26);
 
     if(runMode == "Meso")
-    {// TODO: update values
+    {   // TODO: update values
         INFLOW_[0] = .0;     // Ssu
-        INFLOW_[1] = .0439;  // Saa
+        INFLOW_[1] = .043879921101364;  // Saa
         INFLOW_[2] = .0;     // Sfa
         INFLOW_[3] = .0;     // Sva
         INFLOW_[4] = .0;     // Sbu
@@ -575,13 +601,13 @@ void admPara::defineINFLOW
         INFLOW_[6] = .0;     // Sac
         INFLOW_[7] = .0;     // Sh2
         INFLOW_[8] = .0;     // Sch4
-        INFLOW_[9] = .0079;  // SIC
-        INFLOW_[10] = .002;  // SIN
-        INFLOW_[11] = .0281; // SI
+        INFLOW_[9] = .007932590852686;    // SIC
+        INFLOW_[10] = .001972071773301;   // SIN
+        INFLOW_[11] = .028066505735355;   // SI
         INFLOW_[12] = .0;     // Xc
-        INFLOW_[13] = 3.7236; // Xch
-        INFLOW_[14] = 15.9235; // Xpr
-        INFLOW_[15] = 8.047; // Xli
+        INFLOW_[13] = 3.723594855179344;  // Xch
+        INFLOW_[14] = 15.923520940540483; // Xpr
+        INFLOW_[15] = 8.046980172357708;  // Xli
         INFLOW_[16] = .0;    // Xsu
         INFLOW_[17] = .0;    // Xaa
         INFLOW_[18] = .0;    // Xfa
@@ -589,14 +615,14 @@ void admPara::defineINFLOW
         INFLOW_[20] = .0;    // Xpro
         INFLOW_[21] = .0;    // Xac
         INFLOW_[22] = .0;    // Xh2
-        INFLOW_[23] = 17.0106; // XI
+        INFLOW_[23] = 17.010642217805245; // XI
         INFLOW_[24] = .0;    // Scat+
-        INFLOW_[25] = .0052; // San-
+        INFLOW_[25] = 0.005210099433331;  // San-
     }
     else if(runMode == "MesoSolid")
     {
         INFLOW_[0] = .0;     // Ssu
-        INFLOW_[1] = .0439;  // Saa
+        INFLOW_[1] = .043879921101364;  // Saa
         INFLOW_[2] = .0;     // Sfa
         INFLOW_[3] = .0;     // Sva
         INFLOW_[4] = .0;     // Sbu
@@ -604,13 +630,13 @@ void admPara::defineINFLOW
         INFLOW_[6] = .0;     // Sac
         INFLOW_[7] = .0;     // Sh2
         INFLOW_[8] = .0;     // Sch4
-        INFLOW_[9] = .0079;  // SIC
-        INFLOW_[10] = .002;  // SIN
-        INFLOW_[11] = .0281; // SI
+        INFLOW_[9] = .007932590852686;    // SIC
+        INFLOW_[10] = .001972071773301;   // SIN
+        INFLOW_[11] = .028066505735355;   // SI
         INFLOW_[12] = .0;     // Xc
-        INFLOW_[13] = 3.7236; // Xch
-        INFLOW_[14] = 15.9235; // Xpr
-        INFLOW_[15] = 8.047; // Xli
+        INFLOW_[13] = 3.723594855179344;  // Xch
+        INFLOW_[14] = 15.923520940540483; // Xpr
+        INFLOW_[15] = 8.046980172357708;  // Xli
         INFLOW_[16] = .0;    // Xsu
         INFLOW_[17] = .0;    // Xaa
         INFLOW_[18] = .0;    // Xfa
@@ -618,14 +644,14 @@ void admPara::defineINFLOW
         INFLOW_[20] = .0;    // Xpro
         INFLOW_[21] = .0;    // Xac
         INFLOW_[22] = .0;    // Xh2
-        INFLOW_[23] = 17.0106; // XI
+        INFLOW_[23] = 17.010642217805245; // XI
         INFLOW_[24] = .0;    // Scat+
-        INFLOW_[25] = .0052; // San-
+        INFLOW_[25] = 0.005210099433331;  // San-
     }
     else
-    {// TODO: update values
+    {   // TODO: update values
         INFLOW_[0] = .0;     // Ssu
-        INFLOW_[1] = .0439;  // Saa
+        INFLOW_[1] = .043879921101364;  // Saa
         INFLOW_[2] = .0;     // Sfa
         INFLOW_[3] = .0;     // Sva
         INFLOW_[4] = .0;     // Sbu
@@ -633,13 +659,13 @@ void admPara::defineINFLOW
         INFLOW_[6] = .0;     // Sac
         INFLOW_[7] = .0;     // Sh2
         INFLOW_[8] = .0;     // Sch4
-        INFLOW_[9] = .0079;  // SIC
-        INFLOW_[10] = .002;  // SIN
-        INFLOW_[11] = .0281; // SI
+        INFLOW_[9] = .007932590852686;    // SIC
+        INFLOW_[10] = .001972071773301;   // SIN
+        INFLOW_[11] = .028066505735355;   // SI
         INFLOW_[12] = .0;     // Xc
-        INFLOW_[13] = 3.7236; // Xch
-        INFLOW_[14] = 15.9235; // Xpr
-        INFLOW_[15] = 8.047; // Xli
+        INFLOW_[13] = 3.723594855179344;  // Xch
+        INFLOW_[14] = 15.923520940540483; // Xpr
+        INFLOW_[15] = 8.046980172357708;  // Xli
         INFLOW_[16] = .0;    // Xsu
         INFLOW_[17] = .0;    // Xaa
         INFLOW_[18] = .0;    // Xfa
@@ -647,9 +673,9 @@ void admPara::defineINFLOW
         INFLOW_[20] = .0;    // Xpro
         INFLOW_[21] = .0;    // Xac
         INFLOW_[22] = .0;    // Xh2
-        INFLOW_[23] = 17.0106; // XI
+        INFLOW_[23] = 17.010642217805245; // XI
         INFLOW_[24] = .0;    // Scat+
-        INFLOW_[25] = .0052; // San-
+        INFLOW_[25] = 0.005210099433331;  // San-
     }
 };
 

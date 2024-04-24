@@ -56,7 +56,7 @@ runTimeModifiable true;
 
 maxCo           0.8;
 
-maxDeltaT       20;
+maxDeltaT       5;
 
 functions {}
 

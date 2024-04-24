@@ -57,14 +57,14 @@ Foam::ADMno1::ADMno1
     (
         "Qin", 
         dimVolume/dimTime, 
-        178.4674
+        178.4674438315954
     ),
     Vgas_
     (
         "Vgas", 
         dimVolume,
-        100 // <<< Rosen et al.
-        // 300
+        // 100 // <<< Rosen et al.
+        300
     ),
     Vliq_
     (
@@ -77,8 +77,8 @@ Foam::ADMno1::ADMno1
     Sc_(ADMno1Dict.lookupOrDefault("Sc", 0.2)),
     R_(ADMno1Dict.lookupOrDefault("R", 0.083145)),
     KP_(ADMno1Dict.lookupOrDefault("Kpip", 5e4)),
-    Vfrac_(ADMno1Dict.lookupOrDefault("Vfrac", 0.0294118)), // 100/3400
-    // Vfrac_(ADMno1Dict.lookupOrDefault("Vfrac", 0.0882353)), // 300/3400
+    // Vfrac_(ADMno1Dict.lookupOrDefault("Vfrac", 0.0294118)), // 100/3400
+    Vfrac_(ADMno1Dict.lookupOrDefault("Vfrac", 0.0882353)), // 300/3400
     Pext_
     (
         "Pext", 
@@ -169,7 +169,7 @@ Foam::ADMno1::ADMno1
     (
         "San",
         dimMass/dimVolume, //TODO
-        ADMno1Dict.lookupOrDefault("San", 0.0052)
+        ADMno1Dict.lookupOrDefault("San", 0.005210099242102)
     ),
     tc_
     (
@@ -367,6 +367,40 @@ Foam::ADMno1::ADMno1
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
+    //-  Medians initialization
+
+    Info<< "Initializing concentrations for electrolytes" << endl;
+
+    EPtrs_.resize(namesElectrolytes.size());
+
+    forAll(namesElectrolytes, i)
+    {
+        EPtrs_.set
+        (
+            i,
+            new volScalarField::Internal
+            (
+                IOobject
+                (
+                    namesElectrolytes[i],
+                    mesh.time().timeName(),
+                    mesh,
+                    IOobject::NO_READ, // READ_IF_PRESENT,
+                    IOobject::AUTO_WRITE
+                ),
+                mesh,
+                dimensionedScalar
+                (
+                    // namesElectrolytes[i] + "Default", 
+                    YPtrs_[0].dimensions(),
+                    para_.Eini(i)
+                )
+            )
+        );
+    }
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
     //- Inhibition coeffs initialization
 
     IPtrs_.resize(8);
@@ -479,6 +513,7 @@ Foam::ADMno1::ADMno1
     nIaa_ = 3.0 / (para_.pHL().ULaa - para_.pHL().LLaa);  // aa
     nIac_ = 3.0 / (para_.pHL().ULac - para_.pHL().LLac);  // ac
     nIh2_ = 3.0 / (para_.pHL().ULh2 - para_.pHL().LLh2);  // h2
+    MPtrs_[0].ref() = YPtrs_[9] - EPtrs_[4]; // Sco2 = SIC - Shco3N
 
     // DEBUG
     Vfrac_ = (Vgas_/Vliq_).value();
@@ -532,8 +567,11 @@ void Foam::ADMno1::calcThermal
     KaIN_ = para_.Ka().IN * exp(51965.0 * fac_);
     KaW_ = para_.Ka().W * exp(55900.0 * fac_);
 
-    Info << "KHco2: " << max(KHco2_.field()) << endl;
-    Info << "Kaco2: " << max(Kaco2_.field()) << endl;
+    // Info << "KHco2: " << max(KHco2_.field()) << endl;
+    // Info << "Kaco2: " << max(Kaco2_.field()) << endl;
+    // Info << "KaIN_: " << max(KaIN_.field()) << endl;
+    // Info << "KaW_: " << max(KaW_.field()) << endl;
+
 }
 
 
@@ -579,7 +617,6 @@ void Foam::ADMno1::correct
     volScalarField& T
 )
 {
-
     //- Calculate thermal factor and adjust parameters
     calcThermal(T);
 
@@ -607,8 +644,8 @@ void Foam::ADMno1::correct
     //- Sh2 calculations
     calcSh2(flux);
 
-    //- 
-    calcTC();
+    // //- 
+    // // calcTC();
 
 }
 
