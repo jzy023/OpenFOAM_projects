@@ -412,7 +412,6 @@ void Foam::ADMno1::dYUpdate
     }
 
     //- calculate with STOI and gas transer
-    // dYPtrs_[7] -= GRPtrs_[0]; // Sh2 - Gh2
     dYPtrs_[8] -= GRPtrs_[1]; // Sch4 - Gch4
     dYPtrs_[9] -= GRPtrs_[2]; // SIC - Gco2
 

@@ -35,41 +35,6 @@ volScalarField::Internal Foam::ADMno1::fShp
     volScalarField::Internal& ShpTemp
 )
 {
-    // volScalarField::Internal SvaN = fSion
-    // (
-    //     para_.Ka().va,
-    //     YPtrs_[3].internalField(),
-    //     ShpTemp
-    // );
-
-    // volScalarField::Internal SbuN = fSion
-    // (
-    //     para_.Ka().bu,
-    //     YPtrs_[4].internalField(),
-    //     ShpTemp
-    // ); 
-
-    // volScalarField::Internal SproN = fSion
-    // (
-    //     para_.Ka().pro,
-    //     YPtrs_[5].internalField(),
-    //     ShpTemp
-    // ); 
-
-    // volScalarField::Internal SacN = fSion
-    // (
-    //     para_.Ka().ac,
-    //     YPtrs_[6].internalField(),
-    //     ShpTemp
-    // );
-
-    // volScalarField::Internal Shco3N = fSion
-    // (
-    //     Kaco2_,
-    //     YPtrs_[9].internalField(), // SIC
-    //     ShpTemp
-    // ); 
-
     EPtrs_[0] = fSion
     (
         para_.Ka().va,
@@ -121,8 +86,6 @@ volScalarField::Internal Foam::ADMno1::fShp
     volScalarField::Internal SohN = KaW_ / ShpTemp;
     SohN.dimensions().reset(ShpTemp.dimensions()); 
 
-    // volScalarField::Internal E = Scat_ - San_ + ShpTemp - SohN + (YPtrs_[10].internalField() - MPtrs_[1].internalField()) - 
-    //                              Shco3N - SacN/64.0 - SproN/112.0 - SbuN/160.0 - SvaN/208.0;
     volScalarField::Internal E = Scat_ - San_ + ShpTemp - SohN + (YPtrs_[10].internalField() - MPtrs_[1].internalField()) - 
                                  EPtrs_[4] - EPtrs_[3]/64.0 - EPtrs_[2]/112.0 - EPtrs_[1]/160.0 - EPtrs_[0]/208.0;
 
@@ -137,10 +100,6 @@ volScalarField::Internal Foam::ADMno1::fShp
     //         "Shco3N:\t" << max(Shco3N.field()) << "\n" <<
     //         "Snh3:\t" << max(MPtrs_[1].field()) << "\n" <<
     //         "SohN:\t" << max(SohN.field()) << "\n" << endl;
-
-    //     Scat_ - San_ + ShP     - SohN + (SIN                        - Snh3)                 
-    // return Scat_ - San_ + ShpTemp - SohN + (YPtrs_[10].internalField() - MPtrs_[1].internalField()) - 
-    //        Shco3N - SacN/64.0 - SproN/112.0 - SbuN/160.0 - SvaN/208.0;
 
     return E;
 }
@@ -192,24 +151,6 @@ volScalarField::Internal Foam::ADMno1::dfShp
         ShpTemp
     );
 
-    // volScalarField::Internal dSvaN = - para_.Ka().va * YPtrs_[3].internalField()
-    //                                  / ((para_.Ka().va + ShpTemp)*(para_.Ka().va + ShpTemp));
-
-    // volScalarField::Internal dSbuN = - para_.Ka().bu * YPtrs_[4].internalField()
-    //                                  / ((para_.Ka().bu + ShpTemp)*(para_.Ka().bu + ShpTemp));
-
-    // volScalarField::Internal dSproN = - para_.Ka().pro * YPtrs_[5].internalField()
-    //                                   / ((para_.Ka().pro + ShpTemp)*(para_.Ka().pro + ShpTemp));
-
-    // volScalarField::Internal dSacN = - para_.Ka().ac * YPtrs_[6].internalField()
-    //                                  / ((para_.Ka().ac + ShpTemp)*(para_.Ka().ac + ShpTemp));
-
-    // volScalarField::Internal dShco3N = - Kaco2_ * YPtrs_[9].internalField()
-    //                                    / ((Kaco2_ + ShpTemp)*(Kaco2_ + ShpTemp));
-
-    // volScalarField::Internal dSnh3 = - KaIN_ * YPtrs_[10].internalField()
-    //                                  / ((KaIN_ + ShpTemp)*(KaIN_ + ShpTemp));
-
     // calc SohN
     // TODO: the original ADMno1 is quite inconsistent with the dimensions
     // TODO: maybe reverse the dimensionsScalar to scalar in para_?
@@ -249,10 +190,6 @@ void Foam::ADMno1::calcShp()
         //               << "Proton (H+) concentration below Zero\n";
         //     std::exit(1);
         // }
-        Info << ">>>\n"
-             << "E(x):\t" << max(E.field()) << "\n"
-             << "x:\t" << max(x.field()) << "\n" << endl;
-
         i++;
     }
     while
@@ -275,13 +212,21 @@ void Foam::ADMno1::calcShp()
     ShP_ = x;
     pH_.field() = -log10(ShP_.field());
 
-    // update Sco2
-    MPtrs_[0].ref() = YPtrs_[9].internalField() - fSion
+    // update Shco3N
+    EPtrs_[4] = fSion
     (
         Kaco2_,
         YPtrs_[9].internalField(), // SIC
         ShP_
-    ); 
+    );
+
+    // update Snh3
+    MPtrs_[1].ref() = fSion
+    (
+        KaIN_,
+        YPtrs_[10].internalField(), // SIN
+        ShP_
+    );
 }
 
 
