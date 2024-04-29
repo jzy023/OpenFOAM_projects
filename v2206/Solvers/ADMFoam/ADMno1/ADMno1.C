@@ -391,7 +391,6 @@ Foam::ADMno1::ADMno1
                 mesh,
                 dimensionedScalar
                 (
-                    // namesElectrolytes[i] + "Default", 
                     YPtrs_[0].dimensions(),
                     para_.Eini(i)
                 )

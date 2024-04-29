@@ -70,8 +70,6 @@ volScalarField::Internal Foam::ADMno1::fShp
         ShpTemp
     );
 
-    MPtrs_[0].ref() = YPtrs_[9] - EPtrs_[4]; // Sco2 = SIC - Shco3N
-
     // Snh3
     MPtrs_[1].ref() = fSion
     (
@@ -219,6 +217,9 @@ void Foam::ADMno1::calcShp()
         YPtrs_[9].internalField(), // SIC
         ShP_
     );
+
+    // update Sco2
+    MPtrs_[0].ref() = YPtrs_[9] - EPtrs_[4]; // Sco2 = SIC - Shco3N
 
     // update Snh3
     MPtrs_[1].ref() = fSion

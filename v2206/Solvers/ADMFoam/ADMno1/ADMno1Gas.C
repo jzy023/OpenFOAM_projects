@@ -29,7 +29,6 @@ License
 #include "ADMno1.H"
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
-// TODO: check volume!! 
 
 void Foam::ADMno1::gasPressure()
 {
@@ -57,16 +56,11 @@ void Foam::ADMno1::gasPressure()
 
     Ph2o.field() = para_.KH().h2o * exp(5290.0 * fac_ * 100 * R_);
     Pgas_.field() = (GPtrs_[0] / 16.0 + GPtrs_[1] / 64.0 + GPtrs_[2]) * R_ * TopDummy_ + Ph2o;
-
-    // Pgas_.field() = 0.0*Pgas_.field() + 1.0645;
-    Info << max(Pgas_.field()) << endl;
-
 }
 
 
 void Foam::ADMno1::gasPhaseRate()
 {
-    // MPtrs_[0].ref() = YPtrs_[9] - EPtrs_[4]; // Sco2 = SIC - Shco3N
 
     GRPtrs_[0] = para_.DTOS() * para_.kLa() 
                * (YPtrs_[7].internalField() - R_ * TopDummy_.internalField() * GPtrs_[0].internalField() * KHh2_);
