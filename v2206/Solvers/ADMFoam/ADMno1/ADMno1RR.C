@@ -133,7 +133,7 @@ void Foam::ADMno1::calcSh2
 )
 {
     //TODO: IO dictionary for these parameters
-    scalar tol = 1e-10;
+    scalar tol = 1e-12;
     label nIter = 1e3;
     label i = 0;
 
@@ -208,16 +208,9 @@ void Foam::ADMno1::inhibitions()
         nIh2_
     );
 
-    // >>> TODO: which one is correct ???
-    // IPtrs_[3] = calcInhibition // IN
-    // (
-    //     YPtrs_[10], // SIN
-    //     para_.KS().IN
-    // );
 
     IPtrs_[3] = 1.0 / (1.0 + (para_.KS().IN / YPtrs_[10]));
     
-
 	IPtrs_[4] = calcInhibition // h2_fa
     (
         YPtrs_[7], // Sh2
@@ -410,6 +403,9 @@ void Foam::ADMno1::dYUpdate
         dYPtrs_[j] = concPerComponent(j, KRPtrs_) + inOutFlow;
         // dYPtrs_[j] = concPerComponent(j, KRPtrs_);
     }
+
+    dIOPtrs_[0] = para_.DTOS() * (Qin_/Vliq_) * (para_.INFLOW(24) - IOPtrs_[0]);  // Scat
+    dIOPtrs_[1] = para_.DTOS() * (Qin_/Vliq_) * (para_.INFLOW(25) - IOPtrs_[1]);  // San
 
     //- calculate with STOI and gas transer
     dYPtrs_[8] -= GRPtrs_[1]; // Sch4 - Gch4

@@ -57,7 +57,8 @@ Foam::ADMno1::ADMno1
     (
         "Qin", 
         dimVolume/dimTime, 
-        178.4674438315954
+        // 178.4674438315954
+        178.4674
     ),
     Vgas_
     (
@@ -169,7 +170,7 @@ Foam::ADMno1::ADMno1
     (
         "San",
         dimMass/dimVolume, //TODO
-        ADMno1Dict.lookupOrDefault("San", 0.005210099242102)
+        ADMno1Dict.lookupOrDefault("San", 0.0052)
     ),
     tc_
     (
@@ -331,7 +332,7 @@ Foam::ADMno1::ADMno1
     }
 
 
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
     //-  Medians initialization
 
@@ -362,10 +363,92 @@ Foam::ADMno1::ADMno1
                     para_.Mini(i)
                 )
             )
+        );  
+    }
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+    //-  Ions initialization
+
+    IOPtrs_.resize(2);
+
+    IOPtrs_.set
+    (
+        0,
+        new volScalarField
+        (
+            IOobject
+            (
+                "Scat",
+                mesh.time().timeName(),
+                mesh,
+                IOobject::READ_IF_PRESENT,
+                IOobject::AUTO_WRITE
+            ),
+            mesh,
+            dimensionedScalar
+            (
+               "Scat", 
+                YPtrs_[0].dimensions(),
+                ADMno1Dict.lookupOrDefault("Scat", 0.00)
+            )
+        )
+    );
+
+    IOPtrs_.set
+    (
+        1,
+        new volScalarField
+        (
+            IOobject
+            (
+                "San",
+                mesh.time().timeName(),
+                mesh,
+                IOobject::READ_IF_PRESENT,
+                IOobject::AUTO_WRITE
+            ),                             
+            mesh,
+            dimensionedScalar
+            (
+               "San", 
+                YPtrs_[0].dimensions(),
+                ADMno1Dict.lookupOrDefault("San", 0.0052)
+            )
+        )
+    );
+
+    
+    //- Initializing derivatives
+
+    dIOPtrs_.resize(namesIons.size());
+
+    for(label i = 0; i < namesIons.size(); i++)
+    {
+        dIOPtrs_.set
+        (
+            i,
+            new volScalarField::Internal
+            (
+                IOobject
+                (
+                    "d" + IOPtrs_[i].name(),
+                    mesh.time().timeName(),
+                    mesh,
+                    IOobject::NO_READ,
+                    IOobject::NO_WRITE
+                ),
+                mesh,
+                dimensionedScalar
+                (
+                    IOPtrs_[0].dimensions()/dimTime, 
+                    Zero
+                )
+            )
         );
     }
 
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
     //-  Medians initialization
 
@@ -508,7 +591,6 @@ Foam::ADMno1::ADMno1
     KaIN_.dimensions().reset(para_.Ka().IN.dimensions());
     KaW_.dimensions().reset(para_.Ka().W.dimensions());
 
-    // 
     nIaa_ = 3.0 / (para_.pHL().ULaa - para_.pHL().LLaa);  // aa
     nIac_ = 3.0 / (para_.pHL().ULac - para_.pHL().LLac);  // ac
     nIh2_ = 3.0 / (para_.pHL().ULh2 - para_.pHL().LLh2);  // h2
@@ -696,6 +778,31 @@ tmp<fvScalarMatrix> Foam::ADMno1::RG
     
     // https://www.openfoam.com/documentation/guides/latest/api/fvMatrix_8C_source.html#l01708
     Su += dG; 
+
+    return tSu;
+};
+
+tmp<fvScalarMatrix> Foam::ADMno1::RIO
+(
+    label i
+) const
+{
+    DimensionedField<scalar, volMesh> dIO = dIOPtrs_[i];
+
+        tmp<fvScalarMatrix> tSu
+        (
+            new fvScalarMatrix
+            (
+                IOPtrs_[i],
+                dIO.dimensions()*dimVolume
+                // dimMass/dimTime // <- for compressible flow and uses fvm::ddt(rho, Yi)
+            )
+        );
+
+    fvScalarMatrix& Su = tSu.ref();
+    
+    // https://www.openfoam.com/documentation/guides/latest/api/fvMatrix_8C_source.html#l01708
+    Su += dIO; 
 
     return tSu;
 }; 

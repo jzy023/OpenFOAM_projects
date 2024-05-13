@@ -84,7 +84,7 @@ volScalarField::Internal Foam::ADMno1::fShp
     volScalarField::Internal SohN = KaW_ / ShpTemp;
     SohN.dimensions().reset(ShpTemp.dimensions()); 
 
-    volScalarField::Internal E = Scat_ - San_ + ShpTemp - SohN + (YPtrs_[10].internalField() - MPtrs_[1].internalField()) - 
+    volScalarField::Internal E = IOPtrs_[0].internalField() - IOPtrs_[1].internalField() + ShpTemp - SohN + (YPtrs_[10].internalField() - MPtrs_[1].internalField()) - 
                                  EPtrs_[4] - EPtrs_[3]/64.0 - EPtrs_[2]/112.0 - EPtrs_[1]/160.0 - EPtrs_[0]/208.0;
 
     // DEBUG
@@ -167,7 +167,7 @@ volScalarField::Internal Foam::ADMno1::dfShp
 void Foam::ADMno1::calcShp()
 {
     //TODO: IO dictionary for these parameters
-    scalar tol = 1e-11;
+    scalar tol = 1e-12;
     label nIter = 1e3;
     label i = 0;
 
@@ -211,23 +211,24 @@ void Foam::ADMno1::calcShp()
     pH_.field() = -log10(ShP_.field());
 
     // update Shco3N
-    EPtrs_[4] = fSion
-    (
-        Kaco2_,
-        YPtrs_[9].internalField(), // SIC
-        ShP_
-    );
+    // EPtrs_[4] = fSion
+    // (
+    //     Kaco2_,
+    //     YPtrs_[9].internalField(), // SIC
+    //     ShP_
+    // );
 
     // update Sco2
-    MPtrs_[0].ref() = YPtrs_[9] - EPtrs_[4]; // Sco2 = SIC - Shco3N
+    // Sco2 = SIC - Shco3N
+    MPtrs_[0].ref() = YPtrs_[9] - EPtrs_[4];
 
-    // update Snh3
-    MPtrs_[1].ref() = fSion
-    (
-        KaIN_,
-        YPtrs_[10].internalField(), // SIN
-        ShP_
-    );
+    // // update Snh3
+    // MPtrs_[1].ref() = fSion
+    // (
+    //     KaIN_,
+    //     YPtrs_[10].internalField(), // SIN
+    //     ShP_
+    // );
 }
 
 

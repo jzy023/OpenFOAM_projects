@@ -2,6 +2,7 @@ Info << "ADM convection-diffusion calculation" << endl;
 
 PtrList<volScalarField>& YPtrs = reaction->Y();
 PtrList<volScalarField>& GPtrs = reaction->G();
+PtrList<volScalarField>& IOPtrs = reaction->IO();
 
 volScalarField Deff = turbulence->nu() / reaction->Sc();
 
@@ -95,6 +96,29 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
         GiEqn.solve(mesh.solver("Yi"));
 
         fvOptions.correct(Gi);
+    }
+
+    // Ions ================================================================= //
+    // TODO: add rho and make adjustment for compressibility
+
+    forAll(IOPtrs, i)
+    {
+        volScalarField& IOi = IOPtrs[i];
+
+        fvScalarMatrix IOiEqn
+        (
+            fvm::ddt(IOi)
+         ==
+            reaction->RIO(i)
+        );
+
+        IOiEqn.relax();
+
+        fvOptions.constrain(IOiEqn);
+
+        IOiEqn.solve(mesh.solver("Yi"));
+
+        fvOptions.correct(IOi);
     }
 
     // Gas Phase ============================================================ //

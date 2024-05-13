@@ -35,6 +35,7 @@ Description
 #ifndef ADMno1Types_H
 #define ADMno1Types_H
 
+#include <iomanip>
 #include "IOdictionary.H"
 #include "typeInfo.H"
 #include "fvCFD.H"

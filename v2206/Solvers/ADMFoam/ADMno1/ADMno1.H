@@ -115,6 +115,12 @@ private:
     //- List of pointers to the field of medians concentrations
     PtrList<volScalarField> MPtrs_;
 
+    //- List of pointers to the field of ions concentrations
+    PtrList<volScalarField> IOPtrs_;
+
+    //- List of pointers to the field of ion concentrations derivatives
+    PtrList<volScalarField::Internal> dIOPtrs_;
+
     //- List of pointers to the field of electrolytes concentrations
     PtrList<volScalarField::Internal> EPtrs_;
 
@@ -150,8 +156,8 @@ private:
     //- Calculated by simple subtractions
     const wordList namesMedians = {"Sco2", "Snh3"};
 
-    //- inert substances
-    const wordList namesInerts = {"Scat", "San"};
+    //- Ions substances
+    const wordList namesIons = {"Scat", "San"};
 
     //- Cation concentration (inert)
     dimensionedScalar Scat_;
@@ -304,6 +310,12 @@ public:
     //- Return dGPtrs_
     inline PtrList<volScalarField::Internal>& dG();
 
+    //- Return IOPtrs_
+    inline PtrList<volScalarField>& IO();
+
+    //- Return dIOPtrs_
+    inline PtrList<volScalarField::Internal>& dIO();
+
     //- Clear derivative pointer lists
     void clear();
 
@@ -315,6 +327,9 @@ public:
 
     //- Return components consumption rate matrix, i.e. source term.
     tmp<fvScalarMatrix> RG(label i) const;
+    
+    //- Return components consumption rate matrix, i.e. source term.
+    tmp<fvScalarMatrix> RIO(label i) const;
    
     //- Return const access to the chemical source terms for specie, i
     // inline const volScalarField::Internal& RR ( const label i ) const;
