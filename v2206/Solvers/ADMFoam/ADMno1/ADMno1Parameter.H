@@ -234,7 +234,12 @@ public:
         ),
         pHL_
         (
-            5.5, 4.0, 7.0, 6.0, 6.0, 5.0
+            5.5,    // ULaa
+            4.0,    // LLaa
+            7.0,    // ULac
+            6.0,    // LLac
+            6.0,    // ULh2
+            5.0     // LLh2
         ),
         NC_
         (
@@ -298,12 +303,7 @@ public:
 
     inline scalar Iini(label idx) const;
 
-    // inline scalar INFLOW(label idx) const;
-
-    inline dimensionedScalar INFLOW(label idx) const
-    {
-        return INFLOW_[idx];
-    };
+    inline dimensionedScalar INFLOW(label idx) const;
     
 };
 

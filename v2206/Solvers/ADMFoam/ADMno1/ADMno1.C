@@ -56,15 +56,13 @@ Foam::ADMno1::ADMno1
     Qin_
     (
         "Qin", 
-        dimVolume/dimTime, 
-        // 178.4674438315954
+        dimVolume/dimTime,
         178.4674
     ),
     Vgas_
     (
         "Vgas", 
         dimVolume,
-        // 100 // <<< Rosen et al.
         300
     ),
     Vliq_
@@ -78,7 +76,6 @@ Foam::ADMno1::ADMno1
     Sc_(ADMno1Dict.lookupOrDefault("Sc", 0.2)),
     R_(ADMno1Dict.lookupOrDefault("R", 0.083145)),
     KP_(ADMno1Dict.lookupOrDefault("Kpip", 5e4)),
-    // Vfrac_(ADMno1Dict.lookupOrDefault("Vfrac", 0.0294118)), // 100/3400
     Vfrac_(ADMno1Dict.lookupOrDefault("Vfrac", 0.0882353)), // 300/3400
     Pext_
     (

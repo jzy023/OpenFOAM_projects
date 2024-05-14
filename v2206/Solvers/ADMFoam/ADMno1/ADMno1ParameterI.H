@@ -140,12 +140,13 @@ License
         return Iini_[idx]; 
     }
 
-    // inline scalar admPara::INFLOW
-    // (
-    //     label idx
-    // ) const
-    // {
-    //     return INFLOW_[idx];
-    // }
+    inline dimensionedScalar admPara::INFLOW
+    (
+        label idx
+    ) const
+    {
+        return INFLOW_[idx];
+    };
+    
 
 // ************************************************************************* //

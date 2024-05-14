@@ -32,9 +32,6 @@ License
 
 void Foam::ADMno1::gasPressure()
 {
-    //- gas pressure
-    // volScalarField Ph2o = GPtrs_[0];
-
     volScalarField Ph2o
     (
         IOobject
@@ -111,8 +108,8 @@ void Foam::ADMno1::gasSourceRate()
     // TODO: actual volume would have effect on normalized kp
     kp.field() = para_.DTOS() * KP_ * (volMeshField / (Vgas_ + Vliq_).value()); // <---- this would be calculated
 
-    //  volScalarField qGasLocal = kp * (Pgas - Pext_) * (Pgas / Pext_); 
     volScalarField qGasLocal = kp * (Pgas_ - Pext_);
+
     forAll( qGasLocal.field(), i )
     {
         if ( qGasLocal.field()[i] < 0.0 ) { qGasLocal.field()[i] = 1e-16; }
