@@ -147,15 +147,6 @@ void Foam::ADMno1::calcSh2
         E.field() = fSh2(flux, x).field();
         dE.field() = dfSh2(flux, x).field();
         x.field() = x.field() - E.field()/dE.field();
-        // false check
-        // if( min(x.field()) < 0 )
-        // {
-        //     std::cerr << nl << "--> FOAM FATAL IO ERROR:" << nl
-        //               << "Sh2 concentration below Zero\n";
-        //     std::exit(1);
-        //     break;
-        // }
-        // Info << max(x.field()) << endl;
         i++;
     }
     while
@@ -393,7 +384,6 @@ void Foam::ADMno1::dYUpdate
         volScalarField::Internal inOutFlow(dYPtrs_[0]);
         inOutFlow = para_.DTOS() * (Qin_/Vliq_) * (para_.INFLOW(j) - YPtrs_[j]);
         dYPtrs_[j] = concPerComponent(j, KRPtrs_) + inOutFlow;
-        // dYPtrs_[j] = concPerComponent(j, KRPtrs_);
     }
 
     for(label j = 8; j < YPtrs_.size(); j++)
@@ -401,11 +391,7 @@ void Foam::ADMno1::dYUpdate
         volScalarField::Internal inOutFlow(dYPtrs_[0]);
         inOutFlow = para_.DTOS() * (Qin_/Vliq_) * (para_.INFLOW(j) - YPtrs_[j]);
         dYPtrs_[j] = concPerComponent(j, KRPtrs_) + inOutFlow;
-        // dYPtrs_[j] = concPerComponent(j, KRPtrs_);
     }
-
-    dIOPtrs_[0] = para_.DTOS() * (Qin_/Vliq_) * (para_.INFLOW(24) - IOPtrs_[0]);  // Scat
-    dIOPtrs_[1] = para_.DTOS() * (Qin_/Vliq_) * (para_.INFLOW(25) - IOPtrs_[1]);  // San
 
     //- calculate with STOI and gas transer
     dYPtrs_[8] -= GRPtrs_[1]; // Sch4 - Gch4

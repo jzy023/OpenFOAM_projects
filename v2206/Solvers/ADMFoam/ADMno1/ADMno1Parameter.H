@@ -301,8 +301,6 @@ public:
 
     inline scalar Eini(label idx) const;
 
-    inline scalar Iini(label idx) const;
-
     inline dimensionedScalar INFLOW(label idx) const;
     
 };

@@ -365,88 +365,6 @@ Foam::ADMno1::ADMno1
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-    //-  Ions initialization
-
-    IOPtrs_.resize(2);
-
-    IOPtrs_.set
-    (
-        0,
-        new volScalarField
-        (
-            IOobject
-            (
-                "Scat",
-                mesh.time().timeName(),
-                mesh,
-                IOobject::READ_IF_PRESENT,
-                IOobject::AUTO_WRITE
-            ),
-            mesh,
-            dimensionedScalar
-            (
-               "Scat", 
-                YPtrs_[0].dimensions(),
-                ADMno1Dict.lookupOrDefault("Scat", 0.00)
-            )
-        )
-    );
-
-    IOPtrs_.set
-    (
-        1,
-        new volScalarField
-        (
-            IOobject
-            (
-                "San",
-                mesh.time().timeName(),
-                mesh,
-                IOobject::READ_IF_PRESENT,
-                IOobject::AUTO_WRITE
-            ),                             
-            mesh,
-            dimensionedScalar
-            (
-               "San", 
-                YPtrs_[0].dimensions(),
-                ADMno1Dict.lookupOrDefault("San", 0.0052)
-            )
-        )
-    );
-
-    
-    //- Initializing derivatives
-
-    dIOPtrs_.resize(namesIons.size());
-
-    for(label i = 0; i < namesIons.size(); i++)
-    {
-        dIOPtrs_.set
-        (
-            i,
-            new volScalarField::Internal
-            (
-                IOobject
-                (
-                    "d" + IOPtrs_[i].name(),
-                    mesh.time().timeName(),
-                    mesh,
-                    IOobject::NO_READ,
-                    IOobject::NO_WRITE
-                ),
-                mesh,
-                dimensionedScalar
-                (
-                    IOPtrs_[0].dimensions()/dimTime, 
-                    Zero
-                )
-            )
-        );
-    }
-
-    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-
     //-  Medians initialization
 
     Info<< "Initializing concentrations for electrolytes" << endl;
@@ -721,10 +639,6 @@ void Foam::ADMno1::correct
 
     //- Sh2 calculations
     calcSh2(flux);
-
-    // //- 
-    // // calcTC();
-
 }
 
 
@@ -767,41 +681,14 @@ tmp<fvScalarMatrix> Foam::ADMno1::RG
             (
                 GPtrs_[i],
                 dG.dimensions()*dimVolume
-                // dimMass/dimTime // <- for compressible flow and uses fvm::ddt(rho, Yi)
             )
         );
 
     fvScalarMatrix& Su = tSu.ref();
     
-    // https://www.openfoam.com/documentation/guides/latest/api/fvMatrix_8C_source.html#l01708
     Su += dG; 
 
     return tSu;
 };
-
-tmp<fvScalarMatrix> Foam::ADMno1::RIO
-(
-    label i
-) const
-{
-    DimensionedField<scalar, volMesh> dIO = dIOPtrs_[i];
-
-        tmp<fvScalarMatrix> tSu
-        (
-            new fvScalarMatrix
-            (
-                IOPtrs_[i],
-                dIO.dimensions()*dimVolume
-                // dimMass/dimTime // <- for compressible flow and uses fvm::ddt(rho, Yi)
-            )
-        );
-
-    fvScalarMatrix& Su = tSu.ref();
-    
-    // https://www.openfoam.com/documentation/guides/latest/api/fvMatrix_8C_source.html#l01708
-    Su += dIO; 
-
-    return tSu;
-}; 
 
 // ************************************************************************* //

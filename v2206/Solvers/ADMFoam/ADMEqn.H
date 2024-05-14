@@ -2,48 +2,14 @@ Info << "ADM convection-diffusion calculation" << endl;
 
 PtrList<volScalarField>& YPtrs = reaction->Y();
 PtrList<volScalarField>& GPtrs = reaction->G();
-PtrList<volScalarField>& IOPtrs = reaction->IO();
 
 volScalarField Deff = turbulence->nu() / reaction->Sc();
 
 {
-    // <<< TEST ---------------------------------------------------------------- //
-    // volScalarField rho
-    // (
-    //     IOobject
-    //     (
-    //         "rho",
-    //         runTime.timeName(),
-    //         mesh,
-    //         IOobject::READ_IF_PRESENT,
-    //         IOobject::NO_WRITE
-    //     ),
-    //     mesh,
-    //     dimensionedScalar
-    //     (
-    //         "rho", 
-    //         dimensionSet(1,-3,0,0,0,0,0), 
-    //         1000
-    //     )
-    // );
-    // volScalarField DMuEff = Deff*rho;
-    // <<< TEST ---------------------------------------------------------------- //
-
     reaction->clear();
     reaction->correct(phi, T);
 
-    //- TEST
-    // volScalarField test(fvc::div(phi, 1000.0*YPtrs[0]));
-    // Info << test << endl;
-
-    // Qdot = reaction->Qdot();
-
-    // volScalarField& Yi = YPtrs[7];
-    // Info << Yi.dimensions() << endl;
-    // Info << fvm::ddt(Yi)->dimensions() << endl;
-    // Info << fvm::div(phi, Yi)->dimensions() << endl;
-    // Info << reaction->R(7)->dimensions() << endl;
-
+    // Liquid Phase ============================================================ //
     forAll(YPtrs, i)
     {
         if(i != 7)
@@ -52,13 +18,7 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
 
             fvScalarMatrix YiEqn
             (
-                fvm::ddt(Yi)
-            //   + fvm::div(phi, Yi)
-            //   - fvm::laplacian(Deff, Yi)
-              ==
-            //     fvOptions(Yi)
-            //   + reaction->R(i)
-                reaction->R(i)
+                fvm::ddt(Yi) == reaction->R(i)
             );
 
             YiEqn.relax();
@@ -71,22 +31,14 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
         }
     }
 
-    // Gas Phase ============================================================ //
-    // TODO: add rho and make adjustment for compressibility
-
+    // Pseudo Gas Phase ======================================================== //
     forAll(GPtrs, i)
     {
         volScalarField& Gi = GPtrs[i];
 
         fvScalarMatrix GiEqn
         (
-            fvm::ddt(Gi)
-        //   + fvm::div(phi, Gi)
-        //   - fvm::laplacian(Deff, Gi)
-         ==
-        //     fvOptions(Gi)
-        //   + reaction->RG(i)
-            reaction->RG(i)
+            fvm::ddt(Gi) == reaction->RG(i)
         );
 
         GiEqn.relax();
@@ -98,29 +50,5 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
         fvOptions.correct(Gi);
     }
 
-    // Ions ================================================================= //
-    // TODO: add rho and make adjustment for compressibility
-
-    forAll(IOPtrs, i)
-    {
-        volScalarField& IOi = IOPtrs[i];
-
-        fvScalarMatrix IOiEqn
-        (
-            fvm::ddt(IOi)
-         ==
-            reaction->RIO(i)
-        );
-
-        IOiEqn.relax();
-
-        fvOptions.constrain(IOiEqn);
-
-        IOiEqn.solve(mesh.solver("Yi"));
-
-        fvOptions.correct(IOi);
-    }
-
-    // Gas Phase ============================================================ //
 
 }

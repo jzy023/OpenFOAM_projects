@@ -132,14 +132,6 @@ License
         return Eini_[idx]; 
     }
 
-    inline scalar admPara::Iini
-    (
-        label idx
-    ) const
-    {
-        return Iini_[idx]; 
-    }
-
     inline dimensionedScalar admPara::INFLOW
     (
         label idx

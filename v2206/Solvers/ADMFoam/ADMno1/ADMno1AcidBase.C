@@ -88,10 +88,6 @@ volScalarField::Internal Foam::ADMno1::fShp
                                  EPtrs_[4] - EPtrs_[3]/64.0 - EPtrs_[2]/112.0 - EPtrs_[1]/160.0 - EPtrs_[0]/208.0;
 
     // DEBUG
-
-    // volScalarField::Internal E = IOPtrs_[0].internalField() - IOPtrs_[1].internalField() + ShpTemp - SohN + (YPtrs_[10].internalField() - MPtrs_[1].internalField()) - 
-    //                              EPtrs_[4] - EPtrs_[3]/64.0 - EPtrs_[2]/112.0 - EPtrs_[1]/160.0 - EPtrs_[0]/208.0;
-
     // Info << ">>>\n" <<
     //         "E(x):\t" << max(E.field()) << "\n" << // endl;
     //         "x:\t" << max(ShpTemp.field()) << "\n" <<
@@ -185,13 +181,6 @@ void Foam::ADMno1::calcShp()
         E.field() = fShp(x).field();
         dE.field() = dfShp(x).field();
         x.field() = x.field() - E.field()/dE.field();
-        // false check
-        // if( min(x.field()) < 0 )
-        // {
-        //     std::cerr << nl << "--> FOAM FATAL IO ERROR:" << nl
-        //               << "Proton (H+) concentration below Zero\n";
-        //     std::exit(1);
-        // }
         i++;
     }
     while
