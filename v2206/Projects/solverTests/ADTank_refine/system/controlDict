@@ -1,0 +1,80 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2206                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     simpleFoam;
+
+startFrom       startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         10;//0.05;
+
+deltaT          1e-5;
+
+adjustableRunTime yes; 
+
+writeControl    runTime;
+
+writeInterval   5;//0.01;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   5;
+
+adjustTimeStep  yes;
+
+maxCo           0.8;
+
+runTimeModifiable true;
+
+functions
+{
+    #includeFunc mag(U)
+    linesample
+    {
+        type                    sets;
+        libs                    (“libsampling.so”);
+        writeControl            runTime;
+        writeInterval           5;
+        interpolationScheme     cellPoint;
+        setFormat               raw;
+        sets
+        (
+            data
+            {
+                type    uniform;
+                axis    y;
+                start   (0  -0.11  0);
+                end     (0  0.11  0);
+                nPoints 500;
+            }
+        );
+        fields (U);
+    }
+}
+
+
+// ************************************************************************* //
