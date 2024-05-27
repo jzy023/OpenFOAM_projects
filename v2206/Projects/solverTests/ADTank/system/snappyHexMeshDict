@@ -75,11 +75,6 @@ castellatedMeshControls
             level 2;
         }
 
-        // {
-        //     file "GeoTank_ss.eMesh";
-        //     level 2;
-        // }
-
         {
             file "GeoShaft_ss.eMesh";
             level 4;
@@ -103,7 +98,7 @@ castellatedMeshControls
 
         GeoShaft
         {
-            level (5 5);
+            level (4 4);
         }
 
     }
