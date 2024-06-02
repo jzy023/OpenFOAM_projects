@@ -16,48 +16,34 @@ FoamFile
 
 solvers
 {
-    p_rgh
+    p
     {
         solver          GAMG;
         smoother        GaussSeidel;
-        tolerance       1e-8;
+        tolerance       1e-12;
         relTol          0.01;
     }
 
-    p_rghFinal
+    pFinal
     {
-        $p_rgh;
+        $p;
         smoother        DICGaussSeidel;
+        tolerance       1e-12;
+        relTol          0.01;
+    }
+
+    "(U|k|omega|epsilon)"
+    {
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
         tolerance       1e-8;
         relTol          0.01;
     }
 
-    // p_rgh
-    // {
-    //     solver          PCG;
-    //     preconditioner  DIC;
-    //     tolerance       1e-6;
-    //     relTol          0.01;
-    // }
-
-    // p_rghFinal
-    // {
-    //     $p_rgh;
-    //     relTol          0;
-    // }
-
-    "(U|T|k|omega|epsilon)"
+    "(U|k|omega|epsilon)Final"
     {
-        solver          PBiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-8;
-        relTol          0.01;
-    }
-
-    "(U|T|k|omega|epsilon)Final"
-    {
-        solver          PBiCGStab;
-        preconditioner  DILU;
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
         tolerance       1e-8;
         relTol          0.01;
     }

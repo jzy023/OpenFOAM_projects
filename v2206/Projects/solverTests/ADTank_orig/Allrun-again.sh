@@ -10,6 +10,3 @@ runApplication decomposePar
 runParallel $(getApplication)
 runApplication reconstructParMesh -constant
 runApplication reconstructPar
-rm -rf proc*
-# Post -------------------
-touch foam.foam

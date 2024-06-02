@@ -11,25 +11,19 @@ FoamFile
     format      ascii;
     class       dictionary;
     location    "constant";
-    object      transportProperties;
+    object      momentumTransport;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-transportModel  Newtonian;
+simulationType RAS;
 
-// nu              0.00;
-nu              1e-4;
+RAS
+{
+    model           kEpsilon;
 
-// Thermal expansion coefficient
-beta            3e-03;
+    turbulence      on;
 
-// Reference temperature
-TRef            300;
-
-// Laminar Prandtl number
-Pr              0.7;
-
-// Turbulent Prandtl number
-Prt             0.85;
+    printCoeffs     on;
+}
 
 // ************************************************************************* //

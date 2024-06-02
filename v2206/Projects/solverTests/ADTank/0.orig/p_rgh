@@ -16,32 +16,36 @@ FoamFile
 
 dimensions          [0 2 -2 0 0 0 0];
 
-internalField       uniform 1.013e5;
+internalField       uniform 0;
 
 boundaryField
 {
     allBoundary
     {
-        type            calculated;
-        value           $internalField;
+        type            fixedFluxPressure;
+        rho             rhok;
+        value           uniform 0;
     }
 
     top
     {
-        type            calculated;
-        value           $internalField;
+        type            fixedFluxPressure;
+        rho             rhok;
+        value           uniform 0;
     }
 
     GeoTank
     {
-        type            calculated;
-        value           $internalField;
+        type            fixedFluxPressure;
+        rho             rhok;
+        value           uniform 0;
     }
 
     GeoShaft
     {
-        type            calculated;
-        value           $internalField;
+        type            fixedFluxPressure;
+        rho             rhok;
+        value           uniform 0;
     }
 
         

@@ -9,14 +9,32 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       uniformDimensionedVectorField;
-    location    "constant";
-    object      g;
+    class       dictionary;
+    object      surfaceFeatureExtractDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 1 -2 0 0 0 0];
-value           (0 0 -9.81);
+GeoShaft_ss.stl { 
+    extractionMethod            extractFromSurface;
+    extractFromSurfaceCoeffs    { includedAngle 135; }
+
+    subsetFeatures
+    {
+        nonManifoldEdges        no;
+        openEdges               no;
+    }
+}
+
+GeoTank_ss.stl {
+    extractionMethod            extractFromSurface;
+    extractFromSurfaceCoeffs    { includedAngle 150; }
+
+    subsetFeatures
+    {
+        nonManifoldEdges        no;
+        openEdges               no;
+    }
+}
 
 
 // ************************************************************************* //

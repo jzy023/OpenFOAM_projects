@@ -2,7 +2,7 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     | Website:  https://openfoam.org
-    \\  /    A nd           | Version:  8
+    \\  /    A nd           | Version:  7  
      \\/     M anipulation  |
 \*---------------------------------------------------------------------------*/
 FoamFile
@@ -11,25 +11,21 @@ FoamFile
     format      ascii;
     class       dictionary;
     location    "constant";
-    object      transportProperties;
+    object      MRFProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-transportModel  Newtonian;
+MRFImpeller
+{
+    cellZone    cellMRFzone;
+    active      yes;
 
-// nu              0.00;
-nu              1e-4;
+    // Fixed patches (by default they 'move' with the MRF zone)
+    nonRotatingPatches ();
 
-// Thermal expansion coefficient
-beta            3e-03;
-
-// Reference temperature
-TRef            300;
-
-// Laminar Prandtl number
-Pr              0.7;
-
-// Turbulent Prandtl number
-Prt             0.85;
+    origin    (0.0 0.0 0.0);
+    axis      (0 0 1);
+    omega     constant 1.256; // ~12 RPM
+}
 
 // ************************************************************************* //

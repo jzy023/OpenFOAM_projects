@@ -23,18 +23,20 @@ boundaryField
 {
     allBoundary
     {
-        type            zeroGradient;
+                type            calculated;
     }
 
     top
     {
-        type            symmetry;
+                value           $internalField;
     }
+    
     GeoTank
     {
         type            epsilonWallFunction;
         value           $internalField;
     }
+
     GeoShaft
     {
         type            epsilonWallFunction;

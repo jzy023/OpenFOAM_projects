@@ -2,7 +2,7 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     | Website:  https://openfoam.org
-    \\  /    A nd           | Version:  7  
+    \\  /    A nd           | Version:  8
      \\/     M anipulation  |
 \*---------------------------------------------------------------------------*/
 FoamFile
@@ -10,41 +10,37 @@ FoamFile
     version     2.0;
     format      ascii;
     class       volScalarField;
-    object      p;
+    location    "0";
+    object      epsilon;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions          [0 2 -2 0 0 0 0];
+dimensions      [0 2 -3 0 0 0 0];
 
-internalField       uniform 1.013e5;
+internalField   uniform 20;
 
 boundaryField
 {
     allBoundary
     {
-        type            calculated;
-        value           $internalField;
+        type            zeroGradient;
     }
 
     top
     {
-        type            calculated;
-        value           $internalField;
+        type            symmetry;
     }
-
     GeoTank
     {
-        type            calculated;
+        type            epsilonWallFunction;
         value           $internalField;
     }
-
     GeoShaft
     {
-        type            calculated;
+        type            epsilonWallFunction;
         value           $internalField;
     }
-
-        
 }
 
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// ************************************************************************* //

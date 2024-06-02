@@ -28,16 +28,18 @@ boundaryField
 
     top
     {
-        type            symmetry;
+         type           zeroGradient;
     }
     GeoTank
     {
+        // type            zeroGradient;
         type            nutkWallFunction;
         value           uniform 0;
     }
 
     GeoShaft
     {
+        // type            zeroGradient;
         type            nutkWallFunction;
         value           uniform 0;
     }

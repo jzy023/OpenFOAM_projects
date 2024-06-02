@@ -8,43 +8,42 @@
 FoamFile
 {
     version     2.0;
-    format      ascii;
-    class       volScalarField;
-    object      p;
+    format      binary;
+    class       volVectorField;
+    object      U;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions          [0 2 -2 0 0 0 0];
+dimensions      [0 1 -1 0 0 0 0];
 
-internalField       uniform 1.013e5;
+internalField   uniform (0 0 0);
 
 boundaryField
 {
     allBoundary
     {
-        type            calculated;
-        value           $internalField;
+        type            noSlip;
     }
-
+    
     top
     {
-        type            calculated;
-        value           $internalField;
+        type            symmetry;
     }
-
     GeoTank
     {
-        type            calculated;
-        value           $internalField;
+        type            fixedValue;
+        value           uniform (0 0 0);
     }
 
     GeoShaft
     {
-        type            calculated;
-        value           $internalField;
+        type            fixedValue;
+        value           uniform (0 0 0);
     }
 
-        
+
+   
+    
 }
 
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+// ************************************************************************* //

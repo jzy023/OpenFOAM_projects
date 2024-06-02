@@ -29,16 +29,15 @@ boundaryField
     {
         type            symmetry;
     }
+
     GeoTank
     {
-        type            fixedValue;
-        value           uniform (0 0 0);
+        type            noSlip;
     }
 
     GeoShaft
     {
-        type            fixedValue;
-        value           uniform (0 0 0);
+        type            noSlip;
     }
 
 

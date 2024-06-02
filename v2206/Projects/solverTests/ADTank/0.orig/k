@@ -17,7 +17,7 @@ FoamFile
 
 dimensions      [0 2 -2 0 0 0 0];
 
-internalField   uniform 1;
+internalField   uniform 1e-16;
 
 boundaryField
 {
@@ -30,6 +30,7 @@ boundaryField
     {
         type            symmetry;
     }
+
     GeoTank
     {
         type            kqRWallFunction;
@@ -41,6 +42,18 @@ boundaryField
         type            kqRWallFunction;
         value           uniform 0;
     }
+
+    // GeoTank
+    // {
+    //     type            fixedValue;
+    //     value           uniform 1e-16;
+    // }
+
+    // GeoShaft
+    // {
+    //     type            fixedValue;
+    //     value           uniform 1e-16;
+    // }
 
 }
 
