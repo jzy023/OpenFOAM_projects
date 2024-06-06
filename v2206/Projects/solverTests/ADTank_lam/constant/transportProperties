@@ -17,8 +17,8 @@ FoamFile
 
 transportModel  Newtonian;
 
-// nu              1e-4;
-nu              5e-4;
+nu              1e-4;
+// nu              5e-4;
 
 // Thermal expansion coefficient
 beta            3e-03;

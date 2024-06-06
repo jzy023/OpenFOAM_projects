@@ -383,7 +383,7 @@ Foam::ADMno1::ADMno1
                 mesh.time().timeName(),
                 mesh,
                 IOobject::READ_IF_PRESENT,
-                IOobject::AUTO_WRITE
+                IOobject::NO_WRITE
             ),
             mesh,
             dimensionedScalar
@@ -406,7 +406,7 @@ Foam::ADMno1::ADMno1
                 mesh.time().timeName(),
                 mesh,
                 IOobject::READ_IF_PRESENT,
-                IOobject::AUTO_WRITE
+                IOobject::NO_WRITE
             ),                             
             mesh,
             dimensionedScalar
@@ -469,7 +469,7 @@ Foam::ADMno1::ADMno1
                     mesh.time().timeName(),
                     mesh,
                     IOobject::NO_READ, // READ_IF_PRESENT,
-                    IOobject::AUTO_WRITE
+                    IOobject::NO_WRITE
                 ),
                 mesh,
                 dimensionedScalar

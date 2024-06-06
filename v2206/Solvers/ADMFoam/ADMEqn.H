@@ -1,10 +1,12 @@
 Info << "ADM convection-diffusion calculation" << endl;
 
-PtrList<volScalarField>& YPtrs = reaction->Y();
-PtrList<volScalarField>& GPtrs = reaction->G();
-PtrList<volScalarField>& IOPtrs = reaction->IO();
+// PtrList<volScalarField>& YPtrs = reaction->Y();
+// PtrList<volScalarField>& GPtrs = reaction->G();
+// PtrList<volScalarField>& IOPtrs = reaction->IO();
 
+//TODO: turbulent diff and different diff compared to particulate species
 volScalarField Deff = turbulence->nu() / reaction->Sc();
+volScalarField DpartEff = Deff / 10.0;
 
 {
     // <<< TEST ---------------------------------------------------------------- //
@@ -29,9 +31,6 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
     // volScalarField DMuEff = Deff*rho;
     // <<< TEST ---------------------------------------------------------------- //
 
-    reaction->clear();
-    reaction->correct(phi, T);
-
     //- TEST
     // volScalarField test(fvc::div(phi, 1000.0*YPtrs[0]));
     // Info << test << endl;
@@ -44,21 +43,24 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
     // Info << fvm::div(phi, Yi)->dimensions() << endl;
     // Info << reaction->R(7)->dimensions() << endl;
 
+
+    // reaction->clear();
+    // reaction->correct(phi, T);
+
     forAll(YPtrs, i)
     {
-        if(i != 7)
-        {
+        // if (i <= 11) 
+        // {
             volScalarField& Yi = YPtrs[i];
 
             fvScalarMatrix YiEqn
             (
                 fvm::ddt(Yi)
-            //   + fvm::div(phi, Yi)
-            //   - fvm::laplacian(Deff, Yi)
-              ==
-            //     fvOptions(Yi)
-            //   + reaction->R(i)
-                reaction->R(i)
+              + fvm::div(phi, Yi)
+              - fvm::laplacian(Deff, Yi)
+             ==
+                fvOptions(Yi)
+              + reaction->R(i)
             );
 
             YiEqn.relax();
@@ -68,7 +70,29 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
             YiEqn.solve(mesh.solver("Yi"));
 
             fvOptions.correct(Yi);
-        }
+        // }
+        // else
+        // {
+        //     volScalarField& Yi = YPtrs[i];
+
+        //     fvScalarMatrix YiEqn
+        //     (
+        //         fvm::ddt(Yi)
+        //       + fvm::div(phi, Yi)
+        //       - fvm::laplacian(DpartEff, Yi)
+        //      ==
+        //         fvOptions(Yi)
+        //       + reaction->R(i)
+        //     );
+
+        //     YiEqn.relax();
+
+        //     fvOptions.constrain(YiEqn);
+
+        //     YiEqn.solve(mesh.solver("Yi"));
+
+        //     fvOptions.correct(Yi);
+        // }
     }
 
     // Gas Phase ============================================================ //
@@ -81,12 +105,11 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
         fvScalarMatrix GiEqn
         (
             fvm::ddt(Gi)
-        //   + fvm::div(phi, Gi)
-        //   - fvm::laplacian(Deff, Gi)
+          + fvm::div(phi, Gi)
+          - fvm::laplacian(Deff, Gi)
          ==
-        //     fvOptions(Gi)
-        //   + reaction->RG(i)
-            reaction->RG(i)
+            fvOptions(Gi)
+          + reaction->RG(i)
         );
 
         GiEqn.relax();
@@ -101,25 +124,25 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
     // Ions ================================================================= //
     // TODO: add rho and make adjustment for compressibility
 
-    forAll(IOPtrs, i)
-    {
-        volScalarField& IOi = IOPtrs[i];
+    // forAll(IOPtrs, i)
+    // {
+    //     volScalarField& IOi = IOPtrs[i];
 
-        fvScalarMatrix IOiEqn
-        (
-            fvm::ddt(IOi)
-         ==
-            reaction->RIO(i)
-        );
+    //     fvScalarMatrix IOiEqn
+    //     (
+    //         fvm::ddt(IOi)
+    //      ==
+    //         reaction->RIO(i)
+    //     );
 
-        IOiEqn.relax();
+    //     IOiEqn.relax();
 
-        fvOptions.constrain(IOiEqn);
+    //     fvOptions.constrain(IOiEqn);
 
-        IOiEqn.solve(mesh.solver("Yi"));
+    //     IOiEqn.solve(mesh.solver("Yi"));
 
-        fvOptions.correct(IOi);
-    }
+    //     fvOptions.correct(IOi);
+    // }
 
     // Gas Phase ============================================================ //
 

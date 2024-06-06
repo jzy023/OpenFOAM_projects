@@ -14,7 +14,8 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     buoyantBoussinesqPimpleFoam;
+// application     buoyantBoussinesqPimpleFoam;
+application     ADMFoam;
 
 startFrom       startTime;
 
@@ -23,22 +24,22 @@ startTime       0;
 stopAt          endTime;
 
 // endTime         10;
-// deltaT          0.1;
+// deltaT          0.01;
+// writeInterval   1;
 
 endTime         200;
-deltaT          0.1;
+deltaT          0.01;
+writeInterval   10;
 
 adjustableRunTime yes; 
 
 writeControl    runTime;
 
-writeInterval   10;
-
 purgeWrite      0;
 
 writeFormat     ascii;
 
-writePrecision  12;
+writePrecision  6;
 
 writeCompression off;
 
@@ -50,147 +51,145 @@ adjustTimeStep  true;
 
 runTimeModifiable true;
 
-maxCo           100;
+maxCo           50;
 
-maxDeltaT       2;
+maxDeltaT       1;
 
 functions
 {
     // #includeFunc mag(U)
-	
-	linesample_00
-	{
-		type						sets;
-		libs						("libsampling.so");
-		timeStart					190;
-		writeControl				$writeControl;
-		writeInterval				0.5;
-		interpolationScheme			cell;
-		setFormat					csv;
-		sets						(
-			data
-			{
-				type				uniform;
-				axis				xyz;
-				start				(-0.00767321211185378  -0.10973204552858067  0.0);
-				end					(0.007673212111853784  0.10973204552858067  0.0);
-				nPoints				500;
-			}
-		);
-		fields	(U);
-	}
 
-	linesample_01
-	{
-		type						sets;
-		libs						("libsampling.so");
-		timeStart					190;
-		writeControl				$writeControl;
-		writeInterval				0.5;
-		interpolationScheme			cell;
-		setFormat					csv;
-		sets						(
-			data
-			{
-				type				uniform;
-				axis				xyz;
-				start				(-0.09119413298105455  -0.061511219381782195  0.0);
-				end					(0.09119413298105458  0.06151121938178216  0.0);
-				nPoints				500;
-			}
-		);
-		fields	(U);
-	}
+	// linesample_00
+	// {
+	// 	type						sets;
+	// 	libs						("libsampling.so");
+	// 	timeStart					100;
+	// 	writeControl				$writeControl;
+	// 	writeInterval				1;
+	// 	interpolationScheme			cell;
+	// 	setFormat					csv;
+	// 	sets						(
+	// 		data
+	// 		{
+	// 			type				uniform;
+	// 			axis				xyz;
+	// 			start				(-0.00767321211185378  -0.10973204552858067  0.0);
+	// 			end					(0.007673212111853784  0.10973204552858067  0.0);
+	// 			nPoints				500;
+	// 		}
+	// 	);
+	// 	fields	(U);
+	// }
 
-	linesample_02
-	{
-		type						sets;
-		libs						("libsampling.so");
-		timeStart					190;
-		writeControl				$writeControl;
-		writeInterval				0.5;
-		interpolationScheme			cell;
-		setFormat					csv;
-		sets						(
-			data
-			{
-				type				uniform;
-				axis				xyz;
-				start				(-0.09886734509290836  -0.048220826146798554  0.0);
-				end					(0.09886734509290837  0.04822082614679852  0.0);
-				nPoints				500;
-			}
-		);
-		fields	(U);
-	}
+	// linesample_01
+	// {
+	// 	type						sets;
+	// 	libs						("libsampling.so");
+	// 	timeStart					100;
+	// 	writeControl				$writeControl;
+	// 	writeInterval				1;
+	// 	interpolationScheme			cell;
+	// 	setFormat					csv;
+	// 	sets						(
+	// 		data
+	// 		{
+	// 			type				uniform;
+	// 			axis				xyz;
+	// 			start				(-0.09119413298105455  -0.061511219381782195  0.0);
+	// 			end					(0.09119413298105458  0.06151121938178216  0.0);
+	// 			nPoints				500;
+	// 		}
+	// 	);
+	// 	fields	(U);
+	// }
 
-	linesample_03
-	{
-		type						sets;
-		libs						("libsampling.so");
-		timeStart					190;
-		writeControl				$writeControl;
-		writeInterval				0.5;
-		interpolationScheme			cell;
-		setFormat					csv;
-		sets						(
-			data
-			{
-				type				uniform;
-				axis				xyz;
-				start				(-0.09886734509290841  0.04822082614679843  0.0);
-				end					(0.09886734509290838  -0.048220826146798484  0.0);
-				nPoints				500;
-			}
-		);
-		fields	(U);
-	}
+	// linesample_02
+	// {
+	// 	type						sets;
+	// 	libs						("libsampling.so");
+	// 	timeStart					100;
+	// 	writeControl				$writeControl;
+	// 	writeInterval				1;
+	// 	interpolationScheme			cell;
+	// 	setFormat					csv;
+	// 	sets						(
+	// 		data
+	// 		{
+	// 			type				uniform;
+	// 			axis				xyz;
+	// 			start				(-0.09886734509290836  -0.048220826146798554  0.0);
+	// 			end					(0.09886734509290837  0.04822082614679852  0.0);
+	// 			nPoints				500;
+	// 		}
+	// 	);
+	// 	fields	(U);
+	// }
 
-	linesample_04
-	{
-		type						sets;
-		libs						("libsampling.so");
-		timeStart					190;
-		writeControl				$writeControl;
-		writeInterval				0.5;
-		interpolationScheme			cell;
-		setFormat					csv;
-		sets						(
-			data
-			{
-				type				uniform;
-				axis				xyz;
-				start				(-0.09119413298105462  0.061511219381782084  0.0);
-				end					(0.0911941329810546  -0.06151121938178213  0.0);
-				nPoints				500;
-			}
-		);
-		fields	(U);
-	}
+	// linesample_03
+	// {
+	// 	type						sets;
+	// 	libs						("libsampling.so");
+	// 	timeStart					100;
+	// 	writeControl				$writeControl;
+	// 	writeInterval				1;
+	// 	interpolationScheme			cell;
+	// 	setFormat					csv;
+	// 	sets						(
+	// 		data
+	// 		{
+	// 			type				uniform;
+	// 			axis				xyz;
+	// 			start				(-0.09886734509290841  0.04822082614679843  0.0);
+	// 			end					(0.09886734509290838  -0.048220826146798484  0.0);
+	// 			nPoints				500;
+	// 		}
+	// 	);
+	// 	fields	(U);
+	// }
 
-	linesample_05
-	{
-		type						sets;
-		libs						("libsampling.so");
-		timeStart					190;
-		writeControl				$writeControl;
-		writeInterval				0.5;
-		interpolationScheme			cell;
-		setFormat					csv;
-		sets						(
-			data
-			{
-				type				uniform;
-				axis				xyz;
-				start				(-0.00767321211185382  0.10973204552858067  0.0);
-				end					(0.007673212111853808  -0.10973204552858067  0.0);
-				nPoints				500;
-			}
-		);
-		fields	(U);
-	}
+	// linesample_04
+	// {
+	// 	type						sets;
+	// 	libs						("libsampling.so");
+	// 	timeStart					100;
+	// 	writeControl				$writeControl;
+	// 	writeInterval				1;
+	// 	interpolationScheme			cell;
+	// 	setFormat					csv;
+	// 	sets						(
+	// 		data
+	// 		{
+	// 			type				uniform;
+	// 			axis				xyz;
+	// 			start				(-0.09119413298105462  0.061511219381782084  0.0);
+	// 			end					(0.0911941329810546  -0.06151121938178213  0.0);
+	// 			nPoints				500;
+	// 		}
+	// 	);
+	// 	fields	(U);
+	// }
 
-
+	// linesample_05
+	// {
+	// 	type						sets;
+	// 	libs						("libsampling.so");
+	// 	timeStart					100;
+	// 	writeControl				$writeControl;
+	// 	writeInterval				1;
+	// 	interpolationScheme			cell;
+	// 	setFormat					csv;
+	// 	sets						(
+	// 		data
+	// 		{
+	// 			type				uniform;
+	// 			axis				xyz;
+	// 			start				(-0.00767321211185382  0.10973204552858067  0.0);
+	// 			end					(0.007673212111853808  -0.10973204552858067  0.0);
+	// 			nPoints				500;
+	// 		}
+	// 	);
+	// 	fields	(U);
+	// }
 
 }
 

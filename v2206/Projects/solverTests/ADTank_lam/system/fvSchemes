@@ -17,44 +17,37 @@ FoamFile
 ddtSchemes
 {
     // default         steadyState;
+    // default         backward;
     default         Euler;
 }
 
 gradSchemes
 {
     default         Gauss linear;
-    grad(p)         Gauss linear;
-    grad(U)         cellLimited Gauss linear 1;
 }
 
 divSchemes
 {
+    default         Gauss linear;
 
-    // default         Gauss linear;
-    // div(phi,U)      bounded Gauss linearUpwind unlimited;
-    // div(phi,T)      bounded Gauss linearUpwind unlimited;
+    div(phi,U)      Gauss LUST grad(U);
 
-    // turbulence      bounded Gauss linearUpwind limited;
-    // div(phi,k)      $turbulence;
-    // div(phi,omega)  $turbulence;
-    // div(phi,epsilon) $turbulence;
-    // div((nuEff*dev2(T(grad(U))))) Gauss linear;
+    div(phi,k)      Gauss limitedLinear 1;
+    div(phi,epsilon) Gauss linear;
+    div(phi,R)      Gauss linear;
+    div(R)          Gauss linear;
 
-    default         none;
-
-    div(phi,U)      Gauss linearUpwind grad(U);
-    div(phi,T)      bounded Gauss linearUpwind unlimited;
-
-    turbulence      Gauss upwind;
-    div(phi,k)      $turbulence;
-    div(phi,epsilon) $turbulence;
+    div(phi,T)      Gauss upwind;
+    div(phi,Yi)     Gauss upwind;
+    div(phi,S*)     Gauss linearUpwind;
+    div(phi,G*)     Gauss linearUpwind;
 
     div((nuEff*dev2(T(grad(U))))) Gauss linear;
 }
 
 laplacianSchemes
 {
-    default         Gauss linear limited corrected 0.33;
+    default         Gauss linear limited corrected 0.5;
 }
 
 interpolationSchemes
@@ -64,13 +57,7 @@ interpolationSchemes
 
 snGradSchemes
 {
-    // default         corrected;
-    default         limited corrected 0.33;
-}
-
-wallDist
-{
-    method meshWave;
+    default         corrected;
 }
 
 // ************************************************************************* //

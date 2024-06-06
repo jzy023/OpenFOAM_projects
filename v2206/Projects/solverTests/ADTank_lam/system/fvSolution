@@ -27,70 +27,38 @@ solvers
     p_rghFinal
     {
         $p_rgh;
-        smoother        DICGaussSeidel;
-        tolerance       1e-6;
-        relTol          0.01;
+        relTol          0;
     }
 
-    // p_rgh
-    // {
-    //     solver          PCG;
-    //     preconditioner  DIC;
-    //     tolerance       1e-6;
-    //     relTol          0.01;
-    // }
-
-    // p_rghFinal
-    // {
-    //     $p_rgh;
-    //     relTol          0;
-    // }
-
-    // "(U|T|k|omega|epsilon)"
-    // {
-    //     solver          PBiCGStab;
-    //     preconditioner  DILU;
-    //     tolerance       1e-8;
-    //     relTol          0.01;
-    // }
-
-    // "(U|T|k|omega|epsilon)Final"
-    // {
-    //     solver          PBiCGStab;
-    //     preconditioner  DILU;
-    //     tolerance       1e-8;
-    //     relTol          0.01;
-    // }
-
-    "T"
-    {
-        solver          PBiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-8;
-        relTol          0.01;
-    }
-
-    "TFinal"
-    {
-        solver          PBiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-8;
-        relTol          0.01;
-    }
-
-    "(U|k|epsilon)"
+    "(U|k|omega|epsilon)"
     {
         solver          smoothSolver;
         smoother        symGaussSeidel;
         tolerance       1e-6;
-        relTol          0.1;
+        relTol          0.01;
+        // solver          PBiCGStab;
+        // preconditioner  DILU;
+        // tolerance       1e-6;
+        // relTol          1e-6;
     }
 
-    "(U|k|epsilon)Final"
+    "(U|k|omega|epsilon)Final"
     {
-        solver          smoothSolver;
-        smoother        symGaussSeidel;
+        $U;
+        relTol          0;
+    }
+
+    "(T|Yi|S*|G*)"
+    {
+        solver          PBiCGStab;
+        preconditioner  DILU;
         tolerance       1e-6;
+        relTol          1e-6; // <--- high relTol leads to inhomogeneity issue
+    }
+
+    "(T|Yi|S*|G*)Final"
+    {
+        $T;
         relTol          0;
     }
 }
@@ -103,6 +71,16 @@ PIMPLE
     nNonOrthogonalCorrectors 0;
     pRefCell        0;
     pRefValue       0;
+}
+
+relaxationFactors
+{
+    equations
+    {
+        U                   0.95;
+        Y*                  0.95;
+        // "(k|omega|epsilon)" 0.95;
+    }
 }
 
 // SIMPLE
@@ -118,14 +96,5 @@ PIMPLE
 //         "(k|epsilon|omega)" 1e-4;
 //     }
 // }
-
-relaxationFactors
-{
-    equations
-    {
-        U                   0.95;
-        "(k|omega|epsilon)" 0.95;
-    }
-}
 
 // ************************************************************************* //
