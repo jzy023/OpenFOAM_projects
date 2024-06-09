@@ -1,6 +1,8 @@
 Info << "ADM convection-diffusion calculation" << endl;
 
-
+// PtrList<volScalarField>& YPtrs = reaction->Y();
+// PtrList<volScalarField>& GPtrs = reaction->G();
+// PtrList<volScalarField>& IOPtrs = reaction->IO();
 
 //TODO: turbulent diff and different diff compared to particulate species
 volScalarField Deff = turbulence->nu() / reaction->Sc();
@@ -41,11 +43,9 @@ volScalarField DpartEff = Deff / 10.0;
     // Info << fvm::div(phi, Yi)->dimensions() << endl;
     // Info << reaction->R(7)->dimensions() << endl;
 
+
     // reaction->clear();
     // reaction->correct(phi, T);
-    // PtrList<volScalarField>& YPtrs = reaction->Y();
-    // PtrList<volScalarField>& GPtrs = reaction->G();
-    // PtrList<volScalarField>& IOPtrs = reaction->IO();
 
     forAll(YPtrs, i)
     {

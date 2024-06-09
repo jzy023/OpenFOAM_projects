@@ -25,7 +25,7 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Application
-    myPimpleFoam.C
+    ADMSimple.C
 
 Group
     grpIncompressibleSolvers
@@ -35,7 +35,7 @@ Description
     on a moving mesh.
 
     \heading Solver details
-    The solver uses the PIMPLE (merged PISO-SIMPLE) algorithm to solve the
+    The solver uses the SIMPLE algorithm to solve the
     continuity equation:
 
         \f[
@@ -80,13 +80,10 @@ Note
 #include "singlePhaseTransportModel.H"
 #include "turbulentTransportModel.H"
 #include "radiationModel.H"
-#include "CorrectPhi.H"
 #include "fvOptions.H"
-#include "pimpleControl.H"
+#include "simpleControl.H"
 
-#include "localEulerDdtScheme.H"
 #include "ADMno1.H"
-// #include "multivariateScheme.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -94,9 +91,8 @@ int main(int argc, char *argv[])
 {
     argList::addNote
     (
-        // TODO: add new note
-        "Transient solver for incompressible, turbulent flow"
-        " of Newtonian fluids on a moving mesh."
+        "Steady-state solver for buoyant, turbulent flow"
+        " of incompressible fluids."
     );
 
     #include "postProcess.H"
@@ -104,12 +100,9 @@ int main(int argc, char *argv[])
     #include "addCheckCaseOptions.H"
     #include "setRootCaseLists.H"
     #include "createTime.H"
-    #include "createDynamicFvMesh.H"
-    #include "createDyMControls.H"
+    #include "createMesh.H"
+    #include "createControl.H"
     #include "createFields.H"
-    #include "createUfIfPresent.H"
-    #include "CourantNo.H"
-    #include "setInitialDeltaT.H"
     #include "initContinuityErrs.H"
 
     turbulence->validate();
@@ -118,74 +111,20 @@ int main(int argc, char *argv[])
 
     Info<< "\nStarting time loop\n" << endl;
 
-    while (runTime.run())
+    while (simple.loop())
     {
-        #include "readDyMControls.H"
-        #include "CourantNo.H"
-        #include "setDeltaT.H"
-
-        ++runTime;
-
         Info<< "Time = " << runTime.timeName() << nl << endl;
 
-        // ADM1 reaction source terms
-        reaction->clear();
-        reaction->correct(phi, T);
-        PtrList<volScalarField>& YPtrs = reaction->Y();
-        PtrList<volScalarField>& GPtrs = reaction->G();
-
-        // --- Pressure-velocity PIMPLE corrector loop
-        while (pimple.loop())
-        {
-            if (pimple.firstIter() || moveMeshOuterCorrectors)
-            {
-                // Do any mesh changes
-                mesh.controlledUpdate();
-
-                if (mesh.changing())
-                {
-                    MRF.update();
-
-                    if (correctPhi)
-                    {
-                        // Calculate absolute flux
-                        // from the mapped surface velocity
-                        phi = mesh.Sf() & Uf();
-
-                        #include "correctPhi.H"
-
-                        // Make the flux relative to the mesh motion
-                        fvc::makeRelative(phi, U);
-                    }
-
-                    if (checkMeshCourantNo)
-                    {
-                        #include "meshCourantNo.H"
-                    }
-                }
-            }
-
+        // Pressure-velocity SIMPLE corrector
+        { 
             #include "UEqn.H"
             #include "TEqn.H"
-            // #include "ADMPartEqn.H"
-
-            // --- Pressure corrector loop
-            while (pimple.correct())
-            {
-                #include "pEqn.H"
-            }
-
-            if (pimple.turbCorr())
-            {
-                laminarTransport.correct();
-                turbulence->correct();
-            }
-
+            #include "pEqn.H"
+            #include "ADMEqn.H"
         }
 
-        // --- ADM calculation
-        #include "ADMEqn.H"
-
+        laminarTransport.correct();
+        turbulence->correct();
 
         runTime.write();
 
