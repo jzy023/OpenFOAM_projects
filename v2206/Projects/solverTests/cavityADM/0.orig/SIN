@@ -16,13 +16,14 @@ FoamFile
 
 dimensions      [1 -3 0 0 0 0 0];
 
-internalField   uniform 0.094468239660074; // 0.0945;
+internalField   uniform 0.0945;
 
 boundaryField
 {
     movingWall
     {
-        type            zeroGradient;
+        type            fixedValue;
+        value           uniform 0.0945;
     }
 
     fixedWalls
