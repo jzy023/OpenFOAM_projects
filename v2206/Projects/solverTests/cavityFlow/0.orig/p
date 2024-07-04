@@ -9,18 +9,45 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    object      decomposeParDict;
+    class       volScalarField;
+    object      p;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-numberOfSubdomains  9;
+dimensions      [0 2 -2 0 0 0 0];
 
-method              hierarchical;
+internalField   uniform 0;
 
-coeffs
+boundaryField
 {
-    n               (3 3 1);
+    // movingWall
+    // {
+    //     type            zeroGradient;
+    //     // type            fixedValue; //inletOutlet;
+    //     // value           uniform 0;
+    // }
+
+    // fixedWalls
+    // {
+    //     type            zeroGradient;
+    // }
+
+    movingWall
+    {
+        type            calculated;
+        value           $internalField;
+    }
+
+    fixedWalls
+    {
+        type            calculated;
+        value           $internalField;
+    }
+
+    frontAndBack
+    {
+        type            empty;
+    }
 }
 
 

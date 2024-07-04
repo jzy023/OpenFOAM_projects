@@ -16,20 +16,6 @@ FoamFile
 
 solvers
 {
-    // p_rgh
-    // {
-    //     solver          PCG;
-    //     preconditioner  DIC;
-    //     tolerance       1e-6;
-    //     relTol          0.01;
-    // }
-
-    // p_rghFinal
-    // {
-    //     $p_rgh;
-    //     relTol          0;
-    // }
-
     p_rgh
     {
         solver          GAMG;
@@ -46,7 +32,36 @@ solvers
         relTol          0;
     }
 
-    "(U|T|k|epsilon|R)"
+    // p_rgh
+    // {
+    //     solver          PCG;
+    //     preconditioner  DIC;
+    //     tolerance       1e-6;
+    //     relTol          0.01;
+    // }
+
+    // p_rghFinal
+    // {
+    //     $p_rgh;
+    //     relTol          0;
+    // }
+
+    U
+    {
+        solver          smoothSolver;
+        smoother        GaussSeidel;
+        tolerance       1e-06;
+        relTol          0;
+    }
+
+    UFinal
+    {
+        $U;
+        tolerance       1e-08;
+        relTol          0;
+    }
+
+    "(T|k|epsilon|R)"
     {
         solver          PBiCGStab;
         preconditioner  DILU;
@@ -54,9 +69,9 @@ solvers
         relTol          0.1;
     }
 
-    "(U|T|k|epsilon|R)Final"
+    "(T|k|epsilon|R)Final"
     {
-        $U;
+        $T;
         relTol          0;
     }
 
@@ -78,7 +93,7 @@ solvers
 PIMPLE
 {
     momentumPredictor no;
-    nOuterCorrectors 2; // 1;
+    nOuterCorrectors 2;
     nCorrectors     2;
     nNonOrthogonalCorrectors 0;
     pRefCell        0;

@@ -54,7 +54,7 @@ adjustTimeStep  true;
 
 runTimeModifiable true;
 
-maxCo           20;
+maxCo           5;
 
 maxDeltaT       1;
 
@@ -215,7 +215,7 @@ functions
 				nPoints				500;
 			}
 		);
-		fields	(Sch4);
+		fields	(Gch4);
 	}
 
     linesample_y_Gch4

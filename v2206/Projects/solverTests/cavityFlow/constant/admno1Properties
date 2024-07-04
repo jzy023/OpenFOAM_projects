@@ -10,18 +10,28 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      decomposeParDict;
+    object      admno1Properties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-numberOfSubdomains  9;
+// Operation modes
+mode            MesoSolid;
 
-method              hierarchical;
+// Schmidt number
+Sc              1;
 
-coeffs
-{
-    n               (3 3 1);
-}
+// Gas constant
+R               0.083145;
+
+// Default pH value
+pH              7.26;
+
+// Cation concentration
+Scat            0.00;
+
+// Anion concentration
+San             0.005210099242102;
+
 
 
 // ************************************************************************* //

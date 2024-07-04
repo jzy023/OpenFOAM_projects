@@ -14,19 +14,19 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-simulationType      laminar;// LES;
+simulationType      laminar; // LES;
 
 LES
 {
-    LESModel        Smagorinsky;
+    LESModel        dynamicKEqn;
 
     turbulence      on;
 
     printCoeffs     on;
 
-    delta           vanDriest;
+    delta           cubeRootVol;
 
-    kEqnCoeffs
+    dynamicKEqnCoeffs
     {
         filter simple;
     }

@@ -22,13 +22,13 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         100;
+endTime         200;
 
 deltaT          5e-3;
 
 writeControl    adjustable;
 
-writeInterval   1;
+writeInterval   10;
 
 purgeWrite      0;
 
@@ -50,59 +50,106 @@ maxCo           0.8;
 
 maxDeltaT       1;
 
-functions {
-    yPlus1
-    {
-        // Mandatory entries (unmodifiable)
-        type            yPlus;
-        libs            (fieldFunctionObjects);
+functions
+{
+    // U 
+    linesample_x_U
+	{
+		type						sets;
+		libs						("libsampling.so");
+		timeStart				    195;
+		writeControl				$writeControl;
+		writeInterval				0.5;
+		interpolationScheme			cell;
+		setFormat					csv;
+		sets						(
+			data
+			{
+				type				uniform;
+				axis				xyz;
+				start				(0.0  0.5  -0.005);
+				end					(1.0  0.5  -0.005);
+				nPoints				500;
+			}
+		);
+		fields	(U);
+	}
 
-        // Optional (inherited) entries
-        writePrecision  6;
-        writeToFile     true;
-        useUserTime     true;
+    linesample_y_U
+	{
+		type						sets;
+		libs						("libsampling.so");
+		timeStart				    195;
+		writeControl				$writeControl;
+		writeInterval				0.5;
+		interpolationScheme			cell;
+		setFormat					csv;
+		sets						(
+			data
+			{
+				type				uniform;
+				axis				xyz;
+				start				(0.5  0.0  -0.005);
+				end					(0.5  1.0  -0.005);
+				nPoints				500;
+			}
+		);
+		fields	(U);
+	}
 
-        region          region0;
-        enabled         true;
-        log             true;
-        timeStart       0;
-        timeEnd         $endTime;
-        executeControl  timeStep;
-        executeInterval $writeInterval;
-        writeControl    adjustable;
-        writeInterval   $writeInterval;
-    }
+    // yPlus1
+    // {
+    //     // Mandatory entries (unmodifiable)
+    //     type            yPlus;
+    //     libs            (fieldFunctionObjects);
 
-    #includeFunc    R;
-    fieldAverage1
-    {
-        type                fieldAverage;
-        libs                ("fieldFunctionObjects.so");
-        fields
-        (
-            U
-            {
-                mean        on;
-                prime2Mean  on;
-                base        time;
-            }
-            p
-            {
-                mean        on;
-                prime2Mean  off;
-                base        time;
-            }
-            nut
-            {
-                mean        on;
-                prime2Mean  off;
-                base        time;
-            }
-        );
-        writeControl        adjustable;
-        writeInterval       $writeInterval;
-        timeStart       	#eval {0.25*$endTime};
-    }
+    //     // Optional (inherited) entries
+    //     writePrecision  6;
+    //     writeToFile     true;
+    //     useUserTime     true;
+
+    //     region          region0;
+    //     enabled         true;
+    //     log             true;
+    //     timeStart       0;
+    //     timeEnd         $endTime;
+    //     executeControl  timeStep;
+    //     executeInterval $writeInterval;
+    //     writeControl    adjustable;
+    //     writeInterval   $writeInterval;
+    // }
+
+    // #includeFunc    R;
+    // fieldAverage1
+    // {
+    //     type                fieldAverage;
+    //     libs                ("fieldFunctionObjects.so");
+    //     fields
+    //     (
+    //         U
+    //         {
+    //             mean        on;
+    //             prime2Mean  on;
+    //             base        time;
+    //         }
+    //         p
+    //         {
+    //             mean        on;
+    //             prime2Mean  off;
+    //             base        time;
+    //         }
+    //         nut
+    //         {
+    //             mean        on;
+    //             prime2Mean  off;
+    //             base        time;
+    //         }
+    //     );
+    //     writeControl        adjustable;
+    //     writeInterval       $writeInterval;
+    //     timeStart       	#eval {0.25*$endTime};
+    // }
+    
 }
 
 
