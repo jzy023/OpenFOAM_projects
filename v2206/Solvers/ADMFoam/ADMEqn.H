@@ -4,7 +4,7 @@ Info << "ADM convection-diffusion calculation" << endl;
 
 //TODO: turbulent diff and different diff compared to particulate species
 volScalarField Deff = turbulence->nu() / reaction->Sc();
-volScalarField DpartEff = Deff / 10.0;
+// volScalarField DpartEff = Deff / 10.0;
 
 {
     // <<< TEST ---------------------------------------------------------------- //

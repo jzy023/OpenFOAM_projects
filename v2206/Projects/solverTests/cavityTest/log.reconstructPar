@@ -1,0 +1,28 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2212                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _c9081d5d-20230220 OPENFOAM=2212 patch=230110 version=v2212
+Arch   : "LSB;label=64;scalar=64"
+Exec   : reconstructPar
+Date   : Jul 14 2024
+Time   : 16:47:18
+Host   : DESKTOP-E2PB5N9
+PID    : 21069
+I/O    : uncollated
+Case   : /home/noreff/works/OpenFOAM-user/v2206/Projects/solverTests/cavityTest
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+--> FOAM Warning : 
+    From int main(int, char**)
+    in file reconstructPar.C at line 271
+    No times selected

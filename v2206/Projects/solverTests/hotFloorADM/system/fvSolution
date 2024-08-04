@@ -18,15 +18,17 @@ solvers
 {
     p_rgh
     {
-        solver          PCG;
-        preconditioner  DIC;
-        tolerance       1e-6;
-        relTol          0.01;
+        solver          GAMG;
+        tolerance       1e-06;
+        relTol          0.1;
+        smoother        GaussSeidel;
     }
 
     p_rghFinal
     {
         $p_rgh;
+        smoother        DICGaussSeidel;
+        tolerance       1e-06;
         relTol          0;
     }
 

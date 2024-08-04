@@ -1,0 +1,38 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2206                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      admno1Properties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Operation modes
+mode            MesoSolid;
+
+// Schmidt number
+// Sc              1;
+Sc              2;
+
+// Gas constant
+R               0.083145;
+
+// Default pH value
+pH              7.26;
+
+// Cation concentration
+Scat            0.00;
+
+// Anion concentration
+San             0.005210099242102;
+
+
+
+// ************************************************************************* //

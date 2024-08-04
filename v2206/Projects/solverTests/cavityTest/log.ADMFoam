@@ -1,0 +1,206 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2212                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _c9081d5d-20230220 OPENFOAM=2212 patch=230110 version=v2212
+Arch   : "LSB;label=64;scalar=64"
+Exec   : ADMFoam -parallel
+Date   : Jul 14 2024
+Time   : 16:47:18
+Host   : DESKTOP-E2PB5N9
+PID    : 20942
+I/O    : uncollated
+Case   : /home/noreff/works/OpenFOAM-user/v2206/Projects/solverTests/cavityTest
+nProcs : 4
+Hosts  :
+(
+    (DESKTOP-E2PB5N9 4)
+)
+Pstream initialized with:
+    floatTransfer      : 0
+    nProcsSimpleSum    : 0
+    commsType          : nonBlocking
+    polling iterations : 0
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+
+PIMPLE: no residual control data found. Calculations will employ 2 corrector loops
+
+Reading field operational temperature
+Reading field p_rgh
+
+Reading field U
+
+Ka_va:	1.38038e-05
+Ka_bu:	1.51356e-05
+Ka_pro:	1.31826e-05
+Ka_ac:	1.7378e-05
+Ka_co2:	4.46684e-07
+Ka_IN:	5.62341e-10
+Ka_W:	1e-14
+
+Selecting ADM no1 operation mode MesoSolid
+Reading ADM no1 initial concentrations for soluables
+Reading ADMno1 initial concentrations for particulates
+Reading ADM no1 initial concentrations for gaseuoses
+Initializing concentrations for medians
+Initializing concentrations for electrolytes
+Reading/calculating face flux field phi
+
+Selecting incompressible transport model Newtonian
+Selecting turbulence model type laminar
+Selecting laminar stress model Stokes
+Reading field alphat
+
+
+Reading g
+
+Reading hRef
+Calculating field g.h
+
+No MRF models present
+
+Radiation model not active: radiationProperties not found
+Selecting radiationModel none
+No finite volume options present
+Courant Number mean: 0 max: 0
+
+Starting time loop
+
+Sampled set:
+    data -> csv
+
+Sampled set:
+    data -> csv
+
+Courant Number mean: 0 max: 0
+deltaT = 0.00120005
+Time = 0.00120005
+
+Newton-Raphson:	Solving for Sh+, min Shp: 5.41659e-08, max Shp: 5.41659e-08, No Interations 3
+Newton-Raphson:	Solving for Sh2, min Sh2: 2.48849e-07, max Sh2: 2.48849e-07, No Interations 3
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for T, Initial residual = 1, Final residual = 1.51511e-06, No Iterations 1
+GAMG:  Solving for p_rgh, Initial residual = 1, Final residual = 0.0298025, No Iterations 2
+time step continuity errors : sum local = 8.11871e-12, global = 6.2041e-27, cumulative = 6.2041e-27
+GAMG:  Solving for p_rgh, Initial residual = 0.0153735, Final residual = 7.59633e-07, No Iterations 6
+time step continuity errors : sum local = 7.72316e-16, global = 0, cumulative = 6.2041e-27
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for T, Initial residual = 0.769231, Final residual = 2.02031e-12, No Iterations 1
+GAMG:  Solving for p_rgh, Initial residual = 1.51647e-05, Final residual = 4.81154e-07, No Iterations 2
+time step continuity errors : sum local = 2.76882e-16, global = 4.65308e-27, cumulative = 1.08572e-26
+GAMG:  Solving for p_rgh, Initial residual = 5.36165e-07, Final residual = 5.36165e-07, No Iterations 0
+time step continuity errors : sum local = 2.76874e-16, global = 4.65308e-27, cumulative = 1.55103e-26
+ADM convection-diffusion calculation
+[2] 
+[2] 
+[2] --> FOAM FATAL ERROR: (openfoam-2212 patch=230110)
+[2] cannot be called for a calculatedFvPatchField
+    on patch movingWall of field Substance in file "/home/noreff/works/OpenFOAM-user/v2206/Projects/solverTests/cavityTest/processor2/0.00120005/Substance"
+    You are probably trying to solve for a field with a default boundary condition.
+[2] 
+[2]     From Foam::tmp<Foam::Field<Type> > Foam::calculatedFvPatchField<Type>::gradientInternalCoeffs() const [with Type = double]
+[2]     in file fields/fvPatchFields/basic/calculated/calculatedFvPatchField.C at line 189.
+[2] 
+FOAM parallel run aborting
+[2] 
+[3] 
+[3] 
+[3] --> FOAM FATAL ERROR: (openfoam-2212 patch=230110)
+[3] cannot be called for a calculatedFvPatchField
+    on patch movingWall of field Substance in file "/home/noreff/works/OpenFOAM-user/v2206/Projects/solverTests/cavityTest/processor3/0.00120005/Substance"
+    You are probably trying to solve for a field with a default boundary condition.
+[3] 
+[3]     From Foam::tmp<Foam::Field<Type> > Foam::calculatedFvPatchField<Type>::gradientInternalCoeffs() const [with Type = double]
+[3]     in file fields/fvPatchFields/basic/calculated/calculatedFvPatchField.C at line 189.
+[3] 
+FOAM parallel run aborting
+[3] 
+[0] 
+[0] 
+[0] --> FOAM FATAL ERROR: (openfoam-2212 patch=230110)
+[0] cannot be called for a calculatedFvPatchField
+    on patch movingWall of field Substance in file "/home/noreff/works/OpenFOAM-user/v2206/Projects/solverTests/cavityTest/processor0/0.00120005/Substance"
+    You are probably trying to solve for a field with a default boundary condition.
+[0] 
+[0]     From Foam::tmp<Foam::Field<Type> > Foam::calculatedFvPatchField<Type>::gradientInternalCoeffs() const [with Type = double]
+[0]     in file fields/fvPatchFields/basic/calculated/calculatedFvPatchField.C at line 189.
+[0] 
+FOAM parallel run aborting
+[0] 
+[1] 
+[1] 
+[1] --> FOAM FATAL ERROR: (openfoam-2212 patch=230110)
+[1] cannot be called for a calculatedFvPatchField
+    on patch movingWall of field Substance in file "/home/noreff/works/OpenFOAM-user/v2206/Projects/solverTests/cavityTest/processor1/0.00120005/Substance"
+    You are probably trying to solve for a field with a default boundary condition.
+[1] 
+[1]     From Foam::tmp<Foam::Field<Type> > Foam::calculatedFvPatchField<Type>::gradientInternalCoeffs() const [with Type = double]
+[1]     in file fields/fvPatchFields/basic/calculated/calculatedFvPatchField.C at line 189.
+[1] 
+FOAM parallel run aborting
+[1] 
+[2] #0  [3] #0  [0] #0  [1] #0  Foam::error::printStack(Foam::Ostream&)Foam::error::printStack(Foam::Ostream&)Foam::error::printStack(Foam::Ostream&)Foam::error::printStack(Foam::Ostream&) in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libOpenFOAM.so
+[3] #1  Foam::error::simpleExit(int, bool) in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libOpenFOAM.so
+[2] #1 in   ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libOpenFOAM.so
+Foam::error::simpleExit(int, bool)[0] #1  Foam::error::simpleExit(int, bool) in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libOpenFOAM.so
+[1] #1  Foam::error::simpleExit(int, bool) in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libOpenFOAM.so
+[3] #2  Foam::calculatedFvPatchField<double>::gradientInternalCoeffs() const in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libOpenFOAM.so
+ in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libOpenFOAM.so
+ in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libOpenFOAM.so
+[1] #2  Foam::calculatedFvPatchField<double>::gradientInternalCoeffs() const[2] #2  Foam::calculatedFvPatchField<double>::gradientInternalCoeffs() const[0] #2  Foam::calculatedFvPatchField<double>::gradientInternalCoeffs() const in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libfiniteVolume.so
+ in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libfiniteVolume.so
+ in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libfiniteVolume.so
+ in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libfiniteVolume.so
+[2] #3  Foam::fv::gaussLaplacianScheme<double, double>::fvmLaplacianUncorrected(Foam::GeometricField<double, Foam::fvsPatchField, Foam::surfaceMesh> const&, Foam::GeometricField<double, Foam::fvsPatchField, Foam::surfaceMesh> const&, Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh> const&)[3] #3  Foam::fv::gaussLaplacianScheme<double, double>::fvmLaplacianUncorrected(Foam::GeometricField<double, Foam::fvsPatchField, Foam::surfaceMesh> const&, Foam::GeometricField<double, Foam::fvsPatchField, Foam::surfaceMesh> const&, Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh> const&)[1] #3  Foam::fv::gaussLaplacianScheme<double, double>::fvmLaplacianUncorrected(Foam::GeometricField<double, Foam::fvsPatchField, Foam::surfaceMesh> const&, Foam::GeometricField<double, Foam::fvsPatchField, Foam::surfaceMesh> const&, Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh> const&)[0] #3  Foam::fv::gaussLaplacianScheme<double, double>::fvmLaplacianUncorrected(Foam::GeometricField<double, Foam::fvsPatchField, Foam::surfaceMesh> const&, Foam::GeometricField<double, Foam::fvsPatchField, Foam::surfaceMesh> const&, Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh> const&) in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libfiniteVolume.so
+ in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libfiniteVolume.so
+ in [0] #4  ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libfiniteVolume.so
+[1] #4  Foam::fv::gaussLaplacianScheme<double, double>::fvmLaplacian(Foam::GeometricField<double, Foam::fvsPatchField, Foam::surfaceMesh> const&, Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh> const&)Foam::fv::gaussLaplacianScheme<double, double>::fvmLaplacian(Foam::GeometricField<double, Foam::fvsPatchField, Foam::surfaceMesh> const&, Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh> const&) in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libfiniteVolume.so
+[3] #4  Foam::fv::gaussLaplacianScheme<double, double>::fvmLaplacian(Foam::GeometricField<double, Foam::fvsPatchField, Foam::surfaceMesh> const&, Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh> const&)[2] #4  Foam::fv::gaussLaplacianScheme<double, double>::fvmLaplacian(Foam::GeometricField<double, Foam::fvsPatchField, Foam::surfaceMesh> const&, Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh> const&) in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libfiniteVolume.so
+ in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libfiniteVolume.so
+ in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libfiniteVolume.so
+ in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libfiniteVolume.so
+[0] #5  Foam::fv::laplacianScheme<double, double>::fvmLaplacian(Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh> const&, Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh> const&)[3] #5  Foam::fv::laplacianScheme<double, double>::fvmLaplacian(Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh> const&, Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh> const&)[2] #5  Foam::fv::laplacianScheme<double, double>::fvmLaplacian(Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh> const&, Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh> const&)[1] #5  Foam::fv::laplacianScheme<double, double>::fvmLaplacian(Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh> const&, Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh> const&) in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libfiniteVolume.so
+[0] #6   in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libfiniteVolume.so
+[2] #6   in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libfiniteVolume.so
+[1] #6   in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/lib/libfiniteVolume.so
+[3] #6  ???? in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/bin/ADMFoam
+[1] #7   in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/bin/ADMFoam
+[0] #7   in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/bin/ADMFoam
+ in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/bin/ADMFoam
+[3] #7  [2] #7  ???? in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/bin/ADMFoam
+ in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/bin/ADMFoam
+[0] #8  ?[1] #8  ? in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/bin/ADMFoam
+[2] #8  ? in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/bin/ADMFoam
+[3] #8  ? in /lib/x86_64-linux-gnu/libc.so.6
+[0] #9  __libc_start_main in /lib/x86_64-linux-gnu/libc.so.6
+[1] #9  __libc_start_main in /lib/x86_64-linux-gnu/libc.so.6
+[2] #9  __libc_start_main in /lib/x86_64-linux-gnu/libc.so.6
+[3] #9  __libc_start_main in /lib/x86_64-linux-gnu/libc.so.6
+[0] #10   in /lib/x86_64-linux-gnu/libc.so.6
+[1] #10   in /lib/x86_64-linux-gnu/libc.so.6
+ in /lib/x86_64-linux-gnu/libc.so.6
+[3] #10  [2] #10  ???? in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/bin/ADMFoam
+ in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/bin/ADMFoam
+ in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/bin/ADMFoam
+ in ~/works/OpenFOAM/2212-user/platforms/linux64GccDPInt64Opt/bin/ADMFoam
+--------------------------------------------------------------------------
+MPI_ABORT was invoked on rank 2 in communicator MPI_COMM_WORLD
+with errorcode 1.
+
+NOTE: invoking MPI_ABORT causes Open MPI to kill all MPI processes.
+You may or may not see output from other processes, depending on
+exactly when Open MPI kills them.
+--------------------------------------------------------------------------
+[DESKTOP-E2PB5N9:20935] 3 more processes have sent help message help-mpi-api.txt / mpi-abort
+[DESKTOP-E2PB5N9:20935] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages

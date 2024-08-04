@@ -54,9 +54,9 @@ adjustTimeStep  true;
 
 runTimeModifiable true;
 
-maxCo           5;
+maxCo           4.8;
 
-maxDeltaT       1;
+maxDeltaT       0.01;
 
 functions
 {
@@ -65,7 +65,7 @@ functions
 	{
 		type						sets;
 		libs						("libsampling.so");
-		timeStart				    95;
+		timeStart				    45;
 		writeControl				$writeControl;
 		writeInterval				0.5;
 		interpolationScheme			cell;
@@ -87,7 +87,7 @@ functions
 	{
 		type						sets;
 		libs						("libsampling.so");
-		timeStart				    95;
+		timeStart				    45;
 		writeControl				$writeControl;
 		writeInterval				0.5;
 		interpolationScheme			cell;
@@ -110,7 +110,7 @@ functions
 	{
 		type						sets;
 		libs						("libsampling.so");
-		timeStart				    95;
+		timeStart				    45;
 		writeControl				$writeControl;
 		writeInterval				0.5;
 		interpolationScheme			cell;
@@ -132,7 +132,7 @@ functions
 	{
 		type						sets;
 		libs						("libsampling.so");
-		timeStart				    95;
+		timeStart				    45;
 		writeControl				$writeControl;
 		writeInterval				0.5;
 		interpolationScheme			cell;
@@ -155,7 +155,7 @@ functions
 	{
 		type						sets;
 		libs						("libsampling.so");
-		timeStart				    95;
+		timeStart				    45;
 		writeControl				$writeControl;
 		writeInterval				0.5;
 		interpolationScheme			cell;
@@ -177,7 +177,7 @@ functions
 	{
 		type						sets;
 		libs						("libsampling.so");
-		timeStart				    95;
+		timeStart				    45;
 		writeControl				$writeControl;
 		writeInterval				0.5;
 		interpolationScheme			cell;
@@ -200,7 +200,7 @@ functions
 	{
 		type						sets;
 		libs						("libsampling.so");
-		timeStart				    95;
+		timeStart				    45;
 		writeControl				$writeControl;
 		writeInterval				0.5;
 		interpolationScheme			cell;
@@ -222,7 +222,7 @@ functions
 	{
 		type						sets;
 		libs						("libsampling.so");
-		timeStart				    95;
+		timeStart				    45;
 		writeControl				$writeControl;
 		writeInterval				0.5;
 		interpolationScheme			cell;
