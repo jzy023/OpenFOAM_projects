@@ -2,7 +2,7 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-    \\  /    A nd           | www.openfoam.com
+    \\  /    A nd           |  
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
     Copyright (C) 2020 OpenCFD Ltd.
@@ -38,6 +38,8 @@ Description
 #define ADMno1_H
 
 #include "ADMno1Parameter.H"
+#include "autoPtr.H"
+#include "runTimeSelectionTables.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -230,30 +232,34 @@ private:
 
     //- Calculate time scale for chemical reactions
     void calcTC();
-
-
+    
 
 public:
  
-    //- Run time type information
-    //> runTimeSelection mechanism: 
-    //> https://openfoamwiki.net/index.php/OpenFOAM_guide/runTimeSelection_mechanism
-    TypeName("ADMno1");
+    // //- Run time type information
+    // //> runTimeSelection mechanism: 
+    // //> https://openfoamwiki.net/index.php/OpenFOAM_guide/runTimeSelection_mechanism
+    // TypeName("ADMno1");
 
-    // Declare run-time constructor selection table
-
+    // // Declare run-time constructor selection table
     // declareRunTimeSelectionTable
     // (
     //     autoPtr,
     //     ADMno1,
     //     fvMesh,
-    //     (const fvMesh& mesh, word runMode),
-    //     (mesh, runMode)
+    //     (
+    //         volScalarField& T,
+    //         const fvMesh& mesh,
+    //         word runMode
+    //     ),
+    //     (
+    //         T,
+    //         mesh,
+    //         runMode
+    //     )
     // );
 
-
-    //- Default name of the turbulence properties dictionary
-
+    //- Default name of the ADMno1 properties dictionary
     static const word propertiesName;
 
 
@@ -350,9 +356,9 @@ public:
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
  
 #include "ADMno1I.H"
-// #ifdef NoRepository
-//     #include "ADMno1Templates.C"
-// #endif
+#ifdef NoRepository
+    #include "ADMno1Templates.C"
+#endif
  
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

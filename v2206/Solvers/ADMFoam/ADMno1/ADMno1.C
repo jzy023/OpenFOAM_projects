@@ -2,12 +2,10 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-    \\  /    A nd           | www.openfoam.com
+    \\  /    A nd           |  
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2013-2017 OpenFOAM Foundation
-    Copyright (C) 2019-2020 OpenCFD Ltd.
--------------------------------------------------------------------------------
+ 
 License
     This file is part of OpenFOAM.
  
@@ -750,7 +748,7 @@ tmp<fvScalarMatrix> Foam::ADMno1::R
 
     fvScalarMatrix& Su = tSu.ref();
     
-    // https://www.openfoam.com/documentation/guides/latest/api/fvMatrix_8C_source.html#l01708
+    // https:// /documentation/guides/latest/api/fvMatrix_8C_source.html#l01708
     Su += dY; 
 
     return tSu;
@@ -776,7 +774,7 @@ tmp<fvScalarMatrix> Foam::ADMno1::RG
 
     fvScalarMatrix& Su = tSu.ref();
     
-    // https://www.openfoam.com/documentation/guides/latest/api/fvMatrix_8C_source.html#l01708
+    // https:// /documentation/guides/latest/api/fvMatrix_8C_source.html#l01708
     Su += dG; 
 
     return tSu;
@@ -801,7 +799,7 @@ tmp<fvScalarMatrix> Foam::ADMno1::RIO
 
     fvScalarMatrix& Su = tSu.ref();
     
-    // https://www.openfoam.com/documentation/guides/latest/api/fvMatrix_8C_source.html#l01708
+    // https:// /documentation/guides/latest/api/fvMatrix_8C_source.html#l01708
     Su += dIO; 
 
     return tSu;

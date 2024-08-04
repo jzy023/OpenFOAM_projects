@@ -16,8 +16,7 @@ volScalarField T
     (
         "TDefault", 
         dimTemperature,
-        308.15 
-        // reaction->paraPtr()->T().value()
+        308.15
     )
 );
 
