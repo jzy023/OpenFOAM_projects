@@ -12,6 +12,8 @@ runApplication decomposePar
 runParallel snappyHexMesh -overwrite
 runApplication reconstructParMesh -constant
 runApplication transformPoints -scale '(0.001 0.001 0.001)'
+runApplication setFields
+
 # Sim --------------------
 rm -rf proc*
 rm log.de*
@@ -21,18 +23,8 @@ runParallel $(getApplication)
 runApplication reconstructParMesh -constant
 runApplication reconstructPar
 rm -rf proc*
+
 # Post -------------------
 touch foam.foam
 
-
-# =====================================================
-# blockMesh
-# surfaceFeatureExtract
-# snappyHexMesh -overwrite # > log.SHM 
-
-# transformPoints -scale '(0.001 0.001 0.001)'
-
-# decomposePar
-# mpirun -np 4 simpleFoam -parallel
-# reconstructPar
 

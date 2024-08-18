@@ -54,8 +54,7 @@ Foam::ADMno1::ADMno1
     Qin_
     (
         "Qin", 
-        dimVolume/dimTime, 
-        // 178.4674438315954
+        dimVolume/dimTime,
         178.4674
     ),
     Vgas_

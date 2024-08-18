@@ -18,7 +18,7 @@ FoamFile
 mode            MesoSolid;
 
 // Schmidt number
-Sc              2;
+Sc              1;
 
 // Gas constant
 R               0.083145;

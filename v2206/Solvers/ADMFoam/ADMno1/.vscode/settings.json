@@ -2,6 +2,8 @@
     "files.associations": {
         "bashrc": "shellscript",
         "ADMno1.C": "cpp",
-        "ADMno1RR.C": "cpp"
+        "ADMno1RR.C": "cpp",
+        "ADMno1AcidBase.C": "cpp",
+        "ADMno1Gas.C": "cpp"
     }
 }
