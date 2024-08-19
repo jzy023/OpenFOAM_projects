@@ -1,0 +1,62 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1912                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      surfaceFeatureExtractDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+GeoTop.stl { 
+    extractionMethod            extractFromSurface;
+    extractFromSurfaceCoeffs    { includedAngle 150; }
+
+    subsetFeatures
+    {
+        nonManifoldEdges        no;
+        openEdges               no;
+    }
+}
+
+GeoTank.stl {
+    extractionMethod            extractFromSurface;
+    extractFromSurfaceCoeffs    { includedAngle 150; }
+
+    subsetFeatures
+    {
+        nonManifoldEdges        no;
+        openEdges               no;
+    }
+}
+
+GeoTank_ss.stl {
+    extractionMethod            extractFromSurface;
+    extractFromSurfaceCoeffs    { includedAngle 150; }
+
+    subsetFeatures
+    {
+        nonManifoldEdges        no;
+        openEdges               no;
+    }
+}
+
+GeoShaft_ss.stl { 
+    extractionMethod            extractFromSurface;
+    extractFromSurfaceCoeffs    { includedAngle 135; }
+
+    subsetFeatures
+    {
+        nonManifoldEdges        no;
+        openEdges               no;
+    }
+}
+
+
+// ************************************************************************* //

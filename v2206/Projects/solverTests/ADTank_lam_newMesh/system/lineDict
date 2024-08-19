@@ -1,0 +1,197 @@
+linesample_0
+    {
+        type                    sets;
+        libs                    ("libsampling.so");
+        writeControl            $writeControl;
+        writeInterval           1;
+        interpolationScheme     cell;
+        setFormat               csv;
+        sets
+        (
+            data
+            {
+                type            uniform;
+                axis            xyz;
+                start           (-0.11  0.0   0.0);
+                end             (0.11   0.0   0.0);
+                nPoints         500;
+            }
+        );
+        fields (U);
+    }
+
+    linesample_1
+    {
+        type                    sets;
+        libs                    ("libsampling.so");
+        writeControl            $writeControl;
+        writeInterval           1;
+        interpolationScheme     cell;
+        setFormat               csv;
+        sets
+        (
+            data
+            {
+                type            uniform;
+                axis            xyz;
+                start           (-0.11  0.0  0.04);
+                end             (0.11   0.0  0.04);
+                nPoints         500;
+            }
+        );
+        fields (U);
+    }
+
+    linesample_2
+    {
+        type                    sets;
+        libs                    ("libsampling.so");
+        writeControl            $writeControl;
+        writeInterval           1;
+        interpolationScheme     cell;
+        setFormat               csv;
+        sets
+        (
+            data
+            {
+                type            uniform;
+                axis            xyz;
+                start           (-0.11  0.0  -0.04);
+                end             (0.11   0.0  -0.04);
+                nPoints         500;
+            }
+        );
+        fields (U);
+    }
+
+    linesample_3
+    {
+        type                    sets;
+        libs                    ("libsampling.so");
+        writeControl            $writeControl;
+        writeInterval           1;
+        interpolationScheme     cellPoint;
+        setFormat               csv;
+        sets
+        (
+            data
+            {
+                type            uniform;
+                axis            xyz;
+                start           (-0.11  0.0   0.05);
+                end             (0.11   0.0   0.05);
+                nPoints         500;
+            }
+        );
+        fields (U);
+    }
+
+    linesample_4
+    {
+        type                    sets;
+        libs                    ("libsampling.so");
+        writeControl            $writeControl;
+        writeInterval           1;
+        interpolationScheme     cellPoint;
+        setFormat               csv;
+        sets
+        (
+            data
+            {
+                type            uniform;
+                axis            xyz;
+                start           (-0.11  0.0  -0.05);
+                end             (0.11   0.0  -0.05);
+                nPoints         500;
+            }
+        );
+        fields (U);
+    }
+
+    linesample_5
+    {
+        type                    sets;
+        libs                    ("libsampling.so");
+        writeControl            $writeControl;
+        writeInterval           1;
+        interpolationScheme     cellPoint;
+        setFormat               csv;
+        sets
+        (
+            data
+            {
+                type            uniform;
+                axis            xyz;
+                start           (-0.11  0.0  -0.01);
+                end             (0.11   0.0  -0.01);
+                nPoints         500;
+            }
+        );
+        fields (U);
+    }
+
+    linesample_6
+    {
+        type                    sets;
+        libs                    ("libsampling.so");
+        writeControl            $writeControl;
+        writeInterval           1;
+        interpolationScheme     cellPoint;
+        setFormat               csv;
+        sets
+        (
+            data
+            {
+                type            uniform;
+                axis            xyz;
+                start           (-0.11  0.0  -0.01);
+                end             (0.11   0.0  -0.01);
+                nPoints         500;
+            }
+        );
+        fields (U);
+    }
+
+    linesample_7
+    {
+        type                    sets;
+        libs                    ("libsampling.so");
+        writeControl            $writeControl;
+        writeInterval           1;
+        interpolationScheme     cellPoint;
+        setFormat               csv;
+        sets
+        (
+            data
+            {
+                type            uniform;
+                axis            xyz;
+                start           (-0.11  0.0  -0.02);
+                end             (0.11   0.0  -0.02);
+                nPoints         500;
+            }
+        );
+        fields (U);
+    }
+
+    linesample_8
+    {
+        type                    sets;
+        libs                    ("libsampling.so");
+        writeControl            $writeControl;
+        writeInterval           1;
+        interpolationScheme     cellPoint;
+        setFormat               csv;
+        sets
+        (
+            data
+            {
+                type            uniform;
+                axis            xyz;
+                start           (-0.11  0.0  -0.02);
+                end             (0.11   0.0  -0.02);
+                nPoints         500;
+            }
+        );
+        fields (U);
+    }

@@ -28,11 +28,11 @@ License
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
  
-namespace Foam
-{
-    defineTypeNameAndDebug(ADMno1, 0);
-    // defineRunTimeSelectionTable(ADMno1, fvMesh);
-}
+// namespace Foam
+// {
+//     defineTypeNameAndDebug(ADMno1, 0);
+//     // defineRunTimeSelectionTable(ADMno1, fvMesh);
+// }
  
 const Foam::word Foam::ADMno1::propertiesName("admno1Properties");
 
