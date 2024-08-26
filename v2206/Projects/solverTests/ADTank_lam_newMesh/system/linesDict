@@ -1,0 +1,219 @@
+	linesample_00_Sch4
+	{
+		type						sets;
+		libs						("libsampling.so");
+		timeStart					45;
+		writeControl				$writeControl;
+		writeInterval				1;
+		interpolationScheme			cell;
+		setFormat					csv;
+		sets						(
+			data
+			{
+				type				uniform;
+				axis				xyz;
+				start				(-0.002614672282429738  -0.02988584094275236  0);
+				end					(-0.002614672282429738  -0.02988584094275236  2.0);
+				nPoints				500;
+			}
+		);
+		fields	(Sch4);
+	}
+
+	linesample_01_Sch4
+	{
+		type						sets;
+		libs						("libsampling.so");
+		timeStart					45;
+		writeControl				$writeControl;
+		writeInterval				1;
+		interpolationScheme			cell;
+		setFormat					csv;
+		sets						(
+			data
+			{
+				type				uniform;
+				axis				xyz;
+				start				(0.002614672282429738  0.02988584094275236  0);
+				end					(0.002614672282429738  0.02988584094275236  2.0);
+				nPoints				500;
+			}
+		);
+		fields	(Sch4);
+	}
+
+	linesample_02_Sch4
+	{
+		type						sets;
+		libs						("libsampling.so");
+		timeStart					45;
+		writeControl				$writeControl;
+		writeInterval				1;
+		interpolationScheme			cell;
+		setFormat					csv;
+		sets						(
+			data
+			{
+				type				uniform;
+				axis				xyz;
+				start				(-0.01968177086971521  -0.02264128740668317  0);
+				end					(-0.01968177086971521  -0.02264128740668317  2.0);
+				nPoints				500;
+			}
+		);
+		fields	(Sch4);
+	}
+
+	linesample_03_Sch4
+	{
+		type						sets;
+		libs						("libsampling.so");
+		timeStart					45;
+		writeControl				$writeControl;
+		writeInterval				1;
+		interpolationScheme			cell;
+		setFormat					csv;
+		sets						(
+			data
+			{
+				type				uniform;
+				axis				xyz;
+				start				(0.01968177086971521  0.02264128740668317  0);
+				end					(0.01968177086971521  0.02264128740668317  2.0);
+				nPoints				500;
+			}
+		);
+		fields	(Sch4);
+	}
+
+	linesample_04_Sch4
+	{
+		type						sets;
+		libs						("libsampling.so");
+		timeStart					45;
+		writeControl				$writeControl;
+		writeInterval				1;
+		interpolationScheme			cell;
+		setFormat					csv;
+		sets						(
+			data
+			{
+				type				uniform;
+				axis				xyz;
+				start				(-0.029231101943557058  -0.006748531630315959  0);
+				end					(-0.029231101943557058  -0.006748531630315959  2.0);
+				nPoints				500;
+			}
+		);
+		fields	(Sch4);
+	}
+
+	linesample_05_Sch4
+	{
+		type						sets;
+		libs						("libsampling.so");
+		timeStart					45;
+		writeControl				$writeControl;
+		writeInterval				1;
+		interpolationScheme			cell;
+		setFormat					csv;
+		sets						(
+			data
+			{
+				type				uniform;
+				axis				xyz;
+				start				(0.029231101943557058  0.006748531630315959  0);
+				end					(0.029231101943557058  0.006748531630315959  2.0);
+				nPoints				500;
+			}
+		);
+		fields	(Sch4);
+	}
+
+	linesample_06_Sch4
+	{
+		type						sets;
+		libs						("libsampling.so");
+		timeStart					45;
+		writeControl				$writeControl;
+		writeInterval				1;
+		interpolationScheme			cell;
+		setFormat					csv;
+		sets						(
+			data
+			{
+				type				uniform;
+				axis				xyz;
+				start				(-0.02761514560357321  0.011721933854678204  0);
+				end					(-0.02761514560357321  0.011721933854678204  2.0);
+				nPoints				500;
+			}
+		);
+		fields	(Sch4);
+	}
+
+	linesample_07_Sch4
+	{
+		type						sets;
+		libs						("libsampling.so");
+		timeStart					45;
+		writeControl				$writeControl;
+		writeInterval				1;
+		interpolationScheme			cell;
+		setFormat					csv;
+		sets						(
+			data
+			{
+				type				uniform;
+				axis				xyz;
+				start				(0.02761514560357321  -0.011721933854678204  0);
+				end					(0.02761514560357321  -0.011721933854678204  2.0);
+				nPoints				500;
+			}
+		);
+		fields	(Sch4);
+	}
+
+	linesample_08_Sch4
+	{
+		type						sets;
+		libs						("libsampling.so");
+		timeStart					45;
+		writeControl				$writeControl;
+		writeInterval				1;
+		interpolationScheme			cell;
+		setFormat					csv;
+		sets						(
+			data
+			{
+				type				uniform;
+				axis				xyz;
+				start				(-0.015451142247301632  0.025715019021063358  0);
+				end					(-0.015451142247301632  0.025715019021063358  2.0);
+				nPoints				500;
+			}
+		);
+		fields	(Sch4);
+	}
+
+	linesample_09_Sch4
+	{
+		type						sets;
+		libs						("libsampling.so");
+		timeStart					45;
+		writeControl				$writeControl;
+		writeInterval				1;
+		interpolationScheme			cell;
+		setFormat					csv;
+		sets						(
+			data
+			{
+				type				uniform;
+				axis				xyz;
+				start				(0.015451142247301632  -0.025715019021063358  0);
+				end					(0.015451142247301632  -0.025715019021063358  2.0);
+				nPoints				500;
+			}
+		);
+		fields	(Sch4);
+	}

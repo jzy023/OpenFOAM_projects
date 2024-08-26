@@ -72,7 +72,7 @@ Foam::ADMno1::ADMno1
     ),
     // =============================================================
     para_(ADMno1Dict.get<word>("mode")),
-    Sc_(ADMno1Dict.lookupOrDefault("Sc", 0.2)),
+    Sc_(ADMno1Dict.lookupOrDefault("Sc", 1.0)),
     R_(ADMno1Dict.lookupOrDefault("R", 0.083145)),
     KP_(ADMno1Dict.lookupOrDefault("Kpip", 5e4)),
     // Vfrac_(ADMno1Dict.lookupOrDefault("Vfrac", 0.0294118)), // 100/3400
@@ -177,7 +177,7 @@ Foam::ADMno1::ADMno1
     )
 {
 
-    Info<< "\nSelecting ADM no1 operation mode " << ADMno1Dict.get<word>("mode") << endl;
+    Info << "\nSelecting ADM no1 operation mode " << ADMno1Dict.get<word>("mode") << endl;
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

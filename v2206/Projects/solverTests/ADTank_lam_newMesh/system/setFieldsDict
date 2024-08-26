@@ -16,7 +16,6 @@ FoamFile
 
 defaultFieldValues
 (
-    // volScalarFieldValue s 1e-3
     volScalarFieldValue Ssu     0.012394   
     volScalarFieldValue Saa     0.005500   
     volScalarFieldValue Sfa     0.107400   
@@ -87,17 +86,6 @@ regions
             volScalarFieldValue ShP     4.73e-08
         );
     }
-
-    // boxToCell
-    // {
-    //     box (0.4   -0.20   0.00) (0.60  0.00   0.10);
-    //     fieldValues
-    //     (
-    //         volScalarFieldValue alpha.lightFluid 0
-    //         volScalarFieldValue alpha.denseFluid 1
-    //         volScalarFieldValue T 250
-    //     );
-    // }
 );
 
 

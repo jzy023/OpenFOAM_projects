@@ -49,7 +49,12 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
 
     forAll(YPtrs, i)
     {
-        // if (i <= 11) 
+        if (i == 7)
+        {
+            continue;
+        }
+        
+        // if (i != 7) 
         // {
             volScalarField& Yi = YPtrs[i];
 
