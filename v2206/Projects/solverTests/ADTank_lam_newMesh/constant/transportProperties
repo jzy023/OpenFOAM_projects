@@ -17,14 +17,16 @@ FoamFile
 
 transportModel  Newtonian;
 
+
 nu              1e-4;
-// nu              5e-4;
+// nu              5e-5;
+// nu              1e-5;
 
 // Thermal expansion coefficient
 beta            3e-03;
 
 // Reference temperature
-TRef            300;
+TRef            308.15;
 
 // Laminar Prandtl number
 Pr              0.7;

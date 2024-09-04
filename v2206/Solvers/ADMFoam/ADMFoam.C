@@ -184,7 +184,7 @@ int main(int argc, char *argv[])
         }
 
         // --- ADM calculation
-        #include "ADMEqn.H"
+        // #include "ADMEqn.H"
 
 
         runTime.write();
