@@ -1,6 +1,6 @@
     // U ===================================================================================
 	
-    vert_00_U
+    vert_00
 	{
 		type						sets;
 		libs						("libsampling.so");
@@ -16,13 +16,13 @@
 				axis				xyz;
 				start				(-0.002614672282429738  -0.02988584094275236  -0.2);
 				end					(-0.002614672282429738  -0.02988584094275236  0.15);
-				nPoints				500;
+				nPoints				200;
 			}
 		);
-		fields	(U);
+		fields	(U Sac Sch4 Gch4);
 	}
 
-	vert_01_U
+	vert_01
 	{
 		type						sets;
 		libs						("libsampling.so");
@@ -38,13 +38,13 @@
 				axis				xyz;
 				start				(0.002614672282429738  0.02988584094275236  -0.2);
 				end					(0.002614672282429738  0.02988584094275236  0.15);
-				nPoints				500;
+				nPoints				200;
 			}
 		);
-		fields	(U);
+		fields	(U Sac Sch4 Gch4);
 	}
 
-	vert_02_U
+	vert_02
 	{
 		type						sets;
 		libs						("libsampling.so");
@@ -60,13 +60,13 @@
 				axis				xyz;
 				start				(-0.01968177086971521  -0.02264128740668317  -0.2);
 				end					(-0.01968177086971521  -0.02264128740668317  0.15);
-				nPoints				500;
+				nPoints				200;
 			}
 		);
-		fields	(U);
+		fields	(U Sac Sch4 Gch4);
 	}
 
-	vert_03_U
+	vert_03
 	{
 		type						sets;
 		libs						("libsampling.so");
@@ -82,13 +82,13 @@
 				axis				xyz;
 				start				(0.01968177086971521  0.02264128740668317  -0.2);
 				end					(0.01968177086971521  0.02264128740668317  0.15);
-				nPoints				500;
+				nPoints				200;
 			}
 		);
-		fields	(U);
+		fields	(U Sac Sch4 Gch4);
 	}
 
-	vert_04_U
+	vert_04
 	{
 		type						sets;
 		libs						("libsampling.so");
@@ -104,13 +104,13 @@
 				axis				xyz;
 				start				(-0.029231101943557058  -0.006748531630315959  -0.2);
 				end					(-0.029231101943557058  -0.006748531630315959  0.15);
-				nPoints				500;
+				nPoints				200;
 			}
 		);
-		fields	(U);
+		fields	(U Sac Sch4 Gch4);
 	}
 
-	vert_05_U
+	vert_05
 	{
 		type						sets;
 		libs						("libsampling.so");
@@ -126,13 +126,13 @@
 				axis				xyz;
 				start				(0.029231101943557058  0.006748531630315959  -0.2);
 				end					(0.029231101943557058  0.006748531630315959  0.15);
-				nPoints				500;
+				nPoints				200;
 			}
 		);
-		fields	(U);
+		fields	(U Sac Sch4 Gch4);
 	}
 
-	vert_06_U
+	vert_06
 	{
 		type						sets;
 		libs						("libsampling.so");
@@ -148,13 +148,13 @@
 				axis				xyz;
 				start				(-0.02761514560357321  0.011721933854678204  -0.2);
 				end					(-0.02761514560357321  0.011721933854678204  0.15);
-				nPoints				500;
+				nPoints				200;
 			}
 		);
-		fields	(U);
+		fields	(U Sac Sch4 Gch4);
 	}
 
-	vert_07_U
+	vert_07
 	{
 		type						sets;
 		libs						("libsampling.so");
@@ -170,13 +170,13 @@
 				axis				xyz;
 				start				(0.02761514560357321  -0.011721933854678204  -0.2);
 				end					(0.02761514560357321  -0.011721933854678204  0.15);
-				nPoints				500;
+				nPoints				200;
 			}
 		);
-		fields	(U);
+		fields	(U Sac Sch4 Gch4);
 	}
 
-	vert_08_U
+	vert_08
 	{
 		type						sets;
 		libs						("libsampling.so");
@@ -192,13 +192,13 @@
 				axis				xyz;
 				start				(-0.015451142247301632  0.025715019021063358  -0.2);
 				end					(-0.015451142247301632  0.025715019021063358  0.15);
-				nPoints				500;
+				nPoints				200;
 			}
 		);
-		fields	(U);
+		fields	(U Sac Sch4 Gch4);
 	}
 
-	vert_09_U
+	vert_09
 	{
 		type						sets;
 		libs						("libsampling.so");
@@ -214,230 +214,8 @@
 				axis				xyz;
 				start				(0.015451142247301632  -0.025715019021063358  -0.2);
 				end					(0.015451142247301632  -0.025715019021063358  0.15);
-				nPoints				500;
+				nPoints				200;
 			}
 		);
-		fields	(U);
+		fields	(U Sac Sch4 Gch4);
 	}
-
-    // Sac =================================================================================
-
-    // vert_00_Sch4
-	// {
-	// 	type						sets;
-	// 	libs						("libsampling.so");
-	// 	timeStart					45;
-	// 	writeControl				$writeControl;
-	// 	writeInterval				1;
-	// 	interpolationScheme			cell;
-	// 	setFormat					csv;
-	// 	sets						(
-	// 		data
-	// 		{
-	// 			type				uniform;
-	// 			axis				xyz;
-	// 			start				(-0.002614672282429738  -0.02988584094275236  -0.2);
-	// 			end					(-0.002614672282429738  -0.02988584094275236  0.15);
-	// 			nPoints				500;
-	// 		}
-	// 	);
-	// 	fields	(Sch4);
-	// }
-
-	// vert_01_Sch4
-	// {
-	// 	type						sets;
-	// 	libs						("libsampling.so");
-	// 	timeStart					45;
-	// 	writeControl				$writeControl;
-	// 	writeInterval				1;
-	// 	interpolationScheme			cell;
-	// 	setFormat					csv;
-	// 	sets						(
-	// 		data
-	// 		{
-	// 			type				uniform;
-	// 			axis				xyz;
-	// 			start				(0.002614672282429738  0.02988584094275236  -0.2);
-	// 			end					(0.002614672282429738  0.02988584094275236  0.15);
-	// 			nPoints				500;
-	// 		}
-	// 	);
-	// 	fields	(Sch4);
-	// }
-
-	// vert_02_Sch4
-	// {
-	// 	type						sets;
-	// 	libs						("libsampling.so");
-	// 	timeStart					45;
-	// 	writeControl				$writeControl;
-	// 	writeInterval				1;
-	// 	interpolationScheme			cell;
-	// 	setFormat					csv;
-	// 	sets						(
-	// 		data
-	// 		{
-	// 			type				uniform;
-	// 			axis				xyz;
-	// 			start				(-0.01968177086971521  -0.02264128740668317  -0.2);
-	// 			end					(-0.01968177086971521  -0.02264128740668317  0.15);
-	// 			nPoints				500;
-	// 		}
-	// 	);
-	// 	fields	(Sch4);
-	// }
-
-	// vert_03_Sch4
-	// {
-	// 	type						sets;
-	// 	libs						("libsampling.so");
-	// 	timeStart					45;
-	// 	writeControl				$writeControl;
-	// 	writeInterval				1;
-	// 	interpolationScheme			cell;
-	// 	setFormat					csv;
-	// 	sets						(
-	// 		data
-	// 		{
-	// 			type				uniform;
-	// 			axis				xyz;
-	// 			start				(0.01968177086971521  0.02264128740668317  -0.2);
-	// 			end					(0.01968177086971521  0.02264128740668317  0.15);
-	// 			nPoints				500;
-	// 		}
-	// 	);
-	// 	fields	(Sch4);
-	// }
-
-	// vert_04_Sch4
-	// {
-	// 	type						sets;
-	// 	libs						("libsampling.so");
-	// 	timeStart					45;
-	// 	writeControl				$writeControl;
-	// 	writeInterval				1;
-	// 	interpolationScheme			cell;
-	// 	setFormat					csv;
-	// 	sets						(
-	// 		data
-	// 		{
-	// 			type				uniform;
-	// 			axis				xyz;
-	// 			start				(-0.029231101943557058  -0.006748531630315959  -0.2);
-	// 			end					(-0.029231101943557058  -0.006748531630315959  0.15);
-	// 			nPoints				500;
-	// 		}
-	// 	);
-	// 	fields	(Sch4);
-	// }
-
-	// vert_05_Sch4
-	// {
-	// 	type						sets;
-	// 	libs						("libsampling.so");
-	// 	timeStart					45;
-	// 	writeControl				$writeControl;
-	// 	writeInterval				1;
-	// 	interpolationScheme			cell;
-	// 	setFormat					csv;
-	// 	sets						(
-	// 		data
-	// 		{
-	// 			type				uniform;
-	// 			axis				xyz;
-	// 			start				(0.029231101943557058  0.006748531630315959  -0.2);
-	// 			end					(0.029231101943557058  0.006748531630315959  0.15);
-	// 			nPoints				500;
-	// 		}
-	// 	);
-	// 	fields	(Sch4);
-	// }
-
-	// vert_06_Sch4
-	// {
-	// 	type						sets;
-	// 	libs						("libsampling.so");
-	// 	timeStart					45;
-	// 	writeControl				$writeControl;
-	// 	writeInterval				1;
-	// 	interpolationScheme			cell;
-	// 	setFormat					csv;
-	// 	sets						(
-	// 		data
-	// 		{
-	// 			type				uniform;
-	// 			axis				xyz;
-	// 			start				(-0.02761514560357321  0.011721933854678204  -0.2);
-	// 			end					(-0.02761514560357321  0.011721933854678204  0.15);
-	// 			nPoints				500;
-	// 		}
-	// 	);
-	// 	fields	(Sch4);
-	// }
-
-	// vert_07_Sch4
-	// {
-	// 	type						sets;
-	// 	libs						("libsampling.so");
-	// 	timeStart					45;
-	// 	writeControl				$writeControl;
-	// 	writeInterval				1;
-	// 	interpolationScheme			cell;
-	// 	setFormat					csv;
-	// 	sets						(
-	// 		data
-	// 		{
-	// 			type				uniform;
-	// 			axis				xyz;
-	// 			start				(0.02761514560357321  -0.011721933854678204  -0.2);
-	// 			end					(0.02761514560357321  -0.011721933854678204  0.15);
-	// 			nPoints				500;
-	// 		}
-	// 	);
-	// 	fields	(Sch4);
-	// }
-
-	// vert_08_Sch4
-	// {
-	// 	type						sets;
-	// 	libs						("libsampling.so");
-	// 	timeStart					45;
-	// 	writeControl				$writeControl;
-	// 	writeInterval				1;
-	// 	interpolationScheme			cell;
-	// 	setFormat					csv;
-	// 	sets						(
-	// 		data
-	// 		{
-	// 			type				uniform;
-	// 			axis				xyz;
-	// 			start				(-0.015451142247301632  0.025715019021063358  -0.2);
-	// 			end					(-0.015451142247301632  0.025715019021063358  0.15);
-	// 			nPoints				500;
-	// 		}
-	// 	);
-	// 	fields	(Sch4);
-	// }
-
-	// vert_09_Sch4
-	// {
-	// 	type						sets;
-	// 	libs						("libsampling.so");
-	// 	timeStart					45;
-	// 	writeControl				$writeControl;
-	// 	writeInterval				1;
-	// 	interpolationScheme			cell;
-	// 	setFormat					csv;
-	// 	sets						(
-	// 		data
-	// 		{
-	// 			type				uniform;
-	// 			axis				xyz;
-	// 			start				(0.015451142247301632  -0.025715019021063358  -0.2);
-	// 			end					(0.015451142247301632  -0.025715019021063358  0.15);
-	// 			nPoints				500;
-	// 		}
-	// 	);
-	// 	fields	(Sch4);
-	// }

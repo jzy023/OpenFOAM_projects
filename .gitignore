@@ -1,43 +1,98 @@
-i# Prerequisites
-**.d
+# Prerequisites
+*.d
 
 # Compiled Object files
-**.slo
-**.lo
-**.o
-**.obj
+*.slo
+*.lo
+*.o
+*.obj
+*.dep
 
 # Precompiled Headers
-**.gch
-**.pch
+*.gch
+*.pch
 
 # Compiled Dynamic libraries
-**.so
-**.dylib
-**.dll
+*.so
+*.dylib
+*.dll
 
 # Fortran module files
-**.mod
-**.smod
+*.mod
+*.smod
 
 # Compiled Static libraries
-**.lai
-**.la
-**.a
-**.lib
+*.lai
+*.la
+*.a
+*.lib
 
 # Executables
-**.exe
-**.out
-**.app
+*.exe
+*.out
+*.app
 
 # Pictures
-**/*.png
-**/*.jpeg
-**/*.eps
+*.png
+*.jpeg
+*.eps
+
+# Data
+processor*/
+*.csv
+log.*
 
 # Folders
-**/bin
-processor*/
-v2006/
+bin/
 Basic*/
+lnInclude/
+
+
+# # Prerequisites
+# **.d
+
+# # Compiled Object files
+# **.slo
+# **.lo
+# **.o
+# **.obj
+# **.dep
+
+# # Precompiled Headers
+# **.gch
+# **.pch
+
+# # Compiled Dynamic libraries
+# **.so
+# **.dylib
+# **.dll
+
+# # Fortran module files
+# **.mod
+# **.smod
+
+# # Compiled Static libraries
+# **.lai
+# **.la
+# **.a
+# **.lib
+
+# # Executables
+# **.exe
+# **.out
+# **.app
+
+# # Pictures
+# **/*.png
+# **/*.jpeg
+# **/*.eps
+
+# # Data
+# processor*/
+# **/*.csv
+# log.*
+
+# # Folders
+# **/bin
+# Basic*/
+# lnInclude/

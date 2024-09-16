@@ -56,6 +56,7 @@ Foam::ADMno1::ADMno1
         "Qin", 
         dimVolume/dimTime,
         ADMno1Dict.lookupOrDefault("qin", 0.00) // benchmark 178.4674
+        // ADMno1Dict.lookupOrDefault("qin", 178.4674) // benchmark 
     ),
     Vgas_
     (
