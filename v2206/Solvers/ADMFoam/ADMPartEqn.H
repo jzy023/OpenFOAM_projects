@@ -1,4 +1,4 @@
-Info << "ADM convection-diffusion calculation for particulates" << endl;
+Info<< "ADM convection-diffusion calculation for particulates" << endl;
 
 //TODO: turbulent diff and different diff compared to soluable species
 // volScalarField Deff = turbulence->nu() / reaction->Sc();

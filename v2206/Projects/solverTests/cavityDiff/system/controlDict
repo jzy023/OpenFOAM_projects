@@ -54,18 +54,18 @@ adjustTimeStep  true;
 
 runTimeModifiable true;
 
-maxCo           5;
+maxCo           10; //4
 
 maxDeltaT       0.01;
 
 functions
 {
     // U 
-    linesample_x_U
+    linesample_x
 	{
 		type						sets;
 		libs						("libsampling.so");
-		timeStart				    90;
+		timeStart				    45;
 		writeControl				$writeControl;
 		writeInterval				0.5;
 		interpolationScheme			cell;
@@ -77,17 +77,17 @@ functions
 				axis				xyz;
 				start				(0.0  0.5  -0.005);
 				end					(1.0  0.5  -0.005);
-				nPoints				500;
+				nPoints				200;
 			}
 		);
-		fields	(U);
+		fields	(U Sac Sch4 Gch4);
 	}
 
-    linesample_y_U
+    linesample_y
 	{
 		type						sets;
 		libs						("libsampling.so");
-		timeStart				    90;
+		timeStart				    45;
 		writeControl				$writeControl;
 		writeInterval				0.5;
 		interpolationScheme			cell;
@@ -99,63 +99,18 @@ functions
 				axis				xyz;
 				start				(0.5  0.0  -0.005);
 				end					(0.5  1.0  -0.005);
-				nPoints				500;
+				nPoints				200;
 			}
 		);
-		fields	(U);
+		fields	(U Sac Sch4 Gch4);
 	}
 
-    // Sac
-    linesample_x_Sac
-	{
-		type						sets;
-		libs						("libsampling.so");
-		timeStart				    90;
-		writeControl				$writeControl;
-		writeInterval				0.5;
-		interpolationScheme			cell;
-		setFormat					csv;
-		sets						(
-			data
-			{
-				type				uniform;
-				axis				xyz;
-				start				(0.0  0.5  -0.005);
-				end					(1.0  0.5  -0.005);
-				nPoints				500;
-			}
-		);
-		fields	(Sac);
-	}
-
-    linesample_y_Sac
-	{
-		type						sets;
-		libs						("libsampling.so");
-		timeStart				    90;
-		writeControl				$writeControl;
-		writeInterval				0.5;
-		interpolationScheme			cell;
-		setFormat					csv;
-		sets						(
-			data
-			{
-				type				uniform;
-				axis				xyz;
-				start				(0.5  0.0  -0.005);
-				end					(0.5  1.0  -0.005);
-				nPoints				500;
-			}
-		);
-		fields	(Sac);
-	}
-
-    // // Sch4
-    // linesample_x_Sch4
+    // // Sac
+    // linesample_x_Sac
 	// {
 	// 	type						sets;
 	// 	libs						("libsampling.so");
-	// 	timeStart				    90;
+	// 	timeStart				    45;
 	// 	writeControl				$writeControl;
 	// 	writeInterval				0.5;
 	// 	interpolationScheme			cell;
@@ -167,17 +122,17 @@ functions
 	// 			axis				xyz;
 	// 			start				(0.0  0.5  -0.005);
 	// 			end					(1.0  0.5  -0.005);
-	// 			nPoints				500;
+	// 			nPoints				200;
 	// 		}
 	// 	);
-	// 	fields	(Sch4);
+	// 	fields	(Sac);
 	// }
 
-    // linesample_y_Sch4
+    // linesample_y_Sac
 	// {
 	// 	type						sets;
 	// 	libs						("libsampling.so");
-	// 	timeStart				    90;
+	// 	timeStart				    45;
 	// 	writeControl				$writeControl;
 	// 	writeInterval				0.5;
 	// 	interpolationScheme			cell;
@@ -189,7 +144,52 @@ functions
 	// 			axis				xyz;
 	// 			start				(0.5  0.0  -0.005);
 	// 			end					(0.5  1.0  -0.005);
-	// 			nPoints				500;
+	// 			nPoints				200;
+	// 		}
+	// 	);
+	// 	fields	(Sac);
+	// }
+
+    // // Sch4
+    // linesample_x_Sch4
+	// {
+	// 	type						sets;
+	// 	libs						("libsampling.so");
+	// 	timeStart				    45;
+	// 	writeControl				$writeControl;
+	// 	writeInterval				0.5;
+	// 	interpolationScheme			cell;
+	// 	setFormat					csv;
+	// 	sets						(
+	// 		data
+	// 		{
+	// 			type				uniform;
+	// 			axis				xyz;
+	// 			start				(0.0  0.5  -0.005);
+	// 			end					(1.0  0.5  -0.005);
+	// 			nPoints				200;
+	// 		}
+	// 	);
+	// 	fields	(Sch4);
+	// }
+
+    // linesample_y_Sch4
+	// {
+	// 	type						sets;
+	// 	libs						("libsampling.so");
+	// 	timeStart				    45;
+	// 	writeControl				$writeControl;
+	// 	writeInterval				0.5;
+	// 	interpolationScheme			cell;
+	// 	setFormat					csv;
+	// 	sets						(
+	// 		data
+	// 		{
+	// 			type				uniform;
+	// 			axis				xyz;
+	// 			start				(0.5  0.0  -0.005);
+	// 			end					(0.5  1.0  -0.005);
+	// 			nPoints				200;
 	// 		}
 	// 	);
 	// 	fields	(Sch4);
@@ -200,7 +200,7 @@ functions
 	// {
 	// 	type						sets;
 	// 	libs						("libsampling.so");
-	// 	timeStart				    90;
+	// 	timeStart				    45;
 	// 	writeControl				$writeControl;
 	// 	writeInterval				0.5;
 	// 	interpolationScheme			cell;
@@ -212,7 +212,7 @@ functions
 	// 			axis				xyz;
 	// 			start				(0.0  0.5  -0.005);
 	// 			end					(1.0  0.5  -0.005);
-	// 			nPoints				500;
+	// 			nPoints				200;
 	// 		}
 	// 	);
 	// 	fields	(Gch4);
@@ -222,7 +222,7 @@ functions
 	// {
 	// 	type						sets;
 	// 	libs						("libsampling.so");
-	// 	timeStart				    90;
+	// 	timeStart				    45;
 	// 	writeControl				$writeControl;
 	// 	writeInterval				0.5;
 	// 	interpolationScheme			cell;
@@ -234,7 +234,7 @@ functions
 	// 			axis				xyz;
 	// 			start				(0.5  0.0  -0.005);
 	// 			end					(0.5  1.0  -0.005);
-	// 			nPoints				500;
+	// 			nPoints				200;
 	// 		}
 	// 	);
 	// 	fields	(Gch4);

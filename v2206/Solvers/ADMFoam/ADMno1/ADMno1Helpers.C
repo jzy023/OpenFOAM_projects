@@ -5,8 +5,7 @@
     \\  /    A nd           |  
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2016 OpenFOAM Foundation
-    Copyright (C) 2017-2021 OpenCFD Ltd.
+    Copyright (C)  Jeremy Z. Yan
 -------------------------------------------------------------------------------
 License
     This file is part of OpenFOAM.
@@ -23,7 +22,15 @@ License
  
     You should have received a copy of the GNU General Public License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
- 
+
+Class
+    ADMno1
+    >>> inspired from reactingFoam/CombustionModel<psiReactionThermo>
+
+Description
+    Anaerobic Digestion ADModel No.1 class.
+
+
 \*---------------------------------------------------------------------------*/
  
 #include "ADMno1.H"

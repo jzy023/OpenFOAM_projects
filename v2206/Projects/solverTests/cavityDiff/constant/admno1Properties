@@ -19,7 +19,7 @@ mode            MesoSolid;
 
 // Schmidt number
 // Sc              1;
-Sc              2;
+Sc              3.0;
 
 // Gas constant
 R               0.083145;

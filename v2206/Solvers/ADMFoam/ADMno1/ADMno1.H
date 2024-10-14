@@ -5,28 +5,27 @@
     \\  /    A nd           |  
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2020 OpenCFD Ltd.
+    Copyright (C)  Jeremy Z. Yan
 -------------------------------------------------------------------------------
 License
     This file is part of OpenFOAM.
-
+ 
     OpenFOAM is free software: you can redistribute it and/or modify it
     under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-
+ 
     OpenFOAM is distributed in the hope that it will be useful, but WITHOUT
     ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
     FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
     for more details.
-
+ 
     You should have received a copy of the GNU General Public License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    ADM::ADMno1
+    ADMno1
     >>> inspired from reactingFoam/CombustionModel<psiReactionThermo>
-
 
 Description
     Anaerobic Digestion ADModel No.1 class.
@@ -91,7 +90,7 @@ private:
 
     //- Thermally adjusted parameters
     volScalarField::Internal KHh2_, KHch4_, KHco2_,
-                             KaW_,  KaIN_,  Kaco2_;					
+                             KaW_,  KaIN_,  Kaco2_;                    
 
     //- Ihibition factors
     dimensionedScalar nIaa_, nIac_, nIh2_;
@@ -105,13 +104,15 @@ private:
     //- List of pointers to the field of specie concentrations
     PtrList<volScalarField> YPtrs_;
 
-    //- List of pointers to the field of specie concentrations derivatives (source for local cell)
+    //- List of pointers to the field of specie concentrations 
+    //  derivatives (source for local cell)
     PtrList<volScalarField::Internal> dYPtrs_;
 
     //- List of pointers to the field of gas concentrations
     PtrList<volScalarField> GPtrs_;
 
-    //- List of pointers to the field of gas concentrations derivatives (source for local cell)
+    //- List of pointers to the field of gas concentrations 
+    //  derivatives (source for local cell)
     PtrList<volScalarField::Internal> dGPtrs_;
 
     //- List of pointers to the field of medians concentrations
@@ -137,29 +138,35 @@ private:
 
     //- Species names for soluable
     //- !!! Sh2 is calculated iteratively 
-    //                               0      1      2      3      4      5
-    const wordList namesSoluable = {"Ssu", "Saa", "Sfa", "Sva", "Sbu", "Spro",
-                                    "Sac", "Sh2", "Sch4", "SIC", "SIN", "SI"};
-    //                               6      7      8       9      10     11
+    const wordList namesSoluable = 
+    //      0      1      2      3      4      5
+          {"Ssu", "Saa", "Sfa", "Sva", "Sbu", "Spro",
+           "Sac", "Sh2", "Sch4", "SIC", "SIN", "SI"};
+    //      6      7      8       9      10     11
   
     //- Species names for particulate
-    //                                  12    13     14     15     16     17
-    const wordList namesParticulate = {"Xc", "Xch", "Xpr", "Xli", "Xsu", "Xaa",
-                                       "Xfa", "Xc4", "Xpro", "Xac", "Xh2", "XI"};
-    //                                  18     19     20      21     22     23
+    const wordList namesParticulate = 
+    //    12    13     14     15     16     17
+          {"Xc", "Xch", "Xpr", "Xli", "Xsu", "Xaa",
+           "Xfa", "Xc4", "Xpro", "Xac", "Xh2", "XI"};
+    //      18     19     20      21     22     23
 
     //- Species names for gaseouse
-    const wordList namesGaseous = {"Gh2", "Gch4", "Gco2"};
+    const wordList namesGaseous = 
+          {"Gh2", "Gch4", "Gco2"};
 
     //- Species names for electrolytes
-    //                                   0       1       2        3       4
-    const wordList namesElectrolytes = {"SvaN", "SbuN", "SproN", "SacN", "Shco3N"};
+    const wordList namesElectrolytes = 
+          {"SvaN", "SbuN", "SproN", "SacN", "Shco3N"};
+    //      0       1       2        3       4
 
     //- Calculated by simple subtractions
-    const wordList namesMedians = {"Sco2", "Snh3"};
+    const wordList namesMedians = 
+          {"Sco2", "Snh3"};
 
     //- Ions substances
-    const wordList namesIons = {"Scat", "San"};
+    const wordList namesIons = 
+          {"Scat", "San"};
 
     //- Cation concentration (inert)
     dimensionedScalar Scat_;
@@ -173,6 +180,7 @@ private:
     //- Pirvate Helper Functions
     #include "ADMno1Helpers.H"
     
+
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
     //- Adjust for thermal condition
@@ -279,7 +287,7 @@ public:
     );
 
 
-    // Selectors
+    //- Selectors
 
     // template<class ADModel>
     // static autoPtr<ADModel> New (const fvMesh&);
@@ -291,13 +299,13 @@ public:
     );
 
 
-    // Destructor
+    //- Destructor
 
     ~ADMno1() = default;
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
-    // Inline Member Functions
+    //- Inline Member Functions
     //- Return Schmidt number
     inline scalar Sc();
 

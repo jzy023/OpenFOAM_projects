@@ -1,4 +1,4 @@
-Info << "ADM convection-diffusion calculation" << endl;
+Info<< "ADM convection-diffusion calculation" << endl;
 
 
 
@@ -31,15 +31,15 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
 
     //- TEST
     // volScalarField test(fvc::div(phi, 1000.0*YPtrs[0]));
-    // Info << test << endl;
+    // Info<< test << endl;
 
     // Qdot = reaction->Qdot();
 
     // volScalarField& Yi = YPtrs[7];
-    // Info << Yi.dimensions() << endl;
-    // Info << fvm::ddt(Yi)->dimensions() << endl;
-    // Info << fvm::div(phi, Yi)->dimensions() << endl;
-    // Info << reaction->R(7)->dimensions() << endl;
+    // Info<< Yi.dimensions() << endl;
+    // Info<< fvm::ddt(Yi)->dimensions() << endl;
+    // Info<< fvm::div(phi, Yi)->dimensions() << endl;
+    // Info<< reaction->R(7)->dimensions() << endl;
 
     // reaction->clear();
     // reaction->correct(phi, T);
@@ -65,7 +65,7 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
               - fvm::laplacian(Deff, Yi)
              ==
                 fvOptions(Yi)
-              + reaction->R(i)
+            //   + reaction->R(i)
             );
 
             YiEqn.relax();
@@ -114,7 +114,7 @@ volScalarField Deff = turbulence->nu() / reaction->Sc();
           - fvm::laplacian(Deff, Gi)
          ==
             fvOptions(Gi)
-          + reaction->RG(i)
+        //   + reaction->RG(i)
         );
 
         GiEqn.relax();

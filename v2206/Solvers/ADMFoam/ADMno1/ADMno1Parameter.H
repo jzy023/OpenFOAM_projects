@@ -64,28 +64,28 @@ private:
     decayRate kDec_; 
 
     //- Yield of biomass (Y)
-	yieldBiomass yB_;
+    yieldBiomass yB_;
 
     //- Yield of product (f)
-	yieldProduct yP_;
+    yieldProduct yP_;
 
     //- Carbon content
-	carbonContent CC_;	
+    carbonContent CC_;	
 
     //- Inhibition factor for h2 and nh3
-	inhibitionParaI KI_;
+    inhibitionParaI KI_;
 
     //- Inhibition factor
-	inhibitionParaS KS_;
+    inhibitionParaS KS_;
 
 	//- Acid-base kinematic para [M/day]
     dimensionedScalar kAB_;
 
     //- Acid-base equilibrium para [M]
-	admAcidBaseEq Ka_;
+    admAcidBaseEq Ka_;
 
     //- Henry's Law coeffecients
-	gasHenryCoe KH_;
+    gasHenryCoe KH_;
 
     // Gas transfer rate coefficients [d^-1]
     dimensionedScalar kLa_;  
@@ -94,7 +94,7 @@ private:
     limPH pHL_;
 
     //- Nitrogen content
-	nitrogenContent NC_;
+    nitrogenContent NC_;
 
     //- Initial values
     List<scalar> Gini_;   // gas
@@ -113,7 +113,7 @@ private:
 
     dimensionedScalar defineTop(word runMode);
 
-	decayRate defineRC(word runMode);
+    decayRate defineRC(word runMode);
 
     yieldBiomass defineYields(word runMode);
 
@@ -121,7 +121,7 @@ private:
 
     inhibitionParaS defineKS(word runMode);
 
-	void defineSTOI();
+    void defineSTOI();
 
     void defineInitialState(word runMode);
 
@@ -134,7 +134,7 @@ public:
     List<List<dimensionedScalar>> STOI;
 
     //- Some acied base stuff
-	List<List<dimensionedScalar>> abDAE;
+    List<List<dimensionedScalar>> abDAE;
 
     //- Constructor
 
@@ -228,7 +228,7 @@ public:
             0.035,      // co2
             0.0313      // h2o
         ),
-    	kLa_
+        kLa_
         (
             dimless/dimTime, 200.0
         ),
@@ -245,7 +245,7 @@ public:
         )
     {
         defineInitialState("Meso");
-    	defineSTOI();
+        defineSTOI();
         defineINFLOW("Meso");
     };
 
@@ -264,13 +264,13 @@ public:
 
     inline const dimensionedScalar T() const;
 
-	inline const decayRate kDec() const;
+    inline const decayRate kDec() const;
 
-	inline const yieldBiomass yB() const;
+    inline const yieldBiomass yB() const;
 
-	inline const yieldProduct yP() const;
+    inline const yieldProduct yP() const;
 
-	inline const carbonContent CC() const;
+    inline const carbonContent CC() const;
 
     inline const inhibitionParaI KI() const;
 

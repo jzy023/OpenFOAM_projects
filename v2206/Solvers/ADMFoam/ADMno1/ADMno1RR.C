@@ -36,19 +36,19 @@ volScalarField::Internal Foam::ADMno1::fSh2
     volScalarField &Sh2Temp
 )
 {
-	volScalarField::Internal I_h2fa = calcInhibition // h2_fa
+    volScalarField::Internal I_h2fa = calcInhibition // h2_fa
     (
         Sh2Temp,
         para_.KI().h2fa
     );
 
-	volScalarField::Internal I_h2c4 = calcInhibition // h2_c4
+    volScalarField::Internal I_h2c4 = calcInhibition // h2_c4
     (
         Sh2Temp,
         para_.KI().h2c4
     );
 
-	volScalarField::Internal I_h2pro = calcInhibition // h2_pro
+    volScalarField::Internal I_h2pro = calcInhibition // h2_pro
     (
         Sh2Temp,
         para_.KI().h2pro
@@ -91,13 +91,13 @@ volScalarField::Internal Foam::ADMno1::dfSh2
         para_.KI().h2fa
     );
 
-	volScalarField::Internal dI_h2c4 = dCalcInhibition // h2_c4
+    volScalarField::Internal dI_h2c4 = dCalcInhibition // h2_c4
     (
         Sh2Temp,
         para_.KI().h2c4
     );
 
-	volScalarField::Internal dI_h2pro = dCalcInhibition // h2_pro
+    volScalarField::Internal dI_h2pro = dCalcInhibition // h2_pro
     (
         Sh2Temp,
         para_.KI().h2pro
@@ -153,7 +153,7 @@ void Foam::ADMno1::calcSh2
         //     std::exit(1);
         //     break;
         // }
-        // Info << max(x.field()) << endl;
+        // Info<< max(x.field()) << endl;
         i++;
     }
     while
@@ -167,7 +167,7 @@ void Foam::ADMno1::calcSh2
         x.field() = 0.0*x.field() + 1e-16;
     }
 
-    Info << "Newton-Raphson:\tSolving for Sh2" 
+    Info<< "Newton-Raphson:\tSolving for Sh2" 
          << ", min Sh2: " << min(x.field()) 
          << ", max Sh2: " << max(x.field()) 
          << ", No Interations " << i << endl;
@@ -209,25 +209,25 @@ void Foam::ADMno1::inhibitions()
 
     IPtrs_[3] = 1.0 / (1.0 + (para_.KS().IN / YPtrs_[10]));
     
-	IPtrs_[4] = calcInhibition // h2_fa
+    IPtrs_[4] = calcInhibition // h2_fa
     (
         YPtrs_[7], // Sh2
         para_.KI().h2fa
     );
 
-	IPtrs_[5] = calcInhibition // h2_c4
+    IPtrs_[5] = calcInhibition // h2_c4
     (
         YPtrs_[7], // Sh2
         para_.KI().h2c4
     );
 
-	IPtrs_[6] = calcInhibition // h2_pro
+    IPtrs_[6] = calcInhibition // h2_pro
     (
         YPtrs_[7], // Sh2
         para_.KI().h2pro
     );
 
-	IPtrs_[7] = calcInhibition // nh3
+    IPtrs_[7] = calcInhibition // nh3
     (
         MPtrs_[1], // Snh3
         para_.KI().nh3
@@ -328,7 +328,7 @@ void Foam::ADMno1::kineticRate()
     );
 
 	// >>> in Rosen et al. implementation, no intermediate used for S_h2
-	KRPtrs_[11] = calcRho
+    KRPtrs_[11] = calcRho
     (
         para_.kDec().m_h2,
         YPtrs_[7], // Sh2
@@ -337,7 +337,7 @@ void Foam::ADMno1::kineticRate()
         IPtrs_[2] * IPtrs_[3] // Iphh2*IIN
     );
 
-	KRPtrs_[12] = calcRho
+    KRPtrs_[12] = calcRho
     (
         para_.kDec().dec_xsu,
         YPtrs_[16] // Xsu

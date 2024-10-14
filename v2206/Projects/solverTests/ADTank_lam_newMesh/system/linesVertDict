@@ -6,7 +6,7 @@
 		libs						("libsampling.so");
 		timeStart					45;
 		writeControl				$writeControl;
-		writeInterval				1;
+		writeInterval				0.5;
 		interpolationScheme			cell;
 		setFormat					csv;
 		sets						(
@@ -28,7 +28,7 @@
 		libs						("libsampling.so");
 		timeStart					45;
 		writeControl				$writeControl;
-		writeInterval				1;
+		writeInterval				0.5;
 		interpolationScheme			cell;
 		setFormat					csv;
 		sets						(
@@ -50,7 +50,7 @@
 		libs						("libsampling.so");
 		timeStart					45;
 		writeControl				$writeControl;
-		writeInterval				1;
+		writeInterval				0.5;
 		interpolationScheme			cell;
 		setFormat					csv;
 		sets						(
@@ -72,7 +72,7 @@
 		libs						("libsampling.so");
 		timeStart					45;
 		writeControl				$writeControl;
-		writeInterval				1;
+		writeInterval				0.5;
 		interpolationScheme			cell;
 		setFormat					csv;
 		sets						(
@@ -94,7 +94,7 @@
 		libs						("libsampling.so");
 		timeStart					45;
 		writeControl				$writeControl;
-		writeInterval				1;
+		writeInterval				0.5;
 		interpolationScheme			cell;
 		setFormat					csv;
 		sets						(
@@ -116,7 +116,7 @@
 		libs						("libsampling.so");
 		timeStart					45;
 		writeControl				$writeControl;
-		writeInterval				1;
+		writeInterval				0.5;
 		interpolationScheme			cell;
 		setFormat					csv;
 		sets						(
@@ -138,7 +138,7 @@
 		libs						("libsampling.so");
 		timeStart					45;
 		writeControl				$writeControl;
-		writeInterval				1;
+		writeInterval				0.5;
 		interpolationScheme			cell;
 		setFormat					csv;
 		sets						(
@@ -160,7 +160,7 @@
 		libs						("libsampling.so");
 		timeStart					45;
 		writeControl				$writeControl;
-		writeInterval				1;
+		writeInterval				0.5;
 		interpolationScheme			cell;
 		setFormat					csv;
 		sets						(
@@ -182,7 +182,7 @@
 		libs						("libsampling.so");
 		timeStart					45;
 		writeControl				$writeControl;
-		writeInterval				1;
+		writeInterval				0.5;
 		interpolationScheme			cell;
 		setFormat					csv;
 		sets						(
@@ -204,7 +204,7 @@
 		libs						("libsampling.so");
 		timeStart					45;
 		writeControl				$writeControl;
-		writeInterval				1;
+		writeInterval				0.5;
 		interpolationScheme			cell;
 		setFormat					csv;
 		sets						(

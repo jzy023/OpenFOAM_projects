@@ -50,16 +50,16 @@ geometry
     {
         // type            searchableCone;
         // point1          (0  0 -81);
-        // radius1         51;
-        // innerRadius1    39;
+        // radius1         51.5;
+        // innerRadius1    36.5;
         // point2          (0  0  80);
-        // radius2         51;
-        // innerRadius2    39;
+        // radius2         51.5;
+        // innerRadius2    36.5;
 
         type searchableCylinder;
         point1 (0.0  0.0  -81);
         point2 (0.0  0.0   81);
-        radius 51;
+        radius 51.5;
     }
 }
 

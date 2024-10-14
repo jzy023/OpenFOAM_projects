@@ -5,72 +5,43 @@
     \\  /    A nd           |  
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2017 OpenFOAM Foundation
-    Copyright (C) 2019 OpenCFD Ltd.
+    Copyright (C)  Jeremy Z. Yan
 -------------------------------------------------------------------------------
 License
     This file is part of OpenFOAM.
-
+ 
     OpenFOAM is free software: you can redistribute it and/or modify it
     under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-
+ 
     OpenFOAM is distributed in the hope that it will be useful, but WITHOUT
     ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
     FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
     for more details.
-
+ 
     You should have received a copy of the GNU General Public License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Application
-    myPimpleFoam.C
+    ADMFoam.C
 
 Group
     grpIncompressibleSolvers
 
 Description
-    Transient solver for incompressible, turbulent flow of Newtonian fluids
-    on a moving mesh.
+    Transient solver for ADM no1 coupled with incompressible, turbulent flow of 
+    Newtonian fluids on a moving mesh.
 
     \heading Solver details
     The solver uses the PIMPLE (merged PISO-SIMPLE) algorithm to solve the
-    continuity equation:
-
-        \f[
-            \div \vec{U} = 0
-        \f]
-
-    and momentum equation:
-
-        \f[
-            \ddt{\vec{U}} + \div \left( \vec{U} \vec{U} \right) - \div \gvec{R}
-          = - \grad p + \vec{S}_U
-        \f]
-
-    Where:
-    \vartable
-        \vec{U} | Velocity
-        p       | Pressure
-        \vec{R} | Stress tensor
-        \vec{S}_U | Momentum source
-    \endvartable
+    continuity equation
 
     Sub-models include:
     - turbulence modelling, i.e. laminar, RAS or LES
     - run-time selectable MRF and finite volume options, e.g. explicit porosity
 
-    \heading Required fields
-    \plaintable
-        U       | Velocity [m/s]
-        p       | Kinematic pressure, p/rho [m2/s2]
-        \<turbulence fields\> | As required by user selection
-    \endplaintable
-
 Note
-   The motion frequency of this solver can be influenced by the presence
-   of "updateControl" and "updateInterval" in the dynamicMeshDict.
 
 \*---------------------------------------------------------------------------*/
 
@@ -86,7 +57,6 @@ Note
 
 #include "localEulerDdtScheme.H"
 #include "ADMno1.H"
-// #include "multivariateScheme.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -94,13 +64,11 @@ int main(int argc, char *argv[])
 {
     argList::addNote
     (
-        // TODO: add new note
-        "Transient solver for incompressible, turbulent flow"
-        " of Newtonian fluids on a moving mesh."
+        "Transient solver for ADM no1 coupled with incompressible," 
+        " turbulent flow of Newtonian fluids on a moving mesh."
     );
 
     #include "postProcess.H"
-
     #include "addCheckCaseOptions.H"
     #include "setRootCaseLists.H"
     #include "createTime.H"
@@ -130,7 +98,7 @@ int main(int argc, char *argv[])
 
         // ADM1 reaction source terms
         reaction->clear();
-        reaction->correct(phi, T);
+        // reaction->correct(phi, T);
         PtrList<volScalarField>& YPtrs = reaction->Y();
         PtrList<volScalarField>& GPtrs = reaction->G();
 

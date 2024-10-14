@@ -65,14 +65,4 @@ inline Foam::PtrList<Foam::volScalarField::Internal>& Foam::ADMno1::dIO()
     return dIOPtrs_;
 }
 
-// inline PtrList<volScalarField>& ADMno1::Y()
-// {
-//     return YPtrs_;
-// }
-
-// inline const Foam::PtrList<Foam::volScalarField>& Y() const
-// {
-//     return YPtrs_;
-// }
-
 // ************************************************************************* //

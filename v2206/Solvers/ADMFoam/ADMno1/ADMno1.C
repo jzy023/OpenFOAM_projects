@@ -55,7 +55,7 @@ Foam::ADMno1::ADMno1
     (
         "Qin", 
         dimVolume/dimTime,
-        ADMno1Dict.lookupOrDefault("qin", 0.00) // benchmark 178.4674
+        ADMno1Dict.lookupOrDefault("qin", 0.00)
         // ADMno1Dict.lookupOrDefault("qin", 178.4674) // benchmark 
     ),
     Vgas_
@@ -120,7 +120,7 @@ Foam::ADMno1::ADMno1
     KHch4_(fac_),
     KHco2_(fac_),
     KaW_(fac_),
-    KaIN_(fac_),					
+    KaIN_(fac_),                    
     Kaco2_(fac_),
     pH_
     (
@@ -178,7 +178,7 @@ Foam::ADMno1::ADMno1
     )
 {
 
-    Info << "\nSelecting ADM no1 operation mode " << ADMno1Dict.get<word>("mode") << endl;
+    Info<< "\nSelecting ADM no1 operation mode " << ADMno1Dict.get<word>("mode") << endl;
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -213,7 +213,7 @@ Foam::ADMno1::ADMno1
 
     iNames += namesSoluable.size();
 
-    //-  Read particulates
+    //- Read particulates
 
     Info<< "Reading ADMno1 initial concentrations for particulates" << endl;
 
@@ -268,7 +268,7 @@ Foam::ADMno1::ADMno1
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-    //-  Gaseuoses initialization
+    //- Gaseuoses initialization
 
     Info<< "Reading ADM no1 initial concentrations for gaseuoses" << endl;
 
@@ -332,7 +332,7 @@ Foam::ADMno1::ADMno1
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-    //-  Medians initialization
+    //- Medians initialization
 
     Info<< "Initializing concentrations for medians" << endl;
 
@@ -366,7 +366,7 @@ Foam::ADMno1::ADMno1
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-    //-  Ions initialization
+    //- Ions initialization
 
     IOPtrs_.resize(2);
 
@@ -646,10 +646,10 @@ void Foam::ADMno1::calcThermal
     KaIN_ = para_.Ka().IN * exp(51965.0 * fac_);
     KaW_ = para_.Ka().W * exp(55900.0 * fac_);
 
-    // Info << "KHco2: " << max(KHco2_.field()) << endl;
-    // Info << "Kaco2: " << max(Kaco2_.field()) << endl;
-    // Info << "KaIN_: " << max(KaIN_.field()) << endl;
-    // Info << "KaW_: " << max(KaW_.field()) << endl;
+    // Info<< "KHco2: " << max(KHco2_.field()) << endl;
+    // Info<< "Kaco2: " << max(Kaco2_.field()) << endl;
+    // Info<< "KaIN_: " << max(KaIN_.field()) << endl;
+    // Info<< "KaW_: " << max(KaW_.field()) << endl;
 
 }
 
@@ -671,7 +671,7 @@ void Foam::ADMno1::calcTC()
         );
     }
     
-    Info << "time scale: " << tc_.value() << endl;
+    Info<< "time scale: " << tc_.value() << endl;
 }
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //

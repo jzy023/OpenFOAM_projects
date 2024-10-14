@@ -52,28 +52,28 @@ Description
 
 /** =======================================================================
  * STOI Components
- * @brief	ADM-1 Table 6.2, raction first order prameters [d^-1]
+ * @brief    ADM-1 Table 6.2, raction first order prameters [d^-1]
  */
 struct decayRate
 {
-	dimensionedScalar dis;	   //[1/d]
-	dimensionedScalar hyd_ch; //[1/d]
-	dimensionedScalar hyd_pr; //[1/d]
-	dimensionedScalar hyd_li; //[1/d]
-	dimensionedScalar m_su;   //[1/d]
-	dimensionedScalar m_aa;   //[1/d]
-	dimensionedScalar m_fa;   //[1/d]
-	dimensionedScalar m_c4;   //[1/d]
-	dimensionedScalar m_pro;  //[1/d]
-	dimensionedScalar m_ac;   //[1/d]
-	dimensionedScalar m_h2;   //[1/d]
-	dimensionedScalar dec_xsu;    //[1/d]
-	dimensionedScalar dec_xaa;    //[1/d]
-	dimensionedScalar dec_xfa;    //[1/d]
-	dimensionedScalar dec_xc4;    //[1/d]
-	dimensionedScalar dec_xpro;   //[1/d]
-	dimensionedScalar dec_xac;    //[1/d]
-	dimensionedScalar dec_xh2;    //[1/d]
+    dimensionedScalar dis;	   //[1/d]
+    dimensionedScalar hyd_ch; //[1/d]
+    dimensionedScalar hyd_pr; //[1/d]
+    dimensionedScalar hyd_li; //[1/d]
+    dimensionedScalar m_su;   //[1/d]
+    dimensionedScalar m_aa;   //[1/d]
+    dimensionedScalar m_fa;   //[1/d]
+    dimensionedScalar m_c4;   //[1/d]
+    dimensionedScalar m_pro;  //[1/d]
+    dimensionedScalar m_ac;   //[1/d]
+    dimensionedScalar m_h2;   //[1/d]
+    dimensionedScalar dec_xsu;    //[1/d]
+    dimensionedScalar dec_xaa;    //[1/d]
+    dimensionedScalar dec_xfa;    //[1/d]
+    dimensionedScalar dec_xc4;    //[1/d]
+    dimensionedScalar dec_xpro;   //[1/d]
+    dimensionedScalar dec_xac;    //[1/d]
+    dimensionedScalar dec_xh2;    //[1/d]
 
     decayRate
     (
@@ -125,9 +125,9 @@ struct decayRate
 // TODO: check dimension
 struct gasHenryCoe
 {
-	dimensionedScalar h2;
-	dimensionedScalar ch4;
-	dimensionedScalar co2;
+    dimensionedScalar h2;
+    dimensionedScalar ch4;
+    dimensionedScalar co2;
     dimensionedScalar h2o;
 
     gasHenryCoe
@@ -147,17 +147,17 @@ struct gasHenryCoe
 };
 
 /** =======================================================================
- * @brief	ADM-1 Table 6.2, default Yields of biomass (Y) [COD/COD]
+ * @brief    ADM-1 Table 6.2, default Yields of biomass (Y) [COD/COD]
  */
 struct yieldBiomass
 {
-	dimensionedScalar su;  //[COD/COD]
-	dimensionedScalar aa;  //[COD/COD]
-	dimensionedScalar fa;  //[COD/COD]
-	dimensionedScalar c4;  //[COD/COD]
-	dimensionedScalar pro; //[COD/COD]
-	dimensionedScalar ac;  //[COD/COD]
-	dimensionedScalar h2;  //[COD/COD]
+    dimensionedScalar su;  //[COD/COD]
+    dimensionedScalar aa;  //[COD/COD]
+    dimensionedScalar fa;  //[COD/COD]
+    dimensionedScalar c4;  //[COD/COD]
+    dimensionedScalar pro; //[COD/COD]
+    dimensionedScalar ac;  //[COD/COD]
+    dimensionedScalar h2;  //[COD/COD]
 
     yieldBiomass
     (
@@ -181,25 +181,25 @@ struct yieldBiomass
 };
 
 /** =======================================================================
- * @brief	ADM-1 Table 6.1, default Yields of product (f) [kgCOD/kgCOD]
+ * @brief    ADM-1 Table 6.1, default Yields of product (f) [kgCOD/kgCOD]
  */
 struct yieldProduct
 {
-	dimensionedScalar si_xc;  //[kgCOD/kgCOD]
-	dimensionedScalar xi_xc;  //[kgCOD/kgCOD]
-	dimensionedScalar ch_xc;  //[kgCOD/kgCOD]
-	dimensionedScalar pr_xc;  //[kgCOD/kgCOD]
-	dimensionedScalar li_xc;  //[kgCOD/kgCOD]
-	dimensionedScalar fa_li;  //[kgCOD/kgCOD]
-	dimensionedScalar h2_su;  //[kgCOD/kgCOD]
-	dimensionedScalar bu_su;  //[kgCOD/kgCOD]
-	dimensionedScalar pro_su; //[kgCOD/kgCOD]
-	dimensionedScalar ac_su;  //[kgCOD/kgCOD]
-	dimensionedScalar h2_aa;  //[kgCOD/kgCOD]
-	dimensionedScalar va_aa;  //[kgCOD/kgCOD]
-	dimensionedScalar bu_aa;  //[kgCOD/kgCOD]
-	dimensionedScalar pro_aa; //[kgCOD/kgCOD]
-	dimensionedScalar ac_aa;  //[kgCOD/kgCOD]
+    dimensionedScalar si_xc;  //[kgCOD/kgCOD]
+    dimensionedScalar xi_xc;  //[kgCOD/kgCOD]
+    dimensionedScalar ch_xc;  //[kgCOD/kgCOD]
+    dimensionedScalar pr_xc;  //[kgCOD/kgCOD]
+    dimensionedScalar li_xc;  //[kgCOD/kgCOD]
+    dimensionedScalar fa_li;  //[kgCOD/kgCOD]
+    dimensionedScalar h2_su;  //[kgCOD/kgCOD]
+    dimensionedScalar bu_su;  //[kgCOD/kgCOD]
+    dimensionedScalar pro_su; //[kgCOD/kgCOD]
+    dimensionedScalar ac_su;  //[kgCOD/kgCOD]
+    dimensionedScalar h2_aa;  //[kgCOD/kgCOD]
+    dimensionedScalar va_aa;  //[kgCOD/kgCOD]
+    dimensionedScalar bu_aa;  //[kgCOD/kgCOD]
+    dimensionedScalar pro_aa; //[kgCOD/kgCOD]
+    dimensionedScalar ac_aa;  //[kgCOD/kgCOD]
 
     yieldProduct
     (
@@ -239,27 +239,27 @@ struct yieldProduct
 };
 
 /** =======================================================================
- * @brief	default Carbon contents of substrates
- * 			_bac and _biom are interchangeable
- * 			Kmole/KgCOD
+ * @brief    default Carbon contents of substrates
+ * 		    _bac and _biom are interchangeable
+ * 		    Kmole/KgCOD
  */
 struct carbonContent
 {
-	dimensionedScalar xc;  //[kmol/kgCOD]
-	dimensionedScalar si;  //[kmol/kgCOD]
-	dimensionedScalar ch;  //[kmol/kgCOD]
-	dimensionedScalar pr;  //[kmol/kgCOD]
-	dimensionedScalar li;  //[kmol/kgCOD]
-	dimensionedScalar xi;  //[kmol/kgCOD]
-	dimensionedScalar su;  //[kmol/kgCOD]
-	dimensionedScalar aa;  //[kmol/kgCOD]
-	dimensionedScalar fa;  //[kmol/kgCOD]
-	dimensionedScalar bu;  //[kmol/kgCOD]
-	dimensionedScalar pro; //[kmol/kgCOD]
-	dimensionedScalar ac;  //[kmol/kgCOD]
-	dimensionedScalar bac; //[kmol/kgCOD]
-	dimensionedScalar va;  //[kmol/kgCOD]
-	dimensionedScalar ch4; //[kmol/kgCOD]
+    dimensionedScalar xc;  //[kmol/kgCOD]
+    dimensionedScalar si;  //[kmol/kgCOD]
+    dimensionedScalar ch;  //[kmol/kgCOD]
+    dimensionedScalar pr;  //[kmol/kgCOD]
+    dimensionedScalar li;  //[kmol/kgCOD]
+    dimensionedScalar xi;  //[kmol/kgCOD]
+    dimensionedScalar su;  //[kmol/kgCOD]
+    dimensionedScalar aa;  //[kmol/kgCOD]
+    dimensionedScalar fa;  //[kmol/kgCOD]
+    dimensionedScalar bu;  //[kmol/kgCOD]
+    dimensionedScalar pro; //[kmol/kgCOD]
+    dimensionedScalar ac;  //[kmol/kgCOD]
+    dimensionedScalar bac; //[kmol/kgCOD]
+    dimensionedScalar va;  //[kmol/kgCOD]
+    dimensionedScalar ch4; //[kmol/kgCOD]
 
     carbonContent
     (
@@ -300,7 +300,7 @@ struct carbonContent
 
 /** =======================================================================
  * Inhibition calcilations
- * @brief	default Inhibition parameters for (KI)
+ * @brief    default Inhibition parameters for (KI)
  */
 struct inhibitionParaI
 {
@@ -339,21 +339,21 @@ struct inhibitionParaI
 };
 
 /** =======================================================================
- * @brief	default Inhibition parameters for [Ks]
+ * @brief    default Inhibition parameters for [Ks]
  */
 struct inhibitionParaS
 {
     dimensionSet ds;
 
-	dimensionedScalar IN;  //[kmol/m3]
-	dimensionedScalar nh3; //[kmol/m3]
-	dimensionedScalar su;  //[kgCOD/m3]
-	dimensionedScalar aa;  //[kgCOD/m3]
-	dimensionedScalar fa;  //[kgCOD/m3]
-	dimensionedScalar c4;  //[kgCOD/m3]
-	dimensionedScalar pro; //[kgCOD/m3]
-	dimensionedScalar ac;  //[kgCOD/m3]
-	dimensionedScalar h2;  //[kgCOD/m3]
+    dimensionedScalar IN;  //[kmol/m3]
+    dimensionedScalar nh3; //[kmol/m3]
+    dimensionedScalar su;  //[kgCOD/m3]
+    dimensionedScalar aa;  //[kgCOD/m3]
+    dimensionedScalar fa;  //[kgCOD/m3]
+    dimensionedScalar c4;  //[kgCOD/m3]
+    dimensionedScalar pro; //[kgCOD/m3]
+    dimensionedScalar ac;  //[kgCOD/m3]
+    dimensionedScalar h2;  //[kgCOD/m3]
 
     inhibitionParaS
     (
@@ -403,12 +403,12 @@ struct inhibitionParaS
  */
 struct admAcidBaseKinetic
 {
-	dimensionedScalar va;  //[m3/kmol/day]
-	dimensionedScalar bu;  //[m3/kmol/day]
-	dimensionedScalar pro; //[m3/kmol/day]
-	dimensionedScalar ac;  //[m3/kmol/day]
-	dimensionedScalar co2; //[m3/kmol/day]
-	dimensionedScalar IN;  //[m3/kmol/day]
+    dimensionedScalar va;  //[m3/kmol/day]
+    dimensionedScalar bu;  //[m3/kmol/day]
+    dimensionedScalar pro; //[m3/kmol/day]
+    dimensionedScalar ac;  //[m3/kmol/day]
+    dimensionedScalar co2; //[m3/kmol/day]
+    dimensionedScalar IN;  //[m3/kmol/day]
 
     admAcidBaseKinetic
     (
@@ -436,13 +436,13 @@ struct admAcidBaseEq
 {
     dimensionSet ds;
 
-	dimensionedScalar va;  //[M]
-	dimensionedScalar bu;  //[M]
-	dimensionedScalar pro; //[M]
-	dimensionedScalar ac;  //[M]
-	dimensionedScalar co2; //[M]
-	dimensionedScalar IN;  //[M]
-	dimensionedScalar W;   //[M]
+    dimensionedScalar va;  //[M]
+    dimensionedScalar bu;  //[M]
+    dimensionedScalar pro; //[M]
+    dimensionedScalar ac;  //[M]
+    dimensionedScalar co2; //[M]
+    dimensionedScalar IN;  //[M]
+    dimensionedScalar W;   //[M]
 
     admAcidBaseEq
     (

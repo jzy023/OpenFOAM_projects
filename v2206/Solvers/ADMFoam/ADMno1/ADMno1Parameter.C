@@ -130,7 +130,7 @@ admPara::admPara
         0.035,      // co2
         0.0313      // h2o
     ),
-	kLa_
+    kLa_
     (
         dimless/dimTime, 200.0
     ),
@@ -149,7 +149,7 @@ admPara::admPara
 {
     // DEBUG
     defineINFLOW(runMode);
-    Info << "Ka_va:\t" << Ka_.va.value()
+    Info<< "Ka_va:\t" << Ka_.va.value()
          << "\nKa_bu:\t" << Ka_.bu.value()
          << "\nKa_pro:\t" << Ka_.pro.value()
          << "\nKa_ac:\t" << Ka_.ac.value()
@@ -158,7 +158,7 @@ admPara::admPara
          << "\nKa_W:\t" << Ka_.W.value() << endl;
 
     defineInitialState(runMode);
-	defineSTOI();
+    defineSTOI();
 };
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
@@ -409,97 +409,97 @@ inhibitionParaS admPara::defineKS
 
 void admPara::defineSTOI()
 {
-	STOI.resize(19);
-	for (int i = 0; i < 19; i++)
+    STOI.resize(19);
+    for (int i = 0; i < 19; i++)
 	{
-		STOI[i].resize(24);
+	    STOI[i].resize(24);
 	}
 	// rows for processes and columns for substrates (visco[j,i] from the table)
-	STOI[1][0] = 1.0;
-	STOI[2][1] = 1.0;
-	STOI[3][0] = 1.0- yP_.fa_li;
-	STOI[3][2] = yP_.fa_li;
+    STOI[1][0] = 1.0;
+    STOI[2][1] = 1.0;
+    STOI[3][0] = 1.0- yP_.fa_li;
+    STOI[3][2] = yP_.fa_li;
 
     STOI[0][11] = yP_.si_xc;
-	STOI[0][12] = -1.0;
-	STOI[0][13] = yP_.ch_xc;
-	STOI[0][14] = yP_.pr_xc;
-	STOI[0][15] = yP_.li_xc;
-	STOI[0][23] = yP_.xi_xc;
+    STOI[0][12] = -1.0;
+    STOI[0][13] = yP_.ch_xc;
+    STOI[0][14] = yP_.pr_xc;
+    STOI[0][15] = yP_.li_xc;
+    STOI[0][23] = yP_.xi_xc;
 
-	STOI[4][0] = -1.0;
-	STOI[4][4] = (1.0- yB_.su) * yP_.bu_su;
-	STOI[4][5] = (1.0- yB_.su) * yP_.pro_su;
-	STOI[4][6] = (1.0- yB_.su) * yP_.ac_su;
-	STOI[4][7] = (1.0- yB_.su) * yP_.h2_su;
+    STOI[4][0] = -1.0;
+    STOI[4][4] = (1.0- yB_.su) * yP_.bu_su;
+    STOI[4][5] = (1.0- yB_.su) * yP_.pro_su;
+    STOI[4][6] = (1.0- yB_.su) * yP_.ac_su;
+    STOI[4][7] = (1.0- yB_.su) * yP_.h2_su;
 
-	STOI[5][1] = -1.0;
-	STOI[5][3] = (1.0- yB_.aa) * yP_.va_aa;
-	STOI[5][4] = (1.0- yB_.aa) * yP_.bu_aa;
-	STOI[5][5] = (1.0- yB_.aa) * yP_.pro_aa;
-	STOI[5][6] = (1.0- yB_.aa) * yP_.ac_aa;
-	STOI[5][7] = (1.0- yB_.aa) * yP_.h2_aa;
+    STOI[5][1] = -1.0;
+    STOI[5][3] = (1.0- yB_.aa) * yP_.va_aa;
+    STOI[5][4] = (1.0- yB_.aa) * yP_.bu_aa;
+    STOI[5][5] = (1.0- yB_.aa) * yP_.pro_aa;
+    STOI[5][6] = (1.0- yB_.aa) * yP_.ac_aa;
+    STOI[5][7] = (1.0- yB_.aa) * yP_.h2_aa;
 
-	STOI[6][2] = -1.0;
-	STOI[6][6] = (1.0- yB_.fa) * 0.7;
-	STOI[6][7] = (1.0- yB_.fa) * 0.3;
+    STOI[6][2] = -1.0;
+    STOI[6][6] = (1.0- yB_.fa) * 0.7;
+    STOI[6][7] = (1.0- yB_.fa) * 0.3;
 
-	STOI[7][3] = -1.0;
-	STOI[7][5] = (1.0- yB_.c4) * 0.54;
-	STOI[7][6] = (1.0- yB_.c4) * 0.31;
-	STOI[7][7] = (1.0- yB_.c4) * 0.15;
+    STOI[7][3] = -1.0;
+    STOI[7][5] = (1.0- yB_.c4) * 0.54;
+    STOI[7][6] = (1.0- yB_.c4) * 0.31;
+    STOI[7][7] = (1.0- yB_.c4) * 0.15;
 
-	STOI[8][4] = -1.0;
-	STOI[8][6] = (1.0- yB_.c4) * 0.8;
-	STOI[8][7] = (1.0- yB_.c4) * 0.2;
+    STOI[8][4] = -1.0;
+    STOI[8][6] = (1.0- yB_.c4) * 0.8;
+    STOI[8][7] = (1.0- yB_.c4) * 0.2;
 
-	STOI[9][5] = -1.0;
-	STOI[9][6] = (1.0- yB_.pro) * 0.57;
-	STOI[9][7] = (1.0- yB_.pro) * 0.43;
+    STOI[9][5] = -1.0;
+    STOI[9][6] = (1.0- yB_.pro) * 0.57;
+    STOI[9][7] = (1.0- yB_.pro) * 0.43;
 
-	STOI[10][6] = -1.0;
-	STOI[10][8] = (1.0- yB_.ac);
+    STOI[10][6] = -1.0;
+    STOI[10][8] = (1.0- yB_.ac);
 
-	STOI[11][7] = -1.0;
-	STOI[11][8] = (1.0- yB_.h2);
+    STOI[11][7] = -1.0;
+    STOI[11][8] = (1.0- yB_.h2);
 
-	STOI[1][13] = -1.0;
-	STOI[2][14] = -1.0;
-	STOI[3][15] = -1.0;
+    STOI[1][13] = -1.0;
+    STOI[2][14] = -1.0;
+    STOI[3][15] = -1.0;
 
-	STOI[4][16] = yB_.su;
-	STOI[5][17] = yB_.aa;
-	STOI[6][18] = yB_.fa;
-	STOI[7][19] = yB_.c4;
+    STOI[4][16] = yB_.su;
+    STOI[5][17] = yB_.aa;
+    STOI[6][18] = yB_.fa;
+    STOI[7][19] = yB_.c4;
 
-	STOI[8][19] = yB_.c4;
-	STOI[9][20] = yB_.pro;
-	STOI[10][21] = yB_.ac;
-	STOI[11][22] = yB_.h2;
+    STOI[8][19] = yB_.c4;
+    STOI[9][20] = yB_.pro;
+    STOI[10][21] = yB_.ac;
+    STOI[11][22] = yB_.h2;
 
-	for (int i = 12; i < 19; i++)
+    for (int i = 12; i < 19; i++)
 	{
-		STOI[i][12] = 1.0;
-		STOI[i][i + 4] = -1.0;
+	    STOI[i][12] = 1.0;
+	    STOI[i][i + 4] = -1.0;
 	}
 
 	// Carbon content with Rosen paper
     STOI[0][9] = -(STOI[0][11] * CC_.si + STOI[0][12] * CC_.xc + STOI[0][13] * CC_.ch +
 				   STOI[0][14] * CC_.pr + STOI[0][15] * CC_.li + STOI[0][23] * CC_.xi); // <<< added by Rosen et al.
-	STOI[1][9] = -(STOI[1][0] * CC_.su +  STOI[1][13] * CC_.ch); // <<< added by Rosen et al.
-	STOI[2][9] = -(STOI[2][1] * CC_.aa + STOI[2][14] * CC_.pr); // <<< added by Rosen et al.
-	STOI[3][9] = -(STOI[3][0] * CC_.su + STOI[3][2] * CC_.fa + STOI[3][15] * CC_.li); // <<< added by Rosen et al.
+    STOI[1][9] = -(STOI[1][0] * CC_.su +  STOI[1][13] * CC_.ch); // <<< added by Rosen et al.
+    STOI[2][9] = -(STOI[2][1] * CC_.aa + STOI[2][14] * CC_.pr); // <<< added by Rosen et al.
+    STOI[3][9] = -(STOI[3][0] * CC_.su + STOI[3][2] * CC_.fa + STOI[3][15] * CC_.li); // <<< added by Rosen et al.
     STOI[4][9] = -(STOI[4][0] * CC_.su + STOI[4][4] * CC_.bu + STOI[4][5] * CC_.pro +
 	               STOI[4][6] * CC_.ac + STOI[4][16] * CC_.bac);
-	STOI[5][9] = -(STOI[5][1] * CC_.aa + STOI[5][3] * CC_.va + STOI[5][4] * CC_.bu +
+    STOI[5][9] = -(STOI[5][1] * CC_.aa + STOI[5][3] * CC_.va + STOI[5][4] * CC_.bu +
 				   STOI[5][5] * CC_.pro + STOI[5][6] * CC_.ac + STOI[5][17] * CC_.bac);
-	STOI[6][9] = -(STOI[6][2] * CC_.fa + STOI[6][6] * CC_.ac + STOI[6][18] * CC_.bac); // <<< added by Rosen et al.
-	STOI[7][9] = -(STOI[7][3] * CC_.va + STOI[7][5] * CC_.pro + STOI[7][6] * CC_.ac + STOI[7][19] * CC_.bac); // <<< added by Rosen et al.
+    STOI[6][9] = -(STOI[6][2] * CC_.fa + STOI[6][6] * CC_.ac + STOI[6][18] * CC_.bac); // <<< added by Rosen et al.
+    STOI[7][9] = -(STOI[7][3] * CC_.va + STOI[7][5] * CC_.pro + STOI[7][6] * CC_.ac + STOI[7][19] * CC_.bac); // <<< added by Rosen et al.
     STOI[8][9] = -(STOI[8][4] * CC_.bu + STOI[8][6] * CC_.ac + STOI[8][19] * CC_.bac); // <<< added by Rosen et al.
     STOI[9][9] = -(STOI[9][5] * CC_.pro + STOI[9][6] * CC_.ac + STOI[9][20] * CC_.bac);
-	STOI[10][9] = -(STOI[10][6] * CC_.ac + STOI[10][8] * CC_.ch4 + STOI[10][21] * CC_.bac);
+    STOI[10][9] = -(STOI[10][6] * CC_.ac + STOI[10][8] * CC_.ch4 + STOI[10][21] * CC_.bac);
     STOI[11][9] = -(STOI[11][8] * CC_.ch4 + STOI[11][22] * CC_.bac);
-	STOI[12][9] = -(STOI[12][12] * CC_.xc +  STOI[12][16] * CC_.bac); // <<< added by Rosen et al.
+    STOI[12][9] = -(STOI[12][12] * CC_.xc +  STOI[12][16] * CC_.bac); // <<< added by Rosen et al.
 
     // SIN calculation according to Rosen paper
     STOI[0][10] = NC_.xc - STOI[0][23] * NC_.I - STOI[0][11] * NC_.I - STOI[0][14] * NC_.aa; // <<< added by Rosen et al.

@@ -43,22 +43,22 @@ License
         return Top_;
     }
 
-	inline const decayRate admPara::kDec() const 
+    inline const decayRate admPara::kDec() const 
     {
         return kDec_;
     }
 
-	inline const yieldBiomass admPara::yB() const 
+    inline const yieldBiomass admPara::yB() const 
     {
         return yB_;
     }
 
-	inline const yieldProduct admPara::yP() const 
+    inline const yieldProduct admPara::yP() const 
     {
         return yP_;
     }
 
-	inline const carbonContent admPara::CC() const 
+    inline const carbonContent admPara::CC() const 
     {
         return CC_;
     }
@@ -139,13 +139,5 @@ License
     {
         return Iini_[idx]; 
     }
-
-    // inline scalar admPara::INFLOW
-    // (
-    //     label idx
-    // ) const
-    // {
-    //     return INFLOW_[idx];
-    // }
 
 // ************************************************************************* //
