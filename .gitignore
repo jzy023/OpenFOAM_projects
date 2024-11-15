@@ -38,9 +38,10 @@
 *.eps
 
 # Data
-processor*/
-*.csv
 log.*
+processor*/
+*.Identifier
+*.csv
 
 # Folders
 bin/
