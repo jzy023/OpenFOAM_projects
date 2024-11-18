@@ -17,71 +17,110 @@ FoamFile
 
 dimensions      [0 0 0 1 0 0 0];
 
-internalField   uniform 293.15; 
+internalField   uniform 285.0; 
 
 boundaryField
 {
     west
     {
-        type            uniformFixedValue;
-        uniformValue    tableFile;
-        uniformValueCoeffs
-        {
-            file        "$FOAM_CASE/0/air/Tambient";
-        }
+        type            fixedValue;
         value           uniform 285.0; 
     }
     east
     {
-        type            uniformFixedValue;
-        uniformValue    tableFile;
-        uniformValueCoeffs
-        {
-            file        "$FOAM_CASE/0/air/Tambient";
-        }
-        value           uniform 285.0; 
+        // type            fixedValue;
+        // value           uniform 285.0; 
+        type            zeroGradient;
     }
     top
     {
-        type            uniformFixedValue;
-        uniformValue    tableFile;
-        uniformValueCoeffs
-        {
-            file        "$FOAM_CASE/0/air/Tambient";
-        }
-        value           uniform 285.0; 
+        // type            fixedValue;
+        // value           uniform 285.0; 
+        type            zeroGradient;
     }
     ground
     {
         type            fixedValue;
-        value           uniform 298.15;        
+        value           uniform 303.15;        
     }
     north
     {
-        type            uniformFixedValue;
-        uniformValue    tableFile;
-        uniformValueCoeffs
-        {
-            file        "$FOAM_CASE/0/air/Tambient";
-        }
-        value           uniform 285.0; 
+        // type            fixedValue;
+        // value           uniform 285.0;
+        type            zeroGradient; 
     }
     south
     {
-        type            uniformFixedValue;
-        uniformValue    tableFile;
-        uniformValueCoeffs
-        {
-            file        "$FOAM_CASE/0/air/Tambient";
-        }
+        type            fixedValue;
         value           uniform 285.0; 
     }
     buildings
     {
-        // type            compressible::CFDHAMfluidTemperatureCoupledMixed;
         type            fixedValue;
         value           uniform 298.15; 
     }
+    
+    // west
+    // {
+    //     type            uniformFixedValue;
+    //     uniformValue    tableFile;
+    //     uniformValueCoeffs
+    //     {
+    //         file        "$FOAM_CASE/0/air/Tambient";
+    //     }
+    //     value           uniform 285.0; 
+    // }
+    // east
+    // {
+    //     type            uniformFixedValue;
+    //     uniformValue    tableFile;
+    //     uniformValueCoeffs
+    //     {
+    //         file        "$FOAM_CASE/0/air/Tambient";
+    //     }
+    //     value           uniform 285.0; 
+    // }
+    // top
+    // {
+    //     type            uniformFixedValue;
+    //     uniformValue    tableFile;
+    //     uniformValueCoeffs
+    //     {
+    //         file        "$FOAM_CASE/0/air/Tambient";
+    //     }
+    //     value           uniform 285.0; 
+    // }
+    // ground
+    // {
+    //     type            fixedValue;
+    //     value           uniform 298.15;        
+    // }
+    // north
+    // {
+    //     type            uniformFixedValue;
+    //     uniformValue    tableFile;
+    //     uniformValueCoeffs
+    //     {
+    //         file        "$FOAM_CASE/0/air/Tambient";
+    //     }
+    //     value           uniform 285.0; 
+    // }
+    // south
+    // {
+    //     type            uniformFixedValue;
+    //     uniformValue    tableFile;
+    //     uniformValueCoeffs
+    //     {
+    //         file        "$FOAM_CASE/0/air/Tambient";
+    //     }
+    //     value           uniform 285.0; 
+    // }
+    // buildings
+    // {
+    //     // type            compressible::CFDHAMfluidTemperatureCoupledMixed;
+    //     type            fixedValue;
+    //     value           uniform 298.15; 
+    // }
 }
 
 

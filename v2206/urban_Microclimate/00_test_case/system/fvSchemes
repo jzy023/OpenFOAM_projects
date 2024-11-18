@@ -16,7 +16,8 @@ FoamFile
 
 ddtSchemes
 {
-    default         steadyState;
+    // default         steadyState;
+    default         Euler;
 }
 
 gradSchemes
@@ -33,7 +34,7 @@ divSchemes
 {
     default         none;
 
-    div(phi,U)      bounded bounded Gauss linearUpwind limited;
+    div(phi,U)      bounded Gauss linearUpwind limited;
     div(phi,T)      bounded Gauss upwind;
 
     turbulence      bounded Gauss limitedLinear 1;

@@ -63,6 +63,48 @@ boundaryField
         gradient        uniform 0; 
         value           uniform 1e5; 
     }
+
+    // west
+    // {
+    //     type            fixedFluxPressure;
+    //     gradient        uniform 0; 
+    //     value           uniform 1e5; 
+    // }
+    // east
+    // {
+    //     type            fixedFluxPressure;
+    //     gradient        uniform 0; 
+    //     value           uniform 1e5; 
+    // }
+    // top
+    // {
+    //     type            fixedValue;
+    //     value           uniform 101325;
+    // }
+    // ground
+    // {
+    //     type            fixedFluxPressure;
+    //     gradient        uniform 0;
+    //     value           uniform 1e5; 
+    // }
+    // north
+    // {
+    //     type            fixedFluxPressure;
+    //     gradient        uniform 0; 
+    //     value           uniform 1e5; 
+    // }
+    // south
+    // {
+    //     type            fixedFluxPressure;
+    //     gradient        uniform 0; 
+    //     value           uniform 1e5; 
+    // }
+    // buildings
+    // {
+    //     type            fixedFluxPressure;
+    //     gradient        uniform 0; 
+    //     value           uniform 1e5; 
+    // }
 }
 
 

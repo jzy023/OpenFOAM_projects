@@ -52,7 +52,7 @@ solvers
 PIMPLE
 {
     momentumPredictor no;
-    nOuterCorrectors 1;
+    nOuterCorrectors 2;
     nCorrectors     2;
     nNonOrthogonalCorrectors 0;
     pRefCell        0;
@@ -63,7 +63,7 @@ relaxationFactors
 {
     equations
     {
-        U               0.9; // 0.9 is more stable but 0.95 less convergent
+        U               0.95; // 0.9 is more stable but 0.95 less convergent
     }
 }
 
