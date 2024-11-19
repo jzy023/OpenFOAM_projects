@@ -24,7 +24,7 @@ backgroundMesh
     /*5*/ zMax   150;
     /*6*/ xCells  32;
     /*7*/ yCells  28;
-    /*8*/ zCells  10;
+    /*8*/ zCells  16;
 }
 
 convertToMeters 1;
@@ -50,7 +50,19 @@ blocks
         $:backgroundMesh.yCells
         $:backgroundMesh.zCells
     )
-    simpleGrading (1 1 1)
+    simpleGrading 
+    (
+        // x-axis
+        1
+        // y-axis
+        1
+        // z-axis
+        (
+            (0.20 0.5 8)
+            (0.80 0.5 1)
+        )
+    )
+    // simpleGrading (1 1 1)
 );
 
 edges

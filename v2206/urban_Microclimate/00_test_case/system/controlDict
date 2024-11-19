@@ -24,7 +24,7 @@ startTime       0;
 stopAt          endTime;
 
 endTime         600;
-deltaT          1;
+deltaT          0.1;
 
 // endTime         86400;
 // deltaT          3600;
@@ -32,7 +32,7 @@ deltaT          1;
 // writeControl    timeStep;
 writeControl    adjustable;
 
-writeInterval   5;
+writeInterval   10;
 
 purgeWrite      0;
 
@@ -54,53 +54,36 @@ maxCo           10.0;
 
 maxDeltaT       1.0;
 
-// functions
-// {
-//     probes
-//     {   
-//         // Where to load it from
-//         libs            ("libsampling.so");
+functions
+{
+    
 
-//         type            probes;
 
-//         // Name of the directory for probe data
-//         name            probes;
+    // probes
+    // {   
+    //     // Where to load it from
+    //     libs            ("libsampling.so");
 
-//         // Write at same frequency as fields
-//         writeControl    timeStep;
-//         writeInterval   10;  
+    //     type            probes;
 
-//         // Fields to be probed
-//         fields          (T U); 
-//         region air;
+    //     // Name of the directory for probe data
+    //     name            probes;
 
-//         probeLocations
-//         (
-//             (100.595 86.3716 2.0)
-//             (119.398 86.1579 2.0)
-//         );
-//     }    
-// }
+    //     // Write at same frequency as fields
+    //     writeControl    timeStep;
+    //     writeInterval   10;  
 
-// //urbanMicroclimateFoam controls
+    //     // Fields to be probed
+    //     fields          (T U); 
+    //     region air;
 
-// initialSolidTimestepFactor	0.001666667;
+    //     probeLocations
+    //     (
+    //         (100.595 86.3716 2.0)
+    //         (119.398 86.1579 2.0)
+    //     );
+    // }    
+}
 
-// minDeltaT       1E-6;
-
-// maxDeltaT       100;
-
-// minFluidIteration	0;
-// maxFluidIteration	1000;
-
-// pcEqnForm    pc-based; //'pc-based' or 'mixed' - default is 'pc-based'
-
-// blending true;
-// blendingCoeffs
-// {
-//     dampingThickness 60;
-//     alphaCoeffU 0.3;
-//     alphaCoeffT 0.1;
-// }
 
 // ************************************************************************* //

@@ -1,0 +1,121 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.4.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 288.15; 
+
+boundaryField
+{
+    west
+    {
+        type            fixedValue;
+        value           uniform 288.15; 
+    }
+    east
+    {
+        type            zeroGradient;
+    }
+    top
+    {
+        type            zeroGradient;
+    }
+    ground
+    {
+        type            fixedValue;
+        value           uniform 298.15;        
+    }
+    north
+    {
+        type            zeroGradient; 
+    }
+    south
+    {
+        type            fixedValue;
+        value           uniform 288.15; 
+    }
+    buildings
+    {
+        type            fixedValue;
+        value           uniform 298.15; 
+    }
+    
+    // west
+    // {
+    //     type            uniformFixedValue;
+    //     uniformValue    tableFile;
+    //     uniformValueCoeffs
+    //     {
+    //         file        "$FOAM_CASE/0/air/Tambient";
+    //     }
+    //     value           uniform 288.15; 
+    // }
+    // east
+    // {
+    //     type            uniformFixedValue;
+    //     uniformValue    tableFile;
+    //     uniformValueCoeffs
+    //     {
+    //         file        "$FOAM_CASE/0/air/Tambient";
+    //     }
+    //     value           uniform 288.15; 
+    // }
+    // top
+    // {
+    //     type            uniformFixedValue;
+    //     uniformValue    tableFile;
+    //     uniformValueCoeffs
+    //     {
+    //         file        "$FOAM_CASE/0/air/Tambient";
+    //     }
+    //     value           uniform 288.15; 
+    // }
+    // ground
+    // {
+    //     type            fixedValue;
+    //     value           uniform 298.15;        
+    // }
+    // north
+    // {
+    //     type            uniformFixedValue;
+    //     uniformValue    tableFile;
+    //     uniformValueCoeffs
+    //     {
+    //         file        "$FOAM_CASE/0/air/Tambient";
+    //     }
+    //     value           uniform 288.15; 
+    // }
+    // south
+    // {
+    //     type            uniformFixedValue;
+    //     uniformValue    tableFile;
+    //     uniformValueCoeffs
+    //     {
+    //         file        "$FOAM_CASE/0/air/Tambient";
+    //     }
+    //     value           uniform 288.15; 
+    // }
+    // buildings
+    // {
+    //     // type            compressible::CFDHAMfluidTemperatureCoupledMixed;
+    //     type            fixedValue;
+    //     value           uniform 298.15; 
+    // }
+}
+
+
+// ************************************************************************* //
