@@ -14,7 +14,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     ADMFoam;
+application     ADMTestFoam;
 
 startFrom       startTime;
 

@@ -24,14 +24,14 @@ boundaryField
     {
         type            fixedFluxPressure;
         rho             rhok;
-        value           uniform 0;
+        value           $internalField;
     }
 
     fixedWalls
     {
         type            fixedFluxPressure;
         rho             rhok;
-        value           uniform 0;
+        value           $internalField;
     }
 
     frontAndBack
