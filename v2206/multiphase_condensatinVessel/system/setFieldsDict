@@ -17,33 +17,43 @@ FoamFile
 defaultFieldValues
 (
     volScalarFieldValue alpha.liquid 0
-    // volScalarFieldValue alpha.vapour 1
-    volScalarFieldValue T 370
+    volScalarFieldValue T 375
 );
 
 regions
 (
     boxToCell
     {
-        box (0.00   0.00   0.00) (0.002  0.005   0.01);
+        box (0.00   0.00   0.00) (0.02  0.0025   0.01);
         fieldValues
         (
             volScalarFieldValue alpha.liquid 1
-            // volScalarFieldValue alpha.vapour 0
-            volScalarFieldValue T 360
+            volScalarFieldValue T 365
         );
     }
-    // boxToCell
-    // {
-    //     box (0.4   -0.20   0.00) (0.60  0.00   0.10);
-    //     fieldValues
-    //     (
-    //         volScalarFieldValue alpha.lightFluid 0
-    //         volScalarFieldValue alpha.denseFluid 1
-    //         volScalarFieldValue T 250
-    //     );
-    // }
 );
+
+
+
+// defaultFieldValues
+// (
+//     volScalarFieldValue alpha.liquid 0
+//     volScalarFieldValue T 375
+// );
+
+// regions
+// (
+//     boxToCell
+//     {
+//         box (0.00   0.00   0.00) (0.02  0.0025   0.01);
+//         fieldValues
+//         (
+//             volScalarFieldValue alpha.liquid 1
+//             // volScalarFieldValue alpha.vapour 0
+//             volScalarFieldValue T 365
+//         );
+//     }
+// );
 
 
 // ************************************************************************* //

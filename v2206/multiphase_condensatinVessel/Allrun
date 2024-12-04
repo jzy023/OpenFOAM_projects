@@ -9,6 +9,17 @@ runApplication blockMesh
 
 runApplication setFields
 
-runApplication $(getApplication)
+# runApplication $(getApplication)
+
+runApplication decomposePar
+
+runParallel $(getApplication)
+
+runApplication reconstructPar
+
+rm -r proc*
+
+touch foam.foam
+
 
 #------------------------------------------------------------------------------

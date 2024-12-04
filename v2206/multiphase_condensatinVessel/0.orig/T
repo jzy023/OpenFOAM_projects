@@ -16,33 +16,35 @@ FoamFile
 
 dimensions          [0 0 0 1 0 0 0];
 
-internalField       uniform 370;
+internalField       uniform 375;
 
 boundaryField
 {
     bottom
     {
         type            fixedValue;
-        value           uniform 370;
+        value           uniform 375;
     }
 
     top
     {
         type            inletOutlet;
-        inletValue      $internalField;
+        inletValue      uniform 303;
         value           $internalField;
     }
 
     left
     {
-        type            zeroGradient;
-        value           uniform 360;
+        // type            zeroGradient;
+        type            fixedValue;
+        value           uniform 303;
     }
 
     right
     {
-        type            zeroGradient;
-        value           uniform 360;
+        // type            zeroGradient;
+        type            fixedValue;
+        value           uniform 303;
     }
 
     frontAndBack

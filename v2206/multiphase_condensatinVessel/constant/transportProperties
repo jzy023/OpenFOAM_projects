@@ -14,9 +14,36 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-phases          (liquid vapour); // FC-72
+phases          (liquid vapour); // water
 
-sigma           0;
+sigma           0.12;
+
+Prt             0.7;
+
+// liquid
+// {
+//     transportModel  Newtonian;
+//     nu              1e-6;
+//     rho             998;
+
+//     Cp              4.186e3;
+//     Cv              4.186e3;   // assume Cp for liquid
+//     kappa           0.6;
+//     hf              0;
+// }
+
+// vapour
+// {
+//     transportModel  Newtonian;
+//     nu              0.0337;
+//     rho             0.56;
+
+//     Cp              1.87e3;     // water vapour
+//     Cv              1.41e3;     // Cv = Cp - R/w
+//     kappa           0.026;      // water vapour
+//     hf              2.2e6;
+// }
+
 
 liquid
 {
@@ -42,7 +69,6 @@ vapour
     hf              93.0e3;
 }
 
-Prt             0.7;
 
 
 // ************************************************************************* //
