@@ -24,7 +24,7 @@ boundaryField
     {
         // type            zeroGradient;
         type            fixedValue;
-        value           uniform 380;
+        value           uniform 375;
     }
 
     top
@@ -37,13 +37,14 @@ boundaryField
     left
     {
         type            zeroGradient;
+        value           $internalField;
         
     }
 
     right
     {
         type            zeroGradient;
-        // value           $internalField;
+        value           $internalField;
     }
 
     frontAndBack

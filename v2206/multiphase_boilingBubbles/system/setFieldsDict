@@ -29,6 +29,7 @@ regions
         (
             volScalarFieldValue alpha.liquid 1
             volScalarFieldValue alpha.gas    0
+            volScalarFieldValue T            365
         );
     }
 );
