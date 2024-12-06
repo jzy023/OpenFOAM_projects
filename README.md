@@ -15,7 +15,7 @@ solver: icoReactingMultiphaseInterFoam
 
 The surface tension between liquid and gas phase $\sigma$ are set to be $\sigma=0.055$, $\sigma=0.07$ and $\sigma=0.10$ from left to right.
 
-![boilingBubblesGif](https://raw.githubusercontent.com/jzy023/gifs/main/LBM/lidDrivenLBM.gif)
+![boilingBubblesGif](https://raw.githubusercontent.com/jzy023/gifs/main/OpenFOAM/multiphase_boilingBubbles/boilingBubbles.gif)
 
 
 ## Multiphase condensateEvaporate
