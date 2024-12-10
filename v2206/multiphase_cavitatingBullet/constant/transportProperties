@@ -10,22 +10,54 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      turbulenceProperties.air;
+    object      transportProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// simulationType      laminar;
+phases          (water vapour);
 
+phaseChangeTwoPhaseMixture SchnerrSauer;
 
-simulationType      RAS;
+pSat            2300;   // Saturation pressure
 
-RAS
+sigma           0.07;
+
+water
 {
-    RASModel        kOmegaSST;
+    transportModel  Newtonian;
+    nu              9e-07;
+    rho             1000;
+}
 
-    turbulence      on;
+vapour
+{
+    transportModel  Newtonian;
+    nu              4.273e-04;
+    rho             0.02308;
+}
 
-    printCoeffs     on;
+KunzCoeffs
+{
+    UInf            U20.0;
+    tInf            0.005; // L = 0.1 m
+    Cc              C1000;
+    Cv              C1000;
+}
+
+MerkleCoeffs
+{
+    UInf            20.0;
+    tInf            0.005;  // L = 0.1 m
+    Cc              80;
+    Cv              1e-03;
+}
+
+SchnerrSauerCoeffs
+{
+    n               1.6e+13;
+    dNuc            2.0e-06;
+    Cc              1;
+    Cv              1;
 }
 
 

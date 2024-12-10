@@ -16,7 +16,11 @@ FoamFile
 
 phases          (liquid vapour); // water
 
-sigma           0.07;
+sigma
+{
+    type                constant;
+    sigma               0.07;
+}
 
 Prt             0.7;
 
@@ -29,19 +33,19 @@ liquid
     Cp              4.186e3;
     Cv              4.186e3;   // assume Cp for liquid
     kappa           0.6;
-    hf              0;
+    hf              -2.4e6;
 }
 
 vapour
 {
     transportModel  Newtonian;
-    nu              0.0337;
+    nu              1.8e-08;
     rho             0.56;
 
     Cp              1.87e3;     // water vapour
     Cv              1.41e3;     // Cv = Cp - R/w
     kappa           0.026;      // water vapour
-    hf              2.2e6;
+    hf              0;
 }
 
 

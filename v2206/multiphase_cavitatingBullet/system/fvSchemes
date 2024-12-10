@@ -10,22 +10,44 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      turbulenceProperties.air;
+    object      fvSchemes;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// simulationType      laminar;
-
-
-simulationType      RAS;
-
-RAS
+ddtSchemes
 {
-    RASModel        kOmegaSST;
+    default             Euler;
+}
 
-    turbulence      on;
+interpolationSchemes
+{
+    default             linear;
+}
 
-    printCoeffs     on;
+divSchemes
+{
+    default             none;
+    div(rhoPhi,U)       Gauss linearUpwind grad(U);
+    div(phi,omega)      Gauss linearUpwind grad(omega);
+    div(phi,k)          Gauss linearUpwind grad(k);
+    div(phi,alpha)      Gauss vanLeer;
+    div(phirb,alpha)    Gauss linear;
+    div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
+}
+
+gradSchemes
+{
+    default             Gauss linear;
+}
+
+laplacianSchemes
+{
+    default             Gauss linear limited corrected 0.5;
+}
+
+snGradSchemes
+{
+    default             limited corrected 0.5;
 }
 
 

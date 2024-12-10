@@ -9,23 +9,37 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    object      turbulenceProperties.air;
+    class       volScalarField;
+    object      Phi;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// simulationType      laminar;
+dimensions      [0 2 -1 0 0];
 
+internalField   uniform 0;
 
-simulationType      RAS;
-
-RAS
+boundaryField
 {
-    RASModel        kOmegaSST;
+    inlet
+    {
+        type            zeroGradient;
+    }
 
-    turbulence      on;
+    outlet
+    {
+        type            fixedValue;
+        value           $internalField;
+    }
 
-    printCoeffs     on;
+    walls
+    {
+        type            symmetry;
+    }
+
+    bullet
+    {
+        type            zeroGradient;
+    }
 }
 
 

@@ -18,8 +18,11 @@ phaseChangeTwoPhaseModel constant;
 
 constantCoeffs
 {
-    coeffC          150;
-    coeffE          150;
+    // coeffC          150;    // the higher the value the faster the condensation
+    // coeffE          150;    // the higher the value the faster the evaporation
+   
+    coeffC          250;  
+    coeffE          250;    
 }
 
 

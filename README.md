@@ -11,7 +11,10 @@ This repo contains case folders for ESI OpenFOAM.
 
 
 ## Multiphase boilingBubbles
-solver: icoReactingMultiphaseInterFoam
+solver: **icoReactingMultiphaseInterFoam**
+
+The solver is based pn continuous-continuous phase interaction modelling (VoF) where the solver solves all $N$ phases and forces a 
+sharp interface between phases. 
 
 The surface tension between liquid and gas phase $\sigma$ are set to be $\sigma=0.055$, $\sigma=0.07$ and $\sigma=0.10$ from left to right.
 
@@ -19,8 +22,24 @@ The surface tension between liquid and gas phase $\sigma$ are set to be $\sigma=
 
 
 ## Multiphase condensateEvaporate
-solver: interCondensatingEvaporatingFoam
+solver: **interCondensatingEvaporatingFoam**
 
+The solver is based on dispersed-continuous phase interaction modelling (Mixture model) where the solver solves $N-1$ phases without forceing a sharp interface between phases. 
+
+The follwoing gif shows 3 case where the condensation and evaporation coefficients ($K_{C}$ and $K_{E}$) are, from left to right, to be:
+
+
+$K_{C} = 50$, $K_{E} = 50$; 
+
+$K_{C} = 250$, $K_{E} = 250$;
+
+$K_{C} = 1e^{-16}$, $K_{E} = 50$  
+
+<!-- The surface tension between liquid and gas phase $\sigma$ are set to be $\sigma=0.055$, $\sigma=0.07$ and $\sigma=0.10$ from left to right. -->
+
+![condensateEvaperateGif](https://raw.githubusercontent.com/jzy023/gifs/main/OpenFOAM/multiphase_condensateEvaperate/condensateEvaperate.gif)
+
+## To Be Continued...
 
 
 

@@ -10,22 +10,17 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      turbulenceProperties.air;
+    object      decomposeParDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// simulationType      laminar;
+numberOfSubdomains 4;
 
+method          simple;
 
-simulationType      RAS;
-
-RAS
+coeffs
 {
-    RASModel        kOmegaSST;
-
-    turbulence      on;
-
-    printCoeffs     on;
+    n           (2 2 1);
 }
 
 

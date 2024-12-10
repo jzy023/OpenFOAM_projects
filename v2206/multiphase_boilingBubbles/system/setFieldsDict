@@ -16,8 +16,8 @@ FoamFile
 
 defaultFieldValues
 (
-    volScalarFieldValue alpha.gas   1
-    volScalarFieldValue alpha.liquid 0
+    volScalarFieldValue alpha.liquid    0
+    volScalarFieldValue alpha.gas       1
 );
 
 regions

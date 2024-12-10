@@ -1,4 +1,4 @@
-/*--------------------------------*- C++ -*----------------------------------*\
+/*--------------------------------*- C++ -*----------------------------------* \
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
 |  \\    /   O peration     | Version:  v2212                                 |
@@ -10,23 +10,11 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      turbulenceProperties.air;
+    object      turbulenceProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// simulationType      laminar;
-
-
-simulationType      RAS;
-
-RAS
-{
-    RASModel        kOmegaSST;
-
-    turbulence      on;
-
-    printCoeffs     on;
-}
+simulationType laminar;
 
 
 // ************************************************************************* //
