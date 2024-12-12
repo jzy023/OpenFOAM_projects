@@ -9,50 +9,46 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    object      controlDict;
+    class       volScalarField;
+    object      p_rgh;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     icoReactingMultiphaseInterFoam;
+dimensions          [ 1 -1 -2 0 0 0 0 ];
 
-startFrom       startTime;
+internalField       uniform 1e5;
 
-startTime       0;
+boundaryField
+{
+    bottom
+    {
+        type            fixedFluxPressure;
+        value           $internalField;
+    }
 
-stopAt          endTime;
+    top
+    {
+        type            totalPressure;
+        p0              $internalField;
+    }
 
-endTime         4.0;
+    left
+    {
+        type            fixedFluxPressure;
+        value           $internalField;
+    }
 
-deltaT          1e-3;
+    right
+    {
+        type            fixedFluxPressure;
+        value           $internalField;
+    }
 
-writeControl    adjustable;
-
-writeInterval   0.02;
-
-purgeWrite      0;
-
-writeFormat     ascii;
-
-writePrecision  6;
-
-writeCompression off;
-
-timeFormat      general;
-
-timePrecision   6;
-
-runTimeModifiable yes;
-
-adjustTimeStep  yes;
-
-maxDeltaT       1e-2;
-
-maxCo           1.5;
-
-maxAlphaCo      1.5;
-
-maxAlphaDdt     1;
+    frontAndBack
+    {
+        type            empty;
+    }
+}
 
 
 // ************************************************************************* //

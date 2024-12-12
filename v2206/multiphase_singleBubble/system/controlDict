@@ -14,7 +14,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     icoReactingMultiphaseInterFoam;
+application     interCondensatingEvaporatingFoam;
 
 startFrom       startTime;
 
@@ -22,9 +22,9 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         4.0;
+endTime         4;
 
-deltaT          1e-3;
+deltaT          1e-5;
 
 writeControl    adjustable;
 
@@ -48,11 +48,11 @@ adjustTimeStep  yes;
 
 maxDeltaT       1e-2;
 
-maxCo           1.5;
+maxCo           2.0;
 
-maxAlphaCo      1.5;
+maxAlphaCo      1.0;
 
-maxAlphaDdt     1;
+maxDeltaT       1e-2;
 
 
 // ************************************************************************* //

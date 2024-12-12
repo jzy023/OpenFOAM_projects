@@ -10,49 +10,20 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      controlDict;
+    object      phaseChangeProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     icoReactingMultiphaseInterFoam;
+phaseChangeTwoPhaseModel constant;
 
-startFrom       startTime;
-
-startTime       0;
-
-stopAt          endTime;
-
-endTime         4.0;
-
-deltaT          1e-3;
-
-writeControl    adjustable;
-
-writeInterval   0.02;
-
-purgeWrite      0;
-
-writeFormat     ascii;
-
-writePrecision  6;
-
-writeCompression off;
-
-timeFormat      general;
-
-timePrecision   6;
-
-runTimeModifiable yes;
-
-adjustTimeStep  yes;
-
-maxDeltaT       1e-2;
-
-maxCo           1.5;
-
-maxAlphaCo      1.5;
-
-maxAlphaDdt     1;
+constantCoeffs
+{
+    // coeffC          150;    // the higher the value the faster the condensation
+    // coeffE          150;    // the higher the value the faster the evaporation
+   
+    coeffC          1e-32; // 250;  
+    coeffE          1e-32; // 250;    
+}
 
 
 // ************************************************************************* //

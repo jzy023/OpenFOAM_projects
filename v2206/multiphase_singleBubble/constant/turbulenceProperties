@@ -10,49 +10,23 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      controlDict;
+    object      turbulenceProperties.air;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     icoReactingMultiphaseInterFoam;
+// simulationType      laminar;
 
-startFrom       startTime;
 
-startTime       0;
+simulationType      RAS;
 
-stopAt          endTime;
+RAS
+{
+    RASModel        kOmegaSST;
 
-endTime         4.0;
+    turbulence      on;
 
-deltaT          1e-3;
-
-writeControl    adjustable;
-
-writeInterval   0.02;
-
-purgeWrite      0;
-
-writeFormat     ascii;
-
-writePrecision  6;
-
-writeCompression off;
-
-timeFormat      general;
-
-timePrecision   6;
-
-runTimeModifiable yes;
-
-adjustTimeStep  yes;
-
-maxDeltaT       1e-2;
-
-maxCo           1.5;
-
-maxAlphaCo      1.5;
-
-maxAlphaDdt     1;
+    printCoeffs     on;
+}
 
 
 // ************************************************************************* //

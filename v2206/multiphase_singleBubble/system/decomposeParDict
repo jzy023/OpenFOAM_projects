@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2212                                 |
+|  \\    /   O peration     | Version:  v2206                                 |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -10,49 +10,18 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      controlDict;
+    object      decomposeParDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     icoReactingMultiphaseInterFoam;
+numberOfSubdomains 12;
 
-startFrom       startTime;
+method          simple;
 
-startTime       0;
-
-stopAt          endTime;
-
-endTime         4.0;
-
-deltaT          1e-3;
-
-writeControl    adjustable;
-
-writeInterval   0.02;
-
-purgeWrite      0;
-
-writeFormat     ascii;
-
-writePrecision  6;
-
-writeCompression off;
-
-timeFormat      general;
-
-timePrecision   6;
-
-runTimeModifiable yes;
-
-adjustTimeStep  yes;
-
-maxDeltaT       1e-2;
-
-maxCo           1.5;
-
-maxAlphaCo      1.5;
-
-maxAlphaDdt     1;
+coeffs
+{
+    n           (1 12 1);
+}
 
 
 // ************************************************************************* //
