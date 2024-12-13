@@ -18,24 +18,32 @@ FoamFile
 mode            MesoSolid;
 
 // Schmidt number
-Sc              0.2;
+Sc              1;
 
-// Gas constant
-R               0.083145;
-
-// Pipe resistance coefficient [m³d⁻¹Bar⁻¹]
-Kpip            5e4;
-
-//- Gas-Liquid volume fraction in tank (Vgas/Vliq)
-Vfrac           0.088235;
+// Gas constant [Pa * K-1 * (mol/m3)-1]
+R               8.3145;
 
 // Default pH value
 pH              7.26;
 
-// Cation concentration
+// Cation concentration [mol * m-3]
 Scat            0.00;
 
-// Anion concentration
-San             0.0052;
+// Anion concentration [mol * m-3]
+San             5.20;
+
+// Vapour pressure of water [Pa]
+Pvap            3130;
+
+
+
+// Benchmark case
+// Pipe resistance [m3 * d * Pa]
+Kpip            0.5;
+
+// External pressure [Pa]
+Pext            101300;
+
+
 
 // ************************************************************************* //

@@ -21,17 +21,30 @@ mode            MesoSolid;
 // Sc              1;
 Sc              3.0;
 
-// Gas constant
-R               0.083145;
+// Gas constant [Pa * K-1 * (mol/m3)-1]
+R               8.3145;
 
 // Default pH value
 pH              7.26;
 
-// Cation concentration
+// Cation concentration [mol * m-3]
 Scat            0.00;
 
-// Anion concentration
-San             0.005210099242102;
+// Anion concentration [mol * m-3]
+San             5.20;
+
+// Vapour pressure of water [Pa]
+Pvap            3130;
+
+
+
+// Benchmark case
+// Pipe resistance [m3 * d * Pa]
+Kpip            0.5;
+
+// External pressure [Pa]
+Pext            101300;
+
 
 
 
