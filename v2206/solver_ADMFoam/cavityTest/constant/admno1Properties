@@ -20,8 +20,13 @@ mode            MesoSolid;
 // Schmidt number
 Sc              1;
 
-// Gas constant
-R               0.083145;
+// Gas constant 
+// R               0.083145; // [bar * K^-1 * (kmol/m^3)^-1]
+R               8.3145; // [Pa * K-1 * (mol/m3)-1]
+
+//
+Kpip            0.5;    // [m3 * d * Pa]
+Pext            101300; // [Pa]
 
 // Default pH value
 pH              7.26;
@@ -30,7 +35,8 @@ pH              7.26;
 Scat            0.00;
 
 // Anion concentration
-San             0.005210099242102;
+// San             0.005210099242102;
+San             5.2;
 
 
 
