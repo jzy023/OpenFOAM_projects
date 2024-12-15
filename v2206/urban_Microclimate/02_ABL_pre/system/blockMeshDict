@@ -1,0 +1,116 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+scale   1;
+
+L   400;
+H   100;
+W   50;
+
+vertices
+(
+    (0    0    0) // v0
+    ($L   0    0) // v1 
+    ($L   $H   0) // v2
+    (0    $H   0) // v3
+
+    (0    0    $W) // v4
+    ($L   0    $W) // v5
+    ($L   $H   $W) // v6
+    (0    $H   $W) // v7
+);
+
+blocks
+(
+    hex (0 1 2 3 4 5 6 7)
+    (128 32 16)
+    simpleGrading 
+    (
+        1 
+        (
+        //   dist   nCell  rate
+            (0.10   0.40   10)
+            (0.90   0.60   1)
+        )
+        1
+    )
+);
+
+edges
+(
+);
+
+boundary
+(
+    inlet
+    {
+        // type patch;
+        type cyclic;
+        neighbourPatch outlet;
+        faces
+        (
+            (0 3 7 4)
+        );
+    }
+    outlet
+    {
+        // type patch;
+        type cyclic;
+        neighbourPatch inlet;
+        faces
+        (
+            (1 2 6 5)
+        );
+    }
+    upperAtm
+    {
+        type patch;
+        faces
+        (
+            (3 7 6 2)
+        );
+    }
+    ground
+    {
+        type wall;
+        faces
+        (
+            (0 4 5 1)
+        );
+    }
+    frontAtm
+    {
+        type cyclic;
+        neighbourPatch backAtm;
+        // type patch;
+        faces
+        (
+            (4 5 6 7)
+        );
+    }
+    backAtm
+    {
+        type cyclic;
+        neighbourPatch frontAtm;
+        // type patch;
+        faces
+        (
+            (0 1 2 3)
+        );
+    }
+);
+
+
+// ************************************************************************* //

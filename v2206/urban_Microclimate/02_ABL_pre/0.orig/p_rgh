@@ -1,0 +1,89 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      p_rgh;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 2 -2 0 0 0 0];
+
+internalField   uniform 1e5;
+
+boundaryField
+{
+    // inlet
+    // {
+    //     type            zeroGradient;
+
+    //     // type            fixedFluxPressure;
+    //     // rho             rhok;
+    //     // value           uniform 1e5;
+    // }
+
+    // outlet
+    // {
+    //     type            zeroGradient;
+
+    //     // type            fixedFluxPressure;
+    //     // rho             rhok;
+    //     // value           uniform 1e5;
+
+    //     // type            fixedValue;
+    //     // value           uniform 1e5;
+    // }
+
+    inlet
+    {
+        type            cyclic;
+    }
+
+    outlet
+    {
+        type            cyclic;
+    }
+
+    upperAtm
+    {
+        // type            zeroGradient;
+
+        // type            totalPressure;
+        // p0              $internalField;
+
+        // type            fixedFluxPressure;
+        // rho             rhok;
+        // value           uniform 1e5;
+
+        type            fixedValue;
+        value           uniform 1e5;
+    }
+
+    ground
+    {
+        // type            zeroGradient;
+        type            fixedFluxPressure;
+        rho             rhok;
+        value           uniform 1e5;
+    }
+
+    frontAtm
+    {
+        type            cyclic;
+    }
+
+    backAtm
+    {
+        type            cyclic;
+    }
+}
+
+
+// ************************************************************************* //

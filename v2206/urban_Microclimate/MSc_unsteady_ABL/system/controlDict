@@ -1,0 +1,125 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1912                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     pimpleFoam;
+
+startFrom       startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         6e4;
+
+deltaT          1;
+
+writeControl    runTime;
+
+writeInterval   2e4;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+adjustTimeStep  yes;
+
+maxCo           0.8;
+
+libs ("libMy.so");
+
+functions
+{
+    #includeFunc    R;
+    fieldAverage1
+    {
+        type                fieldAverage;
+        libs                ("fieldFunctionObjects.so");
+        fields
+        (
+            U
+            {
+                mean        on;
+                prime2Mean  on;
+                base        time;
+            }
+            p_rgh
+            {
+                mean        on;
+                prime2Mean  off;
+                base        time;
+            }
+            nut
+            {
+                mean        on;
+                prime2Mean  off;
+                base        time;
+            }
+            T
+            {
+                mean        on;
+                prime2Mean  off;
+                base        time;
+            }
+        );
+        writeControl    	runTime;
+        writeInterval       2e4;
+        timeStart       	2e4;
+    }
+	turbulenceFields1
+	{
+	    type                turbulenceFields;
+	    libs                ("libfieldFunctionObjects.so");
+        restartOnOutput     true;
+	    field               L;
+        writeControl        runTime;
+        writeInterval       2e4;
+        timeStart           2e4; //#eval #{ 0.1 * ${/endTime} #};
+	}
+    probes
+    {
+        type                probes;
+        libs                ("libsampling.so");
+        name                probes;
+        writeControl        timeStep;
+        writeInterval       1;
+        timeStart           2e4;
+
+        fields              (p U);
+        probeLocations
+        (
+            (6200 900 1550)
+            (6200 500 1550)
+            (6200 100 1550)
+        );
+        // Optional: filter out points that haven't been found. Default
+        //           is to include them (with value -VGREAT)
+        includeOutOfBounds  true;
+    }
+
+
+}
+
+
+// ************************************************************************* //

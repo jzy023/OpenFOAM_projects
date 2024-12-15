@@ -1,0 +1,30 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1912                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      transportProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+transportModel  Newtonian;
+
+nu              [0 2 -1 0 0 0 0] 1.5e-05;
+
+beta			[0 0 0 -1 0 0 0] 3.43e-03; // thermal expansion rate
+
+TRef			[0 0 0 1 0 0 0] 273; // 0 C 
+
+Pr   			[0 0 0 0 0 0 0] 0.75; // Prandtl number
+
+Prt 			[0 0 0 0 0 0 0] 0.85; // static subgrid Prandtl number
+
+// ************************************************************************* //

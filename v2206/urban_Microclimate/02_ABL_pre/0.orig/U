@@ -1,0 +1,88 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volVectorField;
+    object      U;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField   uniform (0 0 0);
+
+boundaryField
+{
+    // inlet
+    // {
+    //     type            atmBoundaryLayerInletVelocity;
+    //     #include        "include/ABLConditions"
+    //     value           uniform (0 0 0);
+
+    //     // flowDir         (1 0 0);
+    //     // zDir            (0 1 0);
+    //     // Uref            10.0;          // (HW:Table 1)
+    //     // Zref            6.0;           // (HW:Table 1)
+    //     // z0              uniform 0.01;  // (HW:Table 1)
+    //     // d               uniform 0.0;
+
+    //     // // Optional (inherited) entries (unmodifiable)
+    //     // kappa           0.41;
+    //     // Cmu             0.09;
+    //     // initABL         true;
+    //     // phi             phi;
+    //     // C1              0.0;
+    //     // C2              1.0;
+    // }
+
+    // outlet
+    // {
+    //     // type            zeroGradient;
+    //     type            inletOutlet;
+    //     inletValue      uniform (0 0 0);
+    //     value           $internalField;
+    // }
+
+    inlet
+    {
+        type            cyclic;
+    }
+
+    outlet
+    {
+        type            cyclic;
+    }
+
+    upperAtm
+    {
+        // type            zeroGradient;
+        type            fixedShearStress;
+        tau             (0.390796574 0 0);
+        value           uniform (0 0 0);
+    }
+
+    ground
+    {
+        type            noSlip;
+    }
+
+    frontAtm
+    {
+        type            cyclic;
+    }
+
+    backAtm
+    {
+        type            cyclic;
+    }
+}
+
+
+// ************************************************************************* //

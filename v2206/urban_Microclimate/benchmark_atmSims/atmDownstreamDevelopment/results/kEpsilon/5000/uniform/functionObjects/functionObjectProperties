@@ -1,0 +1,264 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2212                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=64;scalar=64";
+    class       dictionary;
+    location    "5000/uniform/functionObjects";
+    object      functionObjectProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+sampleIso
+{
+    epsilon
+    {
+        file            "<case>/postProcessing/sampleIso/5000/envelope.vtp";
+    }
+    k
+    {
+        file            "<case>/postProcessing/sampleIso/5000/envelope.vtp";
+    }
+    nut
+    {
+        file            "<case>/postProcessing/sampleIso/5000/envelope.vtp";
+    }
+    U
+    {
+        file            "<case>/postProcessing/sampleIso/5000/envelope.vtp";
+    }
+}
+
+samplePlanes
+{
+    epsilon
+    {
+        file            "<case>/postProcessing/samplePlanes/5000/planes.vtp";
+    }
+    k
+    {
+        file            "<case>/postProcessing/samplePlanes/5000/planes.vtp";
+    }
+    nut
+    {
+        file            "<case>/postProcessing/samplePlanes/5000/planes.vtp";
+    }
+    U
+    {
+        file            "<case>/postProcessing/samplePlanes/5000/planes.vtp";
+    }
+}
+
+cdf7e925f5746741c316f5fbcf39ad0dfca90775
+{
+    minMax
+    {
+        scalar
+        {
+            min(mag(U))     0;
+            max(mag(U))     16.99844817596387;
+        }
+        label
+        {
+            min(mag(U))_cell 0;
+            min(mag(U))_processor 0;
+            max(mag(U))_cell 15594;
+            max(mag(U))_processor 7;
+        }
+        vector
+        {
+            min(mag(U))_position ( 5 10 0 );
+            max(mag(U))_position ( 4995 10 500 );
+        }
+    }
+    samples_u
+    {
+        vector
+        {
+            average(x_0mPatch,U) ( 13.4786399739 -2.66186082993e-12 9.59520259006e-05 );
+            min(x_0mPatch,U) ( 6.16349328772 -1.56759128496e-11 -0.000832510763287 );
+            max(x_0mPatch,U) ( 16.8519353159 2.56813743126e-13 0.000468142319662 );
+            average(x_0mCell,U) ( 13.4111740671 -2.71480543823e-12 9.777372089619999e-05 );
+            min(x_0mCell,U) ( 6.16349328772 -1.56759128496e-11 -0.000832510763287 );
+            max(x_0mCell,U) ( 16.8519353159 2.56813743126e-13 0.000468142319662 );
+            average(x_2500m,U) ( 13.4711595432 -2.36631361926e-10 8.469978519419999e-05 );
+            min(x_2500m,U)  ( 6.01072669424 -6.09296525714e-09 -0.00023984371511 );
+            max(x_2500m,U)  ( 16.8847236082 1.1197381055e-08 0.000946830615463 );
+            average(x_4000m,U) ( 13.470423626 -2.82559049994e-10 0.000286188627614 );
+            min(x_4000m,U)  ( 6.00875571387 -2.85669901953e-08 1.50786965522e-06 );
+            max(x_4000m,U)  ( 16.90596174 9.784970126059999e-09 0.00112355956222 );
+            average(x_5000mCell,U) ( 13.4684299134 1.2025872016e-10 0.000364592987488 );
+            min(x_5000mCell,U) ( 6.00547559918 -2.31105115594e-12 2.68752101618e-06 );
+            max(x_5000mCell,U) ( 16.9194575407 4.65749991268e-10 0.00107341749957 );
+            average(x_5000mPatch,U) ( 13.4684299134 1.2025872016e-10 0.000364592987488 );
+            min(x_5000mPatch,U) ( 6.00547559918 -2.31105115594e-12 2.68752101618e-06 );
+            max(x_5000mPatch,U) ( 16.9194575407 4.65749991268e-10 0.00107341749957 );
+            average(U)      ( 13.4629187402 -7.45843151238e-11 0.000197207084797 );
+            min(U)          ( 6.00547559918 -2.85669901953e-08 -0.000832510763287 );
+            max(U)          ( 16.9194575407 1.1197381055e-08 0.00112355956222 );
+        }
+        label
+        {
+            size(x_0mPatch,U) 51;
+            size(x_0mCell,U) 50;
+            size(x_2500m,U) 102;
+            size(x_4000m,U) 51;
+            size(x_5000mCell,U) 51;
+            size(x_5000mPatch,U) 51;
+            size(U)         356;
+        }
+    }
+    samples_k
+    {
+        scalar
+        {
+            average(x_0mPatch,k) 1.304961325737613;
+            min(x_0mPatch,k) 1.302655809370509;
+            max(x_0mPatch,k) 1.373836944194212;
+            average(x_0mCell,k) 1.305007174932944;
+            min(x_0mCell,k) 1.302655809370509;
+            max(x_0mCell,k) 1.373836944194212;
+            average(x_2500m,k) 1.29229519369525;
+            min(x_2500m,k)  1.277641988105061;
+            max(x_2500m,k)  1.382134672084325;
+            average(x_4000m,k) 1.285383682361345;
+            min(x_4000m,k)  1.274511253215573;
+            max(x_4000m,k)  1.38113094122079;
+            average(x_5000mCell,k) 1.279422556369067;
+            min(x_5000mCell,k) 1.269613037871905;
+            max(x_5000mCell,k) 1.379515155191779;
+            average(x_5000mPatch,k) 1.279422556369067;
+            min(x_5000mPatch,k) 1.269613037871905;
+            max(x_5000mPatch,k) 1.379515155191779;
+            average(k)      1.29121675468049;
+            min(k)          1.269613037871905;
+            max(k)          1.382134672084325;
+        }
+        label
+        {
+            size(x_0mPatch,k) 51;
+            size(x_0mCell,k) 50;
+            size(x_2500m,k) 102;
+            size(x_4000m,k) 51;
+            size(x_5000mCell,k) 51;
+            size(x_5000mPatch,k) 51;
+            size(k)         356;
+        }
+    }
+    samples_epsilon
+    {
+        scalar
+        {
+            average(x_0mPatch,epsilon) 0.05757952900058838;
+            min(x_0mPatch,epsilon) 0.001269633073291972;
+            max(x_0mPatch,epsilon) 1.237262463807618;
+            average(x_0mCell,epsilon) 0.05870572691913432;
+            min(x_0mCell,epsilon) 0.001269633073291972;
+            max(x_0mCell,epsilon) 1.237262463807618;
+            average(x_2500m,epsilon) 0.05899696810259031;
+            min(x_2500m,epsilon) 0.001559702964836972;
+            max(x_2500m,epsilon) 1.204617602901112;
+            average(x_4000m,epsilon) 0.05893683861375434;
+            min(x_4000m,epsilon) 0.001626492306449475;
+            max(x_4000m,epsilon) 1.203390731000127;
+            average(x_5000mCell,epsilon) 0.0588331842631558;
+            min(x_5000mCell,epsilon) 0.001656944517443834;
+            max(x_5000mCell,epsilon) 1.201377356499515;
+            average(x_5000mPatch,epsilon) 0.0588331842631558;
+            min(x_5000mPatch,epsilon) 0.001656944517443834;
+            max(x_5000mPatch,epsilon) 1.201377356499515;
+            average(epsilon) 0.05869746245953454;
+            min(epsilon)    0.001269633073291972;
+            max(epsilon)    1.237262463807618;
+        }
+        label
+        {
+            size(x_0mPatch,epsilon) 51;
+            size(x_0mCell,epsilon) 50;
+            size(x_2500m,epsilon) 102;
+            size(x_4000m,epsilon) 51;
+            size(x_5000mCell,epsilon) 51;
+            size(x_5000mPatch,epsilon) 51;
+            size(epsilon)   356;
+        }
+    }
+    samples_nut
+    {
+        scalar
+        {
+            average(x_0mPatch,nut) 32.60173847814794;
+            min(x_0mPatch,nut) 0.1255651554803547;
+            max(x_0mPatch,nut) 120.290782357559;
+            average(x_0mCell,nut) 30.84795760055972;
+            min(x_0mCell,nut) 0.1255651554803547;
+            max(x_0mCell,nut) 120.290782357559;
+            average(x_2500m,nut) 30.57382097119094;
+            min(x_2500m,nut) 0.1244508056663425;
+            max(x_2500m,nut) 96.94526091035847;
+            average(x_4000m,nut) 29.77805445567508;
+            min(x_4000m,nut) 0.1244088236736492;
+            max(x_4000m,nut) 92.01840319070888;
+            average(x_5000mCell,nut) 29.33235180013305;
+            min(x_5000mCell,nut) 0.1243392753562412;
+            max(x_5000mCell,nut) 89.69250242563312;
+            average(x_5000mPatch,nut) 29.33235180013305;
+            min(x_5000mPatch,nut) 0.1243392753562412;
+            max(x_5000mPatch,nut) 89.69250242563312;
+            average(nut)    30.43313747844946;
+            min(nut)        0.1243392753562412;
+            max(nut)        120.290782357559;
+        }
+        label
+        {
+            size(x_0mPatch,nut) 51;
+            size(x_0mCell,nut) 50;
+            size(x_2500m,nut) 102;
+            size(x_4000m,nut) 51;
+            size(x_5000mCell,nut) 51;
+            size(x_5000mPatch,nut) 51;
+            size(nut)       356;
+        }
+    }
+}
+
+samples_u
+{
+    U
+    {
+        file            "<case>/postProcessing/samples_u/5000/x_5000mPatch_U.xy";
+    }
+}
+
+samples_k
+{
+    k
+    {
+        file            "<case>/postProcessing/samples_k/5000/x_5000mPatch_k.xy";
+    }
+}
+
+samples_epsilon
+{
+    epsilon
+    {
+        file            "<case>/postProcessing/samples_epsilon/5000/x_5000mPatch_epsilon.xy";
+    }
+}
+
+samples_nut
+{
+    nut
+    {
+        file            "<case>/postProcessing/samples_nut/5000/x_5000mPatch_nut.xy";
+    }
+}
+
+
+// ************************************************************************* //
