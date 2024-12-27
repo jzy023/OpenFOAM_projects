@@ -68,7 +68,6 @@ boundaryField
 
     ground
     {
-        // type            zeroGradient;
         type            fixedFluxPressure;
         rho             rhok;
         value           uniform 1e5;

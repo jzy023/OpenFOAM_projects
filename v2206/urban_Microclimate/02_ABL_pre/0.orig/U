@@ -62,10 +62,9 @@ boundaryField
 
     upperAtm
     {
-        // type            zeroGradient;
-        type            fixedShearStress;
-        tau             (0.390796574 0 0);
-        value           uniform (0 0 0);
+        type            inletOutlet;
+        value           $internalField;
+        inletValue      uniform (3.53 0 0);
     }
 
     ground

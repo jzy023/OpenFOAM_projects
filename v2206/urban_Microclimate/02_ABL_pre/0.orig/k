@@ -16,11 +16,11 @@ FoamFile
 
 dimensions      [0 2 -2 0 0 0 0];
 
-internalField   uniform 1.0;
+internalField   uniform 1.0; //1.0;
 
 boundaryField
 {
-    // #include            "include/ABLConditions"
+    #include            "include/ABLConditions"
 
     // inlet
     // {
@@ -52,7 +52,7 @@ boundaryField
     ground
     {
         type            kqRWallFunction;
-        value           uniform 0.1;
+        value           uniform 0.02;
     }
 
     frontAtm

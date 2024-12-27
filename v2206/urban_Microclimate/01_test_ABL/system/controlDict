@@ -22,13 +22,13 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         100;
+endTime         1000;
 
 deltaT          0.05;
 
 writeControl    adjustable;
 
-writeInterval   5;
+writeInterval   20;
 
 purgeWrite      0;
 
@@ -71,6 +71,42 @@ functions
         writeControl    writeTime;
         writeInterval   1;
     }
+
+    // fieldAverage
+    // {
+    //     type                fieldAverage;
+    //     libs                ("fieldFunctionObjects.so");
+    //     fields
+    //     (
+    //         U
+    //         {
+    //             mean        on;
+    //             prime2Mean  on;
+    //             base        time;
+    //         }
+    //         p_rgh
+    //         {
+    //             mean        on;
+    //             prime2Mean  off;
+    //             base        time;
+    //         }
+    //         nut
+    //         {
+    //             mean        on;
+    //             prime2Mean  off;
+    //             base        time;
+    //         }
+    //         T
+    //         {
+    //             mean        on;
+    //             prime2Mean  off;
+    //             base        time;
+    //         }
+    //     );
+    //     writeControl    	runTime;
+    //     writeInterval       2e4;
+    //     timeStart       	2e4;
+    // }
 }
 
 

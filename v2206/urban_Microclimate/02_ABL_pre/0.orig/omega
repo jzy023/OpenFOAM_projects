@@ -20,7 +20,7 @@ internalField   uniform 0.0007;
 
 boundaryField
 {
-    // #include            "include/ABLConditions"
+    #include            "include/ABLConditions"
 
     // inlet
     // {

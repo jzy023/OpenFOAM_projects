@@ -46,7 +46,7 @@ boundaryField
     {
         // type            zeroGradient;
         type            inletOutlet;
-        inletValue      uniform (0 0 0);
+        inletValue      uniform (3 0 0);
         value           $internalField;
     }
 
@@ -55,7 +55,7 @@ boundaryField
         // type            zeroGradient;
         type            fixedShearStress;
         tau             (0.390796574 0 0);
-        value           uniform (0 0 0);
+        value           uniform (3 0 0);
     }
 
     ground

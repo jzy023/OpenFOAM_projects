@@ -16,7 +16,7 @@ FoamFile
 
 dimensions      [0 2 -1 0 0 0 0];
 
-internalField   uniform 1e-3;
+internalField   uniform 1e-12;
 
 boundaryField
 {
@@ -43,19 +43,20 @@ boundaryField
 
     upperAtm
     {
-        type            zeroGradient;
+        type            calculated;
+        value           $internalField;
         
     }
 
     ground
     {
-        // type            nutkWallFunction;
         type            nutkRoughWallFunction;
         Cmu             0.09;
-        kappa           0.41;
+        kappa           0.40;
         E               9.8;
         Cs              uniform 0.5;
-        Ks              uniform 1.45;
+        Ks              uniform 2.2     ;  // 4.5;
+
         value           $internalField;
     }
 

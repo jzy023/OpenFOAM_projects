@@ -15,27 +15,46 @@ FoamFile
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 scale   1;
 
-L   400;
-H   100;
-W   50;
+
+
+// main box
+Lmin   -300;
+Hmin   0;
+Wmin   -270;
+
+Lmax   220;
+Hmax   100;
+Wmax   120;
+
+
+// refined box
+// Lmin   -280;
+// Hmin   0;
+// Wmin   -250;
+
+// Lmax   200;
+// Hmax   100;
+// Wmax   100;
+
 
 vertices
 (
-    (0    0    0) // v0
-    ($L   0    0) // v1 
-    ($L   $H   0) // v2
-    (0    $H   0) // v3
+    ($Wmin     $Hmin   $Lmin) // v0
+    ($Wmax     $Hmin   $Lmin) // v1 
+    ($Wmax     $Hmax   $Lmin) // v2
+    ($Wmin     $Hmax   $Lmin) // v3
 
-    (0    0    $W) // v4
-    ($L   0    $W) // v5
-    ($L   $H   $W) // v6
-    (0    $H   $W) // v7
+    ($Wmin     $Hmin   $Lmax) // v4
+    ($Wmax     $Hmin   $Lmax) // v5
+    ($Wmax     $Hmax   $Lmax) // v6
+    ($Wmin     $Hmax   $Lmax) // v7
 );
+
 
 blocks
 (
     hex (0 1 2 3 4 5 6 7)
-    (128 32 16)
+    (32 32 64)
     simpleGrading 
     (
         1 
@@ -48,9 +67,11 @@ blocks
     )
 );
 
+
 edges
 (
 );
+
 
 boundary
 (

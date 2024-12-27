@@ -20,6 +20,6 @@ momentumSource
     active  		yes;
     selectionMode   all;
     fields          (U);
-    Ubar            (5 0 0);
-    relaxation		0.8;
+    Ubar            (3 0 0);
+    relaxation		0.9;
 }

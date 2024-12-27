@@ -16,11 +16,11 @@ FoamFile
 
 dimensions      [0 2 -3 0 0 0 0];
 
-internalField   uniform 0.01;
+internalField   uniform 1e-5;
 
 boundaryField
 {
-    // #include            "include/ABLConditions"
+    #include            "include/ABLConditions"
 
     // inlet
     // {
@@ -54,9 +54,7 @@ boundaryField
     ground
     {
         type            epsilonWallFunction;
-        // Cmu             $Cmu;
-        // kappa           $kappa;
-        value           $internalField;
+        value           uniform 0.075;
     }
 
     frontAtm

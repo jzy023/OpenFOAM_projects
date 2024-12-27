@@ -1,0 +1,75 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      omega;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 -1 0 0 0 0];
+
+// turluent intensity 0.5%
+internalField   uniform 2.3958;
+
+// turluent intensity 1%
+// internalField   uniform 4.7916;
+
+// turluent intensity 5%
+// internalField   uniform 23.9579;
+
+boundaryField
+{
+    airfoil
+    {
+        // type            omegaWallFunction;
+        // value           uniform 7200;
+        // value           $internalField;
+
+        type            fixedValue;
+        value           uniform 72000;
+        // value           $internalField;
+    }
+
+    west
+    {
+        type            fixedValue;
+        value           $internalField;
+    }
+
+    east
+    {
+        type            inletOutlet;
+        inletValue      $internalField;
+        value           $internalField;
+    }
+
+    north
+    {
+        type            slip;
+    }
+
+    south
+    {
+        type            slip;
+    }
+
+    front
+    {
+        type            empty;
+    }
+
+    back
+    {
+        type            empty;
+    }
+}
+// ************************************************************************* //
