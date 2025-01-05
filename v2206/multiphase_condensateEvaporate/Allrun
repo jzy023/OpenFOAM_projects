@@ -19,7 +19,7 @@ runApplication reconstructPar
 
 rm -r proc*
 
-touch foam.foam
+touch channelCE.foam
 
 
 #------------------------------------------------------------------------------

@@ -9,6 +9,6 @@ restore0Dir
 
 runApplication $(getApplication)
 
-touch foam.foam
+touch cavityTest.foam
 
 #------------------------------------------------------------------------------

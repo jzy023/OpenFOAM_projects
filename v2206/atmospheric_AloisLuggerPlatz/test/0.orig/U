@@ -1,0 +1,72 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volVectorField;
+    object      U;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField   uniform (0 0 0);
+
+boundaryField
+{
+    inlet
+    {
+        type                    fixedProfile;
+        profile                 csvFile; // table;
+        profileCoeffs
+        {
+            file                "0/uInletProfile.csv";
+            format              csv;
+            nHeaderLine         1;
+            refColumn           3;
+            componentColumns    (0 1 2);
+            separator           ",";
+            mergeSeparators     no;
+            outOfBounds         clamp;
+            interpolationScheme linear;
+        }
+        direction               (0 1 0);
+        origin                  0;
+    }
+
+    outlet
+    {
+        type            zeroGradient;
+    }
+
+    upperAtm
+    {
+        type            inletOutlet;
+        value           $internalField;
+        inletValue      uniform (0 0 3.53);
+    }
+
+    ground
+    {
+        type            noSlip;
+    }
+
+    frontAtm
+    {
+        type            cyclic;
+    }
+
+    backAtm
+    {
+        type            cyclic;
+    }
+}
+
+
+// ************************************************************************* //

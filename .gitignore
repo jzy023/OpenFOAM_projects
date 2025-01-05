@@ -41,7 +41,7 @@
 log.*
 processor*/
 *.Identifier
-*.csv
+# *.csv
 
 # Folders
 bin/
