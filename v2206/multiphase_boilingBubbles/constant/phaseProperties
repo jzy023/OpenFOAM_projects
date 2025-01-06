@@ -43,7 +43,7 @@ massTransferModel
     {
         type            Lee;
         species         vapour.gas;
-        C               100;
+        C               0.25; // 250;
         Tactivate       366;
     }
 );

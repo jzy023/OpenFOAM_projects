@@ -18,42 +18,55 @@ scale   1;
 
 
 // main box
-Lmin   0;
-Hmin   0;
-Wmin   0;
+// Lmin   0;
+// Hmin   0;
+// Wmin   0;
 
-Lmax   400;
+// Lmax   400;
+// Hmax   100;
+// Wmax   250;
+ 
+
+Lmin   -300;
+Hmin   0;
+Wmin   -280;
+
+Lmax   150;
 Hmax   100;
-Wmax   250;
+Wmax   200;
 
 
 
 vertices
 (
-    ($Wmin     $Hmin   $Lmin) // v0
-    ($Wmax     $Hmin   $Lmin) // v1 
-    ($Wmax     $Hmax   $Lmin) // v2
-    ($Wmin     $Hmax   $Lmin) // v3
+    ($Lmin     $Hmin   $Wmin) // v0
+    ($Lmax     $Hmin   $Wmin) // v1 
+    ($Lmax     $Hmax   $Wmin) // v2
+    ($Lmin     $Hmax   $Wmin) // v3
 
-    ($Wmin     $Hmin   $Lmax) // v4
-    ($Wmax     $Hmin   $Lmax) // v5
-    ($Wmax     $Hmax   $Lmax) // v6
-    ($Wmin     $Hmax   $Lmax) // v7
+    ($Lmin     $Hmin   $Wmax) // v4
+    ($Lmax     $Hmin   $Wmax) // v5
+    ($Lmax     $Hmax   $Wmax) // v6
+    ($Lmin     $Hmax   $Wmax) // v7
 );
 
 
 blocks
 (
     hex (0 1 2 3 4 5 6 7)
-    (16 32 24)
+    (32 16 32)
     simpleGrading 
     (
         1 
-        (
+        1
+        // (
         //   dist   nCell  rate
-            (0.15   0.30   10)
-            (0.85   0.70   1)
-        )
+            // (0.15   0.30   10)
+            // (0.85   0.70   1)
+
+            // (0.15   0.40   11)
+            // (0.85   0.60   1)
+        // )
         1
     )
 );
@@ -106,10 +119,10 @@ boundary
     }
     frontAtm
     {
-        type cyclic;
-        neighbourPatch backAtm;
+        // type cyclic;
+        // neighbourPatch backAtm;
 
-        // type patch;
+        type patch;
         faces
         (
             (4 5 6 7)
@@ -117,10 +130,10 @@ boundary
     }
     backAtm
     {
-        type cyclic;
-        neighbourPatch frontAtm;
+        // type cyclic;
+        // neighbourPatch frontAtm;
 
-        // type patch;
+        type patch;
         faces
         (
             (0 1 2 3)

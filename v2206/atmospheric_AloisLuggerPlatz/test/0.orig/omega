@@ -52,12 +52,14 @@ boundaryField
 
     frontAtm
     {
-        type            cyclic;
+        // type            cyclic;
+        type            zeroGradient;
     }
 
     backAtm
     {
-        type            cyclic;
+        // type            cyclic;
+        type            zeroGradient;
     }
 
 
