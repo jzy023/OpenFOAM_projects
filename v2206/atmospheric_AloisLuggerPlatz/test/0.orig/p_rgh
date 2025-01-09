@@ -54,6 +54,13 @@ boundaryField
         // type            cyclic;
         type            zeroGradient;
     }
+
+    buildings
+    {
+        type            fixedFluxPressure;
+        rho             rhok;
+        value           uniform 1e5;
+    }
 }
 
 

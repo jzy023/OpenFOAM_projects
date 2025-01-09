@@ -53,6 +53,12 @@ boundaryField
         // type            cyclic;
         type            zeroGradient;
     }
+
+    buildings
+    {
+        type            fixedValue;
+        value           uniform 308;
+    }
 }
 
 

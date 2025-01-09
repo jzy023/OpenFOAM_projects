@@ -55,6 +55,12 @@ boundaryField
         // type            cyclic;
         type            zeroGradient;
     }
+
+    buildings
+    {
+        type            kqRWallFunction;
+        value           uniform 0.14;
+    }
 }
 
 

@@ -55,6 +55,12 @@ boundaryField
         // type            cyclic;
         type            zeroGradient;
     }
+
+    buildings
+    {
+        type            epsilonWallFunction;
+        value           uniform 0.118;
+    }
 }
 
 

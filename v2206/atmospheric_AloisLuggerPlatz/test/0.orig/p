@@ -46,14 +46,20 @@ boundaryField
 
     frontAtm
     {
-        // type            cyclic;
-        type            zeroGradient;
+        type            calculated;
+        value           $internalField;
     }
 
     backAtm
     {
-        // type            cyclic;
-        type            zeroGradient;
+        type            calculated;
+        value           $internalField;
+    }
+
+    buildings
+    {
+        type            calculated;
+        value           $internalField;
     }
 }
 

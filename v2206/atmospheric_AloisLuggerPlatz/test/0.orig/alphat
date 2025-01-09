@@ -54,6 +54,12 @@ boundaryField
         type            zeroGradient;
     }
     
+    buildings
+    {
+        type            alphatJayatillekeWallFunction;
+        Prt             0.85;
+        value           uniform 0;
+    }
 }
 
 

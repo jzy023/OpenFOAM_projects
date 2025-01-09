@@ -62,7 +62,13 @@ boundaryField
         type            zeroGradient;
     }
 
-
+    buildings
+    {
+        type            omegaWallFunction;
+        Cmu             $Cmu;
+        kappa           $kappa;
+        value           $internalField;
+    }
 }
 
 

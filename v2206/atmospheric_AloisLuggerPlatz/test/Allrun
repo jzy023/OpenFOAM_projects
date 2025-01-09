@@ -4,19 +4,25 @@ cd "${0%/*}" || exit                                # Run from this directory
 #------------------------------------------------------------------------------
 
 restore0Dir
-
 runApplication blockMesh
+
+# SHM for 3D model
+runApplication surfaceFeatureExtract
+runApplication decomposePar -force
+runParallel snappyHexMesh -overwrite
+runApplication reconstructParMesh -constant
+rm -r proc*
+rm -r log.decom*
+rm -r log.recon*
+
 
 # runApplication $(getApplication)
 
 runApplication decomposePar
-
 runParallel $(getApplication)
-
 runApplication reconstructPar
-
 rm -rf proc*
 
-touch ABL.foam
+touch platz.foam
 
 #------------------------------------------------------------------------------

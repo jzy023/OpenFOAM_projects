@@ -61,6 +61,19 @@ boundaryField
         // type            cyclic;
         type            zeroGradient;
     }
+
+    buildings
+    {
+        // type            nutkRoughWallFunction;
+        // Cmu             0.09;
+        // kappa           0.40;
+        // E               9.8;
+        // Cs              uniform 0.5;
+        // Ks              uniform 2.2;
+
+        type            nutkWallFunction;
+        value           $internalField; 
+    }
 }
 
 

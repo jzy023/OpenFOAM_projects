@@ -18,22 +18,24 @@ scale   1;
 
 
 // main box
-// Lmin   0;
-// Hmin   0;
-// Wmin   0;
+Lmin    -300;
+Hmin    0;
+Wmin    -280;
 
-// Lmax   400;
-// Hmax   100;
-// Wmax   250;
- 
+Lmax    150;
+Hmax    100;
+Wmax    200;
 
-Lmin   -300;
-Hmin   0;
-Wmin   -280;
 
-Lmax   150;
-Hmax   100;
-Wmax   200;
+// resolution
+nx      24;
+ny      12;
+nz      24;
+// nx      32;
+// ny      16;
+// nz      32;
+
+
 
 
 
@@ -54,21 +56,22 @@ vertices
 blocks
 (
     hex (0 1 2 3 4 5 6 7)
-    (32 16 32)
+    ($nx $ny $nz)
     simpleGrading 
-    (
-        1 
-        1
-        // (
-        //   dist   nCell  rate
-            // (0.15   0.30   10)
-            // (0.85   0.70   1)
+    ( 1  1  1 )
+
+    // ( 
+    //     1
+    //     (
+        // //   dist   nCell  rate
+        //     (0.15   0.30   10)
+        //     (0.85   0.70   1)
 
             // (0.15   0.40   11)
             // (0.85   0.60   1)
-        // )
-        1
-    )
+    //     )
+    //     1
+    // )
 );
 
 

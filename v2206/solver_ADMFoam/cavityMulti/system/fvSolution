@@ -1,0 +1,119 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2206                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      fvSolution;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+solvers
+{
+    // testing
+    "alpha.*"
+    {
+        nAlphaSubCycles 4;
+        cAlpha          1;
+    }
+
+    p_rgh
+    {
+        solver          GAMG;
+        tolerance       1e-06;
+        relTol          0.1;
+        smoother        GaussSeidel;
+    }
+
+    p_rghFinal
+    {
+        $p_rgh;
+        smoother        DICGaussSeidel;
+        tolerance       1e-06;
+        relTol          0;
+    }
+
+    // p_rgh
+    // {
+    //     solver          PCG;
+    //     preconditioner  DIC;
+    //     tolerance       1e-6;
+    //     relTol          0.01;
+    // }
+
+    // p_rghFinal
+    // {
+    //     $p_rgh;
+    //     relTol          0;
+    // }
+
+    U
+    {
+        solver          smoothSolver;
+        smoother        GaussSeidel;
+        tolerance       1e-06;
+        relTol          0;
+    }
+
+    UFinal
+    {
+        $U;
+        tolerance       1e-08;
+        relTol          0;
+    }
+
+    "(T|k|epsilon|R)"
+    {
+        solver          PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-6;
+        relTol          0.1;
+    }
+
+    "(T|k|epsilon|R)Final"
+    {
+        $T;
+        relTol          0;
+    }
+
+    "(Yi|S*|G*)"
+    {
+        solver          PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-6;
+        relTol          1e-6; // <--- high relTol leads to inhomogeneity issue
+    }
+
+    "(Yi|S*|G*)Final"
+    {
+        $Sch4;
+        relTol          0;
+    }
+}
+
+PIMPLE
+{
+    momentumPredictor no;
+    nOuterCorrectors 2;
+    nCorrectors     2;
+    nNonOrthogonalCorrectors 0;
+    pRefCell        0;
+    pRefValue       101325;
+}
+
+relaxationFactors
+{
+    equations
+    {
+        // U               0.95; // 0.9 is more stable but 0.95 more convergent
+    }
+}
+
+
+// ************************************************************************* //

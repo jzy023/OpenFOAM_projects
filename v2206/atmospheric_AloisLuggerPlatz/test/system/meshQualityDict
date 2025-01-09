@@ -38,8 +38,8 @@ FoamFile
 
 
 //- Maximum non-orthogonality allowed. Set to 180 to disable.
-// maxNonOrtho 65;
-maxNonOrtho 55;
+maxNonOrtho 65;
+// maxNonOrtho 55;
 
 //- Max skewness allowed. Set to <0 to disable.
 maxBoundarySkewness 4;
@@ -69,7 +69,8 @@ minArea -1;
 
 //- Minimum face twist. Set to <-1 to disable. dot product of face normal
 //  and face centre triangles normal
-minTwist 0.05;
+// minTwist 0.05;
+minTwist 0.01;
 
 //- Minimum normalised cell determinant
 //  1 = hex, <= 0 = folded or flattened illegal cell

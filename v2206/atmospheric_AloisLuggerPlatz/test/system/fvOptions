@@ -24,7 +24,7 @@ FoamFile
     
 //     fields          (U);
     
-//     Ubar            (0 0 3);
+//     Ubar            (3 0 0);
     
 //     relaxation		0.9;
 // }

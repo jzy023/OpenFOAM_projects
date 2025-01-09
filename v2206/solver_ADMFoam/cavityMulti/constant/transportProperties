@@ -1,0 +1,121 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2206                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      transportProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+transportModel  Newtonian;
+
+// nu              0.00;
+nu              1e-5;
+
+// Thermal expansion coefficient
+beta            3e-03;
+
+// Reference temperature
+TRef            300;
+
+// Laminar Prandtl number
+Pr              0.7;
+
+// Turbulent Prandtl number
+Prt             0.85;
+
+
+
+// multiphase testing
+phases
+(
+    Gh2
+    {
+        transportModel Newtonian;
+        nu             1e-06;
+        rho            0.083;
+    }
+
+    Gch4
+    {
+        transportModel Newtonian;
+        nu             1e-06;
+        rho            0.657;
+    }
+
+    Gco2
+    {
+        transportModel Newtonian;
+        nu             1e-06;
+        rho            1.98;
+    }
+
+    fluid
+    {
+        transportModel Newtonian;
+        nu             1e-06;
+        rho            1000;
+    }
+);
+
+sigmas
+(
+    (fluid Gh2) 0.07
+    (fluid Gch4) 0.07
+    (fluid Gco2) 0.07
+    (Gh2 Gch4) 0.07
+    (Gh2 Gco2) 0.07
+    (Gch4 Gco2) 0.07
+);
+
+// phases
+// (
+//     water
+//     {
+//         transportModel Newtonian;
+//         nu             1e-06;
+//         rho            1000;
+//     }
+
+//     oil
+//     {
+//         transportModel Newtonian;
+//         nu             1e-06;
+//         rho            500;
+//     }
+
+//     mercury
+//     {
+//         transportModel Newtonian;
+//         nu             1.125e-07;
+//         rho            13529;
+//     }
+
+//     air
+//     {
+//         transportModel Newtonian;
+//         nu             1.48e-05;
+//         rho            1;
+//     }
+// );
+
+// sigmas
+// (
+//     (air water) 0.07
+//     (air oil) 0.07
+//     (air mercury) 0.07
+//     (water oil) 0.07
+//     (water mercury) 0.07
+//     (oil mercury) 0.07
+// );
+
+
+
+// ************************************************************************* //
