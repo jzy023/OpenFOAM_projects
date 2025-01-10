@@ -18,18 +18,26 @@ scale   1;
 
 
 // main box
+// Lmin    -300;
+// Hmin    0;
+// Wmin    -280;
+
+// Lmax    150;
+// Hmax    100;
+// Wmax    200;
+
 Lmin    -300;
 Hmin    0;
-Wmin    -280;
+Wmin    -220;
 
 Lmax    150;
-Hmax    100;
-Wmax    200;
+Hmax    10; // 100;
+Wmax    130;
 
 
 // resolution
 nx      24;
-ny      12;
+ny      4;
 nz      24;
 // nx      32;
 // ny      16;

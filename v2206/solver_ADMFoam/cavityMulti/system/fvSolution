@@ -39,6 +39,21 @@ solvers
         relTol          0;
     }
 
+    "pcorr.*"
+    {
+        solver          PCG;
+        preconditioner
+        {
+            preconditioner  GAMG;
+            tolerance       1e-05;
+            relTol          0;
+            smoother        GaussSeidel;
+        }
+        tolerance       1e-05;
+        relTol          0;
+        maxIter         100;
+    }
+
     // p_rgh
     // {
     //     solver          PCG;

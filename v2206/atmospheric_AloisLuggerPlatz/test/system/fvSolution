@@ -18,10 +18,17 @@ solvers
 {
     p_rgh
     {
-        solver          PCG;
-        preconditioner  DIC;
+        // solver          PCG;
+        // preconditioner  DIC;
+        // tolerance       1e-6;
+        // relTol          0.01;
+
+        solver          GAMG;
+        smoother        GaussSeidel;
         tolerance       1e-6;
         relTol          0.01;
+
+
     }
 
     p_rghFinal
@@ -29,6 +36,32 @@ solvers
         $p_rgh;
         relTol          0;
     }
+
+    // p_rgh
+    // {
+    //     solver          GAMG;
+    //     tolerance       1e-8;
+    //     relTol          0.1;
+    //     smoother        DICGaussSeidel;
+    //     maxIter         50;
+    // };
+
+    // p_rghFinal
+    // {
+    //     solver          PCG;
+    //     preconditioner
+    //     {
+    //         preconditioner  GAMG;
+    //         tolerance       1e-6;
+    //         relTol          0;
+    //         nVcycles        2;
+    //         smoother        DICGaussSeidel;
+
+    //     };
+    //     tolerance       1e-7;
+    //     relTol          0;
+    //     maxIter         50;
+    // };
 
     "(U|T|k|epsilon|omega|R)"
     {
@@ -59,8 +92,8 @@ relaxationFactors
 {
     equations
     {
-        "(U|T|k|epsilon|R)" 1;
-        "(U|T|k|epsilon|R)Final" 1;
+        "(U|T|k|epsilon|R)" 0.9;
+        "(U|T|k|epsilon|R)Final" 0.9;
     }
 }
 
