@@ -25,7 +25,8 @@ liquid
 
 gas
 {
-    type            multiComponentMovingPhaseModel;
+    type            pureMovingPhaseModel;
+    // type            multiComponentMovingPhaseModel;
 }
 
 surfaceTension

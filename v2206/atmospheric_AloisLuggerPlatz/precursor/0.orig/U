@@ -34,7 +34,8 @@ boundaryField
     {
         type            inletOutlet;
         value           $internalField;
-        inletValue      uniform (0 0 3.53);
+        inletValue      uniform (0 0 3.24);
+        // inletValue      uniform (0 0 3.53);
     }
 
     ground

@@ -96,7 +96,7 @@ solvers
         relTol          0.0;
     }
 
-    "(k.*|omega.*|Theta.*).*"
+    "(k.*|epsilon.*|omega.*|Theta.*).*"
     {
         solver          PBiCGStab;
         preconditioner  DILU;

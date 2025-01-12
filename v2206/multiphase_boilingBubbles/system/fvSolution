@@ -23,27 +23,26 @@ solvers
 
     "alpha.*"
     {
-        solver          PBiCG;
-        preconditioner  DILU;
-        tolerance       1e-08;
-        relTol          0.0;
-
         cAlphas          ((liquid and gas) 1);
-
         nAlphaCorr      2;
         nAlphaSubCycles 2;
 
         // Compressiion factor for species in each alpha phase
         // NOTE: It should be similar to cAlpha
         cYi             1;
-    }
 
-    "pcorr.*"
-    {
-        solver          PCG;
-        preconditioner  DIC;
-        tolerance       1e-5;
+        MULESCorr       yes;
+        nLimiterIter    1;
+
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-8;
         relTol          0;
+
+        // solver          PBiCG;
+        // preconditioner  DILU;
+        // tolerance       1e-08;
+        // relTol          0.0;
     }
 
     "(U.*|epsilon.*|k.*)"
@@ -54,6 +53,78 @@ solvers
         relTol          0;
     };
 
+    p_rgh
+    {
+        solver          GAMG;
+        tolerance       1e-8;
+        relTol          0.01;
+        smoother        DICGaussSeidel;
+        nPreSweeps      0;
+        nPostSweeps     2;
+        cacheAgglomeration true;
+        nCellsInCoarsestLevel 10;
+        agglomerator    faceAreaPair;
+        mergeLevels     1;
+        maxIter         100;
+    };
+
+    p_rghFinal
+    {
+        solver          PCG;
+        preconditioner
+        {
+            preconditioner  GAMG;
+            tolerance       1e-6;
+            relTol          0;
+            nVcycles        2;
+            smoother        DICGaussSeidel;
+            nPreSweeps      0;
+            nPostSweeps     2;
+            nFinestSweeps   2;
+            cacheAgglomeration true;
+            nCellsInCoarsestLevel 10;
+            agglomerator    faceAreaPair;
+            mergeLevels     1;
+        };
+        tolerance       1e-9;
+        relTol          0;
+        maxIter         300;
+    };
+
+    "pcorr.*"
+    {
+        $p_rgh;
+        relTol          0;
+    };
+
+    // p_rgh
+    // {
+    //     solver          PCG;
+    //     preconditioner  DIC;
+    //     tolerance       1e-8;
+    //     relTol          0.01;
+    //     nPreSweeps      0;
+    //     nPostSweeps     2;
+    //     cacheAgglomeration true;
+    //     nCellsInCoarsestLevel 10;
+    //     agglomerator    faceAreaPair;
+    //     mergeLevels     1;
+    // };
+
+    // p_rghFinal
+    // {
+    //     $p_rgh;
+    //     relTol          0;
+    // };
+
+    // "pcorr.*"
+    // {
+    //     solver          PCG;
+    //     preconditioner  DIC;
+    //     tolerance       1e-5;
+    //     relTol          0;
+    // }
+
     "T.*"
     {
         solver          PBiCGStab;
@@ -63,25 +134,6 @@ solvers
         residualAlpha   1e-5;
     }
 
-    p_rgh
-    {
-        solver          PCG;
-        preconditioner  DIC;
-        tolerance       1e-8;
-        relTol          0.01;
-        nPreSweeps      0;
-        nPostSweeps     2;
-        cacheAgglomeration true;
-        nCellsInCoarsestLevel 10;
-        agglomerator    faceAreaPair;
-        mergeLevels     1;
-    };
-
-    p_rghFinal
-    {
-        $p_rgh;
-        relTol          0;
-    };
 
     "Xvapour.gas.*"
     {
@@ -96,7 +148,7 @@ PIMPLE
 {
     momentumPredictor   false;
     nOuterCorrectors    1;
-    nCorrectors         3;
+    nCorrectors         2;
     nNonOrthogonalCorrectors 0;
 }
 

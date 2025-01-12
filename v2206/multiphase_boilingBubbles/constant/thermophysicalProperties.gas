@@ -17,55 +17,24 @@ FoamFile
 thermoType
 {
     type            heRhoThermo;
-    mixture         multiComponentMixture;
+    mixture         pureMixture;
     transport       const;
     thermo          hConst;
-    equationOfState incompressiblePerfectGas;
+    equationOfState rhoConst;
     specie          specie;
     energy          sensibleEnthalpy;
 }
 
-species
-(
-    air
-    vapour
-);
-
-inertSpecie air;
-
-vapour
+mixture
 {
     specie
     {
-        nMoles      1;
-        molWeight   18.9;
+        nMoles          1;
+        molWeight       28.9;
     }
     equationOfState
     {
-        pRef         1e5;
-    }
-    thermodynamics
-    {
-        Hf          0;
-        Cp          1900;
-    }
-    transport
-    {
-        mu          1.8e-05;
-        Pr          0.7;
-    }
-}
-
-air
-{
-    specie
-    {
-        nMoles      1;
-        molWeight   28.9;
-    }
-    equationOfState
-    {
-        pRef         1e5;
+        rho             1.3;
     }
     thermodynamics
     {
@@ -74,10 +43,75 @@ air
     }
     transport
     {
-        mu          1.8e-05;
+        mu          2.3e-08;
         Pr          0.7;
     }
 }
+
+// thermoType
+// {
+//     type            heRhoThermo;
+//     mixture         multiComponentMixture;
+//     transport       const;
+//     thermo          hConst;
+//     equationOfState incompressiblePerfectGas;
+//     specie          specie;
+//     energy          sensibleEnthalpy;
+// }
+
+// species
+// (
+//     air
+//     vapour
+// );
+
+// inertSpecie air;
+
+// vapour
+// {
+//     specie
+//     {
+//         nMoles      1;
+//         molWeight   18.9;
+//     }
+//     equationOfState
+//     {
+//         pRef        1e5;
+//     }
+//     thermodynamics
+//     {
+//         Hf          0;
+//         Cp          1900;
+//     }
+//     transport
+//     {
+//         mu          1.8e-05;
+//         Pr          0.7;
+//     }
+// }
+
+// air
+// {
+//     specie
+//     {
+//         nMoles      1;
+//         molWeight   28.9;
+//     }
+//     equationOfState
+//     {
+//         pRef        1e5;
+//     }
+//     thermodynamics
+//     {
+//         Hf          0;
+//         Cp          900;
+//     }
+//     transport
+//     {
+//         mu          1.8e-05;
+//         Pr          0.7;
+//     }
+// }
 
 
 // ************************************************************************* //

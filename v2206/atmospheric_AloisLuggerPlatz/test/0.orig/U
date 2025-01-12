@@ -49,8 +49,10 @@ boundaryField
     {
         type            inletOutlet;
         value           $internalField;
-        inletValue      uniform (2.3 0 0);  // <-- for 10m height
-        // inletValue      uniform (3.53 0 0); // <-- for 100m height
+        inletValue      uniform (3.53 0 0); // <-- for 100m height
+        // inletValue      uniform (2.3 0 0);  // <-- for 10m height
+
+        // type            zeroGradient;
     }
 
     ground

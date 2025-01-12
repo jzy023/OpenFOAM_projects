@@ -32,10 +32,10 @@ vertices
     ($width 0       0)
     ($width $height 0)
     (0      $height 0)
-    (0      0       1)
-    ($width 0       1)
-    ($width $height 1)
-    (0      $height 1)
+    (0      0       0.001)
+    ($width 0       0.001)
+    ($width $height 0.001)
+    (0      $height 0.001)
 );
 
 blocks
