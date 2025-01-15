@@ -10,49 +10,51 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      controlDict;
+    object      fvSchemes;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     interCondensatingEvaporatingFoam;
+ddtSchemes
+{
+    default         Euler;
+}
 
-startFrom       startTime;
+gradSchemes
+{
+    default         Gauss linear;
+}
 
-startTime       0;
+divSchemes
+{
+    default         none;
 
-stopAt          endTime;
+    div(phi,U)      Gauss upwind;
+    div(phi,T)      Gauss upwind;
 
-endTime         0.8;
+    turbulence      Gauss upwind;
+    div(phi,k)      $turbulence;
+    div(phi,epsilon) $turbulence;
+    div(phi,omega) $turbulence;
+    div(phi,R)      $turbulence;
+    div(R)          Gauss linear;
 
-deltaT          1e-5;
+    div((nuEff*dev2(T(grad(U))))) Gauss linear;
+}
 
-writeControl    adjustable;
+laplacianSchemes
+{
+    default         Gauss linear uncorrected;
+}
 
-writeInterval   0.01;
+interpolationSchemes
+{
+    default         linear;
+}
 
-purgeWrite      0;
-
-writeFormat     ascii;
-
-writePrecision  6;
-
-writeCompression off;
-
-timeFormat      general;
-
-timePrecision   6;
-
-runTimeModifiable yes;
-
-adjustTimeStep  yes;
-
-maxDeltaT       1e-2;
-
-maxCo           2.0;
-
-maxAlphaCo      1.0;
-
-maxDeltaT       1e-2;
+snGradSchemes
+{
+    default         uncorrected;
+}
 
 
 // ************************************************************************* //

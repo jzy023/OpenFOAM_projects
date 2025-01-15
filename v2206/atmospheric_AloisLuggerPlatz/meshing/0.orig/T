@@ -9,50 +9,57 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    object      controlDict;
+    class       volScalarField;
+    object      T;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     interCondensatingEvaporatingFoam;
+dimensions      [0 0 0 1 0 0 0];
 
-startFrom       startTime;
+internalField   uniform 300;
 
-startTime       0;
+boundaryField
+{   
+    inlet
+    {
+        type            fixedValue;
+        value           uniform 300;
+    }
 
-stopAt          endTime;
+    outlet
+    {
+        type            zeroGradient;
+    }
 
-endTime         0.8;
+    upperAtm
+    {
+        type            zeroGradient;
+    }
 
-deltaT          1e-5;
+    ground
+    {
+        type            fixedValue;
+        value           uniform 300;
+    }
 
-writeControl    adjustable;
+    frontAtm
+    {
+        // type            cyclic;
+        type            zeroGradient;
+    }
 
-writeInterval   0.01;
+    backAtm
+    {
+        // type            cyclic;
+        type            zeroGradient;
+    }
 
-purgeWrite      0;
-
-writeFormat     ascii;
-
-writePrecision  6;
-
-writeCompression off;
-
-timeFormat      general;
-
-timePrecision   6;
-
-runTimeModifiable yes;
-
-adjustTimeStep  yes;
-
-maxDeltaT       1e-2;
-
-maxCo           2.0;
-
-maxAlphaCo      1.0;
-
-maxDeltaT       1e-2;
+    buildings
+    {
+        type            fixedValue;
+        value           uniform 308;
+    }
+}
 
 
 // ************************************************************************* //

@@ -5,7 +5,6 @@
 *.slo
 *.lo
 *.o
-*.obj
 *.dep
 
 # Precompiled Headers
@@ -36,6 +35,10 @@
 *.png
 *.jpeg
 *.eps
+
+# Geometry
+*.eMesh
+*.extendedFeatureEdgeMesh
 
 # Data
 log.*

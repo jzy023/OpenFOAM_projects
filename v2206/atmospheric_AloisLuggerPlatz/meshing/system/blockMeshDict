@@ -1,0 +1,156 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+scale   1;
+
+
+
+// main box
+// Lmin    -300;
+// Hmin    0;
+// Wmin    -280;
+
+// Lmax    150;
+// Hmax    100;
+// Wmax    200;
+
+Lmin    -300;
+Hmin    0;
+Wmin    -205;
+
+Lmax    150;
+Hmax    65; // 100;
+Wmax    110;
+
+
+// resolution
+nx      24;
+ny      8; // 12;
+nz      24;
+// nx      32;
+// ny      16;
+// nz      32;
+
+
+
+
+
+vertices
+(
+    ($Lmin     $Hmin   $Wmin) // v0
+    ($Lmax     $Hmin   $Wmin) // v1 
+    ($Lmax     $Hmax   $Wmin) // v2
+    ($Lmin     $Hmax   $Wmin) // v3
+
+    ($Lmin     $Hmin   $Wmax) // v4
+    ($Lmax     $Hmin   $Wmax) // v5
+    ($Lmax     $Hmax   $Wmax) // v6
+    ($Lmin     $Hmax   $Wmax) // v7
+);
+
+
+blocks
+(
+    hex (0 1 2 3 4 5 6 7)
+    ($nx $ny $nz)
+    simpleGrading 
+    ( 1  1  1 )
+
+    // ( 
+    //     1
+    //     (
+    //     //   dist   nCell  rate
+    //         (0.15   0.20   10)
+    //         (0.85   0.80   1)
+
+    //         // (0.15   0.40   11)
+    //         // (0.85   0.60   1)
+    //     )
+    //     1
+    // )
+);
+
+
+edges
+(
+);
+
+
+boundary
+(
+    inlet
+    {
+        // type cyclic;
+        // neighbourPatch outlet;
+        
+        type patch;
+        faces
+        (
+            (0 3 7 4)
+        );
+    }
+    outlet
+    {
+        // type cyclic;
+        // neighbourPatch inlet;
+
+        type patch;
+        faces
+        (
+            (1 2 6 5)
+        );
+    }
+    upperAtm
+    {
+        type patch;
+        faces
+        (
+            (3 7 6 2)
+        );
+    }
+    ground
+    {
+        type wall;
+        faces
+        (
+            (0 4 5 1)
+        );
+    }
+    frontAtm
+    {
+        // type cyclic;
+        // neighbourPatch backAtm;
+
+        type patch;
+        faces
+        (
+            (4 5 6 7)
+        );
+    }
+    backAtm
+    {
+        // type cyclic;
+        // neighbourPatch frontAtm;
+
+        type patch;
+        faces
+        (
+            (0 1 2 3)
+        );
+    }
+);
+
+
+// ************************************************************************* //

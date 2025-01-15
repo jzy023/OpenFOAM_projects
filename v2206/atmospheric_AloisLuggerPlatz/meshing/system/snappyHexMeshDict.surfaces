@@ -1,0 +1,375 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      snappyHexMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// #includeEtc "caseDicts/mesh/generation/snappyHexMeshDict.cfg"
+
+castellatedMesh on;
+snap            on;
+addLayers       off;
+// addLayers       on;
+
+geometry
+{
+    surfaces_top
+    {
+        type triSurfaceMesh;
+        file "surfaces_top.obj";
+    }
+    surfaces_ground
+    {
+        type triSurfaceMesh;
+        file "surfaces_ground.obj";
+    }
+    surfaces_east
+    {
+        type triSurfaceMesh;
+        file "surfaces_east.obj";
+    }
+    surfaces_west
+    {
+        type triSurfaceMesh;
+        file "surfaces_west.obj";
+    }
+    surfaces_north
+    {
+        type triSurfaceMesh;
+        file "surfaces_north.obj";
+    }
+    surfaces_south
+    {
+        type triSurfaceMesh;
+        file "surfaces_south.obj";
+    }
+
+
+    refinementChannel
+    {
+        type searchableBox;
+        min  (-300   0  -220);
+        max  ( 150  75   130);
+    }
+
+    refinementBox
+    {
+        type searchableBox;
+        min  (-220   0  -205);
+        max  (  80  65   110);
+        // max  (  80  60   110);
+    }
+};
+
+castellatedMeshControls
+{
+    // If local number of cells is >= maxLocalCells on any processor
+    // switches from from refinement followed by balancing
+    // (current method) to (weighted) balancing before refinement.
+    maxLocalCells 100000;
+
+    // Overall cell limit (approximately). Refinement will stop immediately
+    // upon reaching this number so a refinement level might not complete.
+    // Note that this is the number of cells before removing the part which
+    // is not 'visible' from the keepPoint. The final number of cells might
+    // actually be a lot less.
+    maxGlobalCells 2000000;
+
+    // The surface refinement loop might spend lots of iterations refining just a
+    // few cells. This setting will cause refinement to stop if <= minimumRefine
+    // are selected for refinement. Note: it will at least do one iteration
+    // (unless the number of cells to refine is 0)
+    minRefinementCells 10;
+
+    // Allow a certain level of imbalance during refining
+    // (since balancing is quite expensive)
+    // Expressed as fraction of perfect balance (= overall number of cells /
+    // nProcs). 0=balance always.
+    maxLoadUnbalance 0.10;  
+
+    minRefinementCells 0;
+    nCellsBetweenLevels 2;
+
+    features
+    (
+       { file  "surfaces_top.eMesh"; level 4; }
+    );
+    features
+    (
+       { file  "surfaces_ground.eMesh"; level 4; }
+    );
+    features
+    (
+       { file  "surfaces_east.eMesh"; level 4; }
+    );
+    features
+    (
+       { file  "surfaces_west.eMesh"; level 4; }
+    );
+    features
+    (
+       { file  "surfaces_north.eMesh"; level 4; }
+    );
+    features
+    (
+       { file  "surfaces_south.eMesh"; level 4; }
+    );
+
+    refinementSurfaces
+    {
+        surfaces_top
+        {
+            level (4 4);
+            patchInfo { type wall; }
+        }
+        surfaces_ground
+        {
+            level (4 4);
+            patchInfo { type wall; }
+        }
+        surfaces_east
+        {
+            level (4 4);
+            patchInfo { type wall; }
+        }
+        surfaces_west
+        {
+            level (4 4);
+            patchInfo { type wall; }
+        }
+        surfaces_north
+        {
+            level (4 4);
+            patchInfo { type wall; }
+        }
+        surfaces_south
+        {
+            level (4 4);
+            patchInfo { type wall; }
+        }
+    }
+
+    refinementRegions
+    {
+        refinementChannel
+        {
+            mode inside;
+            levels ((1E15 2));
+        }
+
+        refinementBox
+        {
+            mode inside;
+            levels ((1E15 3));
+        }
+
+        // surfaces_top
+        // {
+        //     mode distance;
+        //     levels ((3.0 4));  
+        // }
+        // surfaces_ground
+        // {
+        //     mode distance;
+        //     levels ((3.0 4));  
+        // }
+        // surfaces_east
+        // {
+        //     mode distance;
+        //     levels ((3.0 4));  
+        // }
+        // surfaces_west
+        // {
+        //     mode distance;
+        //     levels ((3.0 4));  
+        // }
+        // surfaces_north
+        // {
+        //     mode distance;
+        //     levels ((3.0 4));  
+        // }
+        // surfaces_south
+        // {
+        //     mode distance;
+        //     levels ((3.0 4));  
+        // }
+    }
+
+    // locationInMesh (1 1 70);
+    locationInMesh (1 1 1);
+
+    // resolveFeatureAngle 15;
+    // allowFreeStandingZoneFaces true;
+    
+    resolveFeatureAngle 10;
+    allowFreeStandingZoneFaces false;
+}
+
+snapControls
+{
+    nSmoothPatch 5;
+    tolerance 8.0;
+    nSolveIter 40;
+    nRelaxIter 8;
+
+    nFeatureSnapIter 10;
+
+    implicitFeatureSnap    true;  
+    explicitFeatureSnap    false; 
+    multiRegionFeatureSnap true;
+
+    // implicitFeatureSnap    false;
+    // explicitFeatureSnap    true;
+    // multiRegionFeatureSnap true;
+
+}
+
+addLayersControls
+{
+    layers
+    {
+        // surfaces_top
+        // {
+        //     nSurfaceLayers 5;
+        // }
+        // surfaces_ground
+        // {
+        //     nSurfaceLayers 5;
+        // }
+        // surfaces_east
+        // {
+        //     nSurfaceLayers 5;
+        // }
+        // surfaces_west
+        // {
+        //     nSurfaceLayers 5;
+        // }
+        // surfaces_north
+        // {
+        //     nSurfaceLayers 5;
+        // }
+        // surfaces_south
+        // {
+        //     nSurfaceLayers 5;
+        // }
+
+        // ground
+        // {
+        //     nSurfaceLayers 4;
+        // }
+    }
+
+    // relativeSizes       false;
+    // expansionRatio      1.2;
+    // firstLayerThickness 0.5;
+    // minThickness        1e-3;
+
+    relativeSizes       true;
+    expansionRatio      1.2;
+    // finalLayerThickness 0.8;
+    firstLayerThickness 0.5;
+    minThickness        1e-3;
+    
+    nGrow 0;
+    featureAngle 10;
+    // featureAngle 60;
+    slipFeatureAngle 30;
+    nRelaxIter 8;
+    nSmoothSurfaceNormals 1;
+    nSmoothNormals 3;
+    nSmoothThickness 10;
+    nBufferCellsNoExtrude 0;
+    nLayerIter 10;
+    
+    // maxFaceThicknessRatio 0.5;
+    // maxThicknessToMedialRatio 0.3;
+    // minMedianAxisAngle 90;
+
+    maxFaceThicknessRatio 1.0;
+    maxThicknessToMedialRatio 0.2;
+    minMedianAxisAngle 90;    
+}
+
+meshQualityControls
+{
+    //- Maximum non-orthogonality allowed. Set to 180 to disable.
+    maxNonOrtho 65;
+    // maxNonOrtho 55;
+    // maxNonOrtho 180;
+
+    //- Max skewness allowed. Set to <0 to disable.
+    maxBoundarySkewness 4;
+    maxInternalSkewness 4;
+
+    //- Max concaveness allowed. Is angle (in degrees) below which concavity
+    //  is allowed. 0 is straight face, <0 would be convex face.
+    //  Set to 180 to disable.
+    maxConcave 60; // 80;
+
+    //- Minimum pyramid volume. Is absolute volume of cell pyramid.
+    //  Set to a sensible fraction of the smallest cell volume expected.
+    //  Set to very negative number (e.g. -1E30) to disable.
+    minVol 1e-13;
+
+    //- Minimum quality of the tet formed by the face-centre
+    //  and variable base point minimum decomposition triangles and
+    //  the cell centre.  Set to very negative number (e.g. -1E30) to
+    //  disable.
+    //     <0 = inside out tet,
+    //      0 = flat tetparaF
+    //      1 = regular tet
+    minTetQuality 1e-30;
+    // minTetQuality 1;
+
+    //- Minimum face area. Set to <0 to disable.
+    minArea -1;
+
+    //- Minimum face twist. Set to <-1 to disable. dot product of face normal
+    //  and face centre triangles normal
+    // minTwist 0.05;
+    minTwist 0.01;
+
+    //- Minimum normalised cell determinant
+    //  1 = hex, <= 0 = folded or flattened illegal cell
+    minDeterminant 0.001;
+
+    //- minFaceWeight (0 -> 0.5)
+    minFaceWeight 0.05;
+
+    //- minVolRatio (0 -> 1)
+    minVolRatio 0.01;
+
+    // must be >0 for Fluent compatibility
+    minTriangleTwist -1;
+
+
+    // Advanced
+
+    //- Number of error distribution iterations
+    nSmoothScale 4;
+        
+    //- Amount to scale back displacement at error points
+    errorReduction 0.75;
+}
+
+writeFlags
+(
+    noRefinement
+    scalarLevels
+    layerSets
+    layerFields
+);
+
+mergeTolerance 1e-6;
+
+// ************************************************************************* //
