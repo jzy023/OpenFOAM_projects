@@ -5,7 +5,6 @@
 *.slo
 *.lo
 *.o
-*.obj
 *.dep
 
 # Precompiled Headers
@@ -37,11 +36,15 @@
 *.jpeg
 *.eps
 
+# Geometry
+*.eMesh
+*.extendedFeatureEdgeMesh
+
 # Data
 log.*
 processor*/
 *.Identifier
-*.csv
+# *.csv
 
 # Folders
 bin/

@@ -52,6 +52,17 @@ $K_{C} = 1e^{-16}$, $K_{E} = 50$
 
 ![condensateEvaperateGif](https://raw.githubusercontent.com/jzy023/gifs/main/OpenFOAM/multiphase_condensateEvaperate/condensateEvaperate_sharp.gif)
 
+## Multiphase solvers comparison
+solvers being compared: 
+
+[left] **multiphaseInterFoam**
+
+[mid] **icoReactingMultiphaseInterFoam**
+
+[right] **interCondensatingEvaporatingFoam**
+
+![solverComparison](https://raw.githubusercontent.com/jzy023/gifs/main/OpenFOAM/multiphase_solverComparison/solverComparison.gif)
+
 ## To Be Continued...
 
 
