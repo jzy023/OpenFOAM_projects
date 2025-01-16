@@ -74,6 +74,12 @@ boundaryField
         type            nutkWallFunction;
         value           $internalField; 
     }
+    
+    "(buildings_surfaces_top|buildings_surfaces_ground|buildings_surfaces_east|buildings_surfaces_west|buildings_surfaces_north|buildings_surfaces_south)"
+    {
+        type            nutkWallFunction;
+        value           $internalField; 
+    }
 }
 
 

@@ -60,6 +60,13 @@ boundaryField
         Prt             0.85;
         value           uniform 0;
     }
+
+    "(buildings_surfaces_top|buildings_surfaces_ground|buildings_surfaces_east|buildings_surfaces_west|buildings_surfaces_north|buildings_surfaces_south)"
+    {
+        type            alphatJayatillekeWallFunction;
+        Prt             0.85;
+        value           uniform 0;
+    }
 }
 
 

@@ -59,7 +59,13 @@ boundaryField
     buildings
     {
         type            epsilonWallFunction;
-        value           uniform 0.118;
+        value           uniform 0.08;
+    }
+
+    "(buildings_surfaces_top|buildings_surfaces_ground|buildings_surfaces_east|buildings_surfaces_west|buildings_surfaces_north|buildings_surfaces_south)"
+    {
+        type            epsilonWallFunction;
+        value           uniform 0.08;
     }
 }
 

@@ -5,6 +5,7 @@ cd "${0%/*}" || exit                                # Run from this directory
 
 restore0Dir
 runApplication blockMesh
+touch platz.foam
 
 # SHM for 3D model
 runApplication surfaceFeatureExtract
@@ -14,7 +15,7 @@ runApplication reconstructParMesh -constant
 rm -r proc*
 rm -r log.decom*
 rm -r log.recon*
-# rm -r log*
+# rm -r log.recon*
 
 
 # runApplication $(getApplication)
@@ -22,8 +23,8 @@ rm -r log.recon*
 runApplication decomposePar
 runParallel $(getApplication)
 runApplication reconstructPar
+
 rm -rf proc*
 
-touch platz.foam
 
 #------------------------------------------------------------------------------
