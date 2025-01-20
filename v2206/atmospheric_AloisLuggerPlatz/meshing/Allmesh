@@ -14,6 +14,7 @@ runApplication surfaceFeatureExtract
 
 runApplication decomposePar -force
 runParallel snappyHexMesh -overwrite
+# runParallel topoSet
 
 runApplication reconstructParMesh -constant
 rm -r proc*

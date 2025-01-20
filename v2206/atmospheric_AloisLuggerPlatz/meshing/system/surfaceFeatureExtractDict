@@ -92,7 +92,31 @@ FoamFile
 //     }
 // }
 
-buildings.obj { 
+
+// buildings.obj { 
+//     extractionMethod            extractFromSurface;
+//     extractFromSurfaceCoeffs    { includedAngle 150; }
+
+//     subsetFeatures
+//     {
+//         nonManifoldEdges        no;
+//         openEdges               no;
+//     }
+// }
+
+// grass.obj { 
+//     extractionMethod            extractFromSurface;
+//     extractFromSurfaceCoeffs    { includedAngle 150; }
+
+//     subsetFeatures
+//     {
+//         nonManifoldEdges        no;
+//         openEdges               no;
+//     }
+// }
+
+
+buildings_grass.obj { 
     extractionMethod            extractFromSurface;
     extractFromSurfaceCoeffs    { includedAngle 150; }
 

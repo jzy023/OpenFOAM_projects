@@ -23,11 +23,11 @@ addLayers       off;
 
 geometry
 {
-    buildings
+    buildings_grass
     {
         type triSurfaceMesh;
-        file "buildings.obj";
-        // file "buildings.stl";
+        file "buildings_grass.obj";
+        #include "snappyRegionsDict"
     }
 
     refinementChannel
@@ -49,19 +49,30 @@ geometry
 castellatedMeshControls
 {
     minRefinementCells 0;
-    nCellsBetweenLevels 2;
+    nCellsBetweenLevels 1;
+
     features
     (
-       { file  "buildings.eMesh"; level 4; }
+       { file  "buildings_grass.eMesh"; level 3; }
     );
+
 
     refinementSurfaces
     {
-        buildings
+        buildings_grass
         {
             level (4 4);
             patchInfo { type wall; }
+            regions
+            {
+                grass
+                {
+                    level (3 3);
+                    patchInfo { type wall; }
+                }
+            }
         }
+
     }
 
     refinementRegions
@@ -78,10 +89,51 @@ castellatedMeshControls
             levels ((1E15 3));
         }
 
-        buildings
+        // #include "snappyRegionsRefineDict"
+
+        buildings_grass_off
         {
             mode distance;
             levels ((3.0 4));  
+            // #include "snappyRegionsRefineDict"
+            // regions
+            // {
+            //     walls_top
+            //     {
+            //         mode distance;
+            //         levels ((4.0 4));  
+            //     }
+
+            //     walls_ground
+            //     {
+            //         mode distance;
+            //         levels ((4.0 4));  
+            //     }
+
+            //     walls_east
+            //     {
+            //         mode distance;
+            //         levels ((4.0 4));  
+            //     }
+
+            //     walls_west
+            //     {
+            //         mode distance;
+            //         levels ((4.0 4));  
+            //     }
+
+            //     walls_north
+            //     {
+            //         mode distance;
+            //         levels ((4.0 4));  
+            //     }
+
+            //     walls_south
+            //     {
+            //         mode distance;
+            //         levels ((4.0 4));  
+            //     }
+            // }
         }
     }
 
@@ -95,12 +147,12 @@ castellatedMeshControls
 
 snapControls
 {
-    nSmoothPatch 2;
+    nSmoothPatch 8;
     tolerance 4.0;
-    nSolveIter 40;
+    nSolveIter 80;
     nRelaxIter 8;
 
-    nFeatureSnapIter 12;
+    nFeatureSnapIter 16;
 
     implicitFeatureSnap    false;
     explicitFeatureSnap    true;
@@ -120,10 +172,10 @@ addLayersControls
         //     nSurfaceLayers 5;//1;
         // }
 
-        ground
-        {
-            nSurfaceLayers 4;
-        }
+        // ground
+        // {
+        //     nSurfaceLayers 4;
+        // }
     }
 
     // relativeSizes       false;

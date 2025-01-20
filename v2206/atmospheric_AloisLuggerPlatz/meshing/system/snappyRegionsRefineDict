@@ -1,0 +1,75 @@
+walls_top
+{
+    mode distance;
+    levels ((3.0 4));  
+}
+
+walls_ground
+{
+    mode distance;
+    levels ((3.0 4));  
+}
+
+walls_east
+{
+    mode distance;
+    levels ((3.0 4));  
+}
+
+walls_west
+{
+    mode distance;
+    levels ((3.0 4));  
+}
+
+walls_north
+{
+    mode distance;
+    levels ((3.0 4));  
+}
+
+walls_south
+{
+    mode distance;
+    levels ((3.0 4));  
+}
+
+
+// regions
+// {
+//     walls_top
+//     {
+//         mode distance;
+//         levels ((3.0 4));  
+//     }
+
+//     walls_ground
+//     {
+//         mode distance;
+//         levels ((3.0 4));  
+//     }
+
+//     walls_east
+//     {
+//         mode distance;
+//         levels ((3.0 4));  
+//     }
+
+//     walls_west
+//     {
+//         mode distance;
+//         levels ((3.0 4));  
+//     }
+
+//     walls_north
+//     {
+//         mode distance;
+//         levels ((3.0 4));  
+//     }
+
+//     walls_south
+//     {
+//         mode distance;
+//         levels ((3.0 4));  
+//     }
+// }
