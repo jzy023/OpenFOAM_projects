@@ -35,17 +35,18 @@ Prt             0.85;
 // multiphase testing
 phases
 (
-    // Gh2
-    // {
-    //     transportModel Newtonian;
-    //     nu             1e-05;
-    //     rho            0.083;
-    // }
+    Gh2
+    {
+        transportModel Newtonian;
+        nu             1e-06;
+        rho            0.1;
+        // rho            0.083;
+    }
 
     Gch4
     {
         transportModel Newtonian;
-        nu             1e-08;
+        nu             1e-06;
         rho            0.657;
     }
 
@@ -66,10 +67,10 @@ phases
 
 sigmas
 (   
-    // (fluid Gh2) 0.07
-    (fluid Gch4) 10
+    (fluid Gh2) 0.07
+    (fluid Gch4) 0.07
     // (fluid Gco2) 0.07
-    // (Gh2 Gch4) 0.00
+    (Gh2 Gch4) 0.00
     // (Gh2 Gco2) 0.00
     // (Gch4 Gco2) 0.00
 );

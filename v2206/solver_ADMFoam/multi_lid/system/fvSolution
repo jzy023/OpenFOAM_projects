@@ -19,8 +19,8 @@ solvers
     // testing
     "alpha.*"
     {
-        nAlphaSubCycles 4;
-        cAlpha          1;
+        nAlphaSubCycles 2;
+        cAlpha          0.0;
     }
 
     "pcorr.*"
@@ -144,6 +144,7 @@ relaxationFactors
 {
     equations
     {
+        "(alpha*|U|p*)"         0.95;
         // U               0.95; // 0.9 is more stable but 0.95 more convergent
     }
 }

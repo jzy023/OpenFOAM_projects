@@ -23,11 +23,14 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         4;
-writeInterval   0.2;
+// endTime         0.001;
+// writeInterval   0.001;
 
-// endTime         200;
-// writeInterval   10;
+// endTime         4;
+// writeInterval   0.2;
+
+endTime         200;
+writeInterval   5;
 
 // endTime         7200;
 // writeInterval   300;

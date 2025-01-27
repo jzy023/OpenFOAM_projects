@@ -24,7 +24,10 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         0.5;
+// endTime         0.001;
+// writeInterval   0.001;
+
+endTime         0.8;
 writeInterval   0.02;
 
 // endTime         200;
@@ -59,9 +62,9 @@ adjustTimeStep  true;
 
 runTimeModifiable true;
 
-maxCo           0.5;
+maxCo           1.0;
 
-maxAlphaCo      0.2;
+maxAlphaCo      0.5;
 
 maxDeltaT       5e-2;
 
