@@ -38,18 +38,18 @@ phases
 (
     Gh2
     {
-        transportModel Newtonian;
-        nu             1e-05;
-        rho            0.4;
-        // rho            0.083;
+        transportModel  Newtonian;
+        nu              1e-05;
+        rho             0.1;  // 0.083;
+        isRhoField      true;
     }
 
     Gch4
     {
-        transportModel Newtonian;
-        nu             1e-05;
-        rho            0.4;
-        // rho            0.657;
+        transportModel  Newtonian;
+        nu              1e-05;
+        rho             0.8;  // 0.657;
+        isRhoField      true;
     }
 
     // Gco2
@@ -59,7 +59,7 @@ phases
     //     rho            1.98;
     // }
 
-    fluid
+    liquid
     {
         transportModel Newtonian;
         nu             1e-04;
@@ -70,12 +70,12 @@ phases
 sigmas
 (
     
-    (fluid Gh2) 0.07
-    (fluid Gch4) 0.07
+    (liquid Gh2) 0.07
+    (liquid Gch4) 0.07
     (Gh2 Gch4) 0.00
 
 
-    // (fluid Gco2) 0.07
+    // (liquid Gco2) 0.07
     // (Gh2 Gch4) 0.07
     // (Gh2 Gco2) 0.07
     // (Gch4 Gco2) 0.07
