@@ -27,12 +27,12 @@ regions
     sphereToCell
     {
         centre (0.05 0.01 -0.005);
-        radius 0.006;
+        radius 0.003;
         fieldValues
         (
             volScalarFieldValue alpha.liquid    0
-            volScalarFieldValue alpha.Gch4      0.5
-            volScalarFieldValue alpha.Gh2       0.5
+            volScalarFieldValue alpha.Gch4      1.0
+            volScalarFieldValue alpha.Gh2       0.0
             volScalarFieldValue alpha.Gco2      0.0
         );
     }

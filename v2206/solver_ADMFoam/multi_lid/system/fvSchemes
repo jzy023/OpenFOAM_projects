@@ -31,24 +31,24 @@ divSchemes
     default         Gauss linear;
 
     // div(phi,U)      Gauss upwind;
-    div(phi,U)      Gauss LUST grad(U);
-    div(phi,T)      Gauss upwind;
+    div(phi,U)          Gauss LUST grad(U);
+    div(phi,T)          Gauss upwind;
 
-    div(phi,k)      Gauss limitedLinear 1;
-    div(phi,epsilon) Gauss linear;
-    div(phi,R)      Gauss linear;
-    div(R)          Gauss linear;
+    div(phi,k)          Gauss limitedLinear 1;
+    div(phi,epsilon)    Gauss linear;
+    div(phi,R)          Gauss linear;
+    div(R)              Gauss linear;
 
-    div(phi,Yi)     Gauss limitedLinear 1;
-    div(phi,S*)     bounded Gauss limitedLinear 1;
-    div(phi,G*)     bounded Gauss limitedLinear 1;
+    div(phi,Yi)         Gauss limitedLinear 1;
+    div(phi,S*)         bounded Gauss limitedLinear 1;
+    div(phi,G*)         bounded Gauss limitedLinear 1;
 
     div((nuEff*dev2(T(grad(U))))) Gauss linear;
 
     // testing
-    div(rhoPhi,U)   Gauss upwind;
-    div(phi,alpha)  Gauss vanLeer;
-    div(phirb,alpha) Gauss linear;
+    div(rhoPhi,U)       Gauss upwind;
+    div(phi,alpha)      Gauss vanLeer;
+    div(phirb,alpha)    Gauss linear;
 }
 
 laplacianSchemes

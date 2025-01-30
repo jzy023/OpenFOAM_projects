@@ -144,8 +144,7 @@ relaxationFactors
 {
     equations
     {
-        "(alpha*|U|p*)"         0.95;
-        // U               0.95; // 0.9 is more stable but 0.95 more convergent
+        // "(alpha*|p*|U)"         0.95;
     }
 }
 

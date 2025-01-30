@@ -23,11 +23,11 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         0.001;
-writeInterval   0.001;
+// endTime         0.001;
+// writeInterval   0.001;
 
-// endTime         0.2;
-// writeInterval   0.01;
+endTime         0.2;
+writeInterval   0.01;
 
 // endTime         200;
 // writeInterval   5;
@@ -65,7 +65,7 @@ maxCo           1;
 
 maxAlphaCo      0.5;
 
-maxDeltaT       20;
+maxDeltaT       1e-2;
 
 functions
 {

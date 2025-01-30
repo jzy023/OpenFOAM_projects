@@ -10,22 +10,30 @@ FoamFile
     version     2.0;
     format      ascii;
     class       volScalarField;
-    object      alpha.fluid;
+    object      SIN;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 0 0 0 0 0 0];
+dimensions      [1 -3 0 0 0 0 0];
 
-internalField   uniform 1;
+// internalField   uniform 0.0945;
+
+// boundaryField
+// {
+//     movingWall
+//     {
+//         type            fixedValue;
+//         value           uniform 0.0945;
+//     }
+
+internalField   uniform 94.5;
 
 boundaryField
 {
     movingWall
     {
-        type            zeroGradient;
-        // type            inletOutlet;
-        // inletValue      uniform 0;
-        // value           uniform 1;
+        type            fixedValue;
+        value           uniform 94.5;
     }
 
     fixedWalls
@@ -38,6 +46,5 @@ boundaryField
         type            empty;
     }
 }
-
 
 // ************************************************************************* //
