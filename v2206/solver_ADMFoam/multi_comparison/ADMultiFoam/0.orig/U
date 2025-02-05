@@ -32,7 +32,10 @@ boundaryField
 
     fixedWalls
     {
-        type            noSlip;
+        type        fixedValue;
+        value       $internalField;
+        
+        // type            noSlip;
     }
 
     frontAndBack

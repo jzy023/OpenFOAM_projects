@@ -46,7 +46,7 @@ solvers
     //     relTol          0;
     // }
 
-    U
+    "U.*"
     {
         solver          smoothSolver;
         smoother        GaussSeidel;
@@ -54,39 +54,25 @@ solvers
         relTol          0;
     }
 
-    UFinal
-    {
-        $U;
-        tolerance       1e-08;
-        relTol          0;
-    }
-
-    "(T|k|epsilon|R)"
+    "(k.*|epsilon.*|omega.*|Theta.*).*"
     {
         solver          PBiCGStab;
         preconditioner  DILU;
-        tolerance       1e-6;
-        relTol          0.1;
-    }
-
-    "(T|k|epsilon|R)Final"
-    {
-        $T;
+        tolerance       1e-7;
         relTol          0;
     }
 
-    "(Yi|S*|G*)"
+    "(T|Yi|S|G).*"
     {
-        solver          PBiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-6;
-        relTol          1e-6; // <--- high relTol leads to inhomogeneity issue
-    }
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-7;
+        relTol          0.0;
 
-    "(Yi|S*|G*)Final"
-    {
-        $Sch4;
-        relTol          0;
+        // solver          PBiCGStab;
+        // preconditioner  DILU;
+        // tolerance       1e-6;
+        // relTol          1e-6;
     }
 }
 

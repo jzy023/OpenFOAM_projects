@@ -30,36 +30,33 @@ solvers
         relTol          0;
     }
 
-    "(U|k|omega|epsilon)"
+    "U.*"
+    {
+        solver          smoothSolver;
+        smoother        GaussSeidel;
+        tolerance       1e-06;
+        relTol          0;
+    }
+
+    "(k.*|epsilon.*|omega.*|Theta.*).*"
+    {
+        solver          PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-7;
+        relTol          0;
+    }
+
+    "(T|Yi|S|G).*"
     {
         solver          smoothSolver;
         smoother        symGaussSeidel;
-        tolerance       1e-6;
-        relTol          0.01;
+        tolerance       1e-7;
+        relTol          0.0;
+
         // solver          PBiCGStab;
         // preconditioner  DILU;
         // tolerance       1e-6;
         // relTol          1e-6;
-    }
-
-    "(U|k|omega|epsilon)Final"
-    {
-        $U;
-        relTol          0;
-    }
-
-    "(T|Yi|S*|G*)"
-    {
-        solver          PBiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-6;
-        relTol          1e-6; // <--- high relTol leads to inhomogeneity issue
-    }
-
-    "(T|Yi|S*|G*)Final"
-    {
-        $T;
-        relTol          0;
     }
 }
 

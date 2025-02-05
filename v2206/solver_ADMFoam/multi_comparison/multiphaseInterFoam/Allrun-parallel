@@ -9,8 +9,17 @@ runApplication blockMesh
 
 runApplication setFields
 
-runApplication $(getApplication)
+touch channel_multi.foam
 
-touch multi.foam
+runApplication decomposePar
+
+runParallel $(getApplication)
+
+runApplication reconstructPar
+
+# runParallel -s "reconstruct" redistributePar -reconstruct -latestTime
+
+rm -r proc*
+
 
 #------------------------------------------------------------------------------

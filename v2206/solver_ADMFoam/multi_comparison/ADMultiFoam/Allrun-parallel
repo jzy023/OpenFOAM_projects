@@ -9,6 +9,8 @@ runApplication blockMesh
 
 runApplication setFields
 
+touch channel_ADM.foam
+
 runApplication decomposePar
 
 runParallel $(getApplication)
@@ -19,8 +21,5 @@ runApplication reconstructPar
 
 rm -r proc*
 
-touch channel.foam
-
-# runApplication foamToVTK
 
 #------------------------------------------------------------------------------
