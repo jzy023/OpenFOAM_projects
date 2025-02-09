@@ -16,38 +16,38 @@ FoamFile
 
 defaultFieldValues
 (
-    volScalarFieldValue alpha.liquid   1.0
-    volScalarFieldValue alpha.Gch4     0.0
+    volScalarFieldValue alpha.liquid   0.0
+    volScalarFieldValue alpha.Gch4     1.0
     volScalarFieldValue alpha.Gh2      0.0
     volScalarFieldValue alpha.Gco2     0.0
 );
 
 regions
 (
-    // boxToCell
-    // {
-    //     box (0 0 0) (1 0.12 1);
-    //     fieldValues
-    //     (
-    //         volScalarFieldValue alpha.liquid   0.0
-    //         volScalarFieldValue alpha.Gch4     1.0 // 1.0
-    //         volScalarFieldValue alpha.Gh2      0.0 // 0.0
-    //         volScalarFieldValue alpha.Gco2     0.0 // 0.0
-    //     );
-    // }
+    boxToCell
+    {
+        box (0 0 0) (1 0.12 1);
+        fieldValues
+        (
+            volScalarFieldValue alpha.liquid   1.0
+            volScalarFieldValue alpha.Gch4     0.0 // 1.0
+            volScalarFieldValue alpha.Gh2      0.0 // 0.0
+            volScalarFieldValue alpha.Gco2     0.0 // 0.0
+        );
+    }
 
-    // sphereToCell
-    // {
-    //     centre (0.02 0.02 0.0001);
-    //     radius 0.003;
-    //     fieldValues
-    //     (
-    //         volScalarFieldValue alpha.liquid   0.0
-    //         volScalarFieldValue alpha.Gch4     1.0
-    //         volScalarFieldValue alpha.Gh2      0.0
-    //         volScalarFieldValue alpha.Gco2     0.0
-    //     );
-    // }
+    sphereToCell
+    {
+        centre (0.02 0.02 0.0001);
+        radius 0.003;
+        fieldValues
+        (
+            volScalarFieldValue alpha.liquid   0.0
+            volScalarFieldValue alpha.Gch4     1.0
+            volScalarFieldValue alpha.Gh2      0.0
+            volScalarFieldValue alpha.Gco2     0.0
+        );
+    }
 );
 
 

@@ -24,10 +24,10 @@ solvers
     "alpha.*"
     {
         cAlpha          1;
-        nAlphaCorr      2;
+        nAlphaCorr      1;
         nAlphaSubCycles 2;
 
-        MULESCorr       yes;
+        MULESCorr       false;
         nLimiterIter    1;
 
         solver          smoothSolver;

@@ -24,7 +24,7 @@ solvers
     "alpha.*"
     {
         cAlphas         ((fluid and air) 1);
-        nAlphaCorr      2;
+        nAlphaCorr      1;
         nAlphaSubCycles 2;
 
         // Compressiion factor for species in each alpha phase
@@ -40,13 +40,13 @@ solvers
         relTol          0;
     }
 
-    "(U.*|epsilon.*|k.*)"
+    "U.*"
     {
         solver          smoothSolver;
-        smoother        symGaussSeidel;
-        tolerance       1e-8;
+        smoother        GaussSeidel;
+        tolerance       1e-06;
         relTol          0;
-    };
+    }
 
     p_rgh
     {
@@ -99,6 +99,14 @@ solvers
         tolerance       1e-08;
         relTol          0.01;
         residualAlpha   1e-5;
+    }
+
+    "(k.*|epsilon.*|omega.*|Theta.*).*"
+    {
+        solver          PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-7;
+        relTol          0;
     }
 
     "Xvapour.air.*"

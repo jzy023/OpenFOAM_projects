@@ -1,0 +1,81 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2206                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      transportProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+transportModel  Newtonian;
+
+// nu              0.00;
+nu              1e-5;
+
+// Thermal expansion coefficient
+beta            3e-03;
+
+// Reference temperature
+TRef            300;
+
+// Laminar Prandtl number
+Pr              0.7;
+
+// Turbulent Prandtl number
+Prt             0.85;
+
+
+// multiphase testing
+phases
+(
+    liquid
+    {
+        transportModel Newtonian;
+        nu             1e-06;
+        rho            1000;
+    }
+
+    // Gh2
+    // {
+    //     transportModel Newtonian;
+    //     nu             1e-06;
+    //     rho            0.1;
+    //     // rho            0.083;
+    // }
+
+    Gch4
+    {
+        transportModel  Newtonian;
+        nu              1.8e-8; // 1e-06;
+        rho             1.3; // 0.657;
+        isRhoField      false;
+    }
+
+    // Gco2
+    // {
+    //     transportModel Newtonian;
+    //     nu             1e-05;
+    //     rho            1.98;
+    // }
+);
+
+sigmas
+(   
+    // (liquid Gh2) 0.07
+    (liquid Gch4) 0.07
+    // (liquid Gco2) 0.07
+    // (Gh2 Gch4) 0.00
+    // (Gh2 Gco2) 0.00
+    // (Gch4 Gco2) 0.00
+);
+
+
+
+// ************************************************************************* //

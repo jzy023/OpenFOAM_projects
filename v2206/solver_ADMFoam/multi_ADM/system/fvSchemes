@@ -1,0 +1,85 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2206                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      fvSchemes;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+ddtSchemes
+{
+    default         Euler;
+}
+
+gradSchemes
+{
+    default         Gauss linear;
+}
+
+divSchemes
+{
+    // default             none;
+    // div(phi,Yi)         bounded Gauss limitedLinear 1;
+    // div(phi,Gi)         bounded Gauss limitedLinear 1;
+
+    default             bounded Gauss limitedLinear 1; 
+
+    // div(phi,U)          Gauss LUST grad(U);
+    div(phi,U)          Gauss upwind;
+    div(phi,T)          Gauss upwind;
+
+    div(phi,k)          Gauss upwind; // Gauss limitedLinear 1;
+    div(phi,omega)      Gauss upwind; // Gauss upwind;
+    div(phi,epsilon)    Gauss upwind; // Gauss linear;
+
+    // div((nuEff*dev2(T(grad(U))))) Gauss linear;
+
+    // testing
+    div(rhoPhi,U)       Gauss upwind;
+    div(phi,alpha)      Gauss vanLeer;
+    div(phirb,alpha)    Gauss linear;
+
+    // div(phi,alpha.liquid)    Gauss vanLeer;
+    // div(phirb,alpha.liquid)  Gauss linear;
+
+    // div(phi,alpha.Gch4)      Gauss vanLeer;
+    // div(phirb,alpha.Gch4)    Gauss linear;
+
+    // "div\(phi,alpha.*\)"    Gauss vanLeer;
+    // "div\(phir,alpha.*\)"   Gauss linear;
+
+    // "div\(Yiphir,alpha.*\)" Gauss linear;
+    // "div\(phi,.*\.air.*\)"  Gauss vanLeer;
+
+    div((muEff*dev(T(grad(U)))))  Gauss linear;
+    div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
+
+    div((interpolate(cp)*rhoPhi),T) Gauss upwind;
+}
+
+laplacianSchemes
+{
+    default         Gauss linear corrected;
+}
+
+interpolationSchemes
+{
+    default         linear;
+}
+
+snGradSchemes
+{
+    default         corrected;
+}
+
+
+// ************************************************************************* //
+
