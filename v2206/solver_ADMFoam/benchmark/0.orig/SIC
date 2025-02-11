@@ -16,7 +16,9 @@ FoamFile
 
 dimensions      [1 -3 0 0 0 0 0];
 
-internalField   uniform 0.0951;
+// internalField   uniform 0.0951; // <- (kmol C m-3) from Rosen
+
+internalField   uniform 95.1; // (mol C m-3)
 
 boundaryField
 {

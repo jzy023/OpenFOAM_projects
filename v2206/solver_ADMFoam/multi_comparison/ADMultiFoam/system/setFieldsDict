@@ -17,9 +17,7 @@ FoamFile
 defaultFieldValues
 (
     volScalarFieldValue alpha.liquid   0.0
-    volScalarFieldValue alpha.Gch4     1.0
-    volScalarFieldValue alpha.Gh2      0.0
-    volScalarFieldValue alpha.Gco2     0.0
+    volScalarFieldValue alpha.gas      1.0
 );
 
 regions
@@ -30,9 +28,7 @@ regions
         fieldValues
         (
             volScalarFieldValue alpha.liquid   1.0
-            volScalarFieldValue alpha.Gch4     0.0 // 1.0
-            volScalarFieldValue alpha.Gh2      0.0 // 0.0
-            volScalarFieldValue alpha.Gco2     0.0 // 0.0
+            volScalarFieldValue alpha.gas      0.0 // 1.0
         );
     }
 
@@ -43,9 +39,7 @@ regions
         fieldValues
         (
             volScalarFieldValue alpha.liquid   0.0
-            volScalarFieldValue alpha.Gch4     1.0
-            volScalarFieldValue alpha.Gh2      0.0
-            volScalarFieldValue alpha.Gco2     0.0
+            volScalarFieldValue alpha.gas      1.0
         );
     }
 );

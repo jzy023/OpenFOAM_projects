@@ -10,7 +10,7 @@ FoamFile
     version     2.0;
     format      ascii;
     class       volScalarField;
-    object      alpha.Gco2;
+    object      alpha.gas;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -20,15 +20,26 @@ internalField   uniform 0;
 
 boundaryField
 {
-    movingWall
+    bottom
     {
         type            zeroGradient;
-        // type            inletOutlet;
-        // inletValue      uniform 0.4;
-        // value           uniform 0;
     }
 
-    fixedWalls
+    top
+    {
+        type            zeroGradient;
+        
+        // type            inletOutlet;
+        // inletValue      uniform 1;
+        // value           uniform 1;
+    }
+
+    left
+    {
+        type            zeroGradient;
+    }
+
+    right
     {
         type            zeroGradient;
     }

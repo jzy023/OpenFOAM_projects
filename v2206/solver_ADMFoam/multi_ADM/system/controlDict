@@ -40,6 +40,7 @@ maxDeltaT       1e-2;
 
 // endTime         86400;  // 1 days simulation
 // writeInterval   3600;
+// maxDeltaT       100;
 
 // endTime         864000; // 10 days simulation
 // writeInterval   3600;
