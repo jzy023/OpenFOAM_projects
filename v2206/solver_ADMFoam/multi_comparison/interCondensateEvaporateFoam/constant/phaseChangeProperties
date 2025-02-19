@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2206                                 |
+|  \\    /   O peration     | Version:  v2212                                 |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -9,43 +9,20 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       volScalarField;
-    object      T;
+    class       dictionary;
+    object      phaseChangeProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 0 0 1 0 0 0];
+phaseChangeTwoPhaseModel constant;
 
-internalField   uniform 308; // 308.15;
-
-boundaryField
+constantCoeffs
 {
-    bottom
-    {
-        type            fixedValue;
-        value           uniform 319; // 313;
-    }
-
-    top
-    {
-        type            zeroGradient;
-    }
-
-    left
-    {
-        type            zeroGradient;
-    }
-
-    right
-    {
-        type            zeroGradient;
-    }
-
-    frontAndBack
-    {
-        type            empty;
-    }
-
+    // coeffC          150;    // the higher the value the faster the condensation
+    // coeffE          150;    // the higher the value the faster the evaporation
+   
+    coeffC          1e-16; // 250;  
+    coeffE          0.75e-3;    
 }
 
 

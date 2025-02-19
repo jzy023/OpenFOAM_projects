@@ -16,8 +16,8 @@ FoamFile
 
 defaultFieldValues
 (
-    volScalarFieldValue alpha.liquid   1.0
-    volScalarFieldValue alpha.gas      0.0
+    volScalarFieldValue alpha.fluid    1
+    volScalarFieldValue alpha.air      0 
 );
 
 regions
@@ -27,8 +27,8 @@ regions
         box (0 -0.04 0) (1 0.00 1);
         fieldValues
         (
-            volScalarFieldValue alpha.liquid    0.0
-            volScalarFieldValue alpha.gas       1.0  
+            volScalarFieldValue alpha.fluid     0.0
+            volScalarFieldValue alpha.air       1.0  
         );
     }
 
@@ -42,24 +42,15 @@ regions
         );
     }
 
-    // boxToCell
-    // {
-    //     box (0 0 0) (1 0.12 1);
-    //     fieldValues
-    //     (
-    //         volScalarFieldValue alpha.liquid   0.0
-    //         volScalarFieldValue alpha.gas      1.0
-    //     );
-    // }
-
     // sphereToCell
     // {
-    //     centre (0.02 0.02 0.0001);
+    //     centre (0.02 -0.14 0.0001);
     //     radius 0.003;
     //     fieldValues
     //     (
-    //         volScalarFieldValue alpha.liquid   0.0
-    //         volScalarFieldValue alpha.gas      1.0
+    //         volScalarFieldValue alpha.fluid     0
+    //         volScalarFieldValue alpha.air       1
+    //         volScalarFieldValue T               298.15
     //     );
     // }
 );
