@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2206                                 |
+|  \\    /   O peration     | Version:  v2212                                 |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -10,44 +10,42 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      admno1Properties;
+    object      thermophysicalProperties.air;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// Operation modes
-mode            MesoSolid;
+thermoType
+{
+    type                heRhoThermo;
+    mixture             pureMixture;
+    transport           const;
+    thermo              hConst;
+    equationOfState     rhoConst;
+    specie              specie;
+    energy              sensibleEnthalpy;
+}
 
-// Schmidt number
-Sc              1;
-
-// Gas constant [Pa * K-1 * (mol/m3)-1]
-R               8.3145;
-
-
-// Default pH value
-pH              7.26;
-
-// Cation concentration [mol * m-3]
-Scat            0.00;
-
-// Anion concentration [mol * m-3]
-San             5.20;
-
-// Vapour pressure of water [Pa]
-Pvap            3130;
-
-
-amp             0.75; // 1.50;
-
-
-
-// Benchmark case
-// Pipe resistance [m3 * d * Pa]
-Kpip            0.5;
-
-// External pressure [Pa]
-Pext            101300;
-
-
+mixture
+{
+    specie
+    {
+        nMoles          1;
+        molWeight       28.9;
+    }
+    equationOfState
+    {
+        rho             1.3;
+    }
+    thermodynamics
+    {
+        Cp              1;
+        Hf              0;
+    }
+    transport
+    {
+        mu              2.34e-08;
+        Pr              0.7;
+    }
+}
 
 // ************************************************************************* //

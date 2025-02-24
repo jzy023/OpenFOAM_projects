@@ -30,8 +30,21 @@ regions
         name walls_south;
     }
 
-    grass
+    platz
     {
-        name grass;
+        name ground_platz;
     }
+
+    streets
+    {
+        name ground_streets;
+    }
+
+    // grass
+    // {
+    //     name grass;
+    // }
+
+
+
 }

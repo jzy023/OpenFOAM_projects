@@ -116,7 +116,7 @@ FoamFile
 // }
 
 
-buildings_grass.obj { 
+buildings_with_streets.obj { 
     extractionMethod            extractFromSurface;
     extractFromSurfaceCoeffs    { includedAngle 150; }
 
@@ -126,6 +126,20 @@ buildings_grass.obj {
         openEdges               no;
     }
 }
+
+
+// buildings_grass.obj { 
+//     extractionMethod            extractFromSurface;
+//     extractFromSurfaceCoeffs    { includedAngle 150; }
+
+//     subsetFeatures
+//     {
+//         nonManifoldEdges        no;
+//         openEdges               no;
+//     }
+// }
+
+
 
 
 

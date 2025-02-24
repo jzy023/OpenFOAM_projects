@@ -26,19 +26,19 @@ gradSchemes
 
 divSchemes
 {
-    // default             none;
+    default             none;
+    // default             bounded Gauss limitedLinear 1;
+
     // div(phi,Yi)         bounded Gauss limitedLinear 1;
     // div(phi,Gi)         bounded Gauss limitedLinear 1;
 
-    default             bounded Gauss limitedLinear 1; 
-
     // div(phi,U)          Gauss LUST grad(U);
-    div(phi,U)          Gauss upwind;
-    div(phi,T)          Gauss upwind;
+    // div(phi,U)          Gauss upwind;
 
-    div(phi,k)          Gauss upwind; // Gauss limitedLinear 1;
-    div(phi,omega)      Gauss upwind; // Gauss upwind;
-    div(phi,epsilon)    Gauss upwind; // Gauss linear;
+    div(phi,k)          Gauss upwind;
+    div(phi,omega)      Gauss upwind;
+    div(phi,epsilon)    Gauss upwind;
+    div(phi,T)          Gauss linearUpwind grad(T);
 
     // div((nuEff*dev2(T(grad(U))))) Gauss linear;
 
@@ -59,10 +59,10 @@ divSchemes
     // "div\(Yiphir,alpha.*\)" Gauss linear;
     // "div\(phi,.*\.air.*\)"  Gauss vanLeer;
 
-    div((muEff*dev(T(grad(U)))))  Gauss linear;
+    div((interpolate(cp)*rhoPhi),T)     Gauss upwind;
+    div((muEff*dev(T(grad(U)))))        Gauss linear;
     div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
 
-    div((interpolate(cp)*rhoPhi),T) Gauss upwind;
 }
 
 laplacianSchemes

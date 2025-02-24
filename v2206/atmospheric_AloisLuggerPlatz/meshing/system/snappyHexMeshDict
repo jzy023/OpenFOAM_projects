@@ -18,15 +18,21 @@ FoamFile
 
 castellatedMesh on;
 snap            on;
-// addLayers       on;
 addLayers       off;
 
 geometry
 {
-    buildings_grass
+    // buildings_grass
+    // {
+    //     type triSurfaceMesh;
+    //     file "buildings_grass.obj";
+    //     #include "snappyRegionsDict"
+    // }
+
+    buildings_with_streets
     {
         type triSurfaceMesh;
-        file "buildings_grass.obj";
+        file "buildings_with_streets.obj";
         #include "snappyRegionsDict"
     }
 
@@ -53,13 +59,15 @@ castellatedMeshControls
 
     features
     (
-       { file  "buildings_grass.eMesh"; level 3; }
+    //    { file  "buildings_grass.eMesh"; level 3; }
+        { file  "buildings_with_streets.eMesh"; level 3; }
     );
 
 
     refinementSurfaces
     {
-        buildings_grass
+        // buildings_grass
+        buildings_with_streets
         {
             level (4 4);
             patchInfo { type wall; }
@@ -91,50 +99,50 @@ castellatedMeshControls
 
         // #include "snappyRegionsRefineDict"
 
-        buildings_grass_off
-        {
-            mode distance;
-            levels ((3.0 4));  
-            // #include "snappyRegionsRefineDict"
-            // regions
-            // {
-            //     walls_top
-            //     {
-            //         mode distance;
-            //         levels ((4.0 4));  
-            //     }
+        // buildings_grass_off
+        // {
+        //     mode distance;
+        //     levels ((3.0 4));  
+        //     // #include "snappyRegionsRefineDict"
+        //     // regions
+        //     // {
+        //     //     walls_top
+        //     //     {
+        //     //         mode distance;
+        //     //         levels ((4.0 4));  
+        //     //     }
 
-            //     walls_ground
-            //     {
-            //         mode distance;
-            //         levels ((4.0 4));  
-            //     }
+        //     //     walls_ground
+        //     //     {
+        //     //         mode distance;
+        //     //         levels ((4.0 4));  
+        //     //     }
 
-            //     walls_east
-            //     {
-            //         mode distance;
-            //         levels ((4.0 4));  
-            //     }
+        //     //     walls_east
+        //     //     {
+        //     //         mode distance;
+        //     //         levels ((4.0 4));  
+        //     //     }
 
-            //     walls_west
-            //     {
-            //         mode distance;
-            //         levels ((4.0 4));  
-            //     }
+        //     //     walls_west
+        //     //     {
+        //     //         mode distance;
+        //     //         levels ((4.0 4));  
+        //     //     }
 
-            //     walls_north
-            //     {
-            //         mode distance;
-            //         levels ((4.0 4));  
-            //     }
+        //     //     walls_north
+        //     //     {
+        //     //         mode distance;
+        //     //         levels ((4.0 4));  
+        //     //     }
 
-            //     walls_south
-            //     {
-            //         mode distance;
-            //         levels ((4.0 4));  
-            //     }
-            // }
-        }
+        //     //     walls_south
+        //     //     {
+        //     //         mode distance;
+        //     //         levels ((4.0 4));  
+        //     //     }
+        //     // }
+        // }
     }
 
     // locationInMesh (1 1 70);
