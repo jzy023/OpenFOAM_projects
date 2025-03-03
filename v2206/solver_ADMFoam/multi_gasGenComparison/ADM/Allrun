@@ -11,8 +11,17 @@ runApplication setFields
 
 touch channel_ADM.foam
 
-runApplication $(getApplication)
+# runApplication $(getApplication)
 
+runApplication decomposePar
+
+runParallel $(getApplication)
+
+runApplication reconstructPar
+
+# runParallel -s "reconstruct" redistributePar -reconstruct -latestTime
+
+rm -r proc*
 
 
 #------------------------------------------------------------------------------

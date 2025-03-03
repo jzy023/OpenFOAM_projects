@@ -9,7 +9,7 @@ runApplication blockMesh
 
 runApplication setFields
 
-touch interCondensateEvaporate.foam
+touch channel_ico.foam
 
 # runApplication $(getApplication)
 

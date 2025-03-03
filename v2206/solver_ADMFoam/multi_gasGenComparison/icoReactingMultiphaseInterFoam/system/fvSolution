@@ -27,8 +27,8 @@ solvers
         nAlphaSubCycles 2;
         cAlphas         ((fluid and air) 1);
 
-        // MULESCorr       true;
-        // nLimiterIter    1;
+        MULESCorr       true;
+        nLimiterIter    1;
 
         solver          smoothSolver;
         smoother        symGaussSeidel;
