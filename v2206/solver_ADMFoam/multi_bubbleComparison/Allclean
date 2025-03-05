@@ -1,10 +1,9 @@
 #!/bin/sh
 cd "${0%/*}" || exit                                # Run from this directory
-. ${WM_PROJECT_DIR:?}/bin/tools/CleanFunctions      # Tutorial clean functions
 #------------------------------------------------------------------------------
 
-cleanCase0
+(cd ADMultiFoam && ./Allclean)
 
-rm -rf constant/triSurface
+(cd interCondensateEvaporateFoam && ./Allclean)
 
 #------------------------------------------------------------------------------

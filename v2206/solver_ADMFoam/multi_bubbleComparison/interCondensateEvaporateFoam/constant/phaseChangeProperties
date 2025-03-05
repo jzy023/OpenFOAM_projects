@@ -21,8 +21,11 @@ constantCoeffs
     // coeffC          150;    // the higher the value the faster the condensation
     // coeffE          150;    // the higher the value the faster the evaporation
    
-    coeffC          1e-16; // 250;  
-    coeffE          0.75e-3;    
+    // coeffC          1e-16; // 250;  
+    // coeffE          0.75e-3;
+
+    coeffC          1e-16;
+    coeffE          1e-16;    
 }
 
 

@@ -1,0 +1,11 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+#------------------------------------------------------------------------------
+
+# Run the ADM case
+(cd ADM && ./Allrun)
+
+# Run the benchmark case
+(cd icoReactingMultiphaseInterFoam && ./Allrun)
+
+# ------------------------------------------------------------------------------

@@ -27,7 +27,7 @@ stopAt          endTime;
 // endTime         0.001;
 // writeInterval   0.001;
 
-endTime         0.8;
+endTime         1.6;
 writeInterval   0.01;
 
 // endTime         200;

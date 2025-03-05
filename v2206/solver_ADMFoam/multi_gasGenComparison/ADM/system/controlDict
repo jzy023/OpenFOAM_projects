@@ -14,8 +14,6 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// application     multiphaseInterFoam;
-// application     ADMFoam;
 application     ADMTestFoam;
 
 startFrom       startTime;
@@ -24,26 +22,13 @@ startTime       0;
 
 stopAt          endTime;
 
-// endTime         0.001;
-// writeInterval   0.001;
-
-endTime         1.0;
+endTime         2.0;
 writeInterval   0.01;
 maxDeltaT       1e-2;
 
-// endTime         70;
-// writeInterval   10;
+// endTime         120;
+// writeInterval   1;
 // maxDeltaT       1;
-
-// endTime         7200;
-// writeInterval   300;
-
-// endTime         86400;  // 1 days simulation
-// writeInterval   3600;
-// maxDeltaT       100;
-
-// endTime         864000; // 10 days simulation
-// writeInterval   3600;
 
 deltaT          1e-5;
 
@@ -68,8 +53,6 @@ adjustTimeStep  yes;
 maxCo           1.0;
 
 maxAlphaCo      0.8;
-
-// maxDeltaT       1e-2;
 
 functions
 {
