@@ -70,10 +70,15 @@ solvers
 
     "T.*"
     {
-        solver          smoothSolver;
-        smoother        symGaussSeidel;
-        tolerance       1e-7;
-        relTol          0.0;
+        // solver          smoothSolver;
+        // smoother        symGaussSeidel;
+        // tolerance       1e-7;
+        // relTol          0.0;
+
+        solver          PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-6;
+        relTol          1e-6;
     }
 
     "(k.*|epsilon.*|omega.*|Theta.*).*"
@@ -98,8 +103,8 @@ relaxationFactors
     fields {}
     equations
     {
-        // ".*"            1;
-        "(alpha.*|U)"   0.95;
+        ".*"            1;
+        // "(alpha.*|U)"   0.95;
     }
 }
 

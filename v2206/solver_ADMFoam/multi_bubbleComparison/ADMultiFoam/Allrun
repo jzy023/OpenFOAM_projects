@@ -9,7 +9,7 @@ runApplication blockMesh
 
 runApplication setFields
 
-touch channel_ADM.foam
+touch bubble_ADM.foam
 
 # runApplication $(getApplication)
 

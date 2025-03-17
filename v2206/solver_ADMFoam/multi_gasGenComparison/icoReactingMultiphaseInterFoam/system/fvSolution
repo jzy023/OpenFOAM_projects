@@ -68,6 +68,14 @@ solvers
         relTol          0;
     }
 
+    "(k.*|epsilon.*|omega.*|Theta.*).*"
+    {
+        solver          PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-7;
+        relTol          0;
+    }
+
     "T.*"
     {
         solver          smoothSolver;
@@ -76,13 +84,6 @@ solvers
         relTol          0.0;
     }
 
-    "(k.*|epsilon.*|omega.*|Theta.*).*"
-    {
-        solver          PBiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-7;
-        relTol          0;
-    }
 }
 
 PIMPLE

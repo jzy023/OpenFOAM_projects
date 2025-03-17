@@ -2,6 +2,9 @@
 cd "${0%/*}" || exit                                # Run from this directory
 #------------------------------------------------------------------------------
 
+# Run the ADM Benchmark case
+(cd benchmark && ./Allrun)
+
 # Run the ADM case
 (cd ADM && ./Allrun)
 

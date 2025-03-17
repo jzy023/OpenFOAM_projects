@@ -1,0 +1,54 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      phaseChangeProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+type    massTransferMultiphaseSystem;
+
+phases  (fluid air);
+
+fluid
+{
+    type            pureMovingPhaseModel;
+}
+
+air
+{
+    type            pureMovingPhaseModel;
+    // type            multiComponentMovingPhaseModel;
+}
+
+surfaceTension
+(
+    (air and fluid)
+    {
+        type            constant;
+        sigma           0.07;
+    }
+);
+
+massTransferModel
+(
+    (fluid to air)
+    {
+        type            Lee;
+        species         air.air;
+        C               0.25; // 250;
+        Tactivate       310;
+    }
+);
+
+
+// ************************************************************************* //

@@ -4,6 +4,8 @@ cd "${0%/*}" || exit                                # Run from this directory
 
 (cd ADMultiFoam && ./Allclean)
 
+(cd icoReactingMultiphaseInterFoam && ./Allclean)
+
 (cd interCondensateEvaporateFoam && ./Allclean)
 
 #------------------------------------------------------------------------------

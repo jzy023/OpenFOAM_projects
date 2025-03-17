@@ -5,7 +5,10 @@ cd "${0%/*}" || exit                                # Run from this directory
 # Run the ADM case
 (cd ADMultiFoam && ./Allrun)
 
-# Run the benchmark case
+# Run the benchmark case 1
+(cd icoReactingMultiphaseInterFoam && ./Allrun)
+
+# Run the benchmark case 2
 (cd interCondensateEvaporateFoam && ./Allrun)
 
 # ------------------------------------------------------------------------------

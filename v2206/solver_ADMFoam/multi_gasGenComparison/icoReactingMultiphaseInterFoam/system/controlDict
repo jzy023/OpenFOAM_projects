@@ -22,7 +22,7 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         2.0;
+endTime         1.0;
 writeInterval   0.01;
 maxDeltaT       1e-2;
 

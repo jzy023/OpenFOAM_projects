@@ -2,6 +2,8 @@
 cd "${0%/*}" || exit                                # Run from this directory
 #------------------------------------------------------------------------------
 
+(cd benchmark && ./Allclean)
+
 (cd ADM && ./Allclean)
 
 (cd icoReactingMultiphaseInterFoam && ./Allclean)

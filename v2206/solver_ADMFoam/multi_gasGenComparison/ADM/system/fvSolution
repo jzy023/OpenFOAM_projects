@@ -27,7 +27,7 @@ solvers
         nAlphaSubCycles 2;
         cAlpha          1;
     
-        MULESCorr       yes;
+        MULESCorr       true;
         nLimiterIter    1;
 
         solver          smoothSolver;

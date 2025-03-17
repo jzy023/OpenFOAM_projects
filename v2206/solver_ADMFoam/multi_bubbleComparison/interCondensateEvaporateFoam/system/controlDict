@@ -22,7 +22,7 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         1.6;;
+endTime         0.8;;
 
 deltaT          1e-5;
 
@@ -51,8 +51,6 @@ maxDeltaT       1e-2;
 maxCo           2.0;
 
 maxAlphaCo      1.0;
-
-maxDeltaT       1e-2;
 
 
 // ************************************************************************* //
