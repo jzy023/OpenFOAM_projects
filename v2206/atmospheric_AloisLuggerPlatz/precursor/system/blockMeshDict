@@ -27,7 +27,6 @@ Hmax   100;
 Wmax   250;
 
 
-
 vertices
 (
     ($Wmin     $Hmin   $Lmin) // v0
