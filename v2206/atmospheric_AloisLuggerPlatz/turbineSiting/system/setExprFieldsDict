@@ -1,24 +1,38 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v1912                                 |
+|  \\    /   O peration     | Version:  v2206                                 |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
-	version 	2.0;
-	format		ascii;
-	class 		dictionary;
-	location	"system";
-	object 		decomposeParDict;
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      setExprFieldsDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-numberOfSubdomains	4;
 
-method				simple;
+// Preload any required fields (optional)
+readFields      ( U );
 
-coeffs
+_value1
 {
-	n 				(2 1 2);
+    variables   ( "rho=1.2" );
+    expression  #{ 0.5*rho*pow(mag(U),3) #};
+    dimensions  [ kg s^-3 ];
 }
+
+expressions
+(
+    windPowerDensity
+    {
+        field   windPowerDensity;
+        create  yes;
+        $_value1;
+    }
+);
+
+
+// ************************************************************************* //

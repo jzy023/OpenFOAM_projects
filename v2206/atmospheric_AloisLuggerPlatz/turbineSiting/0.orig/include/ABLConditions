@@ -1,24 +1,16 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v1912                                 |
+|  \\    /   O peration     | Version:  v2206                                 |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
-FoamFile
-{
-	version 	2.0;
-	format		ascii;
-	class 		dictionary;
-	location	"system";
-	object 		decomposeParDict;
-}
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-numberOfSubdomains	4;
 
-method				simple;
+Uref                 10.0;
+Zref                 20;
+zDir                 (0 0 1);
+flowDir              (1 0 0);
+z0                   uniform 0.1;
+d                    uniform 0.0;
 
-coeffs
-{
-	n 				(2 1 2);
-}
+// ************************************************************************* //
