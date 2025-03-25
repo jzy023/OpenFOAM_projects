@@ -38,7 +38,7 @@ actions
         type    cellSet;
         action  new;
         source  boxToCell;  
-        box     (245 35 170) (255 45 180);
+        box     (245 35 120) (255 45 130);
         // box     (581754 4785658 1065) (581754.4 4785668 1075);
         // upstreamPoint   (581753 4785663 1070);
     }

@@ -46,7 +46,7 @@ disk2
     Ct              0.58;
     diskArea        20;
     diskDir         (1 0 0);  // Or other Function1
-    upstreamPoint   (250 40 175);
+    upstreamPoint   (250 40 125);
 }
 
 
