@@ -9,50 +9,22 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       volVectorField;
-    object      U;
+    class       dictionary;
+    object      turbulenceProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 1 -1 0 0 0 0];
+simulationType      RAS;
 
-internalField   uniform (0 0 0);
-
-boundaryField
+RAS
 {
-    inlet
-    {
-        type            cyclic;
-    }
+    RASModel        kEpsilon;
 
-    outlet
-    {
-        type            cyclic;
-    }
+    turbulence      on;
 
-    upperAtm
-    {
-        type            inletOutlet;
-        value           $internalField;
-        inletValue      uniform (3.24 0 0);
-    }
-
-    ground
-    {
-        type            noSlip;
-        // type slip;
-    }
-
-    frontAtm
-    {
-        type            cyclic;
-    }
-
-    backAtm
-    {
-        type            cyclic;
-    }
+    printCoeffs     on;
 }
+
 
 
 // ************************************************************************* //

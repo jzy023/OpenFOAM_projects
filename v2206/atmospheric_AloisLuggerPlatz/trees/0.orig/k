@@ -9,48 +9,63 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       volVectorField;
-    object      U;
+    class       volScalarField;
+    object      k;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 1 -1 0 0 0 0];
+dimensions      [0 2 -2 0 0 0 0];
 
-internalField   uniform (0 0 0);
+internalField   uniform 0.1;
 
 boundaryField
 {
+    #include            "include/ABLConditions"
+
     inlet
     {
-        type            cyclic;
+        type            fixedValue;
+        value           $internalField;
     }
 
     outlet
     {
-        type            cyclic;
+        type            zeroGradient;
     }
 
     upperAtm
     {
-        type            inletOutlet;
-        value           $internalField;
-        inletValue      uniform (3.24 0 0);
+        type            zeroGradient;
     }
 
     ground
     {
-        type            noSlip;
-        // type slip;
+        type            kqRWallFunction;
+        value           uniform 0.14;
     }
 
     frontAtm
     {
-        type            cyclic;
+        // type            cyclic;
+        type            zeroGradient;
     }
 
     backAtm
     {
-        type            cyclic;
+        // type            cyclic;
+        type            zeroGradient;
+    }
+
+    buildings
+    {
+        type            kqRWallFunction;
+        value           uniform 0.14;
+    }
+
+    "(buildings_surfaces_top|buildings_surfaces_ground|buildings_surfaces_east|buildings_surfaces_west|buildings_surfaces_north|buildings_surfaces_south)"
+    {
+        type            kqRWallFunction;
+        value           uniform 0.05;
     }
 }
 

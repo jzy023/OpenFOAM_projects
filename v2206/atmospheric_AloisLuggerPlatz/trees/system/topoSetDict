@@ -23,14 +23,30 @@ actions
         type    cellSet;
         action  new;
         source  boxToCell;  
-        box     (50 35 120) (52 45 130);
+        box     (245 35 120) (255 45 130);
     }
     {
-        name    dragSource1;
+        name    dragZone1;
         type    cellZoneSet;
         action  new;
         source  setToCellZone;
         set     dragSource1CellSet;
     }
-    
+
+
+    // LEGACY
+    // {
+    //     name         searchableSurface;
+    //     type         faceZoneSet; // faceSet; // faceZoneSet; // pointSet;
+    //     action       new;
+    //     source       searchableSurfaceToFaceZone; // searchableSurfaceToFace;
+    //                                           // searchableSurfaceToFaceZone;
+    //                                           // searchableSurfaceToPoint;
+    //     surfaceType  triSurfaceMesh;
+    //     surfaceName  grass.obj;
+    // }
+
 );
+
+
+// ************************************************************************* //

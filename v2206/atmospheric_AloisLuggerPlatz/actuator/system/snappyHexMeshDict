@@ -31,8 +31,8 @@ geometry
     windTurbine2
     {
         type box;
-        min  (245 35 120);
-        max  (255 45 130);
+        min  (50 35 120);
+        max  (55 45 130);
     }
 }
 
@@ -83,12 +83,7 @@ castellatedMeshControls
     // Specifies a level for any cell intersected by its edges.
     // This is a featureEdgeMesh, read from constant/triSurface for now.
     features
-    (
-        //{
-        //    file "someLine.eMesh";
-        //    level 2;
-        //}
-    );
+    ();
 
 
 
@@ -102,37 +97,7 @@ castellatedMeshControls
     // angle > resolveFeatureAngle get refined up to the maximum level.
 
     refinementSurfaces
-    {
-//         terrain
-//         {
-//             // Surface-wise min and max refinement level
-//             level (2 2);
-
-//             // Optional region-wise level specification
-// /*
-//             regions
-//             {
-//                 windTurbine
-//                 {
-//                     level (3 3);
-//                 }
-//             }
-// */
-//             //- Optional angle to detect small-large cell situation
-//             //  perpendicular to the surface. Is the angle of face w.r.t.
-//             //  the local surface normal. Use on flat(ish) surfaces only.
-//             //  Otherwise leave out or set to negative number.
-//             //perpendicularAngle 10;
-
-
-//             //- Optional faceZone and (for closed surface) cellZone with
-//             //  how to select the cells that are in the cellZone
-//             //  (inside / outside / specified insidePoint)
-//             //faceZone sphere;
-//             //cellZone sphere;
-//             //cellZoneInside inside;  //outside/insidePoint
-//         }
-    }
+    {}
 
     resolveFeatureAngle 30;
 
@@ -155,7 +120,7 @@ castellatedMeshControls
         windTurbine2
         {
             mode inside;
-            levels ((3 3));
+            levels ((4 4));
         }
     }
 
@@ -168,7 +133,7 @@ castellatedMeshControls
     // section reachable from the locationInMesh is kept.
     // NOTE: This point should never be on a face, always inside a cell, even
     // after refinement.
-    locationInMesh (900 50 90);
+    locationInMesh (50 50 90);
 
 
     // Whether any faceZones (as specified in the refinementSurfaces)

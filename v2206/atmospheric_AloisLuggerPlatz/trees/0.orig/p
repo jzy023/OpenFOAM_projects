@@ -9,48 +9,63 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       volVectorField;
-    object      U;
+    class       volScalarField;
+    object      p;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 1 -1 0 0 0 0];
+dimensions      [0 2 -2 0 0 0 0];
 
-internalField   uniform (0 0 0);
+internalField   uniform 0;
 
 boundaryField
 {
     inlet
     {
-        type            cyclic;
+        type            calculated;
+        value           $internalField;
     }
 
     outlet
     {
-        type            cyclic;
+        type            calculated;
+        value           $internalField;
     }
 
     upperAtm
     {
-        type            inletOutlet;
+        type            calculated;
         value           $internalField;
-        inletValue      uniform (3.24 0 0);
     }
 
     ground
     {
-        type            noSlip;
-        // type slip;
+        type            calculated;
+        value           $internalField;
     }
 
     frontAtm
     {
-        type            cyclic;
+        type            calculated;
+        value           $internalField;
     }
 
     backAtm
     {
-        type            cyclic;
+        type            calculated;
+        value           $internalField;
+    }
+
+    buildings
+    {
+        type            calculated;
+        value           $internalField;
+    }
+
+    "(buildings_surfaces_top|buildings_surfaces_ground|buildings_surfaces_east|buildings_surfaces_west|buildings_surfaces_north|buildings_surfaces_south)"
+    {
+        type            calculated;
+        value           $internalField;
     }
 }
 

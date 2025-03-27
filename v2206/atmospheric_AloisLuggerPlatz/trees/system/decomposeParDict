@@ -11,28 +11,15 @@ FoamFile
 	format		ascii;
 	class 		dictionary;
 	location	"system";
-	object 		fvOptions;
+	object 		decomposeParDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-momentumSource
-{
-    type    		meanVelocityForce;
-    active  		yes;
-    selectionMode   all;
-    fields          (U);
-    Ubar            (3 0 0);
-    relaxation		0.9;
-}
+numberOfSubdomains	8;
 
-dragSource1
+method				simple;
+
+coeffs
 {
-    type            actuationDiskSource;
-    selectionMode   cellSet;
-    cellSet         dragSource1;
-    Cp              0.53;
-    Ct              0.58;
-    diskArea        40;
-    diskDir         (1 0 0);  // Or other Function1
-    upstreamPoint   (45 40 125);
+	n 				(2 1 4);
 }

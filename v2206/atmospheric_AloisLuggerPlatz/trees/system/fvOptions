@@ -15,24 +15,24 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-momentumSource
-{
-    type    		meanVelocityForce;
-    active  		yes;
-    selectionMode   all;
-    fields          (U);
-    Ubar            (3 0 0);
-    relaxation		0.9;
-}
-
 dragSource1
 {
     type            actuationDiskSource;
     selectionMode   cellSet;
-    cellSet         dragSource1;
-    Cp              0.53;
+    cellSet         dragZone1;
+    Cp              0.55;
     Ct              0.58;
-    diskArea        40;
+    diskArea        20;
     diskDir         (1 0 0);  // Or other Function1
-    upstreamPoint   (45 40 125);
+    upstreamPoint   (250 40 125);
 }
+
+// momentumSource
+// {
+//     type    		meanVelocityForce;
+//     active  		yes;
+//     selectionMode   all;
+//     fields          (U);
+//     Ubar            (3 0 0);
+//     relaxation		0.9;
+// }

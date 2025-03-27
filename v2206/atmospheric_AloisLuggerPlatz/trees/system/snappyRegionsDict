@@ -1,0 +1,50 @@
+regions
+{
+    surfaces_top
+    {
+        name walls_top;
+    }
+
+    surfaces_ground
+    {
+        name walls_ground;
+    }
+
+    surfaces_east
+    {
+        name walls_east;
+    }
+
+    surfaces_west
+    {
+        name walls_west;
+    }
+
+    surfaces_north
+    {
+        name walls_north;
+    }
+
+    surfaces_south
+    {
+        name walls_south;
+    }
+
+    platz
+    {
+        name ground_platz;
+    }
+
+    streets
+    {
+        name ground_streets;
+    }
+
+    // grass
+    // {
+    //     name grass;
+    // }
+
+
+
+}

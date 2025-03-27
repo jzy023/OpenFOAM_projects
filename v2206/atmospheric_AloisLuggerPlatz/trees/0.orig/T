@@ -1,0 +1,94 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 296.85;
+
+boundaryField
+{   
+    inlet
+    {
+        type            fixedValue;
+        value           uniform 296.85; // 23.7C
+    }
+
+    outlet
+    {
+        type            zeroGradient;
+    }
+
+    upperAtm
+    {
+        type            zeroGradient;
+    }
+
+    ground
+    {
+        type            fixedValue;
+        value           uniform 312.55; // 39.4C
+    }
+
+    frontAtm
+    {
+        type            zeroGradient;
+    }
+
+    backAtm
+    {
+        type            zeroGradient;
+    }
+
+    buildings
+    {
+        type            fixedValue;
+        value           uniform 308.15; // 35.0C
+    }
+
+    buildings_surfaces_top
+    {
+        type            fixedValue;
+        value           uniform 320.25; // 47.1C
+    }
+    buildings_surfaces_ground
+    {
+        type            fixedValue;
+        value           uniform 312.55; // 39.4C
+    }
+    buildings_surfaces_east
+    {
+        type            fixedValue;
+        value           uniform 302.15; // 29.0C
+    }
+    buildings_surfaces_west
+    {
+        type            fixedValue;
+        value           uniform 300.15; // 27.0C
+    }
+    buildings_surfaces_north
+    {
+        type            fixedValue;
+        value           uniform 296.15; // 23.0C
+    }
+    buildings_surfaces_south
+    {
+        type            fixedValue;
+        value           uniform 315.15; // 42.0C
+    }
+}
+
+
+// ************************************************************************* //
