@@ -26,7 +26,8 @@ gradSchemes
 
 divSchemes
 {
-    default             none;
+    default             Gauss limitedLinear 1;
+    // default             Gauss upwind; // none;
     // default             bounded Gauss limitedLinear 1;
 
     // div(phi,Yi)         bounded Gauss limitedLinear 1;
@@ -47,17 +48,17 @@ divSchemes
     div(phi,alpha)      Gauss vanLeer;
     div(phirb,alpha)    Gauss linear;
 
-    // div(phi,alpha.liquid)    Gauss vanLeer;
-    // div(phirb,alpha.liquid)  Gauss linear;
+    div(phi,alpha.liquid)    Gauss vanLeer;
+    div(phirb,alpha.liquid)  Gauss linear;
 
-    // div(phi,alpha.Gch4)      Gauss vanLeer;
-    // div(phirb,alpha.Gch4)    Gauss linear;
+    div(phi,alpha.Gch4)      Gauss vanLeer;
+    div(phirb,alpha.Gch4)    Gauss linear;
 
-    // "div\(phi,alpha.*\)"    Gauss vanLeer;
-    // "div\(phir,alpha.*\)"   Gauss linear;
+    "div\(phi,alpha.*\)"    Gauss vanLeer;
+    "div\(phir,alpha.*\)"   Gauss linear;
 
-    // "div\(Yiphir,alpha.*\)" Gauss linear;
-    // "div\(phi,.*\.air.*\)"  Gauss vanLeer;
+    "div\(Yiphir,alpha.*\)" Gauss linear;
+    "div\(phi,.*\.air.*\)"  Gauss vanLeer;
 
     div((interpolate(cp)*rhoPhi),T)     Gauss upwind;
     div((muEff*dev(T(grad(U)))))        Gauss linear;
