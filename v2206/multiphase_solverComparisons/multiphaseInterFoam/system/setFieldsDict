@@ -32,16 +32,16 @@ regions
         );
     }
 
-    sphereToCell
-    {
-        centre (0.02 0.02 0.0001);
-        radius 0.003;
-        fieldValues
-        (
-            volScalarFieldValue alpha.liquid    0
-            volScalarFieldValue alpha.air       1
-        );
-    }
+    // sphereToCell
+    // {
+    //     centre (0.02 0.02 0.0001);
+    //     radius 0.003;
+    //     fieldValues
+    //     (
+    //         volScalarFieldValue alpha.liquid    0
+    //         volScalarFieldValue alpha.air       1
+    //     );
+    // }
 );
 
 

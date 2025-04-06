@@ -25,7 +25,7 @@ solvers
     {    
         nAlphaCorr      2;
         nAlphaSubCycles 2;
-        cAlpha          0.2; // 1;
+        cAlpha          1;
     
         MULESCorr       true;
         nLimiterIter    1;
@@ -135,18 +135,39 @@ solvers
         relTol          0;
     }
     
-    "(T|Yi|S|G).*"
+    "(T|S|Gi).*"
+    {
+        solver          PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-6;
+        relTol          1e-6;
+    }
+
+    "(Yi|Gi).*"
     {
         // solver          smoothSolver;
         // smoother        symGaussSeidel;
         // tolerance       1e-7;
         // relTol          0.0;
 
-        solver          PBiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-6;
-        relTol          1e-6;
+        solver          GAMG;
+        tolerance       1e-06;
+        relTol          0.1;
+        smoother        GaussSeidel;
     }
+
+    // "(T|Yi|S|G).*"
+    // {
+    //     // solver          smoothSolver;
+    //     // smoother        symGaussSeidel;
+    //     // tolerance       1e-7;
+    //     // relTol          0.0;
+
+    //     solver          PBiCGStab;
+    //     preconditioner  DILU;
+    //     tolerance       1e-6;
+    //     relTol          1e-6;
+    // }
 
 }
 

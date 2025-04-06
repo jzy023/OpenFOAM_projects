@@ -26,7 +26,8 @@ gradSchemes
 
 divSchemes
 {
-    default             Gauss limitedLinear 1;
+    default             Gauss vanLeer;
+    // default             Gauss limitedLinear 1;
     // default             Gauss upwind; // none;
     // default             bounded Gauss limitedLinear 1;
 
@@ -44,21 +45,21 @@ divSchemes
     // div((nuEff*dev2(T(grad(U))))) Gauss linear;
 
     // testing
-    div(rhoPhi,U)       Gauss upwind;
+    // div(rhoPhi,U)       Gauss upwind;
+    div(rhoPhi,U)       Gauss linearUpwind grad(U);
     div(phi,alpha)      Gauss vanLeer;
     div(phirb,alpha)    Gauss linear;
 
     div(phi,alpha.liquid)    Gauss vanLeer;
     div(phirb,alpha.liquid)  Gauss linear;
 
-    div(phi,alpha.Gch4)      Gauss vanLeer;
-    div(phirb,alpha.Gch4)    Gauss linear;
+    "div\(alphaRhoPhi.*,U.*\)"      Gauss limitedLinearV 1;
+    "div\(phi.*,U.*\)"              Gauss limitedLinearV 1;
 
-    "div\(phi,alpha.*\)"    Gauss vanLeer;
-    "div\(phir,alpha.*\)"   Gauss linear;
-
-    "div\(Yiphir,alpha.*\)" Gauss linear;
-    "div\(phi,.*\.air.*\)"  Gauss vanLeer;
+    "div\(alphaRhoPhi.*,Yi\)"       Gauss limitedLinear 1;
+    "div\(alphaRhoPhi.*,(h|e).*\)"  Gauss limitedLinear 1;
+    "div\(alphaRhoPhi.*,K.*\)"      Gauss limitedLinear 1;
+    "div\(alphaPhi.*,p\)"           Gauss limitedLinear 1;
 
     div((interpolate(cp)*rhoPhi),T)     Gauss upwind;
     div((muEff*dev(T(grad(U)))))        Gauss linear;
@@ -68,7 +69,8 @@ divSchemes
 
 laplacianSchemes
 {
-    default         Gauss linear corrected;
+    // default         Gauss linear corrected;
+    default         Gauss linear orthogonal;
 }
 
 interpolationSchemes
@@ -78,7 +80,8 @@ interpolationSchemes
 
 snGradSchemes
 {
-    default         corrected;
+    // default         corrected;
+    default         orthogonal;
 }
 
 
