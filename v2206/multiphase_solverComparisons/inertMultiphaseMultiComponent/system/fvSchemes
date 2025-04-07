@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2206                                 |
+|  \\    /   O peration     | Version:  v2212                                 |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -16,41 +16,38 @@ FoamFile
 
 ddtSchemes
 {
-    default             Euler;
+    default         Euler;
 }
 
 gradSchemes
 {
-    default             Gauss linear;
+    default         Gauss linear;
 }
 
 divSchemes
 {
-    default             none;
+    default         none;
 
-    div(rhoPhi,U)       Gauss upwind;
+    div(rhoPhi,U)           Gauss limitedLinearV 1;
 
-    div(phi,k)          Gauss upwind;
-    div(phi,omega)      Gauss upwind;
-    div(phi,epsilon)    Gauss upwind;
-    
-    div(rhoCpPhi,T)     Gauss upwind;
-    div(rhoPhi,K)       Gauss upwind;
-    
-    div(phi,alpha)      Gauss vanLeer;
-    div(phirb,alpha)    Gauss linear;
-    
-    div((interpolate(cp)*rhoPhi),T) Gauss upwind;
-    div((muEff*dev(T(grad(U)))))  Gauss linear;
+    "div\(phi,alpha.*\)"        Gauss vanLeer;
+    "div\(phir,alpha.*\)"       Gauss linear;
+
+    "div\(phi,alpha.*\)"        Gauss vanLeer;
+    "div\(Yiphir,alpha.*\)"     Gauss vanLeer;
+
+    "div\(phi,.*\.gas.*\)"      Gauss vanLeer;
+    "div\(phi,.*\.liquid.*\)"   Gauss vanLeer;
+
     div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
-    
-    
-    div(phi,brine)      Gauss upwind;
+
+    div(phi,T)              Gauss linearUpwind gradT;
+
 }
 
 laplacianSchemes
 {
-    default         Gauss linear corrected;
+    default         Gauss linear orthogonal;
 }
 
 interpolationSchemes
@@ -60,7 +57,22 @@ interpolationSchemes
 
 snGradSchemes
 {
-    default         corrected;
+    default         orthogonal;
+}
+
+wallDist
+{
+    method meshWave;
+}
+
+fluxRequired
+{
+    default         no;
+    p_rgh             ;
+    Xvapour.gas;
+    XCO2.gas;
+    XO2.liquid;
+    "alpha.*";
 }
 
 

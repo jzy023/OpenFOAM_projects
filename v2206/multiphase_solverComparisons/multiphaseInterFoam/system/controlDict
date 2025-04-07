@@ -22,13 +22,13 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         0.8;
+endTime         0.5;
 
 deltaT          1e-5;
 
 writeControl    adjustable;
 
-writeInterval   0.01;
+writeInterval   0.02;
 
 purgeWrite      0;
 
@@ -53,7 +53,57 @@ maxCo           2.0;
 maxAlphaCo      1.0;
 
 functions
-{}
+{
+    scalar1
+    {
+        type            scalarTransport;
+        libs            (solverFunctionObjects);
+        // libs            ("libsolverFunctionObjects.so");
+
+        // Optional entries
+
+        // Name of scalar field to transport, default = 's'
+        field           brine;
+
+        // // Name of flux field, default = 'phi'
+        // // phi             phi;
+        // phi             philiquidCorr;
+
+        // // Name of density field for compressible cases, default = 'rho'
+        // rho             rho;
+
+        // Name of phase field to constrain scalar to, default = 'none'
+        phase           alpha.liquid;
+        bounded01       false;
+
+        // // Set the scalar to zero on start/re-start
+        // resetOnStartUp  no;
+
+        // // Name of field to use when looking up schemes from fvSchemes
+        // // default = <field>
+        // schemesField    U;
+
+
+        // // Diffusivity
+
+        // // Fixed value diffusivity
+        // D               0.001;
+
+        // // Name of field to use as diffusivity, default = 'none'
+        // nut             none;
+
+        // // Run-time selectable sources
+        // // fvOptions
+        // // {
+        // //     ...
+        // // }
+
+        // startFrom       startTime;
+        // stopAt          endTime;
+        // writeControl    adjustable;
+        // writeInterval   $writeInterval;
+    }
+}
 
 
 // ************************************************************************* //

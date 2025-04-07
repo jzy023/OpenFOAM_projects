@@ -22,15 +22,15 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         2.0;
-writeInterval   0.02;
-maxDeltaT       1e-2;
+endTime         0.8;
+writeInterval   0.01;
+maxDeltaT       5e-3;
 
 // endTime         120;
 // writeInterval   1;
 // maxDeltaT       1;
 
-deltaT          1e-5;
+deltaT          1e-3;
 
 writeControl    adjustable;
 

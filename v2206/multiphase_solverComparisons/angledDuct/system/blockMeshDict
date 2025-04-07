@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2206                                 |
+|  \\    /   O peration     | Version:  v2212                                 |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -14,17 +14,16 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-
 // settings
 
 scale    0.2;
 
 xMin     0.00;
-yMin    -0.80;
+yMin     0.00;
 zMin     0.00;
 
 xMax     0.20;
-yMax     0.00;
+yMax     0.80;
 zMax     0.001;
 
 
@@ -43,8 +42,7 @@ vertices
 blocks
 (
     hex (0 1 2 3 4 5 6 7)
-    // (128 256 1)
-    (64 128 1)
+    (64 128 1) 
     simpleGrading (1 1 1)
 );
 
@@ -100,6 +98,5 @@ boundary
 mergePatchPairs
 (
 );
-
 
 // ************************************************************************* //

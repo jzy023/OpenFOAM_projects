@@ -10,50 +10,48 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      setFieldsDict;
+    object      thermophysicalProperties.oil;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-defaultFieldValues
-(
-    volScalarFieldValue alpha.liquid   0
-    volScalarFieldValue alpha.air      1
-);
+thermoType
+{
+    type            heRhoThermo;
+    mixture         pureMixture;
+    transport       const;
+    thermo          hConst;
+    equationOfState icoTabulated;
+    specie          specie;
+    energy          sensibleEnthalpy;
+}
 
-regions
-(
-    boxToCell
+mixture
+{
+    specie
     {
-        box (0 0 0) (1 0.12 1);
-        fieldValues
+        nMoles          1;
+        molWeight       300.9;
+    }
+    equationOfState
+    {
+        rho
         (
-            volScalarFieldValue alpha.liquid    1
-            volScalarFieldValue alpha.air       0
-            volScalarFieldValue brine           1.65
+            (200 1010)
+            (350 1000)
+            (400 980)
         );
     }
-
-    // sphereToCell
-    // {
-    //     centre (0.02 0.02 0.0001);
-    //     radius 0.003;
-    //     fieldValues
-    //     (
-    //         volScalarFieldValue alpha.liquid    0
-    //         volScalarFieldValue alpha.air       1
-    //     );
-    // }
-
-    // sphereToCell
-    // {
-    //     centre (0.02 0.02 0.0001);
-    //     radius 0.003;
-    //     fieldValues
-    //     (
-    //         volScalarFieldValue brine           1.65
-    //     );
-    // }
-);
+    thermodynamics
+    {
+        Cp              1670;
+        Hf              0.0;
+    }
+    transport
+    {
+        mu              0.079;
+        Pr              0.8;
+    }
+}
 
 
 // ************************************************************************* //

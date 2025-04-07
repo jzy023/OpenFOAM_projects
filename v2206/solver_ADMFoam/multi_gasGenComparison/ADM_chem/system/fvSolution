@@ -135,39 +135,39 @@ solvers
         relTol          0;
     }
     
-    "(T|S|Gi).*"
-    {
-        solver          PBiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-6;
-        relTol          1e-6;
-    }
+    // "T.*"
+    // {
+    //     solver          PBiCGStab;
+    //     preconditioner  DILU;
+    //     tolerance       1e-6;
+    //     relTol          1e-6;
+    // }
 
-    "(Yi|Gi).*"
-    {
-        // solver          smoothSolver;
-        // smoother        symGaussSeidel;
-        // tolerance       1e-7;
-        // relTol          0.0;
-
-        solver          GAMG;
-        tolerance       1e-06;
-        relTol          0.1;
-        smoother        GaussSeidel;
-    }
-
-    // "(T|Yi|S|G).*"
+    // "(S|X|G).*"
     // {
     //     // solver          smoothSolver;
     //     // smoother        symGaussSeidel;
     //     // tolerance       1e-7;
     //     // relTol          0.0;
 
-    //     solver          PBiCGStab;
-    //     preconditioner  DILU;
-    //     tolerance       1e-6;
-    //     relTol          1e-6;
+    //     solver          GAMG;
+    //     tolerance       1e-10;
+    //     relTol          1e-5;
+    //     smoother        GaussSeidel;
     // }
+
+    "(T|S|X|G).*"
+    {
+        // solver          smoothSolver;
+        // smoother        symGaussSeidel;
+        // tolerance       1e-7;
+        // relTol          0.0;
+
+        solver          PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-8;
+        relTol          1e-8;
+    }
 
 }
 
@@ -187,7 +187,7 @@ relaxationFactors
     fields {}
     equations
     {
-        // ".*"            1;
+        // ".*"            0.95;
         "(alpha.*|U)"   0.95;
     }
 }
