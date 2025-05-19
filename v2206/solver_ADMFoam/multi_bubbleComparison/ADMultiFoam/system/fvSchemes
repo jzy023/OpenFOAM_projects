@@ -33,8 +33,8 @@ divSchemes
     default             bounded Gauss limitedLinear 1; 
 
     // div(phi,U)          Gauss LUST grad(U);
-    div(phi,U)          Gauss upwind;
-    div(phi,T)          Gauss upwind;
+    // div(phi,U)          Gauss upwind;
+    // div(phi,T)          Gauss upwind;
 
     div(phi,k)          Gausee upwind; // Gauss limitedLinear 1;
     div(phi,omega)      Gausee upwind; // Gauss upwind;
@@ -44,6 +44,7 @@ divSchemes
 
     // testing
     div(rhoPhi,U)       Gauss upwind;
+    div(rhoPhi,T)       Gauss upwind;
     div(phi,alpha)      Gauss vanLeer;
     div(phirb,alpha)    Gauss linear;
 

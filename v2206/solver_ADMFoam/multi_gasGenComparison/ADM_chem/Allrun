@@ -9,7 +9,7 @@ runApplication blockMesh
 
 runApplication setFields
 
-touch channel_ADM.foam
+touch ADM_chem.foam
 
 # runApplication $(getApplication)
 
@@ -22,7 +22,6 @@ runApplication reconstructPar
 # runParallel -s "reconstruct" redistributePar -reconstruct -latestTime
 
 rm -r proc*
-
 
 
 #------------------------------------------------------------------------------

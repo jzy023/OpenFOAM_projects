@@ -23,7 +23,6 @@ Sc              1;
 // Gas constant [Pa * K-1 * (mol/m3)-1]
 R               8.3145;
 
-
 // Default pH value
 pH              7.26;
 
@@ -37,9 +36,6 @@ San             5.20;
 Pvap            3130;
 
 
-amp             0.25; // 1.50;
-
-
 
 // Benchmark case
 // Pipe resistance [m3 * d * Pa]
@@ -48,6 +44,8 @@ Kpip            0.5;
 // External pressure [Pa]
 Pext            101300;
 
+// Test Multiphase
+amp             0.25; // 1.50;
 
 
 // ************************************************************************* //

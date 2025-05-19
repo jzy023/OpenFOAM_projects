@@ -17,7 +17,7 @@ FoamFile
 // dimensions      [0 2 -2 0 0 0 0];    // <-- Pressure/Density
 dimensions      [1 -1 -2 0 0 0 0];      // <-- Pascal
 
-internalField   uniform 0;
+internalField   uniform 101300;
 
 boundaryField
 {

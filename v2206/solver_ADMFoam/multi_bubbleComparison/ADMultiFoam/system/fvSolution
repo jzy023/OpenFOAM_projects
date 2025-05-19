@@ -96,7 +96,7 @@ solvers
         relTol          0;
     }
     
-    "(T|Yi|S|G).*"
+    "(T|S|X|G).*"
     {
         // solver          smoothSolver;
         // smoother        symGaussSeidel;

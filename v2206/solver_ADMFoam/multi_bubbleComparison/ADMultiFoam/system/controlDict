@@ -43,6 +43,7 @@ writeInterval   0.01;
 // writeInterval   3600;
 
 deltaT          1e-5;
+maxDeltaT       1e-2;
 
 writeControl    adjustable;
 
@@ -66,7 +67,6 @@ maxCo           2.0;
 
 maxAlphaCo      1.0;
 
-maxDeltaT       1e-2;
 
 functions
 {

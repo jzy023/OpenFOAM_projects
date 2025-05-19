@@ -22,7 +22,10 @@ boundaryField
 {
     bottom
     {
-        type            noSlip;
+        type        fixedValue;
+        value       $internalField;
+
+        // type            noSlip;
     }
 
     top
@@ -37,12 +40,14 @@ boundaryField
 
     left
     {
-        type            noSlip;
+        type        fixedValue;
+        value       $internalField;
     }
 
     right
     {
-        type            noSlip;
+        type        fixedValue;
+        value       $internalField;
     }
 
     frontAndBack

@@ -22,44 +22,48 @@ ddtSchemes
 gradSchemes
 {
     default         Gauss linear;
+    nHat            pointCellsLeastSquares;
 }
 
 divSchemes
 {
-    // default             Gauss vanLeer;
-    // default             Gauss upwind; // none;
+    default             none;
+    // default             Gauss upwind;
     // default             Gauss limitedLinear 0;
-
-    // div(phi,test)       Gauss upwind;
-    div(phi,test)       bounded Gauss limitedLinear 0;
-
+    // default             bounded Gauss limitedLinear 1; 
+    
     // div(phi,Yi)         bounded Gauss limitedLinear 1;
     // div(phi,Gi)         bounded Gauss limitedLinear 1;
 
     // div(phi,U)          Gauss LUST grad(U);
     // div(phi,U)          Gauss upwind;
+    // div(phi,T)          Gauss linearUpwind grad(T);
     // div(phi,k)          Gauss upwind;
     // div(phi,omega)      Gauss upwind;
     // div(phi,epsilon)    Gauss upwind;
-    div(phi,T)          Gauss linearUpwind grad(T);
 
     // div((nuEff*dev2(T(grad(U))))) Gauss linear;
 
+
     // testing
-    div(rhoPhi,U)       Gauss linearUpwind grad(U);
-    div(phi,alpha)      Gauss vanLeer;
-    div(phirb,alpha)    Gauss linear;
+    // div(rhoPhi,U)       Gauss upwind; // Gauss linearUpwind grad(U);
+    div(rhoPhi,T)       Gauss upwind; // Gauss linearUpwind grad(T);
 
-    div(phi,alpha.liquid)    Gauss vanLeer;
-    div(phirb,alpha.liquid)  Gauss linear;
+    // div(phi,Yi)         bounded Gauss limitedLinear 1;
+    // div(phi,Gi)         bounded Gauss limitedLinear 1;
 
-    "div\(alphaRhoPhi.*,U.*\)"      Gauss limitedLinearV 1;
-    "div\(phi.*,U.*\)"              Gauss limitedLinearV 1;
+    // div(phi,alpha)      Gauss vanLeer;
+    // div(phirb,alpha)    Gauss linear;
 
-    "div\(alphaRhoPhi.*,Yi\)"       Gauss limitedLinear 1;
-    "div\(alphaRhoPhi.*,(h|e).*\)"  Gauss limitedLinear 1;
-    "div\(alphaRhoPhi.*,K.*\)"      Gauss limitedLinear 1;
-    "div\(alphaPhi.*,p\)"           Gauss limitedLinear 1;
+    div(rhoPhi,U)       Gauss SFCD;
+    div(phi,alpha)      Gauss vanLeer01;
+    div(phi,Yi)         Gauss vanLeer01;
+    div(phirb,alpha)    Gauss interfaceCompression;
+    div(phiH,Yi)        Gauss linear;
+
+    // "div\(alphaRhoPhi.*,(h|e).*\)"  Gauss limitedLinear 1; // <-- reserved for turbulence
+    // "div\(alphaRhoPhi.*,K.*\)"      Gauss limitedLinear 1; // <-- reserved for turbulence
+    // "div\(alphaPhi.*,p\)"           Gauss limitedLinear 1; // <-- reserved for turbulence
 
     div((interpolate(cp)*rhoPhi),T)     Gauss upwind;
     div((muEff*dev(T(grad(U)))))        Gauss linear;
@@ -79,8 +83,8 @@ interpolationSchemes
 
 snGradSchemes
 {
-    // default         corrected;
-    default         orthogonal;
+    // default         orthogonal;
+    default         corrected;
 }
 
 
