@@ -1,0 +1,77 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2206                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      fvSchemes;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+ddtSchemes
+{
+    default         Euler;
+}
+
+gradSchemes
+{
+    default         Gauss linear;
+}
+
+divSchemes
+{
+    default             none;
+    // div(phi,Yi)         bounded Gauss limitedLinear 1;
+    // div(phi,Gi)         bounded Gauss limitedLinear 1;
+    // default             bounded Gauss limitedLinear 1; 
+
+    // div(phi,U)          Gauss LUST grad(U);
+    // div(phi,U)          Gauss upwind;
+    // div(phi,T)          Gauss upwind;
+
+    div(phi,k)          Gausee upwind; // Gauss limitedLinear 1;
+    div(phi,omega)      Gausee upwind; // Gauss upwind;
+    div(phi,epsilon)    Gausee upwind; // Gauss linear;
+
+    // div((nuEff*dev2(T(grad(U))))) Gauss linear;
+    div((muEff*dev(T(grad(U)))))  Gauss linear;
+    div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
+
+    // testing
+    div(rhoPhi,U)       Gauss SFCD; // Gauss upwind;
+    div(rhoPhi,T)       Gauss upwind;
+    div(phi,alpha)      Gauss vanLeer01;
+    div(phirb,alpha)    Gauss interfaceCompression; // Gauss linear;
+
+    //inter
+    div(rhoCpPhi,T)     Gauss upwind;
+    div(rhoPhi,K)       Gauss upwind;
+    div((interpolate(cp)*rhoPhi),T) Gauss upwind;
+
+    div(phi,Yi)         Gauss vanLeer01;
+    div(phiH,Yi)        Gauss linear;
+}
+
+laplacianSchemes
+{
+    default         Gauss linear corrected;
+}
+
+interpolationSchemes
+{
+    default         linear;
+}
+
+snGradSchemes
+{
+    default         corrected;
+}
+
+
+// ************************************************************************* //
