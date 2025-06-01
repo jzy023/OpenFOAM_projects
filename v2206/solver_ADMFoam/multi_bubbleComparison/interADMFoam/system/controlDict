@@ -29,10 +29,10 @@ stopAt          endTime;
 // writeInterval   0.001;
 
 endTime         0.8;
-writeInterval   0.05;
+writeInterval   0.01;
 
-// endTime         200;
-// writeInterval   10;
+// endTime         20;
+// writeInterval   0.1;
 
 // endTime         7200;
 // writeInterval   300;
@@ -67,7 +67,7 @@ adjustTimeStep  yes;
 // maxCo           2.0;
 // maxAlphaCo      1.0;
 
-maxCo           0.5;
+maxCo           0.2;
 maxAlphaCo      0.2;
 
 

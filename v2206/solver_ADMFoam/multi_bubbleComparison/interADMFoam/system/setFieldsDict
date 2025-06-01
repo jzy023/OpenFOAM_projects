@@ -29,21 +29,31 @@ regions
         (
             volScalarFieldValue alpha.liquid    0.0
             volScalarFieldValue alpha.gas       1.0  
-            volScalarFieldValue Sac             1e-4
+            volScalarFieldValue Sac             0.0
         );
     }
 
-    // sphereToCell
-    // {
-    //     centre (0.02 -0.14 0.0001);
-    //     radius 0.003;
-    //     fieldValues
-    //     (
-    //         volScalarFieldValue alpha.liquid    0.0
-    //         volScalarFieldValue alpha.gas       1.0
-    //         // volScalarFieldValue T               298.15
-    //     );
-    // }
+    boxToCell
+    {
+        box (0 -0.16 0) (1 -0.08 1);
+        fieldValues
+        (
+            volScalarFieldValue Sac             0.12
+        );
+    }
+
+    sphereToCell
+    {
+        centre (0.02 -0.14 0.0001);
+        radius 0.003;
+        fieldValues
+        (
+            volScalarFieldValue alpha.liquid    0.0
+            volScalarFieldValue alpha.gas       1.0
+            volScalarFieldValue Sac             0.0
+            // volScalarFieldValue T               298.15
+        );
+    }
 );
 
 
