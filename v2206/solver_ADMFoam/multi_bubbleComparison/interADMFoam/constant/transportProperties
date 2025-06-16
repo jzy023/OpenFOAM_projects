@@ -31,6 +31,8 @@ liquid
     transportModel  Newtonian;
     nu              1e-6;
     rho             1000;
+    D               1e-7;
+    // H               1e-1;
 
     Cp              4.186e3;
     Cv              4.186e3;   // assume Cp for liquid
@@ -43,6 +45,7 @@ gas
     transportModel  Newtonian;
     nu              1.8e-08;
     rho             1.3;
+    D               1e-6;
 
     Cp              1.87e3;     // water gas
     Cv              1.41e3;     // Cv = Cp - R/w

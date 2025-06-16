@@ -42,6 +42,15 @@ regions
     //     );
     // }
 
+    boxToCell
+    {
+        box (0 -0.16 0) (1 -0.08 1);
+        fieldValues
+        (
+            volScalarFieldValue Sac             310
+        );
+    }
+
     sphereToCell
     {
         centre (0.02 -0.14 0.0001);
