@@ -26,6 +26,8 @@ sigma
 
 Prt                 0.7;
 
+mDotTest            1e-2;
+
 liquid
 {
     transportModel  Newtonian;
