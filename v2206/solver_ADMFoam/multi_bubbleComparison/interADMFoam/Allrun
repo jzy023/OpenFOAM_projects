@@ -11,13 +11,13 @@ runApplication setFields
 
 touch bubble_ADM.foam
 
-# runApplication $(getApplication)
+runApplication $(getApplication)
 
-runApplication decomposePar
+# runApplication decomposePar
 
-runParallel $(getApplication)
+# runParallel $(getApplication)
 
-runApplication reconstructPar
+# runApplication reconstructPar
 
 # runParallel -s "reconstruct" redistributePar -reconstruct -latestTime
 

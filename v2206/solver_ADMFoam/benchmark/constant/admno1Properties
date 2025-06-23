@@ -35,10 +35,15 @@ San             5.20;
 // Vapour pressure of water [Pa]
 Pvap            3130;
 
+// Gas transfer rate coefficients [d-1]
+// kLa             1e-16;
+kLa             200;
 
 
 // Benchmark case
-// Pipe resistance [m3 * d * Pa]
+// Pipe resistance [m3 * d-1 * Pa-1]
+// Rosen: 5e4 [m3 * d-1 * bar-1]
+// Kpip            1e-16;
 Kpip            0.5;
 
 // External pressure [Pa]

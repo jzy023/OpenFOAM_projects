@@ -48,15 +48,15 @@ solvers
 
     "(T|Yi|S|G).*"
     {
-        solver          smoothSolver;
-        smoother        symGaussSeidel;
-        tolerance       1e-7;
-        relTol          0.0;
+        // solver          smoothSolver;
+        // smoother        symGaussSeidel;
+        // tolerance       1e-7;
+        // relTol          0.0;
 
-        // solver          PBiCGStab;
-        // preconditioner  DILU;
-        // tolerance       1e-6;
-        // relTol          1e-6;
+        solver          PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-6;
+        relTol          1e-6;
     }
 }
 
