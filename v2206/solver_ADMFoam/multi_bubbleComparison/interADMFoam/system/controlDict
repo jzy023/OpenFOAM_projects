@@ -25,8 +25,8 @@ startTime       0;
 
 stopAt          endTime;
 
-// endTime         0.001;
-// writeInterval   0.0001;
+// endTime         0.1;
+// writeInterval   0.001;
 
 endTime         0.8;
 writeInterval   0.1;
@@ -44,7 +44,7 @@ writeInterval   0.1;
 // writeInterval   3600;
 
 deltaT          1e-5;
-maxDeltaT       1e-2;
+maxDeltaT       1e-3;
 
 writeControl    adjustable;
 
