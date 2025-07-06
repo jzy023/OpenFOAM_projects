@@ -25,14 +25,14 @@ startTime       0;
 
 stopAt          endTime;
 
-// endTime         0.1;
-// writeInterval   0.01;
+// endTime         0.001;
+// writeInterval   0.0001;
 
-endTime         0.8;
-writeInterval   0.1;
-
-// endTime         4;
+// endTime         0.8;
 // writeInterval   0.1;
+
+endTime         1;
+writeInterval   0.1;
 
 // endTime         7200;
 // writeInterval   300;
