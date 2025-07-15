@@ -54,6 +54,12 @@ phases
     }
 );
 
+surface
+(
+    // movingWalls;
+    fixedWalls;
+)
+
 sigmas
 (
     (liquid gas) 0.07

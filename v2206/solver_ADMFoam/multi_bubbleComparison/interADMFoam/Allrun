@@ -19,9 +19,9 @@ runParallel $(getApplication)
 
 runApplication reconstructPar
 
-# runParallel -s "reconstruct" redistributePar -reconstruct -latestTime
-
 rm -r proc*
+
+# runParallel -s "reconstruct" redistributePar -reconstruct -latestTime
 
 
 #------------------------------------------------------------------------------
