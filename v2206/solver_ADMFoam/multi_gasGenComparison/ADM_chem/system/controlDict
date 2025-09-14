@@ -14,7 +14,8 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     ADMTestFoam;
+// application     ADMTestFoam;
+application     interADMFoam;
 
 startFrom       startTime;
 
@@ -22,11 +23,11 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         1.0;
+endTime         0.8;
 writeInterval   0.1;
 
-// endTime         10;
-// writeInterval   0.2;
+// endTime         2;
+// writeInterval   0.1;
 
 // endTime         120;
 // writeInterval   1;
@@ -52,13 +53,13 @@ runTimeModifiable yes;
 
 adjustTimeStep  yes;
 
-maxCo           0.5;
+// maxCo           0.5;
 
-maxAlphaCo      0.2;
+// maxAlphaCo      0.2;
 
-// maxCo           2.0;
+maxCo           1.0;
 
-// maxAlphaCo      1.0;
+maxAlphaCo      0.8;
 
 functions
 {

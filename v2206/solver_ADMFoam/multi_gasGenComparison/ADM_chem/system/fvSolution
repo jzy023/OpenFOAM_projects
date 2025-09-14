@@ -87,6 +87,56 @@ solvers
         $p_rgh;
         relTol          0;
     }
+
+    // -------------------------------------------------------------
+    // seems faster!!!
+
+    // "pcorr.*"
+    // {
+    //     solver          GAMG;
+    //     tolerance       1e-8;
+    //     relTol          0;
+    //     smoother        GaussSeidel;
+    //     nPreSweeps      0;
+    //     nPostSweeps     2;
+    //     nFinestSweeps   2;
+    //     cacheAgglomeration on;
+    //     nCellsInCoarsestLevel 10;
+    //     agglomerator    faceAreaPair;
+    //     mergeLevels     1;
+    // }
+
+    // p_rgh
+    // {
+    //     solver          GAMG;
+    //     tolerance       1e-6;
+    //     relTol          0.01;
+    //     smoother        GaussSeidel;
+    //     nPreSweeps      0;
+    //     nPostSweeps     2;
+    //     nFinestSweeps   2;
+    //     cacheAgglomeration on;
+    //     nCellsInCoarsestLevel 10;
+    //     agglomerator    faceAreaPair;
+    //     mergeLevels     1;
+    // }
+
+    // p_rghFinal
+    // {
+    //     solver          GAMG;
+    //     tolerance       1e-7;
+    //     relTol          0;
+    //     smoother        GaussSeidel;
+    //     nPreSweeps      0;
+    //     nPostSweeps     2;
+    //     nFinestSweeps   2;
+    //     cacheAgglomeration on;
+    //     nCellsInCoarsestLevel 10;
+    //     agglomerator    faceAreaPair;
+    //     mergeLevels     1;
+    // }
+
+    // -------------------------------------------------------------
     
     // "pcorr.*"
     // {
@@ -160,7 +210,7 @@ solvers
 
 PIMPLE
 {
-    momentumPredictor   false; // true;
+    momentumPredictor   false;
     nOuterCorrectors    1;
     nCorrectors         2;
     nNonOrthogonalCorrectors 0;

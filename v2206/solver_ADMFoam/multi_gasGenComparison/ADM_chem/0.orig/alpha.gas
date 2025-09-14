@@ -27,11 +27,11 @@ boundaryField
 
     top
     {
-        // type            zeroGradient;
+        type            zeroGradient;
         
-        type            inletOutlet;
-        inletValue      uniform 1;
-        value           uniform 1;
+        // type            inletOutlet;
+        // inletValue      uniform 1;
+        // value           uniform 1;
     }
 
     left

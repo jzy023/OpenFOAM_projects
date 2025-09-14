@@ -38,6 +38,7 @@ Pvap            3130;
 // Gas transfer rate coefficients [d-1]
 // kLa             1e-16;
 kLa             200;
+// kLa             214.1143;
 
 
 // Benchmark case

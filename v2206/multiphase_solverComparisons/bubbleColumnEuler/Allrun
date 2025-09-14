@@ -19,7 +19,7 @@ runApplication blockMesh
 
 runApplication setFields
 
-touch foam.foam
+touch reactingEuler.foam
 
 # runApplication $(getApplication)
 

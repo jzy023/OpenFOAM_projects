@@ -28,38 +28,22 @@ gradSchemes
 divSchemes
 {
     default             none;
-    // default             Gauss upwind;
-    // default             Gauss limitedLinear 0;
-    // default             bounded Gauss limitedLinear 1; 
     
-    // div(phi,Yi)         bounded Gauss limitedLinear 1;
-    // div(phi,Gi)         bounded Gauss limitedLinear 1;
-
-    // div(phi,U)          Gauss LUST grad(U);
-    // div(phi,U)          Gauss upwind;
-    // div(phi,T)          Gauss linearUpwind grad(T);
-    // div(phi,k)          Gauss upwind;
-    // div(phi,omega)      Gauss upwind;
-    // div(phi,epsilon)    Gauss upwind;
-
-    // div((nuEff*dev2(T(grad(U))))) Gauss linear;
-
-
     // testing
-    // div(rhoPhi,U)       Gauss upwind; // Gauss linearUpwind grad(U);
+    div(rhoPhi,U)       Gauss upwind; // Gauss linearUpwind grad(U);
     div(rhoPhi,T)       Gauss upwind; // Gauss linearUpwind grad(T);
 
     // div(phi,Yi)         bounded Gauss limitedLinear 1;
     // div(phi,Gi)         bounded Gauss limitedLinear 1;
 
-    // div(phi,alpha)      Gauss vanLeer;
-    // div(phirb,alpha)    Gauss linear;
+    div(phi,alpha)      Gauss vanLeer;
+    div(phirb,alpha)    Gauss linear;
 
-    div(rhoPhi,U)       Gauss SFCD;
-    div(phi,alpha)      Gauss vanLeer01;
-    div(phi,Yi)         Gauss vanLeer01;
-    div(phirb,alpha)    Gauss interfaceCompression;
-    div(phiH,Yi)        Gauss linear;
+    // div(rhoPhi,U)       Gauss SFCD;
+    // div(phi,alpha)      Gauss vanLeer01;
+    // div(phi,Yi)         Gauss vanLeer01;
+    // div(phirb,alpha)    Gauss interfaceCompression;
+    // div(phiH,Yi)        Gauss linear;
 
     // "div\(alphaRhoPhi.*,(h|e).*\)"  Gauss limitedLinear 1; // <-- reserved for turbulence
     // "div\(alphaRhoPhi.*,K.*\)"      Gauss limitedLinear 1; // <-- reserved for turbulence
@@ -83,7 +67,6 @@ interpolationSchemes
 
 snGradSchemes
 {
-    // default         orthogonal;
     default         corrected;
 }
 
