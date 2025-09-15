@@ -1,0 +1,73 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2206                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=64;scalar=64";
+    class       surfaceScalarField;
+    location    "334800";
+    object      phi;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 3 -1 0 0 0 0];
+
+oriented        oriented;
+
+internalField   nonuniform List<scalar> 
+24
+(
+4.88561e-10
+-4.88561e-10
+5.63448e-10
+-7.48875e-11
+3.97239e-10
+1.66209e-10
+3.97239e-10
+1.1107e-10
+-5.99631e-10
+1.52142e-10
+-1.15959e-10
+1.62981e-11
+3.02052e-10
+4.13538e-10
+-2.6507e-10
+-3.3456e-10
+-2.86949e-10
+-9.40804e-11
+-2.02548e-10
+2.17651e-10
+2.1099e-10
+-3.3456e-10
+-4.28641e-10
+-2.1099e-10
+)
+;
+
+boundaryField
+{
+    movingWall
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    fixedWalls
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    frontAndBack
+    {
+        type            empty;
+        value           nonuniform List<scalar> 0();
+    }
+}
+
+
+// ************************************************************************* //

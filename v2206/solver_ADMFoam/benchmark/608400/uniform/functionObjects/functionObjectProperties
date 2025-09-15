@@ -1,0 +1,61 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2206                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=64;scalar=64";
+    class       dictionary;
+    location    "608400/uniform/functionObjects";
+    object      functionObjectProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+cdf7e925f5746741c316f5fbcf39ad0dfca90775
+{
+    probes
+    {
+        scalar
+        {
+            average(Gch4)   1.653690649118225;
+            min(Gch4)       1.653690649118225;
+            max(Gch4)       1.653690649118225;
+            average(SIC)    95.1786655142044;
+            min(SIC)        95.1786655142044;
+            max(SIC)        95.1786655142044;
+            average(SIN)    94.49554887624144;
+            min(SIN)        94.49554887624144;
+            max(SIN)        94.49554887624144;
+            average(Sac)    0.08938443493789663;
+            min(Sac)        0.08938443493789663;
+            max(Sac)        0.08938443493789663;
+            average(Sch4)   0.05549559139617245;
+            min(Sch4)       0.05549559139617245;
+            max(Sch4)       0.05549559139617245;
+            average(Sh2)    2.505702147409592e-07;
+            min(Sh2)        2.505702147409592e-07;
+            max(Sh2)        2.505702147409592e-07;
+            average(pH)     7.263382386846478;
+            min(pH)         7.263382386846478;
+            max(pH)         7.263382386846478;
+        }
+        label
+        {
+            size(Gch4)      1;
+            size(SIC)       1;
+            size(SIN)       1;
+            size(Sac)       1;
+            size(Sch4)      1;
+            size(Sh2)       1;
+            size(pH)        1;
+        }
+    }
+}
+
+
+// ************************************************************************* //

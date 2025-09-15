@@ -3,7 +3,7 @@ import pandas as pd
 
 # Input/output files
 input_file = "log.ADMFoam"
-output_file = "ADMFoam_benchmark_v5.csv"
+output_file = "ADMFoam_benchmark_10days.csv"
 
 # Regex patterns
 time_pattern = re.compile(r"^\s*Time\s*=\s*([0-9.eE+-]+)\s*$")

@@ -1,9 +1,9 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
-| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2212                                 |
-|   \\  /    A nd           | Website:  www.openfoam.com                      |
-|    \\/     M anipulation  |                                                 |
+| \      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \    /   O peration     | Version:  v2212                                 |
+|   \  /    A nd           | Website:  www.openfoam.com                      |
+|    \/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
@@ -27,96 +27,84 @@ regions
 (
     boxToCell
     {
-        // box (0 -0.04 0) (1 0.00 1);
-        box (0 -0.013 0) (1 0.00 1);
+        box (0 -0.08 0) (1 -0.013 1);
         fieldValues
         (
             volScalarFieldValue alpha.liquid    0.0
             volScalarFieldValue alpha.gas       1.0
 
             // TODO: make a sperate file to initialize
-            volScalarFieldValue Ssu             0.0
-            volScalarFieldValue Saa             0.0
-            volScalarFieldValue Sfa             0.0
-            volScalarFieldValue Sva             0.0
-            volScalarFieldValue Sbu             0.0
-            volScalarFieldValue Spro            0.0
-            volScalarFieldValue Sac             0.0
-            volScalarFieldValue Sh2             0.0
-            volScalarFieldValue Sch4            0.0
-            volScalarFieldValue SIC             0.0
-            volScalarFieldValue SIN             0.0
-            volScalarFieldValue SI              0.0
-            volScalarFieldValue Xc              0.0
-            volScalarFieldValue Xch             0.0
-            volScalarFieldValue Xpr             0.0
-            volScalarFieldValue Xli             0.0
-            volScalarFieldValue Xsu             0.0
-            volScalarFieldValue Xaa             0.0
-            volScalarFieldValue Xfa             0.0
-            volScalarFieldValue Xc4             0.0
-            volScalarFieldValue Xpro            0.0
-            volScalarFieldValue Xac             0.0
-            volScalarFieldValue Xh2             0.0
-            volScalarFieldValue XI              0.0
-            volScalarFieldValue Gh2             1.1032e-5
-            volScalarFieldValue Gch4            1.6535     
+            volScalarFieldValue Ssu             0.012394
+            volScalarFieldValue Saa             0.0055
+            volScalarFieldValue Sfa             0.1074
+            volScalarFieldValue Sva             0.0123
+            volScalarFieldValue Sbu             0.014
+            volScalarFieldValue Spro            0.0176
+            volScalarFieldValue Sac             0.0893
+            volScalarFieldValue Sh2             2.5055e-07
+            volScalarFieldValue Sch4            0.0555
+            volScalarFieldValue SIC             0.0951
+            volScalarFieldValue SIN             0.0945
+            volScalarFieldValue SI              0.1309
+            volScalarFieldValue Xc              0.1079
+            volScalarFieldValue Xch             0.0205
+            volScalarFieldValue Xpr             0.0842
+            volScalarFieldValue Xli             0.0436
+            volScalarFieldValue Xsu             0.3122
+            volScalarFieldValue Xaa             0.9317
+            volScalarFieldValue Xfa             0.3384
+            volScalarFieldValue Xc4             0.3258
+            volScalarFieldValue Xpro            0.1011
+            volScalarFieldValue Xac             0.6772
+            volScalarFieldValue Xh2             0.2848
+            volScalarFieldValue XI              17.2162
+            volScalarFieldValue Snh3            0.001884
+            volScalarFieldValue Gh2             0.011032
+            volScalarFieldValue Gch4            1653.5
             volScalarFieldValue Gco2            13.5
         );
     }
 
-    // boxToCell
-    // {
-    //     box (0 -0.16 0) (1 -0.08 1);
-    //     fieldValues
-    //     (
-    //         volScalarFieldValue Sac             0.12
-    //     );
-    // }
+    boxToCell
+    {
+        box (0 -0.16 0) (1 -0.080 1);
+        fieldValues
+        (
+            volScalarFieldValue alpha.liquid    0.0
+            volScalarFieldValue alpha.gas       1.0
 
-    // sphereToCell
-    // {
-    //     // centre (0.02 -0.14 0.0001);
-    //     // radius 0.003;
+            // TODO: make a sperate file to initialize
+            volScalarFieldValue Ssu             0.012394
+            volScalarFieldValue Saa             0.0055
+            volScalarFieldValue Sfa             0.1074
+            volScalarFieldValue Sva             0.0123
+            volScalarFieldValue Sbu             0.014
+            volScalarFieldValue Spro            0.0176
+            volScalarFieldValue Sac             0.0893
+            volScalarFieldValue Sh2             2.5055e-07
+            volScalarFieldValue Sch4            0.0555
+            volScalarFieldValue SIC             0.0951
+            volScalarFieldValue SIN             0.0945
+            volScalarFieldValue SI              0.1309
+            volScalarFieldValue Xc              0.1079
+            volScalarFieldValue Xch             0.0205
+            volScalarFieldValue Xpr             0.0842
+            volScalarFieldValue Xli             0.0436
+            volScalarFieldValue Xsu             0.3122
+            volScalarFieldValue Xaa             0.9317
+            volScalarFieldValue Xfa             0.3384
+            volScalarFieldValue Xc4             0.3258
+            volScalarFieldValue Xpro            0.1011
+            volScalarFieldValue Xac             0.6772
+            volScalarFieldValue Xh2             0.2848
+            volScalarFieldValue XI              17.2162
+            volScalarFieldValue Snh3            0.001884
+            volScalarFieldValue Gh2             0.011032
+            volScalarFieldValue Gch4            1653.5
+            volScalarFieldValue Gco2            13.5
+        );
+    }
 
-    //     centre (0.02 -0.05 0.0001);
-    //     radius 0.003;
-    //     fieldValues
-    //     (
-    //         volScalarFieldValue alpha.liquid    0.0
-    //         volScalarFieldValue alpha.gas       1.0
-    //         // volScalarFieldValue T               298.15
-
-    //         // TODO: make a sperate file to initialize
-    //         volScalarFieldValue Ssu             0.0
-    //         volScalarFieldValue Saa             0.0
-    //         volScalarFieldValue Sfa             0.0
-    //         volScalarFieldValue Sva             0.0
-    //         volScalarFieldValue Sbu             0.0
-    //         volScalarFieldValue Spro            0.0
-    //         volScalarFieldValue Sac             0.0
-    //         volScalarFieldValue Sh2             0.0
-    //         volScalarFieldValue Sch4            0.0
-    //         volScalarFieldValue SIC             0.0
-    //         volScalarFieldValue SIN             0.0
-    //         volScalarFieldValue SI              0.0
-    //         volScalarFieldValue Xc              0.0
-    //         volScalarFieldValue Xch             0.0
-    //         volScalarFieldValue Xpr             0.0
-    //         volScalarFieldValue Xli             0.0
-    //         volScalarFieldValue Xsu             0.0
-    //         volScalarFieldValue Xaa             0.0
-    //         volScalarFieldValue Xfa             0.0
-    //         volScalarFieldValue Xc4             0.0
-    //         volScalarFieldValue Xpro            0.0
-    //         volScalarFieldValue Xac             0.0
-    //         volScalarFieldValue Xh2             0.0
-    //         volScalarFieldValue XI              0.0
-    //         // volScalarFieldValue Gh2             1.1032e-5
-    //         // volScalarFieldValue Gco2            13.5
-    //         // volScalarFieldValue Gch4            1.6535      
-    //     );
-    // }
 );
 
 

@@ -22,8 +22,8 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         40;
-writeInterval   2;
+// endTime         40;
+// writeInterval   2;
 
 // endTime         600;
 // writeInterval   5;
@@ -34,8 +34,8 @@ writeInterval   2;
 // endTime         86400;  // 1 days simulation
 // writeInterval   3600;
 
-// endTime         864000; // 10 days simulation
-// writeInterval   3600;
+endTime         864000; // 10 days simulation
+writeInterval   3600;
 
 deltaT          1;
 
@@ -59,9 +59,9 @@ runTimeModifiable true;
 
 maxCo           0.8;
 
-// maxDeltaT       1;
-deltaT          1e-5;
-maxDeltaT       1e-3;
+maxDeltaT       2;
+// deltaT          1e-5;
+// maxDeltaT       1e-3;
 
 functions 
 {
