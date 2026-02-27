@@ -1,0 +1,63 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2206                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      admno1Properties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+// Operation modes 
+// [mandatory for general case]
+mode            MesoSolid;
+
+// Schmidt number
+Sc              1;
+
+// Vapour pressure of water [Pa]
+Pvap            3130;
+
+// Pipe resistance [m3 * s-1 * Pa-1]
+// Rosen: 5e4 [m3 * d-1 * bar-1]
+// Kpip            1e-16;
+Kpip            0.5;
+
+// External pressure [Pa]
+Pext            101300;
+
+
+// Optional Entries ---------------------------------------------------------
+
+// Benchmark case
+benchmark       false;
+
+// Default pH value
+pH              7.26;
+
+// Gas constant [Pa * K-1 * (mol/m3)-1]
+R               8.3145;
+
+// Cation concentration [mol * m-3]
+Scat            0.00;
+
+// Anion concentration [mol * m-3]
+San             5.20;
+
+// TODO: remove
+// Gas transfer rate coefficients [d-1]
+// kLa             1e-16;
+kLa             200;
+
+
+
+
+
+// ************************************************************************* //

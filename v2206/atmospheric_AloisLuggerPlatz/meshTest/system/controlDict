@@ -1,0 +1,139 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     buoyantBoussinesqPimpleFoam;
+
+startFrom       startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+// endTime         60;
+endTime         3600;
+
+deltaT          1e-2;
+
+writeControl    adjustable;
+
+writeInterval   30;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+adjustTimeStep  yes;
+
+maxDeltaT       1.5;
+
+maxCo           5.0;
+
+functions 
+{
+    // #includeFunc    R;
+
+    yPlus
+    {
+        // Mandatory entries (unmodifiable)
+        type            yPlus;
+        libs            (fieldFunctionObjects);
+
+        // Optional (inherited) entries
+        writePrecision  8;
+        writeToFile     true;
+        useUserTime     true;
+
+        region          region0;
+        enabled         true;
+        log             true;
+        timeStart       0;
+        timeEnd         $endTime;
+        executeControl  timeStep;
+        executeInterval 1;
+        writeControl    $writeControl;
+        writeInterval   $writeInterval;
+    }
+
+    // fieldAverage
+    // {
+    //     type                fieldAverage;
+    //     libs                ("fieldFunctionObjects.so");
+    //     fields
+    //     (
+    //         U
+    //         {
+    //             mean        on;
+    //             prime2Mean  on;
+    //             base        time;
+    //         }
+    //         p_rgh
+    //         {
+    //             mean        on;
+    //             prime2Mean  off;
+    //             base        time;
+    //         }
+    //         nut
+    //         {
+    //             mean        on;
+    //             prime2Mean  off;
+    //             base        time;
+    //         }
+    //         T
+    //         {
+    //             mean        on;
+    //             prime2Mean  off;
+    //             base        time;
+    //         }
+    //     );
+    //     writeControl    	$writeControl;
+    //     writeInterval       $writeInterval;
+    // }
+
+    // wallShearStress
+    // {
+    //     // Mandatory entries (unmodifiable)
+    //     type            wallShearStress;
+    //     libs            (fieldFunctionObjects);
+
+    //     // Optional (inherited) entries
+    //     writePrecision  8;
+    //     writeToFile     true;
+    //     useUserTime     true;
+
+    //     region          region0;
+    //     enabled         true;
+    //     log             true;
+    //     timeStart       0;
+    //     timeEnd         $endTime;
+    //     executeControl  timeStep;
+    //     executeInterval 1;
+    //     writeControl    $writeControl;
+    //     writeInterval   $writeInterval;
+    // }
+}
+
+
+// ************************************************************************* //

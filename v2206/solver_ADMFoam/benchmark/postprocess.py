@@ -3,7 +3,7 @@ import pandas as pd
 
 # Input/output files
 input_file = "log.ADMFoam"
-output_file = "ADMFoam_benchmark_10days.csv"
+output_file = "ADMFoam_benchmark_noInflow_10days.csv"
 
 # Regex patterns
 time_pattern = re.compile(r"^\s*Time\s*=\s*([0-9.eE+-]+)\s*$")
@@ -60,7 +60,7 @@ if current_record:
 df = pd.DataFrame(records)
 
 # Reorder columns
-expected_cols = ["Time", "Sh2Ave", "Sch4Ave", "Sco2Ave", "Gh2", "RGh2", "Gch4", "RGch4", "Gco2", "RGco2"]
+expected_cols = ["Time", "ShpAve", "Sh2Ave", "Sch4Ave", "Sco2Ave", "Gh2", "RGh2", "Gch4", "RGch4", "Gco2", "RGco2"]
 df = df.reindex(columns=expected_cols)
 
 # Save to CSV

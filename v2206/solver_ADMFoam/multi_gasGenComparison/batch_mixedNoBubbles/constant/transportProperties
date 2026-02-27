@@ -1,0 +1,104 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      transportProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// transportModel  Newtonian;
+
+phases              (liquid gas);
+
+sigma
+{
+    type            constant;
+    sigma           0.07;
+}
+
+Prt                 0.7;
+
+degassing
+{
+    //- Madatory
+    // boundary walls that promotes inter-phase mass trnasfer
+    walls
+    {
+        "fixedWalls";
+    }
+
+    // solid surface wettability 
+    // higher alphaW means smaller contact angle (more wetting)
+    // TODO: move in walls entry to set up alphaW for each wall
+    // TODO: get an actual model than just (amplifier = alphaW)
+    // alphaW          0.1188898933;
+    alphaW          0.11889;
+    
+    // alphaW          0.125; <- works for less bubbles case: gasPhaseRate(kLa)
+    alphaI          1e-20;
+
+    //- Optional
+    // Henry's coefficient
+    H               1e-20;
+
+    // volume fraction threshold to determine interface for inter-phase mass transfer
+    // 
+    alphaInterface  0.75;
+
+    // DEBUG -------------------------------
+    // TODO: change into a dimensionless amplifer 
+    // decoupling degassing rate from ADM gas transfer rate kLa
+
+    // Fits benchmark case
+    // mDotCoeff        1.360713e-2;
+    // mDotCoeff        1.0;
+
+    // Fits half of benchmark case
+    
+    // mDotCoeff        0.1;
+    
+    // No degassing
+    mDotCoeff        0.0;
+}
+
+liquid
+{
+    transportModel  Newtonian;
+    nu              1e-6;
+    rho             1000;
+
+    // Diffusion coefficients for species in soluables phase
+    D               1e-6;
+
+    Cp              4.186e3;
+    Cv              4.186e3;   // assume Cp for liquid
+    kappa           0.6;
+    hf              -2.4e6;
+}
+
+gas
+{
+    transportModel  Newtonian;
+    nu              1.8e-08;
+    rho             1.3;
+
+    // Diffusion coefficients for species in gaseous phase 
+    D               1e-16;
+
+    Cp              1.87e3;     // water gas
+    Cv              1.41e3;     // Cv = Cp - R/w
+    kappa           0.026;      // water gas
+    hf              0;
+}
+
+
+
+// ************************************************************************* //

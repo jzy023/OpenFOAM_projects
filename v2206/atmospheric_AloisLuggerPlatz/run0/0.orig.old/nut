@@ -1,0 +1,86 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      nut;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 2 -1 0 0 0 0];
+
+internalField   uniform 1e-12;
+
+boundaryField
+{
+    inlet
+    {
+        type            calculated;
+        value           $internalField;
+    }
+
+    outlet
+    {
+        type            calculated;
+        value           $internalField;
+    }
+
+    upperAtm
+    {
+        type            calculated;
+        value           $internalField;
+    }
+
+    ground
+    {
+        type            nutkRoughWallFunction;
+        Cmu             0.09;
+        kappa           0.40;
+        E               9.8;
+        Cs              uniform 0.5;
+        Ks              uniform 2.2;
+
+        value           $internalField;
+    }
+
+    frontAtm
+    {
+        // type            cyclic;
+        type            zeroGradient;
+    }
+
+    backAtm
+    {
+        // type            cyclic;
+        type            zeroGradient;
+    }
+
+    buildings
+    {
+        // type            nutkRoughWallFunction;
+        // Cmu             0.09;
+        // kappa           0.40;
+        // E               9.8;
+        // Cs              uniform 0.5;
+        // Ks              uniform 2.2;
+
+        type            nutkWallFunction;
+        value           $internalField; 
+    }
+    
+    "(buildings_surfaces_top|buildings_surfaces_ground|buildings_surfaces_east|buildings_surfaces_west|buildings_surfaces_north|buildings_surfaces_south)"
+    {
+        type            nutkWallFunction;
+        value           $internalField; 
+    }
+}
+
+
+// ************************************************************************* //

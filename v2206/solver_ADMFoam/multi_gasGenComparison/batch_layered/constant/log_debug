@@ -1,0 +1,157 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2212                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _c9081d5d-20230220 OPENFOAM=2212 patch=230110 version=v2212
+Arch   : "LSB;label=64;scalar=64"
+Exec   : interADMFoam -parallel
+Date   : Feb 24 2026
+Time   : 22:27:01
+Host   : DESKTOP-EOE2N29
+PID    : 2575
+I/O    : uncollated
+Case   : /home/noreff/works/OpenFOAM_projects/v2206/solver_ADMFoam/multi_gasGenComparison/batch_layered
+nProcs : 8
+Hosts  :
+(
+    (DESKTOP-EOE2N29 8)
+)
+Pstream initialized with:
+    floatTransfer      : 0
+    nProcsSimpleSum    : 0
+    commsType          : nonBlocking
+    polling iterations : 0
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+
+PIMPLE: Operating solver in PISO mode
+
+Reading field p_rgh
+
+Reading field U
+
+Reading/calculating face flux field phi
+
+Reading field operational temperature
+Creating admMixture
+
+Selecting incompressible transport model Newtonian
+Selecting incompressible transport model Newtonian
+
+Selecting ADM no1 operation mode MesoSolid
+Reading ADM no1 initial concentrations for soluables
+Reading ADMno1 initial concentrations for particulates
+Reading ADM no1 initial concentrations for gaseuoses
+Initializing concentrations for medians
+Initializing concentrations for electrolytes
+>>> is benchmark case: 0
+>>> Qin_: 0
+>>> Vgas_: 1.05e-07
+>>> Vliq_: 1.175e-06
+>>> Vfrac_: 0.0893617
+>>> qGas_: 9.52381e-14
+Selecting surfaceTensionModel constant
+Selecting turbulence model type laminar
+Selecting laminar stress model Stokes
+
+Reading g
+
+Reading hRef
+Calculating field g.h
+
+Reading field p
+
+No MRF models present
+
+No finite volume options present
+GAMG:  Solving for pcorr, Initial residual = 0, Final residual = 0, No Iterations 0
+time step continuity errors : sum local = 0, global = 0, cumulative = 0
+Courant Number mean: 0 max: 0
+
+Starting time loop
+
+Courant Number mean: 0 max: 0
+Interface Courant Number mean: 0 max: 0
+deltaT = 1.2e-06
+Time = 1.2e-06
+
+>>> Sh2Ave = 0
+>>> Sch4Ave = 0.0519294
+>>> Sco2Ave = 10.028
+>>> Gh2 concentration = 1.1032e-05, generation rate = -4.83169e-10
+>>> Gch4 concentration = 1.6535, generation rate = 6.26371e-06
+>>> Gco2 concentration = 13.5, generation rate = 0.00147774
+>>> ShpAve = 5.13354e-05
+Newton-Raphson:	Solving for Sh+, min Shp: 4.90221e-05, max Shp: 4.90221e-05, No Interations 5
+Newton-Raphson:	Solving for Sh2, min Sh2: 1.17057e-07, max Sh2: 1.17057e-07, No Interations 4
+PIMPLE: iteration 1
+smoothSolver:  Solving for alpha.liquid, Initial residual = 3.31346e-09, Final residual = 3.31346e-09, No Iterations 0
+Phase-1 volume fraction = 0.917969  Min(alpha.liquid) = 1e-16  Max(alpha.liquid) = 1
+MULES: Correcting alpha.liquid
+MULES: Correcting alpha.liquid
+Liquid phase volume fraction = 0.917969  Min(alpha.liquid) = 1e-16  Max(alpha.liquid) = 1
+smoothSolver:  Solving for alpha.liquid, Initial residual = 3.31346e-09, Final residual = 3.31346e-09, No Iterations 0
+Phase-1 volume fraction = 0.917969  Min(alpha.liquid) = 1e-16  Max(alpha.liquid) = 1
+MULES: Correcting alpha.liquid
+MULES: Correcting alpha.liquid
+Liquid phase volume fraction = 0.917969  Min(alpha.liquid) = 1e-16  Max(alpha.liquid) = 1
+MULES: Solving for Ssu
+MULES: Solving for Saa
+MULES: Solving for Sfa
+MULES: Solving for Sva
+MULES: Solving for Sbu
+MULES: Solving for Spro
+MULES: Solving for Sac
+MULES: Solving for Sch4
+MULES: Solving for SIC
+MULES: Solving for SIN
+MULES: Solving for SI
+MULES: Solving for Xc
+MULES: Solving for Xch
+MULES: Solving for Xpr
+MULES: Solving for Xli
+MULES: Solving for Xsu
+MULES: Solving for Xaa
+MULES: Solving for Xfa
+MULES: Solving for Xc4
+MULES: Solving for Xpro
+MULES: Solving for Xac
+MULES: Solving for Xh2
+MULES: Solving for XI
+GAMG:  Solving for p_rgh, Initial residual = 1, Final residual = 0.00178341, No Iterations 3
+GAMG:  Solving for p_rgh, Initial residual = 5.34332e-06, Final residual = 7.30807e-08, No Iterations 4
+ADM convection-diffusion calculation
+DILUPBiCGStab:  Solving for Ssu, Initial residual = 2.44292e-08, Final residual = 2.68261e-14, No Iterations 1
+DILUPBiCGStab:  Solving for Saa, Initial residual = 2.45984e-08, Final residual = 2.70193e-14, No Iterations 1
+DILUPBiCGStab:  Solving for Sfa, Initial residual = 2.37824e-08, Final residual = 2.61296e-14, No Iterations 1
+DILUPBiCGStab:  Solving for Sva, Initial residual = 2.45509e-08, Final residual = 2.69608e-14, No Iterations 1
+DILUPBiCGStab:  Solving for Sbu, Initial residual = 2.45451e-08, Final residual = 2.69536e-14, No Iterations 1
+DILUPBiCGStab:  Solving for Spro, Initial residual = 2.44369e-08, Final residual = 2.68476e-14, No Iterations 1
+DILUPBiCGStab:  Solving for Sac, Initial residual = 2.42668e-08, Final residual = 2.66581e-14, No Iterations 1
+DILUPBiCGStab:  Solving for Sch4, Initial residual = 1.03722e-08, Final residual = 1.20132e-14, No Iterations 1
+DILUPBiCGStab:  Solving for SIC, Initial residual = 9.80596e-10, Final residual = 9.80596e-10, No Iterations 0
+DILUPBiCGStab:  Solving for SIN, Initial residual = 4.13872e-10, Final residual = 4.13872e-10, No Iterations 0
+DILUPBiCGStab:  Solving for SI, Initial residual = 1.64542e-09, Final residual = 1.64542e-09, No Iterations 0
+DILUPBiCGStab:  Solving for Xc, Initial residual = 1.8675e-09, Final residual = 1.8675e-09, No Iterations 0
+DILUPBiCGStab:  Solving for Xch, Initial residual = 2.45039e-08, Final residual = 2.70231e-14, No Iterations 1
+DILUPBiCGStab:  Solving for Xpr, Initial residual = 2.46545e-08, Final residual = 2.71892e-14, No Iterations 1
+DILUPBiCGStab:  Solving for Xli, Initial residual = 2.45639e-08, Final residual = 2.70893e-14, No Iterations 1
+DILUPBiCGStab:  Solving for Xsu, Initial residual = 1.92016e-10, Final residual = 1.92016e-10, No Iterations 0
+DILUPBiCGStab:  Solving for Xaa, Initial residual = 1.60473e-10, Final residual = 1.60473e-10, No Iterations 0
+DILUPBiCGStab:  Solving for Xfa, Initial residual = 1.05744e-09, Final residual = 1.05744e-09, No Iterations 0
+DILUPBiCGStab:  Solving for Xc4, Initial residual = 2.58031e-10, Final residual = 2.58031e-10, No Iterations 0
+DILUPBiCGStab:  Solving for Xpro, Initial residual = 6.55009e-10, Final residual = 6.55009e-10, No Iterations 0
+DILUPBiCGStab:  Solving for Xac, Initial residual = 8.43125e-10, Final residual = 8.43125e-10, No Iterations 0
+DILUPBiCGStab:  Solving for Xh2, Initial residual = 5.44368e-10, Final residual = 5.44368e-10, No Iterations 0
+DILUPBiCGStab:  Solving for XI, Initial residual = 2.54768e-11, Final residual = 2.54768e-11, No Iterations 0
+ExecutionTime = 0.08 s  ClockTime = 0 s

@@ -1,0 +1,262 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2206                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     ADMFoam;
+
+startFrom       startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+// endTime         0.0001;
+// writeInterval   0.00001;
+
+// writeInterval   1;
+// writeControl    timeStep;
+
+writeControl    adjustable;
+
+endTime         0.8;
+writeInterval   0.1;
+
+// endTime         20;
+// writeInterval   2;
+
+// endTime         600;
+// writeInterval   5;
+
+// endTime         86400;  // 1 days simulation
+// writeInterval   3600;
+
+// endTime         864000; // 10 days simulation
+// writeInterval   3600;
+
+deltaT          1e-6;
+ maxDeltaT      1e-3;
+// maxDeltaT       1e-4;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable yes;
+
+adjustTimeStep  yes;
+
+// maxCo           2.0;
+// maxAlphaCo      1.0;
+
+maxCo           1.0;
+maxAlphaCo      0.8;
+
+// maxCo           0.2;
+// maxAlphaCo      0.2;
+
+
+functions
+{
+    // U 
+    // linesample_x_U
+	// {
+	// 	type						sets;
+	// 	libs						("libsampling.so");
+	// 	timeStart				    195;
+	// 	writeControl				$writeControl;
+	// 	writeInterval				0.5;
+	// 	interpolationScheme			cell;
+	// 	setFormat					csv;
+	// 	sets						(
+	// 		data
+	// 		{
+	// 			type				uniform;
+	// 			axis				xyz;
+	// 			start				(0.0  0.5  -0.005);
+	// 			end					(1.0  0.5  -0.005);
+	// 			nPoints				500;
+	// 		}
+	// 	);
+	// 	fields	(U);
+	// }
+
+    // linesample_y_U
+	// {
+	// 	type						sets;
+	// 	libs						("libsampling.so");
+	// 	timeStart				    195;
+	// 	writeControl				$writeControl;
+	// 	writeInterval				0.5;
+	// 	interpolationScheme			cell;
+	// 	setFormat					csv;
+	// 	sets						(
+	// 		data
+	// 		{
+	// 			type				uniform;
+	// 			axis				xyz;
+	// 			start				(0.5  0.0  -0.005);
+	// 			end					(0.5  1.0  -0.005);
+	// 			nPoints				500;
+	// 		}
+	// 	);
+	// 	fields	(U);
+	// }
+
+    // // Sac
+    // linesample_x_Sac
+	// {
+	// 	type						sets;
+	// 	libs						("libsampling.so");
+	// 	timeStart				    95;
+	// 	writeControl				$writeControl;
+	// 	writeInterval				0.5;
+	// 	interpolationScheme			cell;
+	// 	setFormat					csv;
+	// 	sets						(
+	// 		data
+	// 		{
+	// 			type				uniform;
+	// 			axis				xyz;
+	// 			start				(0.0  0.5  -0.005);
+	// 			end					(1.0  0.5  -0.005);
+	// 			nPoints				500;
+	// 		}
+	// 	);
+	// 	fields	(Sac);
+	// }
+
+    // linesample_y_Sac
+	// {
+	// 	type						sets;
+	// 	libs						("libsampling.so");
+	// 	timeStart				    95;
+	// 	writeControl				$writeControl;
+	// 	writeInterval				0.5;
+	// 	interpolationScheme			cell;
+	// 	setFormat					csv;
+	// 	sets						(
+	// 		data
+	// 		{
+	// 			type				uniform;
+	// 			axis				xyz;
+	// 			start				(0.5  0.0  -0.005);
+	// 			end					(0.5  1.0  -0.005);
+	// 			nPoints				500;
+	// 		}
+	// 	);
+	// 	fields	(Sac);
+	// }
+
+    // // Sch4
+    // linesample_x_Sch4
+	// {
+	// 	type						sets;
+	// 	libs						("libsampling.so");
+	// 	timeStart				    95;
+	// 	writeControl				$writeControl;
+	// 	writeInterval				0.5;
+	// 	interpolationScheme			cell;
+	// 	setFormat					csv;
+	// 	sets						(
+	// 		data
+	// 		{
+	// 			type				uniform;
+	// 			axis				xyz;
+	// 			start				(0.0  0.5  -0.005);
+	// 			end					(1.0  0.5  -0.005);
+	// 			nPoints				500;
+	// 		}
+	// 	);
+	// 	fields	(Sch4);
+	// }
+
+    // linesample_y_Sch4
+	// {
+	// 	type						sets;
+	// 	libs						("libsampling.so");
+	// 	timeStart				    95;
+	// 	writeControl				$writeControl;
+	// 	writeInterval				0.5;
+	// 	interpolationScheme			cell;
+	// 	setFormat					csv;
+	// 	sets						(
+	// 		data
+	// 		{
+	// 			type				uniform;
+	// 			axis				xyz;
+	// 			start				(0.5  0.0  -0.005);
+	// 			end					(0.5  1.0  -0.005);
+	// 			nPoints				500;
+	// 		}
+	// 	);
+	// 	fields	(Sch4);
+	// }
+
+    // // Gch4
+    // linesample_x_Gch4
+	// {
+	// 	type						sets;
+	// 	libs						("libsampling.so");
+	// 	timeStart				    95;
+	// 	writeControl				$writeControl;
+	// 	writeInterval				0.5;
+	// 	interpolationScheme			cell;
+	// 	setFormat					csv;
+	// 	sets						(
+	// 		data
+	// 		{
+	// 			type				uniform;
+	// 			axis				xyz;
+	// 			start				(0.0  0.5  -0.005);
+	// 			end					(1.0  0.5  -0.005);
+	// 			nPoints				500;
+	// 		}
+	// 	);
+	// 	fields	(Sch4);
+	// }
+
+    // linesample_y_Gch4
+	// {
+	// 	type						sets;
+	// 	libs						("libsampling.so");
+	// 	timeStart				    95;
+	// 	writeControl				$writeControl;
+	// 	writeInterval				0.5;
+	// 	interpolationScheme			cell;
+	// 	setFormat					csv;
+	// 	sets						(
+	// 		data
+	// 		{
+	// 			type				uniform;
+	// 			axis				xyz;
+	// 			start				(0.5  0.0  -0.005);
+	// 			end					(0.5  1.0  -0.005);
+	// 			nPoints				500;
+	// 		}
+	// 	);
+	// 	fields	(Gch4);
+	// }
+}
+
+
+// ************************************************************************* //

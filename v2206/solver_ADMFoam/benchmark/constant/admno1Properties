@@ -40,15 +40,25 @@ Pvap            3130;
 kLa             200;
 // kLa             214.1143;
 
-
-// Benchmark case
-// Pipe resistance [m3 * d-1 * Pa-1]
-// Rosen: 5e4 [m3 * d-1 * bar-1]
-// Kpip            1e-16;
-Kpip            0.5;
+// Pipe resistance
+// Rosen:  5e4  [m3 * d-1 * bar-1]
+// Rosen:  0.5  [m3 * d-1 * Pa-1]
+// User ----->  [m3 * d-1 * Pa-1]
+// Kpip            0.5;
+Kpip            1e-32; // [m3 * d-1 * Pa-1]
 
 // External pressure [Pa]
 Pext            101300;
+
+// Volume fraction between gas and liquid phase
+Vfrac           0.08824; // [300 / 3400]
+
+
+// Benchmark case
+benchmark     false;
+// benchmark     true;
+
+
 
 
 

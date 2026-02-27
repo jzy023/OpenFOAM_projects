@@ -1,0 +1,83 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      omega;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 -1 0 0 0 0];
+
+internalField   uniform 0.0007;
+
+boundaryField
+{
+    #include            "include/ABLConditions"
+
+    inlet
+    {
+        type            fixedValue;
+        value           $internalField;
+    }
+
+    outlet
+    {
+        type            zeroGradient;
+        
+        // type            inletOutlet;
+        // inletValue      $internalField;
+        // value           $internalField;
+    }
+
+    upperAtm
+    {
+        type            zeroGradient;
+    }
+
+    "(ground|ground_platz|ground_streets)"
+    {
+        type            omegaWallFunction;
+        Cmu             $Cmu;
+        kappa           $kappa;
+        value           $internalField;
+    }
+
+    frontAtm
+    {
+        // type            cyclic;
+        type            zeroGradient;
+    }
+
+    backAtm
+    {
+        // type            cyclic;
+        type            zeroGradient;
+    }
+
+    buildings
+    {
+        type            omegaWallFunction;
+        Cmu             $Cmu;
+        kappa           $kappa;
+        value           $internalField;
+    }
+
+    "(walls_top|walls_ground|walls_east|walls_west|walls_north|walls_south)"
+    {
+        type            omegaWallFunction;
+        Cmu             $Cmu;
+        kappa           $kappa;
+        value           $internalField;
+    }
+}
+
+
+// ************************************************************************* //

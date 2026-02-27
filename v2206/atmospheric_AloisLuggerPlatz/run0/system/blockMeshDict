@@ -1,0 +1,116 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+scale   1;
+
+// main box
+Lmin    -300;
+Hmin    0;
+Wmin    -205;
+
+Lmax    150;
+Hmax    65; // 100;
+Wmax    110;
+
+
+// resolution
+nx      16;
+ny      3;
+nz      16;
+
+
+vertices
+(
+    ($Lmin     $Hmin   $Wmin) // v0
+    ($Lmax     $Hmin   $Wmin) // v1 
+    ($Lmax     $Hmax   $Wmin) // v2
+    ($Lmin     $Hmax   $Wmin) // v3
+
+    ($Lmin     $Hmin   $Wmax) // v4
+    ($Lmax     $Hmin   $Wmax) // v5
+    ($Lmax     $Hmax   $Wmax) // v6
+    ($Lmin     $Hmax   $Wmax) // v7
+);
+
+
+blocks
+(
+    hex (0 1 2 3 4 5 6 7)
+    ($nx $ny $nz)
+    simpleGrading 
+
+    ( 1  1  1 )
+);
+
+
+edges
+(
+);
+
+
+boundary
+(
+    inlet
+    {
+        type patch;
+        faces
+        (
+            (0 3 7 4)
+        );
+    }
+    outlet
+    {
+        type patch;
+        faces
+        (
+            (1 2 6 5)
+        );
+    }
+    upperAtm
+    {
+        type patch;
+        faces
+        (
+            (3 7 6 2)
+        );
+    }
+    ground
+    {
+        type wall;
+        faces
+        (
+            (0 4 5 1)
+        );
+    }
+    frontAtm
+    {
+        type patch;
+        faces
+        (
+            (4 5 6 7)
+        );
+    }
+    backAtm
+    {
+        type patch;
+        faces
+        (
+            (0 1 2 3)
+        );
+    }
+);
+
+
+// ************************************************************************* //

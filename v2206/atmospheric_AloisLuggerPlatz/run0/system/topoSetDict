@@ -1,0 +1,51 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2412                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      topoSetDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+actions
+(
+    // {
+    //     // Mandatory (inherited) entries
+    //     name            grassField;
+    //     type            pointSet;
+    //     action          new;
+
+    //     // Mandatory entries
+    //     source          surfaceToPoint;
+    //     file            "constant/triSurface/grass.obj";
+    //     includeInside   false;
+    //     includeOutside  true;
+    //     nearDistance    0.5;
+
+    //     // Optional entries
+    //     fileType        obj;
+    //     scale           1.0;
+    // }
+
+    {
+        name         searchableSurface;
+        type         faceZoneSet; // faceSet; // faceZoneSet; // pointSet;
+        action       new;
+        source       searchableSurfaceToFaceZone; // searchableSurfaceToFace;
+                                              // searchableSurfaceToFaceZone;
+                                              // searchableSurfaceToPoint;
+        surfaceType  triSurfaceMesh;
+        surfaceName  grass.obj;
+    }
+
+);
+
+
+// ************************************************************************* //

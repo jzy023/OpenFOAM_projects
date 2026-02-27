@@ -1,0 +1,114 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      transportProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+transportModel  Newtonian;
+
+// Viscosity
+nu              1e-5;
+
+// Thermal expansion coefficient
+beta            3e-03;
+
+// Reference temperature
+TRef            300;
+
+// Laminar Prandtl number
+Pr              0.7;
+
+// Turbulent Prandtl number
+Prt             0.85;
+
+
+
+// phases              (liquid gas);
+
+// sigma
+// {
+//     type            constant;
+//     sigma           0.07;
+// }
+
+// Prt                 0.7;
+
+// degassing
+// {
+//     //- Madatory
+//     // boundary walls that promotes inter-phase mass trnasfer
+//     walls
+//     {
+//         "fixedWalls";
+//     }
+
+//     // solid surface wettability 
+//     // higher alphaW means smaller contact angle (more wetting)
+//     // TODO: move in walls entry to set up alphaW for each wall
+//     // TODO: get an actual model than just (amplifier = 1/alphaW)
+//     // alphaW          1;
+//     // alphaW          0.12725;
+//     // alphaI          0.1;
+
+//     // alphaW          0.12728;
+//     // alphaI          1e-20;
+
+//     // alphaW          0.1188898933;
+//     alphaW          0.11889;
+//     alphaI          1e-20;
+
+//     //- Optional
+//     // Henry's coefficient
+//     H               1e-20;
+
+//     // volume fraction threshold to determine interface for inter-phase mass transfer
+//     // 
+//     alphaInterface  0.75;
+
+//     // DEBUG
+//     // mDotCoeff        1e-12;
+// }
+
+// liquid
+// {
+//     transportModel  Newtonian;
+//     nu              1e-6;
+//     rho             1000;
+
+//     // Diffusion coefficients for species in soluables phase
+//     D               1e-6;
+
+//     Cp              4.186e3;
+//     Cv              4.186e3;   // assume Cp for liquid
+//     kappa           0.6;
+//     hf              -2.4e6;
+// }
+
+// gas
+// {
+//     transportModel  Newtonian;
+//     nu              1.8e-08;
+//     rho             1.3;
+
+//     // Diffusion coefficients for species in gaseous phase 
+//     D               1e-16;
+
+//     Cp              1.87e3;     // water gas
+//     Cv              1.41e3;     // Cv = Cp - R/w
+//     kappa           0.026;      // water gas
+//     hf              0;
+// }
+
+
+
+// ************************************************************************* //

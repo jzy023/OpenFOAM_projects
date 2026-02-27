@@ -1,0 +1,73 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      epsilon;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 2 -3 0 0 0 0];
+
+internalField   uniform 0.0015;
+
+boundaryField   
+{
+    #include            "include/ABLConditions"
+
+    inlet
+    {
+        type            fixedValue;
+        value           $internalField;
+    }
+
+    outlet
+    {
+        type            zeroGradient;
+    }
+
+    upperAtm
+    {
+        type            zeroGradient;
+    }
+
+    "(ground|ground_platz|ground_streets)"
+    {
+        type            epsilonWallFunction;
+        value           uniform 0.118;
+    }
+
+    frontAtm
+    {
+        // type            cyclic;
+        type            zeroGradient;
+    }
+
+    backAtm
+    {
+        // type            cyclic;
+        type            zeroGradient;
+    }
+
+    buildings
+    {
+        type            epsilonWallFunction;
+        value           uniform 0.08;
+    }
+
+    "(walls_top|walls_ground|walls_east|walls_west|walls_north|walls_south)"
+    {
+        type            epsilonWallFunction;
+        value           uniform 0.08;
+    }
+}
+
+
+// ************************************************************************* //

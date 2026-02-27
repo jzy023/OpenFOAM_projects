@@ -1,0 +1,107 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \    /   O peration     | Version:  v2212                                 |
+|   \  /    A nd           | Website:  www.openfoam.com                      |
+|    \/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      setFieldsDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+defaultFieldValues
+(
+    volScalarFieldValue alpha.liquid   1.0
+    volScalarFieldValue alpha.gas      0.0
+    volScalarFieldValue Gh2            0.0
+    volScalarFieldValue Gch4           0.0
+    volScalarFieldValue Gco2           0.0
+);
+
+regions
+(
+    boxToCell
+    {
+        box (0 -0.013 0) (1 -0.000 1);
+        fieldValues
+        (
+            volScalarFieldValue alpha.liquid    0.0
+            volScalarFieldValue alpha.gas       1.0
+            volScalarFieldValue Saa             0.0
+            volScalarFieldValue Ssu             0.0
+            volScalarFieldValue Sfa             0.0
+            volScalarFieldValue Sva             0.0
+            volScalarFieldValue Sbu             0.0
+            volScalarFieldValue Spro            0.0
+            volScalarFieldValue Sac             0.0
+            volScalarFieldValue Sh2             0.0
+            volScalarFieldValue Sch4            0.0
+            volScalarFieldValue SIC             0.0
+            volScalarFieldValue SIN             0.0
+            volScalarFieldValue SI              0.0
+            volScalarFieldValue Xc              0.0
+            volScalarFieldValue Xch             0.0
+            volScalarFieldValue Xpr             0.0
+            volScalarFieldValue Xli             0.0
+            volScalarFieldValue Xsu             0.0
+            volScalarFieldValue Xaa             0.0
+            volScalarFieldValue Xfa             0.0
+            volScalarFieldValue Xc4             0.0
+            volScalarFieldValue Xpro            0.0
+            volScalarFieldValue Xac             0.0
+            volScalarFieldValue Xh2             0.0
+            volScalarFieldValue XI              0.0
+            volScalarFieldValue Snh3            0.0
+            volScalarFieldValue Gh2             0.011032
+            volScalarFieldValue Gch4            1.6535
+            volScalarFieldValue Gco2            13.5
+        );
+    }
+
+    boxToCell
+    {
+        box (0 -0.16  0) (1 -0.013 1);
+        fieldValues
+        (
+            volScalarFieldValue alpha.liquid    1.0
+            volScalarFieldValue alpha.gas       0.0
+            volScalarFieldValue Ssu             0.006076015319148937
+            volScalarFieldValue Saa             0.0025640117106382975
+            volScalarFieldValue Sfa             0.06117625872340425
+            volScalarFieldValue Sva             0.005815431217021276
+            volScalarFieldValue Sbu             0.006630484425531915
+            volScalarFieldValue Spro            0.008625903659574469
+            volScalarFieldValue Sac             0.04579524017021277
+            volScalarFieldValue Sh2             1.3035936170212765e-07
+            volScalarFieldValue Sch4            0.05192939914893617
+            volScalarFieldValue SIC             95.70802723404256
+            volScalarFieldValue SIN             94.76743829787233
+            volScalarFieldValue SI              0.13238752340425533
+            volScalarFieldValue Xc              0.10929383829787234
+            volScalarFieldValue Xch             0.010004354042553192
+            volScalarFieldValue Xpr             0.039241830127659576
+            volScalarFieldValue Xli             0.020904516085106385
+            volScalarFieldValue Xsu             0.31260742127659574
+            volScalarFieldValue Xaa             0.9306879829787233
+            volScalarFieldValue Xfa             0.34086141276595744
+            volScalarFieldValue Xc4             0.32637245957446803
+            volScalarFieldValue Xpro            0.10155371914893616
+            volScalarFieldValue Xac             0.6811200680851064
+            volScalarFieldValue Xh2             0.28586212765957447
+            volScalarFieldValue XI              17.21919574468085
+            volScalarFieldValue Snh3            1.1467465021276595
+            volScalarFieldValue Gh2             0.0
+            volScalarFieldValue Gch4            0.0
+            volScalarFieldValue Gco2            0.0
+        );
+    }
+
+);
+
+
+// ************************************************************************* //

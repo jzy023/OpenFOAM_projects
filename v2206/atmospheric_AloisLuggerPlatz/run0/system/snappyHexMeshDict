@@ -1,0 +1,150 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      snappyHexMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+#includeEtc "caseDicts/mesh/generation/snappyHexMeshDict.cfg"
+
+castellatedMesh on;
+snap            on;
+addLayers       off;
+// addLayers       on;
+
+geometry
+{
+    buildings_with_streets
+    {
+        type triSurfaceMesh;
+        file "buildings_with_streets.obj";
+        #include "snappyRegionsDict"
+    }
+
+    refinementChannel
+    {
+        type searchableBox;
+        min  (-300   0  -220);
+        max  ( 150  75   130);
+    }
+
+    refinementBox
+    {
+        type searchableBox;
+        min  (-200   0  -205);
+        max  (  80  65   110);
+    }
+};
+
+castellatedMeshControls
+{
+    minRefinementCells 0;
+    nCellsBetweenLevels 2;
+
+    features
+    (
+        { 
+            file "buildings_with_streets.eMesh";
+            level 5;
+        }
+    );
+
+
+    refinementSurfaces
+    {
+        buildings_with_streets
+        {
+            level (6 6);
+            patchInfo { type wall; }
+        }
+    }
+
+    refinementRegions
+    {
+        refinementChannel
+        {
+            mode inside;
+            levels ((1E15 2));
+        }
+
+        refinementBox
+        {
+            mode inside;
+            levels ((1E15 3));
+        }
+    }
+
+    locationInMesh (1 1 30);
+
+    resolveFeatureAngle 10;
+    allowFreeStandingZoneFaces false;
+}
+
+snapControls
+{
+    nSmoothPatch    10;
+    tolerance       4.0;
+    nSolveIter      40;
+    nRelaxIter      10;
+
+    nFeatureSnapIter 10;
+
+    implicitFeatureSnap    false;
+    explicitFeatureSnap    true;
+    multiRegionFeatureSnap true;
+}
+
+addLayersControls
+{
+    layers
+    {
+        buildings_with_streets
+        {
+            nSurfaceLayers 2;
+        }
+    }
+
+    relativeSizes       true;
+    expansionRatio      1.2;
+    firstLayerThickness 0.5;
+    minThickness        1e-3;
+    
+    nGrow 0;
+    featureAngle 60;
+    slipFeatureAngle 30;
+    nRelaxIter 8;
+    nSmoothSurfaceNormals 1;
+    nSmoothNormals 3;
+    nSmoothThickness 10;
+    nBufferCellsNoExtrude 0;
+    nLayerIter 10;
+
+
+    maxFaceThicknessRatio 1.0;
+    maxThicknessToMedialRatio 0.2;
+    minMedianAxisAngle 90;    
+}
+
+meshQualityControls
+{}
+
+writeFlags
+(
+    noRefinement
+    scalarLevels
+    layerSets
+    layerFields
+);
+
+mergeTolerance 1e-6;
+
+// ************************************************************************* //

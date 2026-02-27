@@ -1,0 +1,29 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+
+restore0Dir
+
+python3 setFields.py
+
+runApplication blockMesh
+
+runApplication setFields
+
+touch ADMFoam_mixed.foam
+
+runApplication $(getApplication)
+
+# runApplication decomposePar
+
+# runParallel $(getApplication)
+
+# runApplication reconstructPar
+
+# rm -r proc*
+
+# runParallel -s "reconstruct" redistributePar -reconstruct -latestTime
+
+
+#------------------------------------------------------------------------------
